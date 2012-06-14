@@ -1,0 +1,115 @@
+
+<!-- saved from url=(0055)http://www1.chapman.edu/~jipsen/svg/asciisvgeditor.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>ASCIIsvg Editor</title>
+<script type="text/javascript" src="ASCIIsvg.js"></script>
+</head>
+<body bgcolor="#CCCCFF" onload="drawPictures(); updatePicture(0);">
+
+<table border=1 cellpadding=10, cellspacing=0>
+	<tbody>
+		<tr>
+			<td><b>Type (ASCIIsvg commands and JavaScript)</b></td>
+			<td><b>Display</b></td>
+		</tr>
+		<tr>
+			<td>
+				<form>
+				<textarea id="picture1input" rows="18" cols="60" onKeyUp="fn_autocomplete();">setBorder(0)
+initPicture(-5,5)
+axes(2, 1, "labels", 1)
+
+stroke = "blue"
+plot("sin(x)")
+
+stroke = "red"
+plot(["5*t*cos(pi*t)", "5*t*sin(pi*t)"],0,1)
+
+stroke = "green"
+strokewidth = "2"
+marker = "arrowdot"
+line([0,1], [pi/2,1])
+dot([pi,0], "open", cpi)
+
+text([-2.5,-2.5], "ASCIIsvg Example")
+				</textarea>
+
+				<br>
+				<input type="checkbox" id="autocomplete_checkbox" checked="checked"> auto-update &nbsp; 
+				<input type="button" value="update" onClick="initPicture(); updatePicture(0);">
+				
+				<br>
+				<br>
+				Error Message: 
+				<br>
+				<br>
+
+				<textarea id="error_msg" rows="2" cols="60" disabled="disabled">
+				</textarea>
+
+			</td>
+			<td valign="middle" align="center">
+				<div id="outputNode">
+				<svg id="picture1" style="display:inline" width="400" height="400" xunitlength="50" yunitlength="50" xmin="-5" xmax="5" ymin="-5" ymax="5" ox="250" oy="250"></svg>
+				</div>
+			</td>
+		</tr>
+
+		<tr>
+			<td colspan=2>
+				<a href="http://www.chapman.edu/~jipsen/svg/asciisvgcommands.html">
+				ASCIIsvg commands</a>
+				<br>
+				<br>
+				<b>initPicture</b>( xmin, xmax {, ymin {, ymax}} ) &nbsp; &nbsp; 
+				<br>
+				<b>axes</b>( {dx, dy,} {"labels" {, "grid"| gdx {, gdy}}} )
+				<br>
+				<b>line</b>( [x,y], [u,v] )
+				<br>
+				<b>marker</b> = "dot" | "arrow" | "arrowdot" | "none"
+				<br>
+				<b>path</b>( [ [x1,y1], [x2,y2], ..., [xn,yn] ] )
+				<br>
+				<b>curve</b>( [ [x1,y1], [x2,y2], ..., [xn,yn] ] )
+				<br>
+				<b>plot</b>( "f(x)" {, xmin, xmax, npoints} )
+				<br>
+				<b>plot</b>( [ "f(t)", "g(t)" ] {, tmin, tmax, npoints} )
+				<br>
+				<b>stroke</b> = "<a href="http://www.spacetoday.org/BoilerRoom/Colors.html">color</a>"
+				<br>
+				<b>strokewidth</b> = "pixelvalue" (default 1)
+				<br>
+				<b>fill</b> = "<a href="http://www.spacetoday.org/BoilerRoom/Colors.html">color</a>"
+				<br>
+				<b>strokedasharray</b> = "dashpixel spacepixel"
+				<br>
+				<b>fontsize</b> = "pixel" (default 20)
+				<br>
+				<b>fontweight</b> = "bold" | "normal"
+				<br>
+				<b>fontstyle</b> = "italic" | "normal"
+				<br>
+				<b>fontfamily</b> = "serif"|"sansserif"|"fixed"|"monotype"
+				<br>
+				<b>circle</b>( [x,y], r )
+				<br>
+				<b>ellipse</b>( [x,y], rx, ry )
+				<br>
+				<b>arc</b>( [x,y], [u,v], r )
+				<br>
+				<b>rect</b>( [x,y], [u,v] )
+				<br>
+				<b>text</b>( [x,y], "label" {, position} )
+				<br>
+				<b>dot</b>( [x,y] {, open | closed {, "label", position} )
+				<br>
+				(position can be: above, below, left, right, aboveleft, aboveright, belowleft, belowright, null)
+				<br>
+
+			</td>
+		</tr>
+</tbody></table>
+
+</body></html>
