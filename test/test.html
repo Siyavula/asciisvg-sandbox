@@ -1,0 +1,104 @@
+
+<!-- saved from url=(0055)http://www1.chapman.edu/~jipsen/svg/asciisvgeditor.html -->
+<html>
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+	<title>ASCIIsvg Editor</title>
+	<script type="text/javascript" src="test.js"></script>
+</head>
+
+<body bgcolor="#CCCCFF" onload="drawPictures();">
+
+<table border=1 cellpadding=10, cellspacing=0>
+	<tbody>
+		<tr>
+			<td colspan=2><b>Type (ASCIIsvg commands and JavaScript)</b></td>
+			<td colspan=1><b>Display</b></td>
+		</tr>
+		<tr>			
+						
+			<td colspan=2>
+	
+				<!-- Input Box -->	
+				
+				<textarea id="picture1input" rows="18" onKeyUp="fn_autocomplete();" style="width:100%;">setBorder(0)
+initPicture(-5,5)
+axes(2, 1, "labels", 1)
+
+stroke = "blue"
+plot("sin(x)")
+
+stroke = "red"
+plot(["5*t*cos(pi*t)", "5*t*sin(pi*t)"],0,1)
+
+stroke = "green"
+strokewidth = "2"
+marker = "arrowdot"
+line([0,1], [pi/2,1])
+dot([pi,0], "open", cpi)
+
+text([-2.5,-2.5], "ASCIIsvg Example")
+				</textarea>
+			</td>
+			<td rowspan=3>
+				<!-- SVG Output -->			
+				<div id="outputNode">
+					<svg 	id="picture1" style="display:inline" width="400" height="400" 
+								xunitlength="50" yunitlength="50" xmin="-5" 
+								xmax="5" ymin="-5" ymax="5" ox="250" oy="250">	
+					</svg>
+				</div>
+			</td>
+		</tr>	
+		<tr>
+			<td>
+
+				<!-- Auto Update -->	
+				<input type="checkbox" id="autocomplete_checkbox" checked="checked"> auto-update &nbsp;
+
+			</td>	
+			<td>
+
+				<!-- Update Button -->
+				<input type="button" value="Manual Update" onClick="initPicture(); updatePicture(0);">
+
+			</td>
+		</tr>
+		<tr>
+
+				<!-- Error Message -->				
+				<td>Error Message:</td>
+				<td><textarea id="error_msg" rows="2" cols="45" disabled="disabled"></textarea></td>
+
+		</tr>
+
+		<tr>
+			<td colspan=2><b>ASCIIsvg commands</b></td>
+			<td colspan=1><b>HTML Colour Wheel</b></td>
+		</tr>
+
+		<tr>
+			<td colspan=3>
+				Screen Dump: <b id="screen_dump" name="screen_dump">Test</b>
+			</td>
+
+		</tr>
+		
+</tbody></table>
+
+</body></html>
+
+<script>
+function set_source(f, target){
+f();
+target.text(f.toString())
+}
+
+function input_example(){
+  var cw = Raphael.colorwheel($("#input_example .colorwheel")[0],300);
+  cw.input($("#input_example input")[0]);
+}
+
+set_source(input_example, $("#input_example .source"));
+</script>

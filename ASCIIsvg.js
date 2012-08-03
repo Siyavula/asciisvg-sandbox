@@ -152,7 +152,6 @@ function isSVGavailable() {
   else return nd;
 }
 
-
 function less(x,y) { return x < y }  // used for scripts in XML files
                                      // since IE does not handle CDATA well
 function setText(st,id) { 
