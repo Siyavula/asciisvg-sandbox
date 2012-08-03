@@ -8,7 +8,7 @@
 	<script type="text/javascript" src="test.js"></script>
 </head>
 
-<body bgcolor="#CCCCFF" onload="drawPictures();">
+<body bgcolor="#CCCCFF" onload="initializeVariables(); initPicture(); updatePicture();">
 
 <table border=1 cellpadding=10, cellspacing=0>
 	<tbody>
@@ -25,29 +25,13 @@
 				<textarea id="picture1input" rows="18" onKeyUp="fn_autocomplete();" style="width:100%;">setBorder(0)
 initPicture(-5,5)
 axes(2, 1, "labels", 1)
-
 stroke = "blue"
-plot("sin(x)")
-
-stroke = "red"
-plot(["5*t*cos(pi*t)", "5*t*sin(pi*t)"],0,1)
-
-stroke = "green"
-strokewidth = "2"
-marker = "arrowdot"
-line([0,1], [pi/2,1])
-dot([pi,0], "open", cpi)
-
-text([-2.5,-2.5], "ASCIIsvg Example")
+rect([10,10], [20,20])
 				</textarea>
 			</td>
 			<td rowspan=3>
 				<!-- SVG Output -->			
 				<div id="outputNode">
-					<svg 	id="picture1" style="display:inline" width="400" height="400" 
-								xunitlength="50" yunitlength="50" xmin="-5" 
-								xmax="5" ymin="-5" ymax="5" ox="250" oy="250">	
-					</svg>
 				</div>
 			</td>
 		</tr>	
@@ -61,7 +45,7 @@ text([-2.5,-2.5], "ASCIIsvg Example")
 			<td>
 
 				<!-- Update Button -->
-				<input type="button" value="Manual Update" onClick="initPicture(); updatePicture(0);">
+				<input type="button" value="Manual Update" onClick="updatePicture();">
 
 			</td>
 		</tr>
@@ -71,11 +55,6 @@ text([-2.5,-2.5], "ASCIIsvg Example")
 				<td>Error Message:</td>
 				<td><textarea id="error_msg" rows="2" cols="45" disabled="disabled"></textarea></td>
 
-		</tr>
-
-		<tr>
-			<td colspan=2><b>ASCIIsvg commands</b></td>
-			<td colspan=1><b>HTML Colour Wheel</b></td>
 		</tr>
 
 		<tr>
