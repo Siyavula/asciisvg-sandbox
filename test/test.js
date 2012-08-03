@@ -3,7 +3,6 @@
 // ========================
 
 var picture, svgpicture, doc;
-var isIE = document.createElementNS==null;
 
 // ========================
 // Functions
@@ -14,24 +13,43 @@ function myCreateElementSVG(t) {
   else return doc.createElementNS("http://www.w3.org/2000/svg",t);
 }
 
-function drawPictures() {
+function drawPictures(src) {
 	
 	var index = 0;
+	var pictures = document.getElementById("picture1input").value.split('\n');
+	var len = pictures.length;
+	var error_text = "";
 	
-	document.getElementById('screen_dump').innerHTML = "drawPictures - precode";
+	//document.getElementById('screen_dump').innerHTML = "\ndrawPictures - len = " + len;
 	
-	var pictures = document.getElementsByTagName("textarea");
-	picture = (isIE ? pictures[index] : pictures[0]);
-	document.getElementById('screen_dump').innerHTML = "drawPictures - picture = " + picture;
+	for (index = 0; index < len; index++) 
+	{
+		var src = pictures[index];
+		
+		src = src.replace(/plot\(\x20*([^\"f\[][^\n\r]+?)\,/g,"plot\(\"$1\",");
+		src = src.replace(/plot\(\x20*([^\"f\[][^\n\r]+)\)/g,"plot(\"$1\")");
+		src = src.replace(/([0-9])([a-zA-Z])/g,"$1*$2");
+		src = src.replace(/\)([\(0-9a-zA-Z])/g,"\)*$1");
 	
-	var src = picture.getAttribute("script");
+		//document.getElementById('screen_dump').innerHTML += "<br>" + src;
+		
+		try 
+		{ 
+			with (Math) eval(src); 
+			error_text += "<br>none";
+		} 
+		catch(err)
+		{
+			error_text += "<br>Image FAILED to generate (" + err + ")";
+		}
 	
-	src = src.replace(/plot\(\x20*([^\"f\[][^\n\r]+?)\,/g,"plot\(\"$1\",");
-    src = src.replace(/plot\(\x20*([^\"f\[][^\n\r]+)\)/g,"plot(\"$1\")");
-    src = src.replace(/([0-9])([a-zA-Z])/g,"$1*$2");
-    src = src.replace(/\)([\(0-9a-zA-Z])/g,"\)*$1");
+	}
 	
-	document.getElementById('screen_dump').innerHTML = "drawPictures - src = " + src;
+	document.getElementById('screen_dump').innerHTML += "<br>" + error_text;
+	
+	//document.getElementById('error_msg').value = error_text;
+	
+	//document.getElementById('screen_dump').innerHTML = "drawPictures - complete = ";
 
 }
 
