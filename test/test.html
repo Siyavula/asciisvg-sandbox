@@ -8,7 +8,7 @@
 	<script type="text/javascript" src="test.js"></script>
 </head>
 
-<body bgcolor="#CCCCFF" onload="initializeVariables(); initPicture(); updatePicture();">
+<body bgcolor="#CCCCFF" onload="createSVG(); updatePicture();">
 
 <table border=1 cellpadding=10, cellspacing=0>
 	<tbody>
@@ -20,19 +20,26 @@
 						
 			<td colspan=2>
 	
-				<!-- Input Box -->	
+				<!-- Input Box -->
 				
 				<textarea id="picture1input" rows="18" onKeyUp="fn_autocomplete();" style="width:100%;">setBorder(0)
 initPicture(-5,5)
 axes(2, 1, "labels", 1)
 stroke = "blue"
-rect([10,10], [20,20])
+rect([1,1], [2,2], 0, 0)
+stroke = "red"
+line([-3,3], [-4,4])
+stroke = "green"
+ellipse ([-1,-1],2,1)
+stroke = "green"
+circle ([-2,-2],2)
 				</textarea>
 			</td>
 			<td rowspan=3>
+
 				<!-- SVG Output -->			
-				<div id="outputNode">
-				</div>
+				<div id="outputNode"></div>
+
 			</td>
 		</tr>	
 		<tr>
@@ -54,13 +61,6 @@ rect([10,10], [20,20])
 				<!-- Error Message -->				
 				<td>Error Message:</td>
 				<td><textarea id="error_msg" rows="2" cols="45" disabled="disabled"></textarea></td>
-
-		</tr>
-
-		<tr>
-			<td colspan=3>
-				Screen Dump: <b id="screen_dump" name="screen_dump">Test</b>
-			</td>
 
 		</tr>
 		
