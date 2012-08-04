@@ -12,6 +12,14 @@ Step 2: Set attribute of the SVG element:  	element.setAttribute(attribute,value
 Step 3: Append SVG elements to SVG canvas: 	canvas.appendChild(element);
 Step 4: Replace old SVG canvas with new:		svg_old.parentNode.replaceChild(svg_new,svg_old);
 
+===================================
+TO DO
+===================================
+
+1. Axes
+2. Dot / ASdot?
+3. Finish Functions ....
+
 ========================================================================================== */
 
 // ==============================
@@ -82,9 +90,20 @@ axesstroke = defaultaxesstroke;	gridstroke = defaultgridstroke;	strokewidth = de
 
 }
 
-// ==============================
-// Functions (SVG CANVAS)
-// ==============================
+/* 
+==============================
+Functions (SVG CANVAS)
+==============================
+> setBorder(x, color)
+> initPicture(a,b,c,d)
+> updatePicture()
+============================== 
+*/
+
+
+
+
+
 
 function setBorder(x, color) 
 { 
@@ -181,9 +200,18 @@ function updatePicture()
 	reset_variables(); // Reset Variables to original values for the next update
 }
 
-// ==============================
-// Functions (BASIC SVG ELEMENTS)
-// ==============================
+/* 
+==============================
+Functions (BASIC SVG ELEMENTS)
+==============================
+> myCreateElementSVG(t)
+> ASdot(center,radius,s,f)
+> dot(center, typ, label, pos, id)
+> arrowhead(p,q)
+> text(p,st,pos,angle)
+> mathjs(st)
+============================== 
+*/
 
 function myCreateElementSVG(t) {
 	return document.createElementNS("http://www.w3.org/2000/svg",t);
@@ -254,8 +282,7 @@ function text(p,st,pos,angle) {  /* DONE */
 	if (pos == below)			{dx = 0; 						dy = fontsize;			textanchor = "middle";}
 	if (pos == belowright){dx = fontsize/2; 	dy = fontsize;			textanchor = "start";}
 
-	// ===================================
-
+	// Text Rotation
 	var node = myCreateElementSVG("text");
 	var node_text = document.createTextNode(st);
   node.setAttribute("transform", "	rotate(" + angle + ", " + (p[0]*xunitlength+origin[0]+dx) + ", " + (height-p[1]*yunitlength-origin[1]+dy) + ")")
@@ -281,9 +308,19 @@ function text(p,st,pos,angle) {  /* DONE */
 function mathjs(st) {
 }
 
-// ==============================
-// Functions (COMPOUND SVG ELEMENTS)
-// ==============================
+/* 
+==============================
+Functions (COMPOUND SVG ELEMENTS)
+==============================
+> myCreateElementSVG(t)
+> ASdot(center,radius,s,f)
+> dot(center, typ, label, pos, id)
+> arrowhead(p,q)
+> text(p,st,pos,angle)
+> mathjs(st)
+============================== 
+*/
+
 
 function line(p,q,id) { /* DONE */
 	var node = myCreateElementSVG("path");
@@ -331,9 +368,77 @@ function arc(start,end,radius,id) {
 function noaxes() {
 }
 
-function axes(dx,dy,labels,gdx,gdy) 
-{
+function axes(dx,dy,labels,gdx,gdy) {
 
+	var x, y, ldx, ldy, lx, ly, lxp, lyp, pnode, st;
+  if (typeof dx=="string") { labels = dx; dx = null; }
+  if (typeof dy=="string") { gdx = dy; dy = null; }
+  if (xscl!=null) {dx = xscl; gdx = xscl; labels = dx}
+  if (yscl!=null) {dy = yscl; gdy = yscl}
+  if (xtick!=null) {dx = xtick}
+  if (ytick!=null) {dy = ytick}
+
+  dx = (dx==null?xunitlength:dx*xunitlength);
+  dy = (dy==null?dx:dy*yunitlength);
+  fontsize = Math.min(dx/2,dy/2,16);
+  ticklength = fontsize/4;
+  if (xgrid!=null) gdx = xgrid;
+  if (ygrid!=null) gdy = ygrid;
+  if (gdx!=null) {
+    gdx = (typeof gdx=="string"?dx:gdx*xunitlength);
+    gdy = (gdy==null?dy:gdy*yunitlength);
+    pnode = myCreateElementSVG("path");
+    st="";
+    for (x = origin[0]; x<width; x = x+gdx)
+      st += " M"+x+",0"+" "+x+","+height;
+    for (x = origin[0]-gdx; x>0; x = x-gdx)
+      st += " M"+x+",0"+" "+x+","+height;
+    for (y = height-origin[1]; y<height; y = y+gdy)
+      st += " M0,"+y+" "+width+","+y;
+    for (y = height-origin[1]-gdy; y>0; y = y-gdy)
+      st += " M0,"+y+" "+width+","+y;
+    pnode.setAttribute("d",st);
+    pnode.setAttribute("stroke-width", .5);
+    pnode.setAttribute("stroke", gridstroke);
+    pnode.setAttribute("fill", fill);
+    svg_picture.appendChild(pnode);
+  }
+  pnode = myCreateElementSVG("path");
+  st="M0,"+(height-origin[1])+" "+width+","+
+    (height-origin[1])+" M"+origin[0]+",0 "+origin[0]+","+height;
+  for (x = origin[0]+dx; x<width; x = x+dx)
+    st += " M"+x+","+(height-origin[1]+ticklength)+" "+x+","+
+           (height-origin[1]-ticklength);
+  for (x = origin[0]-dx; x>0; x = x-dx)
+    st += " M"+x+","+(height-origin[1]+ticklength)+" "+x+","+
+           (height-origin[1]-ticklength);
+  for (y = height-origin[1]+dy; y<height; y = y+dy)
+    st += " M"+(origin[0]+ticklength)+","+y+" "+(origin[0]-ticklength)+","+y;
+  for (y = height-origin[1]-dy; y>0; y = y-dy)
+    st += " M"+(origin[0]+ticklength)+","+y+" "+(origin[0]-ticklength)+","+y;
+  if (labels!=null) with (Math) {
+    ldx = dx/xunitlength;
+    ldy = dy/yunitlength;
+    lx = (xmin>0 || xmax<0?xmin:0);
+    ly = (ymin>0 || ymax<0?ymin:0);
+    lxp = (ly==0?"below":"above");
+    lyp = (lx==0?"left":"right");
+    var ddx = floor(1.1-log(ldx)/log(10))+1;
+    var ddy = floor(1.1-log(ldy)/log(10))+1;
+    for (x = ldx; x<=xmax; x = x+ldx)
+      text([x,ly],chopZ(x.toFixed(ddx)),lxp);
+    for (x = -ldx; xmin<=x; x = x-ldx)
+      text([x,ly],chopZ(x.toFixed(ddx)),lxp);
+    for (y = ldy; y<=ymax; y = y+ldy)
+      text([lx,y],chopZ(y.toFixed(ddy)),lyp);
+    for (y = -ldy; ymin<=y; y = y-ldy)
+      text([lx,y],chopZ(y.toFixed(ddy)),lyp);
+  }
+  pnode.setAttribute("d",st);
+  pnode.setAttribute("stroke-width", .5);
+  pnode.setAttribute("stroke", axesstroke);
+  pnode.setAttribute("fill", fill);
+  svg_picture.appendChild(pnode);
 
 
 }
