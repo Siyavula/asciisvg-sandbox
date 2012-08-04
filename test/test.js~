@@ -228,6 +228,8 @@ function text(p,st,pos,id,fontsty) {
   node.setAttribute("text-anchor",textanchor);
   if (fontstroke!="none") node.setAttribute("stroke",fontstroke);
   if (fontfill!="none") node.setAttribute("fill",fontfill);
+	
+  
 	svg_picture.appendChild(node);
 }
 

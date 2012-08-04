@@ -26,7 +26,7 @@
 initPicture(-5,5)
 axes(2, 1, "labels", 1)
 stroke = "blue"
-rect([0.5,0.5], [1.5,1.5], 0, 0)
+rect([1.5,1.5], [2.5,2.5], 0, 0)
 stroke = "red"
 line([-3,3], [-4,4])
 stroke = "green"
