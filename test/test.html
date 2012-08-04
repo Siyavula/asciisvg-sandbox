@@ -6,15 +6,18 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 	<title>ASCIIsvg Editor</title>
 	<script type="text/javascript" src="test.js"></script>
+	<script src="color/jquery-1.4.1.min.js" type="text/javascript"></script>
+	<script src="color/raphael-2.1.0-min.js" type="text/javascript"></script>
+	<script src="color/colorwheel.js" type="text/javascript"></script>
 </head>
 
-<body bgcolor="#CCCCFF" onload="updatePicture();">
+<body bgcolor="#88CC88" onload="updatePicture();">
 
 <table border=1 cellpadding=10, cellspacing=0>
 	<tbody>
 		<tr>
-			<td colspan=2><b>Type (ASCIIsvg commands and JavaScript)</b></td>
-			<td colspan=1><b>Display</b></td>
+			<td colspan=2><b>Input (ASCIIsvg commands and JavaScript)</b></td>
+			<td colspan=1><b>Output (SVG)</b></td>
 		</tr>
 		<tr>			
 						
@@ -33,15 +36,9 @@ stroke = "green"
 ellipse ([-1,-1],2,1)
 stroke = "green"
 circle ([-2,-2],2)
-text([1,1], "X")
-text([1,1], "a", aboveleft)
-text([1,1], "b", above)
-text([1,1], "c", aboveright)
-text([1,1], "d", right)
-text([1,1], "e", belowright)
-text([1,1], "f", below)
-text([1,1], "g", belowleft)
-text([1,1], "h", left)
+dot([1,1])
+text([1,1], "Hello", "middle", 0)
+text([1,1], "Hello", "middle", 90)
 
 				</textarea>
 			</td>
@@ -73,6 +70,26 @@ text([1,1], "h", left)
 				<td><textarea id="error_msg" rows="2" cols="45" disabled="disabled"></textarea></td>
 
 		</tr>
+
+		<tr>
+			<td colspan=2><b></b></td>
+			<td colspan=1><b>Colour Wheel</b></td>
+		</tr>
+
+		<tr>
+
+			<td>
+				
+				<!-- Colour Wheel -->
+				<div id="input_example" align="center">
+					<div class="colorwheel" align="center"></div>
+					<div align="center">HEX: <input name="input_example" value="#FF9900" size="7"></div>
+				</div>				
+
+			</td>
+
+		</tr>
+
 		
 </tbody></table>
 

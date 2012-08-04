@@ -193,14 +193,53 @@ function ASdot(center,radius,s,f) {
 }
 
 function dot(center, typ, label, pos, id) {
+  var node;
+  var cx = center[0]*xunitlength+origin[0];
+  var cy = height-center[1]*yunitlength-origin[1];
+  if (typ=="+" || typ=="-" || typ=="|") {
+    if (node==null) {
+      node = myCreateElementSVG("path");
+      node.setAttribute("id", id);
+      svgpicture.appendChild(node);
+    }
+    if (typ=="+") {
+      node.setAttribute("d",
+        " M "+(cx-ticklength)+" "+cy+" L "+(cx+ticklength)+" "+cy+
+        " M "+cx+" "+(cy-ticklength)+" L "+cx+" "+(cy+ticklength));
+      node.setAttribute("stroke-width", .5);
+      node.setAttribute("stroke", axesstroke);
+    } else {
+      if (typ=="-") node.setAttribute("d",
+        " M "+(cx-ticklength)+" "+cy+" L "+(cx+ticklength)+" "+cy);
+      else node.setAttribute("d",
+        " M "+cx+" "+(cy-ticklength)+" L "+cx+" "+(cy+ticklength));
+      node.setAttribute("stroke-width", strokewidth);
+      node.setAttribute("stroke", stroke);
+    }
+  } else {
+    if (node==null) {
+      node = myCreateElementSVG("circle");
+      node.setAttribute("id", id);
+      svg_picture.appendChild(node);
+    }
+    node.setAttribute("cx",cx);
+    node.setAttribute("cy",cy);
+    node.setAttribute("r",dotradius);
+    node.setAttribute("stroke-width", strokewidth);
+    node.setAttribute("stroke", stroke);
+    node.setAttribute("fill", (typ=="open"?"white":stroke));
+  }
+  if (label!=null) 
+    text(center,label,(pos==null?"below":pos),(id==null?id:id+"label"))
 }
 
 function arrowhead(p,q) {
 }
 
-function text(p,st,pos,id,fontsty) {
+function text(p,st,pos,angle) {  /* DONE */
 
 	// Default text positions
+	if (angle == null) {angle = 0;}
 	var textanchor = "middle";
   var dx = 0; 
 	var dy = fontsize/3;
@@ -215,20 +254,28 @@ function text(p,st,pos,id,fontsty) {
 	if (pos == below)			{dx = 0; 						dy = fontsize;			textanchor = "middle";}
 	if (pos == belowright){dx = fontsize/2; 	dy = fontsize;			textanchor = "start";}
 
+	// ===================================
+
 	var node = myCreateElementSVG("text");
-	node.appendChild(document.createTextNode(st));
-  node.setAttribute("id", id);
+	var node_text = document.createTextNode(st);
+  node.setAttribute("transform", "	rotate(" + angle + ", " + (p[0]*xunitlength+origin[0]+dx) + ", " + (height-p[1]*yunitlength-origin[1]+dy) + ")")
+	node.appendChild(node_text);
+	
+	// Node Attributes
   node.lastChild.nodeValue = st;
   node.setAttribute("x",p[0]*xunitlength+origin[0]+dx);
   node.setAttribute("y",height-p[1]*yunitlength-origin[1]+dy);
-  node.setAttribute("font-style",(fontsty!=null?fontsty:fontstyle));
+  node.setAttribute("font-style",fontstyle);
   node.setAttribute("font-family",fontfamily);
   node.setAttribute("font-size",fontsize);
   node.setAttribute("font-weight",fontweight);
   node.setAttribute("text-anchor",textanchor);
   if (fontstroke!="none") node.setAttribute("stroke",fontstroke);
   if (fontfill!="none") node.setAttribute("fill",fontfill);
+	
+	// Attach Nodes
 	svg_picture.appendChild(node);
+
 }
 
 function mathjs(st) {
