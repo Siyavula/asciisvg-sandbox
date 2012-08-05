@@ -13,36 +13,36 @@
 
 <body bgcolor="#88CC88" onload="updatePicture();">
 
-<table border=1 cellpadding=10, cellspacing=0>
+<table border=1 cellpadding=5 cellspacing=0>
 	<tbody>
 		<tr>
-			<td colspan=2><b>Input (ASCIIsvg commands and JavaScript)</b></td>
-			<td colspan=1><b>Output (SVG)</b></td>
+			<td colspan=2 bgcolor="#CCCCCC"><b>Input (ASCIIsvg commands and JavaScript)</b></td>
+			<td colspan=1 bgcolor="#CCCCCC"><b>Output (SVG)</b></td>
 		</tr>
+
 		<tr>			
-						
 			<td colspan=2>
 	
 				<!-- Input Box -->
-				
+	
 				<textarea id="picture1input" rows="18" onKeyUp="fn_autocomplete();" style="width:100%;">setBorder(0)
 initPicture(-5,5)
 axes(2, 1, "labels", 1)
+
 stroke = "blue"
+
 rect([0.5,0.5], [1.5,1.5], 0, 0)
-stroke = "red"
 line([-3,3], [-4,4])
-stroke = "green"
 ellipse ([-1,-1],2,1)
-stroke = "green"
 circle ([-2,-2],2)
-dot([1,1])
+
 text([1,1], "Hello", "middle", 0)
 text([1,1], "Hello", "middle", 90)
+dot([0,0], open, "hello", above)
 
 				</textarea>
 			</td>
-			<td rowspan=3>
+			<td rowspan=3 style="width:400;">
 
 				<!-- SVG Output -->			
 				<div id="outputNode"></div>
@@ -67,31 +67,288 @@ text([1,1], "Hello", "middle", 90)
 
 				<!-- Error Message -->				
 				<td>Error Message:</td>
-				<td><textarea id="error_msg" rows="2" cols="45" disabled="disabled"></textarea></td>
+				<td><textarea id="error_msg" rows="4" cols="45" disabled="disabled"></textarea></td>
 
+		</tr>
+	</tbody>
+</table>
+
+<br><br>
+
+<table border=1 cellpadding=5 cellspacing=0>
+	<tbody>
+
+		<!-- Canvas Commands -->	
+
+		<tr>
+			<td colspan=1 bgcolor="#CCCCCC">Canvas Commands</td>
+			<td colspan=1 bgcolor="#CCCCCC">Example</td>
+			<td colspan=1 bgcolor="#CCCCCC"><b>Colour Wheel</b></td>
 		</tr>
 
 		<tr>
-			<td colspan=2>&nbsp;</td>
-			<td colspan=1><b>Colour Wheel</b></td>
-		</tr>
-
-		<tr>
-			<td colspan=2>&nbsp;</td>
-			<td>
+			<td colspan=1>
+				<b>initPicture</b>(xmin,xmax,ymin,ymax)
+			</td>
+			<td colspan=1>
+				<b>initPicture</b>(0,2)</br>
+				<b>initPicture</b>(0,2,0,10)</br>
+			</td>
+			<td colspan=1 rowspan=40 valign="top">
 				
 				<!-- Colour Wheel -->
+
 				<div id="input_example" align="center">
 					<div class="colorwheel" align="center"></div>
 					<div align="center">HEX: <input name="input_example" value="#FF9900" size="7"></div>
 				</div>				
 
 			</td>
-
 		</tr>
 
-		
-</tbody></table>
+		<tr>
+			<td colspan=1>
+				<b>axes</b>(dx, dy,"labels",gdx,gdy)
+			</td>
+			<td colspan=1>
+				<b>axes</b>(1, 1)<br>
+				<b>axes</b>(1, 1,"labels")<br>
+				<b>axes</b>(1, 1,"labels",2,2)<br>
+			</td>
+		</tr>
+
+		<tr>
+			<td colspan=1>
+				<b>grid</b>(dx, dy)
+			</td>
+			<td colspan=1>
+				<b>grid</b>(1, 1)<br>
+			</td>
+		</tr>
+
+		<!-- Attributes -->	
+
+		<tr>
+			<td colspan=1 bgcolor="#CCCCCC">Attributes</td>
+			<td colspan=1 bgcolor="#CCCCCC">Example</td>
+		</tr>
+
+		<tr>
+			<td colspan=1>
+				<b>marker</b> = "dot" | "arrow" | "arrowdot" | "none"
+			</td>
+			<td colspan=1>
+				&nbsp;
+			</td>
+		</tr>
+
+		<tr>
+			<td colspan=1>
+				<b>stroke</b> = color
+			</td>
+			<td colspan=1>
+				<b>stroke</b> = "#AABBCC"<br>
+				<b>stroke</b> = "blue"
+			</td>
+		</tr>
+
+		<tr>
+			<td colspan=1>
+				<b>strokewidth</b> = "pixelvalue" (default 1)
+			</td>
+			<td colspan=1>
+				&nbsp;
+			</td>
+		</tr>
+
+		<tr>
+			<td colspan=1>
+				<b>strokedasharray</b> = [dashpixel, spacepixel]
+			</td>
+			<td colspan=1>
+				<b>strokedasharray</b> = [1,0]  <- Continuous <br>
+				<b>strokedasharray</b> = [5,5]  <- Dashed
+			</td>
+		</tr>
+
+		<tr>
+			<td colspan=1>
+				<b>fill</b> = color
+			</td>
+			<td colspan=1>
+				<b>fill</b> = "#AABBCC"<br>
+				<b>fill</b> = "red"
+			</td>
+		</tr>
+
+		<tr>
+			<td colspan=1>
+				<b>fontsize</b> = "pixel" (default 20)
+			</td>
+			<td colspan=1>
+				<b>fontsize</b> = 20
+			</td>
+		</tr>
+
+		<tr>
+			<td colspan=1>
+				<b>fontweight</b> = "bold" | "normal"
+			</td>
+			<td colspan=1>
+				&nbsp;
+			</td>
+		</tr>
+
+		<tr>
+			<td colspan=1>
+				<b>fontstyle</b> = "italic" | "normal"
+			</td>
+			<td colspan=1>
+				&nbsp;
+			</td>
+		</tr>
+
+		<tr>
+			<td colspan=1>
+				<b>fontfamily</b> = "serif"|"sansserif"|"fixed"|"monotype"
+			</td>
+			<td colspan=1>
+				&nbsp;
+			</td>
+		</tr>
+
+		<!-- Basic Elements -->	
+
+		<tr>
+			<td colspan=1 bgcolor="#CCCCCC">Basic Elements</td>
+			<td colspan=1 bgcolor="#CCCCCC">Example</td>
+		</tr>
+
+		<tr>
+			<td colspan=1>
+				<b>dot</b>([x,y],open | closed,"label",position)
+			</td>
+			<td colspan=1>
+				<b>dot</b>([x,y],open)<br>
+				<b>dot</b>([x,y],closed,"text")<br>
+				<b>dot</b>([x,y],closed,"text","aboveleft")
+			</td>
+		</tr>
+
+		<tr>
+			<td colspan=1>
+				<b>arrowhead</b>([x1,y1],[x2,y2])
+			</td>
+			<td colspan=1>
+				<b>arrowhead</b>([0,0],[1,1])
+			</td>
+		</tr>
+
+		<tr>
+			<td colspan=1>
+				<b>line</b>([x1,y1],[x2,y2])
+			</td>
+			<td colspan=1>
+				<b>line</b>([0,0],[1,1])
+			</td>
+		</tr>
+
+		<tr>
+			<td colspan=1>
+				<b>circle</b>([x,y],r)
+			</td>
+			<td colspan=1>
+				<b>circle</b>([0,0],5)
+			</td>
+		</tr>
+
+		<tr>
+			<td colspan=1>
+				<b>ellipse</b>([x,y],rx,ry)
+			</td>
+			<td colspan=1>
+				<b>ellipse</b>([0,0],3,6)
+			</td>
+		</tr>
+
+		<tr>
+			<td colspan=1>
+				<b>arc</b>([x,y],[u,v],r)
+			</td>
+			<td colspan=1>
+				<b>arc</b>([0,0],[1,1],5)
+			</td>
+		</tr>
+
+		<tr>
+			<td colspan=1>
+				<b>rect</b>([x,y],[u,v])
+			</td>
+			<td colspan=1>
+				<b>rect</b>([0,0],[2,2])
+			</td>
+		</tr>
+
+		<tr>
+			<td colspan=1>
+				<b>text</b>([x,y],label,position,clock_rotation_deg)
+			</td>
+			<td colspan=1>
+				<b>text</b>([2,2],"hello")<br>
+				<b>text</b>([2,2],"hello", "bottomright")<br>
+				<b>text</b>([2,2],"hello", "bottomright", 90)<br>
+			</td>
+		</tr>
+
+		<!-- Complex Elements -->	
+
+		<tr>
+			<td colspan=1 bgcolor="#CCCCCC">Complex Elements</td>
+			<td colspan=1 bgcolor="#CCCCCC">Example</td>
+		</tr>
+
+		<tr>
+			<td colspan=1>
+				<b>path</b>([[x1,y1],[x2,y2], ..., [xn,yn]])
+			</td>
+			<td colspan=1>
+				<b>path</b>([[0,0],[1,1],[0,2]])
+			</td>
+		</tr>
+
+		<tr>
+			<td colspan=1>
+				<b>curve</b>([[x1,y1],[x2,y2], ..., [xn,yn]])
+			</td>
+			<td colspan=1>
+				<b>curve</b>([[0,0],[1,1],[0,2]])
+			</td>
+		</tr>
+
+		<tr>
+			<td colspan=1>
+				<b>plot</b>(f(x), xmin, xmax, npoints)
+			</td>
+			<td colspan=1>
+				<b>plot</b>("sin(x)")<br>
+				<b>plot</b>("sin(x)", 0, 2*pi)<br>
+				<b>plot</b>("sin(x)", 0, 2*pi, 100)
+			</td>
+		</tr>
+
+		<tr>
+			<td colspan=1>
+				<b>plot</b>(["t", "sin(t)"], xmin, xmax, npoints)
+			</td>
+			<td colspan=1>
+				<b>plot</b>(["t", "sin(t)"])<br>
+				<b>plot</b>(["t", "sin(t)"], 0, 2*pi)<br>
+				<b>plot</b>(["t", "sin(t)"], 0, 2*pi, 100)
+			</td>
+		</tr>
+
+	</tbody>
+</table>
 
 </body></html>
 

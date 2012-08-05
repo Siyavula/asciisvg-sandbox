@@ -17,7 +17,6 @@ TO DO
 ===================================
 
 1. Axes
-2. Dot / ASdot?
 3. Finish Functions ....
 
 ========================================================================================== */
@@ -70,7 +69,7 @@ var dotradius = defaultdotradius 							= 4;
 var ticklength = defaultticklength 						= 4;
 
 // SVG Labels
-var above = "above"; var below = "below"; var left = "left"; var right = "right"; var aboveleft = "aboveleft"; var aboveright = "aboveright"; var belowleft = "belowleft"; var belowright = "belowright";
+var above = "above"; var below = "below"; var left = "left"; var right = "right"; var aboveleft = "aboveleft"; var aboveright = "aboveright"; var belowleft = "belowleft"; var belowright = "belowright"; var open = "open"; var closed = "closed";
 
 // SVG Function Variables
 var cpi = "\u03C0", ctheta = "\u03B8"; var pi = Math.PI, ln = Math.log, e = Math.E; var sign = function(x) { return (x==0?0:(x<0?-1:1)) }; var arcsin = Math.asin; var arccos = Math.acos; var arctan = Math.atan; var sinh = function(x) { return (Math.exp(x)-Math.exp(-x))/2 }; var cosh = function(x) { return (Math.exp(x)+Math.exp(-x))/2 }; var tanh = function(x) { return (Math.exp(x)-Math.exp(-x))/(Math.exp(x)+Math.exp(-x)) }; var arcsinh = function(x) { return ln(x+Math.sqrt(x*x+1)) }; var arccosh = function(x) { return ln(x+Math.sqrt(x*x-1)) }; var arctanh = function(x) { return ln((1+x)/(1-x))/2 }; var sech = function(x) { return 1/cosh(x) }; var csch = function(x) { return 1/sinh(x) }; var coth = function(x) { return 1/tanh(x) }; var arcsech = function(x) { return arccosh(1/x) }; var arccsch = function(x) { return arcsinh(1/x) }; var arccoth = function(x) { return arctanh(1/x) }; var sec = function(x) { return 1/Math.cos(x) }; var csc = function(x) { return 1/Math.sin(x) }; var cot = function(x) { return 1/Math.tan(x) }; var arcsec = function(x) { return arccos(1/x) }; var arccsc = function(x) { return arcsin(1/x) }; var arccot = function(x) { return arctan(1/x) };
@@ -99,10 +98,6 @@ Functions (SVG CANVAS)
 > updatePicture()
 ============================== 
 */
-
-
-
-
 
 
 function setBorder(x, color) 
@@ -205,11 +200,10 @@ function updatePicture()
 Functions (BASIC SVG ELEMENTS)
 ==============================
 > myCreateElementSVG(t)
-> ASdot(center,radius,s,f)
 > dot(center, typ, label, pos, id)
-> arrowhead(p,q)
+* arrowhead(p,q)
 > text(p,st,pos,angle)
-> mathjs(st)
+* mathjs(st)
 ============================== 
 */
 
@@ -217,54 +211,58 @@ function myCreateElementSVG(t) {
 	return document.createElementNS("http://www.w3.org/2000/svg",t);
 }
 
-function ASdot(center,radius,s,f) {
-}
-
 function dot(center, typ, label, pos, id) {
-  var node;
   var cx = center[0]*xunitlength+origin[0];
   var cy = height-center[1]*yunitlength-origin[1];
-  if (typ=="+" || typ=="-" || typ=="|") {
-    if (node==null) {
-      node = myCreateElementSVG("path");
-      node.setAttribute("id", id);
-      svgpicture.appendChild(node);
-    }
-    if (typ=="+") {
-      node.setAttribute("d",
-        " M "+(cx-ticklength)+" "+cy+" L "+(cx+ticklength)+" "+cy+
-        " M "+cx+" "+(cy-ticklength)+" L "+cx+" "+(cy+ticklength));
+  if (typ=="+" || typ=="-" || typ=="|") 
+	{
+		// Type Defined
+    var node = myCreateElementSVG("path");
+    node.setAttribute("id", id);
+    svg_picture.appendChild(node);
+
+    if (typ=="+") {	
+			// "+" Sign
+      node.setAttribute("d", 	" M "+(cx-ticklength)+" "+cy+" L "+(cx+ticklength)+" "+cy+
+        											" M "+cx+" "+(cy-ticklength)+" L "+cx+" "+(cy+ticklength));
       node.setAttribute("stroke-width", .5);
       node.setAttribute("stroke", axesstroke);
-    } else {
-      if (typ=="-") node.setAttribute("d",
-        " M "+(cx-ticklength)+" "+cy+" L "+(cx+ticklength)+" "+cy);
-      else node.setAttribute("d",
-        " M "+cx+" "+(cy-ticklength)+" L "+cx+" "+(cy+ticklength));
+    }
+    if (typ=="-") {
+			// "-" Sign
+			node.setAttribute("d", " M "+(cx-ticklength)+" "+cy+" L "+(cx+ticklength)+" "+cy);
+    }
+		if (typ=="|") { 
+			// "|" Sign
+			node.setAttribute("d", " M "+cx+" "+(cy-ticklength)+" L "+cx+" "+(cy+ticklength));
       node.setAttribute("stroke-width", strokewidth);
       node.setAttribute("stroke", stroke);
     }
-  } else {
-    if (node==null) {
-      node = myCreateElementSVG("circle");
-      node.setAttribute("id", id);
-      svg_picture.appendChild(node);
-    }
+  } 
+	else {
+		// Type NOT Defined
+    node = myCreateElementSVG("circle");
+    node.setAttribute("id", id);
+    svg_picture.appendChild(node);
+
     node.setAttribute("cx",cx);
     node.setAttribute("cy",cy);
-    node.setAttribute("r",dotradius);
+    node.setAttribute("r", dotradius);
     node.setAttribute("stroke-width", strokewidth);
     node.setAttribute("stroke", stroke);
     node.setAttribute("fill", (typ=="open"?"white":stroke));
+
   }
-  if (label!=null) 
-    text(center,label,(pos==null?"below":pos),(id==null?id:id+"label"))
+	// Label
+  if (label!=null) {
+		text(center,label,(pos==null?"below":pos),(id==null?id:id+"label"));
+	}
 }
 
 function arrowhead(p,q) {
 }
 
-function text(p,st,pos,angle) {  /* DONE */
+function text(p,st,pos,angle) {
 
 	// Default text positions
 	if (angle == null) {angle = 0;}
@@ -312,17 +310,14 @@ function mathjs(st) {
 ==============================
 Functions (COMPOUND SVG ELEMENTS)
 ==============================
-> myCreateElementSVG(t)
-> ASdot(center,radius,s,f)
-> dot(center, typ, label, pos, id)
-> arrowhead(p,q)
-> text(p,st,pos,angle)
-> mathjs(st)
+> line(p,q,id)
+> ellipse(center,rx,ry,id)
+> circle(center,radius,id)
+* arc(start,end,radius,id)
 ============================== 
 */
 
-
-function line(p,q,id) { /* DONE */
+function line(p,q,id) {
 	var node = myCreateElementSVG("path");
 	node.setAttribute("id", id);
 	node.setAttribute("d","M"+(p[0]*xunitlength+origin[0])+","+
@@ -341,7 +336,7 @@ function line(p,q,id) { /* DONE */
 	svg_picture.appendChild(node);
 }
 
-function ellipse(center,rx,ry,id) {  /* DONE */
+function ellipse(center,rx,ry,id) {
   var node = myCreateElementSVG("ellipse");
   node.setAttribute("id", id);
   node.setAttribute("cx",center[0]*xunitlength+origin[0]);
@@ -354,16 +349,28 @@ function ellipse(center,rx,ry,id) {  /* DONE */
 	svg_picture.appendChild(node);
 }
 
-function circle(center,radius,id) {  /* DONE */
+function circle(center,radius,id) {
 	ellipse(center,radius,radius,id);
 }
 
 function arc(start,end,radius,id) {
 }
 
-// ==============================
-// Functions (COMPLEX SVG ELEMENTS)
-// ==============================
+/*
+==============================
+Functions (COMPLEX SVG ELEMENTS)
+==============================
+* noaxes()
+* axes(dx,dy,labels,gdx,gdy)
+* grid(dx,dy)
+> rect(p,q,id,rx,ry)
+* path(plist,id,c)
+* plot(fun,x_min,x_max,points,id)
+* curve(plist,id)
+* loop(p,d,id)
+* slopefield(fun,dx,dy)
+============================== 
+*/
 
 function noaxes() {
 }
@@ -439,15 +446,13 @@ function axes(dx,dy,labels,gdx,gdy) {
   pnode.setAttribute("stroke", axesstroke);
   pnode.setAttribute("fill", fill);
   svg_picture.appendChild(pnode);
-
-
 }
 
-function grid(dx,dy) { /* DONE */
+function grid(dx,dy) { 
 	axes(dx,dy,null,dx,dy)
 }
 
-function rect(p,q,id,rx,ry) { /* DONE */
+function rect(p,q,id,rx,ry) { 
 	var node = myCreateElementSVG("rect");
 	node.setAttribute("id", id);
 	node.setAttribute("x",p[0]*xunitlength+origin[0]);
@@ -468,7 +473,7 @@ function path(plist,id,c) {
 function plot(fun,x_min,x_max,points,id) {
 }
 
-function curve(plist,id) { /* DONE */
+function curve(plist,id) { 
 	path(plist,id,"T");
 }
 
@@ -484,7 +489,7 @@ function slopefield(fun,dx,dy) {
 // Date: 14th June 2012
 // ================================================
 
-function fn_autocomplete() { /* DONE */
+function fn_autocomplete() { 
 	if (document.getElementById("autocomplete_checkbox").checked) { updatePicture(); }
 }
 
