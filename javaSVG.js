@@ -47,26 +47,26 @@ var yunitlength = defaultyunitlength 	= 1;
 var origin = defaultorigin 						= [0,0];
 
 // Element Variables
-var axesstroke = defaultaxesstroke 						= "black";
-var gridstroke = defaultgridstroke 						= "grey";
-var strokewidth = defaultstrokewidth 					= 1; 					
-var strokedasharray = defaultstrokedasharray 	= 1;
-var stroke = defaultstroke 										= "black";
-var arrowfill = defaultarrowfill 							= stroke;
-var fill = defaultfill 												= "none";
-var fontstyle = defaultfontstyle 							= "italic";
-var fontfamily = defaultfontfamily 						= "times";		
-var fontsize = defaultfontsize 								= 16;
-var fontweight = defaultfontweight 						= "normal";
-var fontstroke = defaultfontstroke 						= "none";
-var fontfill = defaultfontfill 								= "none";    
-var markerfill = defaultmarkerstrokewidth 		= 1;
-var markerstroke = defaultmarkerstroke 				= "black";
-var markerfill = defaultmarkerfill 						= "yellow";
-var markersize = defaultmarkersize 						= 4;
-var marker = defaultmarker 										= "none";
-var dotradius = defaultdotradius 							= 4;
-var ticklength = defaultticklength 						= 4;
+var axesstroke = defaultaxesstroke 							= "black";
+var gridstroke = defaultgridstroke 							= "grey";
+var strokewidth = defaultstrokewidth 						= 1; 					
+var strokedasharray = defaultstrokedasharray 		= 1;
+var stroke = defaultstroke 											= "black";
+var arrowfill = defaultarrowfill 								= stroke;
+var fill = defaultfill 													= "none";
+var fontstyle = defaultfontstyle 								= "italic";
+var fontfamily = defaultfontfamily 							= "times";		
+var fontsize = defaultfontsize 									= 16;
+var fontweight = defaultfontweight 							= "normal";
+var fontstroke = defaultfontstroke 							= "none";
+var fontfill = defaultfontfill 									= "none";    
+var markerstrokewidth = defaultmarkerstrokewidth= 1;
+var markerstroke = defaultmarkerstroke 					= "black";
+var markerfill = defaultmarkerfill 							= "yellow";
+var markersize = defaultmarkersize 							= 4;
+var marker = defaultmarker 											= "none";
+var dotradius = defaultdotradius 								= 4;
+var ticklength = defaultticklength 							= 4;
 
 // SVG Labels
 var above = "above"; var below = "below"; var left = "left"; var right = "right"; var aboveleft = "aboveleft"; var aboveright = "aboveright"; var belowleft = "belowleft"; var belowright = "belowright"; var open = "open"; var closed = "closed";
@@ -258,7 +258,25 @@ function dot(center, typ, label, pos, id) {
 	}
 }
 
-function arrowhead(p,q) {
+function arrowhead(p,q,size) {
+  var up;
+  var v = [p[0]*xunitlength+origin[0],height-p[1]*yunitlength-origin[1]];		// adjusted start point
+  var w = [q[0]*xunitlength+origin[0],height-q[1]*yunitlength-origin[1]];		// adjusted end point
+  var u = [w[0]-v[0],w[1]-v[1]]; // unit vector * length
+  var d = Math.sqrt(u[0]*u[0]+u[1]*u[1]); //length of unit vector
+  
+	if (d > 0.00000001) {
+    u = [u[0]/d, u[1]/d];	// unit vector
+    up = [-u[1],u[0]]; 		// inverse unit vector
+    var node = myCreateElementSVG("path");
+    node.setAttribute("d","M "+(w[0]-15*u[0]-4*up[0])+" "+
+      (w[1]-15*u[1]-4*up[1])+" L "+(w[0]-3*u[0])+" "+(w[1]-3*u[1])+" L "+
+      (w[0]-15*u[0]+4*up[0])+" "+(w[1]-15*u[1]+4*up[1])+" z");
+    node.setAttribute("stroke-width", (size!=null?size:markerstrokewidth));
+    node.setAttribute("stroke", stroke); /*was markerstroke*/
+    node.setAttribute("fill", stroke); /*was arrowfill*/
+    svg_picture.appendChild(node);   
+  }
 }
 
 function text(p,st,pos,angle) {
@@ -359,9 +377,9 @@ function arc(start,end,radius,id) {
 ==============================
 Functions (COMPLEX SVG ELEMENTS)
 ==============================
-* noaxes()
-* axes(dx,dy,labels,gdx,gdy)
-* grid(dx,dy)
+> noaxes()
+> axes(dx,dy,labels,gdx,gdy)
+> grid(dx,dy)
 > rect(p,q,id,rx,ry)
 * path(plist,id,c)
 * plot(fun,x_min,x_max,points,id)
@@ -372,6 +390,7 @@ Functions (COMPLEX SVG ELEMENTS)
 */
 
 function noaxes() {
+	initPicture();
 }
 
 function axes(dx,dy,labels,gdx,gdy) {
