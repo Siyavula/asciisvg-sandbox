@@ -269,7 +269,7 @@ function arrowhead(p,q,size) {
     node.setAttribute("d","M "+(w[0]-15*u[0]-4*up[0])+" "+
       (w[1]-15*u[1]-4*up[1])+" L "+(w[0]-3*u[0])+" "+(w[1]-3*u[1])+" L "+
       (w[0]-15*u[0]+4*up[0])+" "+(w[1]-15*u[1]+4*up[1])+" z");
-    node.setAttribute("stroke-width", (size!=null?size:markerstrokewidth));
+    node.setAttribute("stroke-width", (size!=null?size:markersize));
     node.setAttribute("stroke", stroke); /*was markerstroke*/
     node.setAttribute("fill", stroke); /*was arrowfill*/
     svg_picture.appendChild(node);   
@@ -445,7 +445,7 @@ Functions (COMPOUND SVG ELEMENTS)
 > line(p,q,id)
 > ellipse(center,rx,ry,id)
 > circle(center,radius,id)
-* arc(start,end,radius,id)
+> arc(start,end,radius,id)
 ============================== 
 */
 
@@ -464,7 +464,7 @@ function line(p,q,id) {
 	if (marker=="dot" || marker=="arrowdot") {ASdot(p,markersize,markerstroke,markerfill); }
 	/* ending point (q) */ 
 	if (marker=="arrowdot" || marker=="arrow") {arrowhead(p,q);}
-  if (marker=="dot") {ASdot(q,markersize,markerstroke,markerfill);}
+  if (marker=="dot") {dot(q);}
 	svg_picture.appendChild(node);
 }
 
@@ -486,38 +486,32 @@ function circle(center,radius,id) {
 }
 
 function arc(start,end,radius,id) {
-
-  var node, v;
-//alert([fill, stroke, origin, xunitlength, yunitlength, height])
-  if (id!=null) node = doc.getElementById(id);
-  if (radius==null) {
-    v=[end[0]-start[0],end[1]-start[1]];
-    radius = Math.sqrt(v[0]*v[0]+v[1]*v[1]);
+  var vector, ab, abn;
+	node = myCreateElementSVG("path");
+	node.setAttribute("id", id);
+	svg_picture.appendChild(node);
+  // Radius
+	if (radius==null) {    
+		vector=[end[0]-start[0],end[1]-start[1]];
+    radius = Math.sqrt(vector[0]*vector[0]+vector[1]*vector[1]);
   }
-  if (node==null) {
-    node = myCreateElementSVG("path");
-    node.setAttribute("id", id);
-    svgpicture.appendChild(node);
-  }
-  node.setAttribute("d","M"+(start[0]*xunitlength+origin[0])+","+
-    (height-start[1]*yunitlength-origin[1])+" A"+radius*xunitlength+","+
-     radius*yunitlength+" 0 0,0 "+(end[0]*xunitlength+origin[0])+","+
-    (height-end[1]*yunitlength-origin[1]));
+	// Draw Arc
+  node.setAttribute("d","M"+	(start[0]*xunitlength+origin[0])+","+
+    													(height-start[1]*yunitlength-origin[1])+" A"+radius*xunitlength+","+
+     													(radius*yunitlength)+" 0 0,0 "+(end[0]*xunitlength+origin[0])+","+
+    													(height-end[1]*yunitlength-origin[1]));
   node.setAttribute("stroke-width", strokewidth);
   node.setAttribute("stroke", stroke);
   node.setAttribute("fill", fill);
-  if (marker=="arrow" || marker=="arrowdot") {
-    u = [(end[1]-start[1])/4,(start[0]-end[0])/4];
-    v = [(end[0]-start[0])/2,(end[1]-start[1])/2];
-//alert([u,v])
-    v = [start[0]+v[0]+u[0],start[1]+v[1]+u[1]];
-  } else v=[start[0],start[1]];
-  if (marker=="dot" || marker=="arrowdot") {
-    ASdot(start,markersize,markerstroke,markerfill);
-    if (marker=="arrowdot") arrowhead(v,end);
-    ASdot(end,markersize,markerstroke,markerfill);
-  } else if (marker=="arrow") arrowhead(v,end);
-
+	// Markers
+	var dx = (end[0]-start[0])/2;
+	var hx = start[0] + dx;
+	var dy = (end[0]-start[0])/2;
+	var hy = start[1] + dy;
+	var tangent = [hx+dy/(radius*radius),hy-dx/(radius*radius)];
+  if (marker=="dot") {dot(start); dot(end);}
+	if (marker=="arrowdot") {dot(start); arrowhead(tangent,end);}
+  if (marker=="arrow") {arrowhead(tangent,end)};
 }
 
 /*
@@ -653,8 +647,6 @@ function path(plist,style,closed,id) {
 
 	// Close the Path
 	if (closed != null) {string += " Z";}	
-	
-	text ([-4, -4], string, right);
 
 	node.setAttribute("d", string);
   node.setAttribute("stroke-width", strokewidth);
