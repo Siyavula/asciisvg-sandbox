@@ -16,8 +16,7 @@ Step 4: Replace old SVG canvas with new:		svg_old.parentNode.replaceChild(svg_ne
 TO DO
 ===================================
 
-1. Axes
-3. Finish Functions ....
+>>> Finish Functions ....
 
 ========================================================================================== */
 
@@ -50,7 +49,7 @@ var origin = defaultorigin 						= [0,0];
 var axesstroke = defaultaxesstroke 							= "black";
 var gridstroke = defaultgridstroke 							= "grey";
 var strokewidth = defaultstrokewidth 						= 1; 					
-var strokedasharray = defaultstrokedasharray 		= 1;
+var strokedasharray = defaultstrokedasharray 		= [1, 0];
 var stroke = defaultstroke 											= "black";
 var arrowfill = defaultarrowfill 								= stroke;
 var fill = defaultfill 													= "none";
@@ -82,10 +81,10 @@ function reset_variables()
 {
 
 // SVG Layout
-xmin = defaultxmin;	xmax = defaultxmax;	ymin = defaultymin;	ymax = defaultymax;	xscl = defaultxscl;	yscl = defaultyscl; xgrid = defaultyscl;	ygrid = defaultygrid;	xtick = defaultxtick;	ytick = defaultytick;	border = defaultborder;	height = defaultwidth;	width = defaultheight;	xunitlength = defaultxunitlength; yunitlength = defaultyunitlength;	origin = defaultorigin;
+xmin = defaultxmin;	xmax = defaultxmax;	ymin = defaultymin;	ymax = defaultymax;	xscl = defaultxscl;	yscl = defaultyscl; xgrid = defaultyscl; ygrid = defaultygrid; xtick = defaultxtick; ytick = defaultytick;	border = defaultborder;	height = defaultwidth;	height = defaultheight;	xunitlength = defaultxunitlength; yunitlength = defaultyunitlength;	origin = defaultorigin;
 
 // SVG Constant Variables
-axesstroke = defaultaxesstroke;	gridstroke = defaultgridstroke;	strokewidth = defaultstrokewidth; strokedasharray = defaultstrokedasharray = null;	stroke = defaultstroke;	fill = defaultfill;	fontstyle = defaultfontstyle;	fontfamily = defaultfontfamily;	fontsize = defaultfontsize; fontweight = defaultfontweight;	fontstroke = defaultfontstroke;	fontfill = defaultfontfill; markerfill = defaultmarkerstrokewidth;	markerstroke = defaultmarkerstroke;	markerfill = defaultmarkerfill;	markersize = defaultmarkersize;	marker = defaultmarker;	arrowfill = defaultarrowfill; dotradius = defaultdotradius;	ticklength = defaultticklength;
+axesstroke = defaultaxesstroke;	gridstroke = defaultgridstroke;	strokewidth = defaultstrokewidth; strokedasharray = defaultstrokedasharray;	stroke = defaultstroke;	fill = defaultfill;	fontstyle = defaultfontstyle;	fontfamily = defaultfontfamily;	fontsize = defaultfontsize; fontweight = defaultfontweight;	fontstroke = defaultfontstroke;	fontfill = defaultfontfill; markerfill = defaultmarkerfill;	markerstroke = defaultmarkerstroke;	markerfill = defaultmarkerfill;	markersize = defaultmarkersize;	marker = defaultmarker;	arrowfill = defaultarrowfill; dotradius = defaultdotradius;	ticklength = defaultticklength;
 
 }
 
@@ -201,9 +200,9 @@ Functions (BASIC SVG ELEMENTS)
 ==============================
 > myCreateElementSVG(t)
 > dot(center, typ, label, pos, id)
-* arrowhead(p,q)
+> arrowhead(p,q)
 > text(p,st,pos,angle)
-* mathjs(st)
+> mathjs(st)
 ============================== 
 */
 
@@ -487,6 +486,38 @@ function circle(center,radius,id) {
 }
 
 function arc(start,end,radius,id) {
+
+  var node, v;
+//alert([fill, stroke, origin, xunitlength, yunitlength, height])
+  if (id!=null) node = doc.getElementById(id);
+  if (radius==null) {
+    v=[end[0]-start[0],end[1]-start[1]];
+    radius = Math.sqrt(v[0]*v[0]+v[1]*v[1]);
+  }
+  if (node==null) {
+    node = myCreateElementSVG("path");
+    node.setAttribute("id", id);
+    svgpicture.appendChild(node);
+  }
+  node.setAttribute("d","M"+(start[0]*xunitlength+origin[0])+","+
+    (height-start[1]*yunitlength-origin[1])+" A"+radius*xunitlength+","+
+     radius*yunitlength+" 0 0,0 "+(end[0]*xunitlength+origin[0])+","+
+    (height-end[1]*yunitlength-origin[1]));
+  node.setAttribute("stroke-width", strokewidth);
+  node.setAttribute("stroke", stroke);
+  node.setAttribute("fill", fill);
+  if (marker=="arrow" || marker=="arrowdot") {
+    u = [(end[1]-start[1])/4,(start[0]-end[0])/4];
+    v = [(end[0]-start[0])/2,(end[1]-start[1])/2];
+//alert([u,v])
+    v = [start[0]+v[0]+u[0],start[1]+v[1]+u[1]];
+  } else v=[start[0],start[1]];
+  if (marker=="dot" || marker=="arrowdot") {
+    ASdot(start,markersize,markerstroke,markerfill);
+    if (marker=="arrowdot") arrowhead(v,end);
+    ASdot(end,markersize,markerstroke,markerfill);
+  } else if (marker=="arrow") arrowhead(v,end);
+
 }
 
 /*
@@ -497,10 +528,12 @@ Functions (COMPLEX SVG ELEMENTS)
 > axes(dx,dy,labels,gdx,gdy)
 > grid(dx,dy)
 > rect(p,q,id,rx,ry)
-* path(plist,id,c)
+> path(plist,id,c)
 * plot(fun,x_min,x_max,points,id)
-* curve(plist,id)
-* loop(p,d,id)
+> curve(plist,id)
+> petal(p,d,id)
+> heart(p,size)
+* flower(p,size,petals)
 * slopefield(fun,dx,dy)
 ============================== 
 */
@@ -526,7 +559,7 @@ function axes(dx,dy,labels,gdx,gdy) {
 		for (i = origin[0]-gdx; i>0; i =i-gdx) {string += " M"+i+",0"+" "+i+","+height;} // x-axis (negative)
 		for (i = height-origin[1]; i<height; i = i+gdy) {string += " M0,"+i+" "+width+","+i;} // y-axis (positive)
 		for (i = height-origin[1]-gdy; i>0; i = i-gdy) {string += " M0,"+i+" "+width+","+i;} // y-axis (negative)
-		// Create SVG Element			
+		// Create SVG Element
     pnode.setAttribute("d",string);
     pnode.setAttribute("stroke-width", 0.5);
     pnode.setAttribute("stroke", gridstroke);
@@ -589,20 +622,122 @@ function rect(p,q,id,rx,ry) {
 	svg_picture.appendChild(node);
 }
 
-function path(plist,id,c) {
+function path(plist,style,closed,id) {
+	var i;
+	var node = myCreateElementSVG("path");
+  node.setAttribute("id", id);
+  svg_picture.appendChild(node);
+  
+	// Source:												http://www.w3schools.com/svg/svg_path.asp
+	// Line:													M 0 0 L 100 100 200 0 ... 														(any number)	
+	// Curve:													M 0 0 C {100 100 200 0 300 100} 											(only 3)
+	// Smooth Curve: 									M 0 0 S {50 50 100 0} {150 50 200 0} {250 50 300 0}" 	(in pairs)
+	// Quadratic Bézier curve: 				M 0 0 Q {50 50 100 0} {150 50 200 0} {250 50 300 0}" 	(in pairs)
+	// Smooth quadratic Bézier curve:	M 0 0 T 50 50 100 0 150 50 200 0 250 50 300 0" 				(any number)
+	// Close Loop:										M 0 0 ............... Z	
+	// Eliptical Curve:								Complex!
+
+	// Style default = L
+	if (style == null) {style = "L";}	
+
+	// Move Command
+	string = "M" + (plist[0][0]*xunitlength+origin[0])+","+ (height-plist[0][1]*yunitlength-origin[1]);
+	
+	// Draw the line	
+	if (style == "L" || style == "C" || style == "S" || style == "Q" || style == "T") 
+	{
+		string += " " + style + " ";
+		for (i=1; i<plist.length; i++)
+			{string += (plist[i][0]*xunitlength+origin[0])+","+ (height-plist[i][1]*yunitlength-origin[1]) + " ";}
+	}
+
+	// Close the Path
+	if (closed != null) {string += " Z";}	
+	
+	text ([-4, -4], string, right);
+
+	node.setAttribute("d", string);
+  node.setAttribute("stroke-width", strokewidth);
+	node.setAttribute("stroke-dasharray", strokedasharray);
+  node.setAttribute("stroke", stroke);
+  node.setAttribute("fill", fill);
+  
+	// Dots
+	if (marker=="dot" || marker=="arrowdot")
+	{
+    for (i=0; i<plist.length; i++)
+		{
+      if (style!="C" && style!="T" || i!=1 && i!=2) {dot(plist[i]);}
+		}
+	}
 }
 
 function plot(fun,x_min,x_max,points,id) {
+	var pth = [];
+  var f = function(x) { return x }, g = fun;
+  var name = null;
+  if (typeof fun=="string") 
+    eval("g = function(x){ with(Math) return "+mathjs(fun)+" }");
+  else if (typeof fun=="object") {
+    eval("f = function(t){ with(Math) return "+mathjs(fun[0])+" }");
+    eval("g = function(t){ with(Math) return "+mathjs(fun[1])+" }");
+  }
+  if (typeof x_min=="string") { name = x_min; x_min = xmin }
+  else name = id;
+  var min = (x_min==null?xmin:x_min);
+  var max = (x_max==null?xmax:x_max);
+  var inc = max-min-0.000001*(max-min);
+  inc = (points==null?inc/200:inc/points);
+  var gt;
+//alert(typeof g(min))
+  for (var t = min; t <= max; t += inc) {
+    gt = g(t);
+    if (!(isNaN(gt)||Math.abs(gt)=="Infinity")) pth[pth.length] = [f(t), gt];
+  }
+  path(pth,name)
+  return p;
+
 }
 
 function curve(plist,id) { 
 	path(plist,id,"T");
 }
 
-function loop(p,d,id) {
+function petal(p,d,id) {
+  if (d==null) d=[1,1];
+  path([p,[p[0]+d[0],p[1]+d[1]],[p[0]-d[1],p[1]+d[0]],p],"C")
+}
+
+function heart(p,size){
+  if (size==null) size = 1;
+	path([[p[0],p[1]], [p[0]+size,p[1]+size], [p[0],p[1]+size*1.25], [p[0],p[1]+size*0.75]], "C");
+	path([[p[0],p[1]+size*0.75],[p[0],p[1]+size*1.25], [p[0]-size,p[1]+size], [p[0],p[1]]], "C");
+}
+
+function flower(p,size,petals) {
 }
 
 function slopefield(fun,dx,dy) {
+
+  var g = fun;
+  if (typeof fun=="string") 
+    eval("g = function(x,y){ with(Math) return "+mathjs(fun)+" }");
+  var gxy,x,y,u,v,dz;
+  if (dx==null) dx=1;
+  if (dy==null) dy=1;
+  dz = Math.sqrt(dx*dx+dy*dy)/6;
+  var x_min = Math.ceil(xmin/dx);
+  var y_min = Math.ceil(ymin/dy);
+  for (x = x_min; x <= xmax; x += dx)
+    for (y = y_min; y <= ymax; y += dy) {
+      gxy = g(x,y);
+      if (!isNaN(gxy)) {
+        if (Math.abs(gxy)=="Infinity") {u = 0; v = dz;}
+        else {u = dz/Math.sqrt(1+gxy*gxy); v = gxy*u;}
+        line([x-u,y-v],[x+u,y+v]);
+      }
+    }
+
 }
 
 // ================================================

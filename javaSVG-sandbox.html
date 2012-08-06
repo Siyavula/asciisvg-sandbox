@@ -29,18 +29,10 @@
 initPicture(-5,5)
 axes(2, 1, "labels", 1)
 
-stroke = "blue"
+fill = "red"
 
-rect([0.5,0.5], [1.5,1.5], 0, 0)
-line([-3,3], [-4,4])
-ellipse ([-1,-1],2,1)
-circle ([-2,-2],2)
-
-text([1,1], "Hello", "middle", 0)
-text([1,1], "Hello", "middle", 90)
-dot([3,3], open, "hello", above)
-
-arrowhead([0,0],[-1,-1])
+petal ([-2,-2])
+heart ([2,2], 1)
 
 				</textarea>
 			</td>
@@ -325,6 +317,26 @@ arrowhead([0,0],[-1,-1])
 			</td>
 			<td colspan=1>
 				<b>curve</b>([[0,0],[1,1],[0,2]])
+			</td>
+		</tr>
+
+		<tr>
+			<td colspan=1>
+				<b>petal</b>petal(p, unit_vector)
+			</td>
+			<td colspan=1>
+				<b>petal</b>([0,0])<br>
+				<b>petal</b>([0,0], [0,2])
+			</td>
+		</tr>
+
+		<tr>
+			<td colspan=1>
+				<b>heart</b>(p,size)
+			</td>
+			<td colspan=1>
+				<b>heart</b>([0,0])<br>
+				<b>heart</b>([0,0], 1)
 			</td>
 		</tr>
 
