@@ -317,7 +317,7 @@ function text(p,st,pos,angle) {
 
 }
 
-function mathjs(string) {
+function mathjs(st) {
 
 	// Working (from ASCIISVG) - remains uncleaned for javaSVG. 
 
@@ -622,6 +622,7 @@ function path(plist,style,closed,id) {
   node.setAttribute("id", id);
   svg_picture.appendChild(node);
   
+	// =================================================================================================
 	// Source:												http://www.w3schools.com/svg/svg_path.asp
 	// Line:													M 0 0 L 100 100 200 0 ... 														(any number)	
 	// Curve:													M 0 0 C {100 100 200 0 300 100} 											(only 3)
@@ -630,6 +631,7 @@ function path(plist,style,closed,id) {
 	// Smooth quadratic Bézier curve:	M 0 0 T 50 50 100 0 150 50 200 0 250 50 300 0" 				(any number)
 	// Close Loop:										M 0 0 ............... Z	
 	// Eliptical Curve:								Complex!
+	// =================================================================================================
 
 	// Style default = L
 	if (style == null) {style = "L";}	
@@ -664,35 +666,43 @@ function path(plist,style,closed,id) {
 	}
 }
 
-function plot(fun,x_min,x_max,points,id) {
-	var pth = [];
-  var f = function(x) { return x }, g = fun;
-  var name = null;
-  if (typeof fun=="string") 
-    eval("g = function(x){ with(Math) return "+mathjs(fun)+" }");
-  else if (typeof fun=="object") {
-    eval("f = function(t){ with(Math) return "+mathjs(fun[0])+" }");
-    eval("g = function(t){ with(Math) return "+mathjs(fun[1])+" }");
-  }
-  if (typeof x_min=="string") { name = x_min; x_min = xmin }
-  else name = id;
-  var min = (x_min==null?xmin:x_min);
-  var max = (x_max==null?xmax:x_max);
-  var inc = max-min-0.000001*(max-min);
-  inc = (points==null?inc/200:inc/points);
-  var gt;
-//alert(typeof g(min))
-  for (var t = min; t <= max; t += inc) {
-    gt = g(t);
-    if (!(isNaN(gt)||Math.abs(gt)=="Infinity")) pth[pth.length] = [f(t), gt];
-  }
-  path(pth,name)
-  return p;
+function plot(func,x_min,x_max,points,id) {
+	
+  var f = function(x) {return x;}
+	x_min = (x_min==null?xmin:x_min);
+  x_max = (x_max==null?xmax:x_max);
+	var name;
+	var array_points = [];
 
+  // plot ("sin(x)") 
+	if (typeof func=="string"){
+		eval("g = function(x){ with(Math) return "+mathjs(func)+" }");
+	}
+	// plot (["t", "sin(t)"])
+  else if (typeof func=="object") {
+    eval("f = function(t){ with(Math) return "+mathjs(func[0])+" }");
+    eval("g = function(t){ with(Math) return "+mathjs(func[1])+" }");
+  }
+  
+	// Number of points
+  var inc = (points==null?(x_max-x_min)/200:inc/points);
+
+	// Fill the array_points
+  var fout, gout;
+	for (var t = x_min; t <= x_max; t += inc) {
+		fout = f(t);
+		gout = g(t);
+		// Try
+		// !(isNaN(gt)||Math.abs(gt)=="Infinity")
+		// try{data = [(fout==Infinity?10000:f(t)), (g(t)==Infinity?10000:g(t))];}
+		// catch(err) { continue; }
+		array_points[array_points.length] = data;
+  }
+  path(array_points);
 }
 
 function curve(plist,id) { 
-	path(plist,id,"T");
+	path(plist,"T");
 }
 
 function petal(p,d,id) {
@@ -729,7 +739,6 @@ function slopefield(fun,dx,dy) {
         line([x-u,y-v],[x+u,y+v]);
       }
     }
-
 }
 
 // ================================================
