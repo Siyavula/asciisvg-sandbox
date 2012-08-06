@@ -244,7 +244,6 @@ function dot(center, typ, label, pos, id) {
     node = myCreateElementSVG("circle");
     node.setAttribute("id", id);
     svg_picture.appendChild(node);
-
     node.setAttribute("cx",cx);
     node.setAttribute("cy",cy);
     node.setAttribute("r", dotradius);
@@ -264,7 +263,6 @@ function arrowhead(p,q,size) {
   var w = [q[0]*xunitlength+origin[0],height-q[1]*yunitlength-origin[1]];		// adjusted end point
   var u = [w[0]-v[0],w[1]-v[1]]; // unit vector * length
   var d = Math.sqrt(u[0]*u[0]+u[1]*u[1]); //length of unit vector
-  
 	if (d > 0.00000001) {
     u = [u[0]/d, u[1]/d];	// unit vector
     up = [-u[1],u[0]]; 		// inverse unit vector
@@ -320,7 +318,125 @@ function text(p,st,pos,angle) {
 
 }
 
-function mathjs(st) {
+function mathjs(string) {
+
+	// Working (from ASCIISVG) - remains uncleaned for javaSVG. 
+
+  st = st.replace(/\s/g,"");
+  if (st.indexOf("^-1")!=-1) {
+    st = st.replace(/sin\^-1/g,"arcsin");
+    st = st.replace(/cos\^-1/g,"arccos");
+    st = st.replace(/tan\^-1/g,"arctan");
+    st = st.replace(/sec\^-1/g,"arcsec");
+    st = st.replace(/csc\^-1/g,"arccsc");
+    st = st.replace(/cot\^-1/g,"arccot");
+    st = st.replace(/sinh\^-1/g,"arcsinh");
+    st = st.replace(/cosh\^-1/g,"arccosh");
+    st = st.replace(/tanh\^-1/g,"arctanh");
+    st = st.replace(/sech\^-1/g,"arcsech");
+    st = st.replace(/csch\^-1/g,"arccsch");
+    st = st.replace(/coth\^-1/g,"arccoth");
+  }
+  st = st.replace(/^e$/g,"(E)");
+  st = st.replace(/^e([^a-zA-Z])/g,"(E)$1");
+  st = st.replace(/([^a-zA-Z])e([^a-zA-Z])/g,"$1(E)$2");
+  st = st.replace(/([0-9])([\(a-zA-Z])/g,"$1*$2");
+  st = st.replace(/\)([\(0-9a-zA-Z])/g,"\)*$1");
+  var i,j,k, ch, nested;
+  while ((i=st.indexOf("^"))!=-1) {
+    //find left argument
+    if (i==0) return "Error: missing argument";
+    j = i-1;
+    ch = st.charAt(j);
+    if (ch>="0" && ch<="9") {// look for (decimal) number
+      j--;
+      while (j>=0 && (ch=st.charAt(j))>="0" && ch<="9") j--;
+      if (ch==".") {
+        j--;
+        while (j>=0 && (ch=st.charAt(j))>="0" && ch<="9") j--;
+      }
+    } else if (ch==")") {// look for matching opening bracket and function name
+      nested = 1;
+      j--;
+      while (j>=0 && nested>0) {
+        ch = st.charAt(j);
+        if (ch=="(") nested--;
+        else if (ch==")") nested++;
+        j--;
+      }
+      while (j>=0 && (ch=st.charAt(j))>="a" && ch<="z" || ch>="A" && ch<="Z")
+        j--;
+    } else if (ch>="a" && ch<="z" || ch>="A" && ch<="Z") {// look for variable
+      j--;
+      while (j>=0 && (ch=st.charAt(j))>="a" && ch<="z" || ch>="A" && ch<="Z")
+        j--;
+    } else { 
+      return "Error: incorrect syntax in "+st+" at position "+j;
+    }
+    //find right argument
+    if (i==st.length-1) return "Error: missing argument";
+    k = i+1;
+    ch = st.charAt(k);
+    if (ch>="0" && ch<="9" || ch=="-") {// look for signed (decimal) number
+      k++;
+      while (k<st.length && (ch=st.charAt(k))>="0" && ch<="9") k++;
+      if (ch==".") {
+        k++;
+        while (k<st.length && (ch=st.charAt(k))>="0" && ch<="9") k++;
+      }
+    } else if (ch=="(") {// look for matching closing bracket and function name
+      nested = 1;
+      k++;
+      while (k<st.length && nested>0) {
+        ch = st.charAt(k);
+        if (ch=="(") nested++;
+        else if (ch==")") nested--;
+        k++;
+      }
+    } else if (ch>="a" && ch<="z" || ch>="A" && ch<="Z") {// look for variable
+      k++;
+      while (k<st.length && (ch=st.charAt(k))>="a" && ch<="z" ||
+               ch>="A" && ch<="Z") k++;
+    } else { 
+      return "Error: incorrect syntax in "+st+" at position "+k;
+    }
+    st = st.slice(0,j+1)+"pow("+st.slice(j+1,i)+","+st.slice(i+1,k)+")"+
+           st.slice(k);
+  }
+  while ((i=st.indexOf("!"))!=-1) {
+    //find left argument
+    if (i==0) return "Error: missing argument";
+    j = i-1;
+    ch = st.charAt(j);
+    if (ch>="0" && ch<="9") {// look for (decimal) number
+      j--;
+      while (j>=0 && (ch=st.charAt(j))>="0" && ch<="9") j--;
+      if (ch==".") {
+        j--;
+        while (j>=0 && (ch=st.charAt(j))>="0" && ch<="9") j--;
+      }
+    } else if (ch==")") {// look for matching opening bracket and function name
+      nested = 1;
+      j--;
+      while (j>=0 && nested>0) {
+        ch = st.charAt(j);
+        if (ch=="(") nested--;
+        else if (ch==")") nested++;
+        j--;
+      }
+      while (j>=0 && (ch=st.charAt(j))>="a" && ch<="z" || ch>="A" && ch<="Z")
+        j--;
+    } else if (ch>="a" && ch<="z" || ch>="A" && ch<="Z") {// look for variable
+      j--;
+      while (j>=0 && (ch=st.charAt(j))>="a" && ch<="z" || ch>="A" && ch<="Z")
+        j--;
+    } else { 
+      return "Error: incorrect syntax in "+st+" at position "+j;
+    }
+    st = st.slice(0,j+1)+"factorial("+st.slice(j+1,i)+")"+st.slice(i+1);
+  }
+  return st;
+
 }
 
 /* 
