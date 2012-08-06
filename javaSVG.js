@@ -35,13 +35,13 @@ var ymin = defaultymin 								= -5;
 var ymax = defaultymax 								= 5;
 var xscl = defaultxscl 								= 1;
 var yscl = defaultyscl 								= 1;
-var xgrid = defaultyscl 							= 1;
+var xgrid = defaultxgrid 							= 1;
 var ygrid = defaultygrid 							= 1;
 var xtick = defaultxtick 							= 4;
 var ytick = defaultytick 							= 4;
 var border = defaultborder 						= 0;
-var height = defaultwidth 						= 400;
-var width = defaultheight 						= 400;
+var height = defaultheight  					= 400;
+var width = defaultwidth							= 400;
 var xunitlength = defaultxunitlength 	= 1;
 var yunitlength = defaultyunitlength 	= 1;
 var origin = defaultorigin 						= [0,0];
@@ -251,7 +251,6 @@ function dot(center, typ, label, pos, id) {
     node.setAttribute("stroke-width", strokewidth);
     node.setAttribute("stroke", stroke);
     node.setAttribute("fill", (typ=="open"?"white":stroke));
-
   }
 	// Label
   if (label!=null) {
@@ -376,76 +375,63 @@ function noaxes() {
 }
 
 function axes(dx,dy,labels,gdx,gdy) {
-
-	var x, y, ldx, ldy, lx, ly, lxp, lyp, pnode, st;
-  if (typeof dx=="string") { labels = dx; dx = null; }
-  if (typeof dy=="string") { gdx = dy; dy = null; }
-  if (xscl!=null) {dx = xscl; gdx = xscl; labels = dx}
-  if (yscl!=null) {dy = yscl; gdy = yscl}
-  if (xtick!=null) {dx = xtick}
-  if (ytick!=null) {dy = ytick}
-
+	var pnode, string, i;
   dx = (dx==null?xunitlength:dx*xunitlength);
-  dy = (dy==null?dx:dy*yunitlength);
+  dy = (dy==null?yunitlength:dy*yunitlength);
   fontsize = Math.min(dx/2,dy/2,16);
   ticklength = fontsize/4;
-  if (xgrid!=null) gdx = xgrid;
-  if (ygrid!=null) gdy = ygrid;
-  if (gdx!=null) {
-    gdx = (typeof gdx=="string"?dx:gdx*xunitlength);
-    gdy = (gdy==null?dy:gdy*yunitlength);
-    pnode = myCreateElementSVG("path");
-    st="";
-    for (x = origin[0]; x<width; x = x+gdx)
-      st += " M"+x+",0"+" "+x+","+height;
-    for (x = origin[0]-gdx; x>0; x = x-gdx)
-      st += " M"+x+",0"+" "+x+","+height;
-    for (y = height-origin[1]; y<height; y = y+gdy)
-      st += " M0,"+y+" "+width+","+y;
-    for (y = height-origin[1]-gdy; y>0; y = y-gdy)
-      st += " M0,"+y+" "+width+","+y;
-    pnode.setAttribute("d",st);
-    pnode.setAttribute("stroke-width", .5);
+  
+	/* === Grid === */
+	if (gdx!=null || gdy!=null) {
+    gdx = (gdx!=null?gdx*xunitlength:xgrid*xunitlength);
+    gdy = (gdy!=null?gdy*yunitlength:ygrid*yunitlength);
+		pnode = myCreateElementSVG("path");
+    string = "";
+		for (i = origin[0]; i<width; i = i+gdx) {string += " M"+i+",0"+" "+i+","+height;} // x-axis (positive)
+		for (i = origin[0]-gdx; i>0; i =i-gdx) {string += " M"+i+",0"+" "+i+","+height;} // x-axis (negative)
+		for (i = height-origin[1]; i<height; i = i+gdy) {string += " M0,"+i+" "+width+","+i;} // y-axis (positive)
+		for (i = height-origin[1]-gdy; i>0; i = i-gdy) {string += " M0,"+i+" "+width+","+i;} // y-axis (negative)
+		// Create SVG Element			
+    pnode.setAttribute("d",string);
+    pnode.setAttribute("stroke-width", 0.5);
     pnode.setAttribute("stroke", gridstroke);
     pnode.setAttribute("fill", fill);
     svg_picture.appendChild(pnode);
   }
+
+	/* === Axes ===	*/
   pnode = myCreateElementSVG("path");
-  st="M0,"+(height-origin[1])+" "+width+","+
-    (height-origin[1])+" M"+origin[0]+",0 "+origin[0]+","+height;
-  for (x = origin[0]+dx; x<width; x = x+dx)
-    st += " M"+x+","+(height-origin[1]+ticklength)+" "+x+","+
-           (height-origin[1]-ticklength);
-  for (x = origin[0]-dx; x>0; x = x-dx)
-    st += " M"+x+","+(height-origin[1]+ticklength)+" "+x+","+
-           (height-origin[1]-ticklength);
-  for (y = height-origin[1]+dy; y<height; y = y+dy)
-    st += " M"+(origin[0]+ticklength)+","+y+" "+(origin[0]-ticklength)+","+y;
-  for (y = height-origin[1]-dy; y>0; y = y-dy)
-    st += " M"+(origin[0]+ticklength)+","+y+" "+(origin[0]-ticklength)+","+y;
-  if (labels!=null) with (Math) {
-    ldx = dx/xunitlength;
-    ldy = dy/yunitlength;
-    lx = (xmin>0 || xmax<0?xmin:0);
-    ly = (ymin>0 || ymax<0?ymin:0);
-    lxp = (ly==0?"below":"above");
-    lyp = (lx==0?"left":"right");
-    var ddx = floor(1.1-log(ldx)/log(10))+1;
-    var ddy = floor(1.1-log(ldy)/log(10))+1;
-    for (x = ldx; x<=xmax; x = x+ldx)
-      text([x,ly],chopZ(x.toFixed(ddx)),lxp);
-    for (x = -ldx; xmin<=x; x = x-ldx)
-      text([x,ly],chopZ(x.toFixed(ddx)),lxp);
-    for (y = ldy; y<=ymax; y = y+ldy)
-      text([lx,y],chopZ(y.toFixed(ddy)),lyp);
-    for (y = -ldy; ymin<=y; y = y-ldy)
-      text([lx,y],chopZ(y.toFixed(ddy)),lyp);
+	// Thicker Axes lines
+	string = "M0,"+(height-origin[1])+" "+width+","+(height-origin[1])+" M"+origin[0]+",0 "+origin[0]+","+height;
+	for (i = origin[0]+dx; i<width; i+=dx) 
+	{string += " M"+i+","+(height-origin[1]+ticklength)+" "+i+","+(height-origin[1]-ticklength);} // x-axis (positive)
+	for (i = origin[0]-dx; i>0; i-=dx) 
+	{string += " M"+i+","+(height-origin[1]+ticklength)+" "+i+","+(height-origin[1]-ticklength);} // x-axis (negative)
+	for (i = height-origin[1]+dy; i<height; i+=dy)	
+	{string += " M"+(origin[0]+ticklength)+","+i+" "+(origin[0]-ticklength)+","+i;} // y-axis (positive)
+	for (i = height-origin[1]-dy; i>0; i-=dy) 
+	{string += " M"+(origin[0]+ticklength)+","+i+" "+(origin[0]-ticklength)+","+i;} // y-axis (negative)
+
+	/* === Labels === */
+	if (labels!=null) with (Math) {
+		var ldx = dx/xunitlength;
+    var ldy = dy/yunitlength;
+    var lx = (xmin>0 || xmax<0?xmin:0);
+    var ly = (ymin>0 || ymax<0?ymin:0);
+    var lxp = (ly==0?"below":"above");
+    var lyp = (lx==0?"left":"right");
+    for (x = ldx; x<=xmax; x = x+ldx) {text([x,ly],x,lxp);} // x-axis (positive)
+		for (x = -ldx; xmin<=x; x = x-ldx) {text([x,ly],x,lxp);} // x-axis (negative)
+    for (y = ldy; y<=ymax; y = y+ldy) {text([lx,y],y,lyp);} // y-axis (positive)
+    for (y = -ldy; ymin<=y; y = y-ldy) {text([lx,y],y,lyp);} // y-axis (negative)
   }
-  pnode.setAttribute("d",st);
-  pnode.setAttribute("stroke-width", .5);
+	/* Create SVG Element	*/
+  pnode.setAttribute("d",string);
+  pnode.setAttribute("stroke-width", 0.5);
   pnode.setAttribute("stroke", axesstroke);
   pnode.setAttribute("fill", fill);
   svg_picture.appendChild(pnode);
+
 }
 
 function grid(dx,dy) { 
@@ -461,6 +447,7 @@ function rect(p,q,id,rx,ry) {
 	node.setAttribute("height",(q[1]-p[1])*yunitlength);
 	if (rx!=null) {node.setAttribute("rx",rx*xunitlength);}
 	if (ry!=null) {node.setAttribute("ry",ry*yunitlength);}
+	// Create SVG Element	
 	node.setAttribute("stroke-width", strokewidth);
 	node.setAttribute("stroke", stroke);
 	node.setAttribute("fill", fill);
