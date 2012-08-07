@@ -39,7 +39,7 @@ Raphael.colorwheel = function(target, color_wheel_size, no_segments){
 
   function create(target, color_wheel_size){
     size     = color_wheel_size;
-    tri_size = size/10;
+    tri_size = size/20;
     center   = size/2;
     parent   = $(target);
     canvas   = Raphael(parent[0],size, size);
