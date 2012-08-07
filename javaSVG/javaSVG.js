@@ -705,6 +705,14 @@ function curve(plist,id) {
 	path(plist,"T");
 }
 
+function bunnyhop(plist,id) { 
+	path(plist,"Q");
+}
+
+function smoothcurve(plist,id) { 
+	path(plist,"S");
+}
+
 function petal(p,d,id) {
   if (d==null) d=[1,1];
   path([p,[p[0]+d[0],p[1]+d[1]],[p[0]-d[1],p[1]+d[0]],p],"C")
