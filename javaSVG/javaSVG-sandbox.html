@@ -24,12 +24,21 @@
 				<!-- Input Box -->
 	
 				<textarea id="picture1input" rows="18" onKeyUp="fn_autocomplete();" style="width:100%;">setBorder(0)
-initPicture(-5,5)
-axes(2, 1, "labels", 1)
+setBorder(0)
+initPicture(-6,6,-6,6)
+axes(2, 1, "labels", 1,1)
 
 marker = "none"
+strokewidth="1"
+stroke = "#ee1122"
+
 slopefield("sin(x)")	
+
+marker = "none"
+strokewidth="2"
+stroke = "blue"
 plot("sin(x)")
+		
 				</textarea>
 			</td>
 			<td rowspan=3 style="width:400;">
