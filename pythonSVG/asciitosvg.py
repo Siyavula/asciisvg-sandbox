@@ -1,23 +1,52 @@
-import cairo
-import rsvg
+import lxml
+from lxml import etree
+
+# ========================================================================================
+# Variables
+# ========================================================================================
+
+# Canvas Variables
+global xml_parent, xmin, defaultxmin, xmax, defaultxmax, ymin, defaultymin, ymax, defaultymax, xscl, defaultxscl, yscl, defaultyscl, xgrid, defaultxgrid, ygrid, defaultygrid, xtick, defaultxtick, ytick, defaultytick, border, defaultborder, height, defaultheigh, width, defaultwidth, xunitlength, defaultxunitlength, yunitlength, defaultyunitlength, origin, defaultorigin
+
+# Element Variables
+global axesstroke, defaultaxesstroke, gridstroke, defaultgridstroke, strokewidth, defaultstrokewidth, strokedasharray, defaultstrokedasharray, stroke, defaultstroke, arrowfill, defaultarrowfill, fill, defaultfill, fontstyle, defaultfontstyle, fontfamily, defaultfontfamily	, fontsize, defaultfontsize , fontweight, defaultfontweight, fontstroke, defaultfontstroke, fontfill, defaultfontfill   , markerstrokewidth, defaultmarkerstrokewidth, markerstroke, defaultmarkerstroke, markerfill, defaultmarkerfill, markersize, defaultmarkersize, marker, defaultmarker, dotradius, defaultdotradius, ticklength, defaultticklength
 
 # ========================================================================================
 # Functions
 # ========================================================================================
 
-def create_png(filename, height, width, svg_string):
+def convert_ascii_svg(name, ascii_string):
 
-	# Source: http://cairographics.org/download/
-	# Example Code: http://stackoverflow.com/questions/6589358/convert-svg-to-png-in-python
+	global xml_parent
 
-	img =  cairo.ImageSurface(cairo.FORMAT_ARGB32, width, height)
-	ctx = cairo.Context(img)
-	handler= rsvg.Handle(None, svg_string)
-	handler.render_cairo(ctx)
-	img.write_to_png(filename+".png")
-
-def convert_ascii_svg(ascii_string):
+	# Reset variables
+	reset_variables()
 	
+	# Initialize SVG Canvas
+	xml_parent = etree.fromstring("<svg></svg>")
+	xml_parent.attrib['id'] = name
+	
+	# ======================
+	# TODO: Process the code
+	# ======================
+
+	initPicture(-5,5,-5,5)
+
+	# ======================	
+
+	str_parent = etree.tostring(xml_parent)	
+	return str_parent
+
+# ========================================================================================
+
+def reset_variables():
+
+	# Canvas Variables
+	global xml_parent, xmin, defaultxmin, xmax, defaultxmax, ymin, defaultymin, ymax, defaultymax, xscl, defaultxscl, yscl, defaultyscl, xgrid, defaultxgrid, ygrid, defaultygrid, xtick, defaultxtick, ytick, defaultytick, border, defaultborder, height, defaultheigh, width, defaultwidth, xunitlength, defaultxunitlength, yunitlength, defaultyunitlength, origin, defaultorigin
+
+	# Element Variables
+	global axesstroke, defaultaxesstroke, gridstroke, defaultgridstroke, strokewidth, defaultstrokewidth, strokedasharray, defaultstrokedasharray, stroke, defaultstroke, arrowfill, defaultarrowfill, fill, defaultfill, fontstyle, defaultfontstyle, fontfamily, defaultfontfamily	, fontsize, defaultfontsize , fontweight, defaultfontweight, fontstroke, defaultfontstroke, fontfill, defaultfontfill   , markerstrokewidth, defaultmarkerstrokewidth, markerstroke, defaultmarkerstroke, markerfill, defaultmarkerfill, markersize, defaultmarkersize, marker, defaultmarker, dotradius, defaultdotradius, ticklength, defaultticklength
+
 	# ==============================
 	# Variables
 	# ==============================
@@ -60,24 +89,72 @@ def convert_ascii_svg(ascii_string):
 	markersize = defaultmarkersize 							= 4
 	marker = defaultmarker 											= "none"
 	dotradius = defaultdotradius 								= 4
-	ticklength = defaultticklength 							= 4		
+	ticklength = defaultticklength 							= 4
 
-	# TO DO	
+# ========================================================================================
 
-	svg_string = '<svg height="50" width="50">'
-	svg_string += '<rect x="0" y="0" width="100" height="100" style="stroke-width:1;fill:white"></rect>'
-	svg_string += '<ellipse id="undefined" cx="50" cy="50" rx="33.5" ry="16.75" stroke-width="2" stroke="red" fill="none"></ellipse>'
-	svg_string += '<ellipse id="undefined" cx="50" cy="50" rx="16.75" ry="33.5" stroke-width="2" stroke="blue" fill="none"></ellipse>'
-	svg_string += '</svg>'
+def initPicture(a,b,c,d):
+	
+	# Canvas Variables
+	global xml_parent, xmin, defaultxmin, xmax, defaultxmax, ymin, defaultymin, ymax, defaultymax, xscl, defaultxscl, yscl, defaultyscl, xgrid, defaultxgrid, ygrid, defaultygrid, xtick, defaultxtick, ytick, defaultytick, border, defaultborder, height, defaultheigh, width, defaultwidth, xunitlength, defaultxunitlength, yunitlength, defaultyunitlength, origin, defaultorigin
 
-	return svg_string
+	# Element Variables
+	global axesstroke, defaultaxesstroke, gridstroke, defaultgridstroke, strokewidth, defaultstrokewidth, strokedasharray, defaultstrokedasharray, stroke, defaultstroke, arrowfill, defaultarrowfill, fill, defaultfill, fontstyle, defaultfontstyle, fontfamily, defaultfontfamily	, fontsize, defaultfontsize , fontweight, defaultfontweight, fontstroke, defaultfontstroke, fontfill, defaultfontfill   , markerstrokewidth, defaultmarkerstrokewidth, markerstroke, defaultmarkerstroke, markerfill, defaultmarkerfill, markersize, defaultmarkersize, marker, defaultmarker, dotradius, defaultdotradius, ticklength, defaultticklength
+
+	# Set Variables
+	xmin = a or xmin
+	xmax = b or xmax
+	ymin = c or ymin
+	ymax = d or ymax
+
+	# Re-calculate variables
+	xunitlength = (width-2*border)/(xmax-xmin)
+	yunitlength = (height-2*border)/(ymax-ymin)
+	origin = [-xmin*xunitlength+border,-ymin*yunitlength+border]
+
+	# Set Attributes
+	xml_parent.attrib['style'] = "display:inline"
+	xml_parent.attrib['width'] = str(width)
+	xml_parent.attrib['height'] = str(height)
+	xml_parent.attrib['xunitlength'] = str(xunitlength)
+	xml_parent.attrib['yunitlength'] = str(yunitlength)
+	xml_parent.attrib['xmin'] = str(xmin)
+	xml_parent.attrib['xmax'] = str(xmax)
+	xml_parent.attrib['ymin'] = str(ymin)
+	xml_parent.attrib['ymax'] = str(ymax)
+	xml_parent.attrib['ox'] = str(origin[0])
+	xml_parent.attrib['oy'] = str(origin[1])
+	
+	# Initialize blank background
+	node = etree.fromstring("<rect></rect>")
+	xml_parent.append(node)
+	node.attrib['x'] = "0"
+	node.attrib['y'] = "0"
+	node.attrib['width'] = str(width)
+	node.attrib['height'] = str(height)
+	node.attrib['stroke-width'] = str(border)
+	node.attrib['stroke'] = str(stroke)
+	node.attrib['fill'] = "white"
+
+# ========================================================================================
+
+
+
+
+
+
+
+
+
+
 
 # ========================================================================================
 # Main Code
 # ========================================================================================
 
-svg_string = convert_ascii_svg("")
-create_png("image1", 100,100, svg_string) 
+svg_string = raw_input()
+xml = convert_ascii_svg("svg1", svg_string)
+print xml
 
 # ========================================================================================
 

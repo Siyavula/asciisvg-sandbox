@@ -98,7 +98,6 @@ Functions (SVG CANVAS)
 ============================== 
 */
 
-
 function setBorder(x, color) 
 { 
 	// Set Variables

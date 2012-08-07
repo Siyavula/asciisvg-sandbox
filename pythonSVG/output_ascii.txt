@@ -1,0 +1,37 @@
+setBorder(0)
+setBorder(0)
+setBorder(0)
+initPicture(-6,6,-6,6)
+axes(2, 1, "labels", 1,1)
+
+marker = "none"
+strokewidth="1"
+stroke = "#ee1122"
+slopefield("sin(x)")	
+
+marker = "none"
+strokewidth="2"
+stroke = "blue"
+plot("sin(x) - 3")
+
+stroke = "black"
+dot([-5,2])
+dot([-3,4])
+dot([-1,2])
+dot([1,4])
+dot([3,2])
+dot([5,4])
+
+marker = "none"
+strokewidth="2"
+stroke = "green"
+path([[-5,2],[-3,4],[-1,2],[1,4],[3,2],[5,4]])
+
+stroke = "red"
+curve([[-5,2],[-3,4],[-1,2],[1,4],[3,2],[5,4]])
+
+stroke = "purple"
+smoothcurve([[-5,2],[-3,4],[-1,2],[1,4],[3,2],[5,4]])
+
+stroke = "orange"
+bunnyhop([[5,4],[3,2],[1,4],[-1,2],[-3,4],[-5,2]])

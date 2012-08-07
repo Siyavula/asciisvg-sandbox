@@ -8,6 +8,10 @@ Type "help", "copyright", "credits" or "license" for more information.
 >>> a
 "<svg d='M 0 0'></svg>"
 >>> etree.fromstring(a)
+
+
+
+
 <Element svg at 0x8f2a3ec>
 >>> b = etree.fromstring(a)
 >>> b
