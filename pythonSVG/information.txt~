@@ -1,0 +1,95 @@
+leen@leen-ThinkPad-E520:~$ python
+Python 2.7.3 (default, Apr 20 2012, 22:44:07) 
+[GCC 4.6.3] on linux2
+Type "help", "copyright", "credits" or "license" for more information.
+>>> import lxml
+>>> help (lxml)
+
+>>> from lxml import etree
+>>> help (etree)
+
+>>> a = "<svg d='M 0 0'></svg>'
+  File "<stdin>", line 1
+    a = "<svg d='M 0 0'></svg>'
+                              ^
+SyntaxError: EOL while scanning string literal
+>>> a = "<svg d='M 0 0'></svg>"
+>>> a
+"<svg d='M 0 0'></svg>"
+>>> etree.fromstring(a)
+<Element svg at 0x8f2a3ec>
+>>> b = etree.fromstring(a)
+>>> b
+<Element svg at 0x8f2a43c>
+>>> b.attrib
+{'d': 'M 0 0'}
+>>> b['d'] = "L 0 0"
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  File "lxml.etree.pyx", line 621, in lxml.etree._Element.__setitem__ (src/lxml/lxml.etree.c:34717)
+TypeError: Cannot convert str to lxml.etree._Element
+>>> b.attrib['d'] = "L 0 0"
+>>> b
+<Element svg at 0x8f2a43c>
+>>> b.attrib
+{'d': 'L 0 0'}
+>>> b.attrib['e'] = "L 0 0"
+>>> b.attrib
+{'e': 'L 0 0', 'd': 'L 0 0'}
+>>> b.tosrting
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+AttributeError: 'lxml.etree._Element' object has no attribute 'tosrting'
+>>> b.tostring
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+AttributeError: 'lxml.etree._Element' object has no attribute 'tostring'
+>>> b.tostring()
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+AttributeError: 'lxml.etree._Element' object has no attribute 'tostring'
+>>> b.to_string()
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+AttributeError: 'lxml.etree._Element' object has no attribute 'to_string'
+>>> etree.tostring(b)
+'<svg d="L 0 0" e="L 0 0"/>'
+>>> etree.fromstring("<svg><line></line><circle></circle></svg>")
+<Element svg at 0x8f2a25c>
+>>> c  = etree.fromstring("<svg><line></line><circle></circle></svg>")
+>>> c.attrib
+{}
+>>> len(c)
+2
+>>> c[0]
+<Element line at 0x8f2a554>
+>>> c[0].attrib
+{}
+>>> c[0].tag
+'line'
+>>> c.tag
+'svg'
+>>> c.append(g)
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+NameError: name 'g' is not defined
+>>> c.append(etree.fromstring("<rect></rect>"))
+>>> z = "rect"
+>>> z
+'rect'
+>>> c.append(etree.fromstring("<"+z+"</"+z+">"))
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  File "lxml.etree.pyx", line 2754, in lxml.etree.fromstring (src/lxml/lxml.etree.c:54631)
+  File "parser.pxi", line 1578, in lxml.etree._parseMemoryDocument (src/lxml/lxml.etree.c:82748)
+  File "parser.pxi", line 1457, in lxml.etree._parseDoc (src/lxml/lxml.etree.c:81546)
+  File "parser.pxi", line 965, in lxml.etree._BaseParser._parseDoc (src/lxml/lxml.etree.c:78216)
+  File "parser.pxi", line 569, in lxml.etree._ParserContext._handleParseResultDoc (src/lxml/lxml.etree.c:74472)
+  File "parser.pxi", line 650, in lxml.etree._handleParseResult (src/lxml/lxml.etree.c:75363)
+  File "parser.pxi", line 590, in lxml.etree._raiseParseError (src/lxml/lxml.etree.c:74696)
+lxml.etree.XMLSyntaxError: error parsing attribute name, line 1, column 6
+>>> etree.Element
+<built-in function Element>
+>>> etree.Element("rect")
+<Element rect at 0x8f2a6e4>
+

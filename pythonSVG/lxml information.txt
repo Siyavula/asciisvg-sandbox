@@ -1,0 +1,50 @@
+leen@leen-ThinkPad-E520:~$ python
+Python 2.7.3 (default, Apr 20 2012, 22:44:07) 
+[GCC 4.6.3] on linux2
+Type "help", "copyright", "credits" or "license" for more information.
+>>> import lxml
+>>> from lxml import etree
+>>> a = "<svg d='M 0 0'></svg>"
+>>> a
+"<svg d='M 0 0'></svg>"
+>>> etree.fromstring(a)
+<Element svg at 0x8f2a3ec>
+>>> b = etree.fromstring(a)
+>>> b
+<Element svg at 0x8f2a43c>
+>>> b.attrib
+{'d': 'M 0 0'}
+>>> b.attrib['d'] = "L 0 0"
+>>> b
+<Element svg at 0x8f2a43c>
+>>> b.attrib
+{'d': 'L 0 0'}
+>>> b.attrib['e'] = "L 0 0"
+>>> b.attrib
+{'e': 'L 0 0', 'd': 'L 0 0'}
+>>> etree.tostring(b)
+'<svg d="L 0 0" e="L 0 0"/>'
+>>> etree.fromstring("<svg><line></line><circle></circle></svg>")
+<Element svg at 0x8f2a25c>
+>>> c  = etree.fromstring("<svg><line></line><circle></circle></svg>")
+>>> c.attrib
+{}
+>>> len(c)
+2
+>>> c[0]
+<Element line at 0x8f2a554>
+>>> c[0].attrib
+{}
+>>> c[0].tag
+'line'
+>>> c.tag
+'svg'
+>>> c.append(etree.fromstring("<rect></rect>"))
+>>> z = "rect"
+>>> z
+'rect'
+>>> etree.Element
+<built-in function Element>
+>>> etree.Element("rect")
+<Element rect at 0x8f2a6e4>
+
