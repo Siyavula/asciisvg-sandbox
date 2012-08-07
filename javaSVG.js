@@ -12,11 +12,11 @@ Step 2: Set attribute of the SVG element:  	element.setAttribute(attribute,value
 Step 3: Append SVG elements to SVG canvas: 	canvas.appendChild(element);
 Step 4: Replace old SVG canvas with new:		svg_old.parentNode.replaceChild(svg_new,svg_old);
 
-===================================
-TO DO
-===================================
+============
+TO DO:
+============
 
->>> Finish Functions ....
+Infinite Loop Handling
 
 ========================================================================================== */
 
@@ -523,12 +523,11 @@ Functions (COMPLEX SVG ELEMENTS)
 > grid(dx,dy)
 > rect(p,q,id,rx,ry)
 > path(plist,id,c)
-* plot(fun,x_min,x_max,points,id)
+> plot(fun,x_min,x_max,points,id)
 > curve(plist,id)
 > petal(p,d,id)
 > heart(p,size)
-* flower(p,size,petals)
-* slopefield(fun,dx,dy)
+> slopefield(fun,dx,dy)
 ============================== 
 */
 
@@ -693,9 +692,10 @@ function plot(func,x_min,x_max,points,id) {
 		fout = f(t);
 		gout = g(t);
 		// Try
-		// !(isNaN(gt)||Math.abs(gt)=="Infinity")
-		// try{data = [(fout==Infinity?10000:f(t)), (g(t)==Infinity?10000:g(t))];}
-		// catch(err) { continue; }
+		if (!(isNaN(fout)||isNaN(gout)||Math.abs(fout)=="Infinity"||Math.abs(gout)=="Infinity")){
+			try{data = [fout, gout];}
+			catch(err) { continue; }
+		}
 		array_points[array_points.length] = data;
   }
   path(array_points);
@@ -716,29 +716,37 @@ function heart(p,size){
 	path([[p[0],p[1]+size*0.75],[p[0],p[1]+size*1.25], [p[0]-size,p[1]+size], [p[0],p[1]]], "C");
 }
 
-function flower(p,size,petals) {
-}
+function slopefield(func,dx,dy) {
 
-function slopefield(fun,dx,dy) {
+	if (dx==null||dx<=0) dx=1;
+  if (dy==null||dy<=0) dy=1;
 
-  var g = fun;
-  if (typeof fun=="string") 
-    eval("g = function(x,y){ with(Math) return "+mathjs(fun)+" }");
-  var gxy,x,y,u,v,dz;
-  if (dx==null) dx=1;
-  if (dy==null) dy=1;
-  dz = Math.sqrt(dx*dx+dy*dy)/6;
-  var x_min = Math.ceil(xmin/dx);
-  var y_min = Math.ceil(ymin/dy);
-  for (x = x_min; x <= xmax; x += dx)
-    for (y = y_min; y <= ymax; y += dy) {
-      gxy = g(x,y);
-      if (!isNaN(gxy)) {
-        if (Math.abs(gxy)=="Infinity") {u = 0; v = dz;}
-        else {u = dz/Math.sqrt(1+gxy*gxy); v = gxy*u;}
-        line([x-u,y-v],[x+u,y+v]);
-      }
+	// Function 
+	var g, gout;	  
+  if (typeof func=="string")
+    eval("g = function(x,y){ with(Math) return "+mathjs(func)+" }");
+  
+	// Length of Line
+	var dz = Math.sqrt(dx*dx+dy*dy)/6;
+	
+	// Loop	
+	var x,y,u,v;
+  for (x = xmin; x <= xmax; x += dx)
+	{
+    for (y = ymin; y <= ymax; y += dy) 
+		{
+			// Calculate the Instantaneous Gradient
+			ddx = 0.0001;
+			gout = (g(x+ddx,y)-g(x-ddx,y))/(2*ddx);
+			// Plot Line
+			if (!isNaN(gout))
+			{
+				if (Math.abs(gout)=="Infinity") {u = 0; v = dz;}
+				else {u = dz/Math.sqrt(1+gout*gout); v = gout*u;}
+				line([x-u,y-v],[x+u,y+v]);
+			}
     }
+	}
 }
 
 // ================================================
