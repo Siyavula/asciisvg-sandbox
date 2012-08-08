@@ -1,11 +1,13 @@
 import cairo
 import rsvg
+import lxml
+from lxml import etree
 
 # ========================================================================================
 # Functions
 # ========================================================================================
 
-def create_png(filename, height, width, svg_string):
+def create_png(filename, width, height, svg_string):
 
 	# Source: http://cairographics.org/download/
 	# Example Code: http://stackoverflow.com/questions/6589358/convert-svg-to-png-in-python
@@ -20,8 +22,9 @@ def create_png(filename, height, width, svg_string):
 # Main Code
 # ========================================================================================
 
-svg_string = raw_input("")
-create_png("image1", 100,100, svg_string) 
+svg_string = raw_input("").strip()
+svg_object = etree.fromstring(svg_string)
+create_png(svg_object.attrib['id'], int(svg_object.attrib['width']), int(svg_object.attrib['height']), svg_string) 
 
 # ========================================================================================
 

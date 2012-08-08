@@ -1,6 +1,4 @@
 setBorder(0)
-setBorder(0)
-setBorder(0)
 initPicture(-6,6,-6,6)
 axes(2, 1, "labels", 1,1)
 

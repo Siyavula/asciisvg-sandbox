@@ -1,0 +1,32 @@
+<svg id="svg1" style="display:inline" width="600" height="600" xunitlength="50" yunitlength="50" xmin="-6" xmax="6" ymin="-6" ymax="6" ox="300" oy="300"><rect x="0" y="0" width="600" height="600" stroke-width="0" stroke="black" fill="white"/><rect x="0" y="0" width="600" height="600" stroke-width="0" stroke="white" fill="white"/></svg>
+
+<!-- PROCESS LOG: -->
+<!-- Complete: setBorder(0) -->
+<!-- Complete: initPicture(-6,6,-6,6) -->
+<!-- Error in: axes(2, 1, "labels", 1,1) -->
+<!-- Error in: marker = "none" -->
+<!-- Error in: strokewidth="1" -->
+<!-- Error in: stroke = "#ee1122" -->
+<!-- Error in: slopefield("sin(x)")	 -->
+<!-- Error in: marker = "none" -->
+<!-- Error in: strokewidth="2" -->
+<!-- Error in: stroke = "blue" -->
+<!-- Error in: plot("sin(x) - 3") -->
+<!-- Error in: stroke = "black" -->
+<!-- Error in: dot([-5,2]) -->
+<!-- Error in: dot([-3,4]) -->
+<!-- Error in: dot([-1,2]) -->
+<!-- Error in: dot([1,4]) -->
+<!-- Error in: dot([3,2]) -->
+<!-- Error in: dot([5,4]) -->
+<!-- Error in: marker = "none" -->
+<!-- Error in: strokewidth="2" -->
+<!-- Error in: stroke = "green" -->
+<!-- Error in: path([[-5,2],[-3,4],[-1,2],[1,4],[3,2],[5,4]]) -->
+<!-- Error in: stroke = "red" -->
+<!-- Error in: curve([[-5,2],[-3,4],[-1,2],[1,4],[3,2],[5,4]]) -->
+<!-- Error in: stroke = "purple" -->
+<!-- Error in: smoothcurve([[-5,2],[-3,4],[-1,2],[1,4],[3,2],[5,4]]) -->
+<!-- Error in: stroke = "orange" -->
+<!-- Error in: bunnyhop([[5,4],[3,2],[1,4],[-1,2],[-3,4],[-5,2]]) -->
+
