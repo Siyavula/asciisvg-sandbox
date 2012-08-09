@@ -10,46 +10,48 @@ class mySvgCanvas:
 	xml_parent = None
 	error_string = ""
 
+	loc_var = {}
+
 	# Canvas Variables
-	xmin = defaultxmin 								= -5
-	xmax = defaultxmax 								= 5
-	ymin = defaultymin 								= -5
-	ymax = defaultymax 								= 5
-	xscl = defaultxscl 								= 1
-	yscl = defaultyscl 								= 1
-	xgrid = defaultxgrid 							= 1
-	ygrid = defaultygrid 							= 1
-	xtick = defaultxtick 							= 4
-	ytick = defaultytick 							= 4
-	border = defaultborder 						= 0
-	height = defaultheight  					= 600
-	width = defaultwidth							= 600
-	xunitlength = defaultxunitlength 	= 1
-	yunitlength = defaultyunitlength 	= 1
-	origin = defaultorigin 						= [0,0]
+	loc_var["xmin"] = loc_var["defaultxmin"] 								= -5
+	loc_var["xmax"] = loc_var["defaultxmax"] 								= 5
+	loc_var["ymin"] = loc_var["defaultymin"] 								= -5
+	loc_var["ymax"] = loc_var["defaultymax"] 								= 5
+	loc_var["xscl"] = loc_var["defaultxscl"] 								= 1
+	loc_var["yscl"] = loc_var["defaultyscl"] 								= 1
+	loc_var["xgrid"] = loc_var["defaultxgrid"] 							= 1
+	loc_var["ygrid"] = loc_var["defaultygrid"] 							= 1
+	loc_var["xtick"] = loc_var["defaultxtick"] 							= 4
+	loc_var["ytick"] = loc_var["defaultytick"] 							= 4
+	loc_var["border"] = loc_var["defaultborder"] 						= 0
+	loc_var["height"] = loc_var["defaultheight"]  					= 600
+	loc_var["width"] = loc_var["defaultwidth"]							= 600
+	loc_var["xunitlength"] = loc_var["defaultxunitlength"] 	= 1
+	loc_var["yunitlength"] = loc_var["defaultyunitlength"] 	= 1
+	loc_var["origin"] = loc_var["defaultorigin"] 						= [0,0]
 
 	# Element Variables
-	axesstroke = defaultaxesstroke 							= "black"
-	gridstroke = defaultgridstroke 							= "grey"
-	strokewidth = defaultstrokewidth 						= 1 					
-	strokedasharray = defaultstrokedasharray 		= [1, 0]
-	stroke = defaultstroke 											= "black"
-	arrowfill = defaultarrowfill 								= stroke
-	fill = defaultfill 													= "none"
-	fontstyle = defaultfontstyle 								= "italic"
-	fontfamily = defaultfontfamily 							= "times"		
-	fontsize = defaultfontsize 									= 16
-	fontweight = defaultfontweight 							= "normal"
-	fontstroke = defaultfontstroke 							= "none"
-	fontfill = defaultfontfill 									= "none"    
-	markerstrokewidth = defaultmarkerstrokewidth= 1
-	markerstroke = defaultmarkerstroke 					= "black"
-	markerfill = defaultmarkerfill 							= "yellow"
-	markersize = defaultmarkersize 							= 4
-	marker = defaultmarker 											= "none"
-	dotradius = defaultdotradius 								= 4
-	ticklength = defaultticklength 							= 4
-
+	loc_var["axesstroke"] = loc_var["defaultaxesstroke"] 							= "black"
+	loc_var["gridstroke"] = loc_var["defaultgridstroke"] 							= "grey"
+	loc_var["strokewidth"] = loc_var["defaultstrokewidth"] 						= 1 					
+	loc_var["strokedasharray"] = loc_var["defaultstrokedasharray"] 		= [1, 0]
+	loc_var["stroke"] = loc_var["defaultstroke"] 											= "black"
+	loc_var["arrowfill"] = loc_var["defaultarrowfill"] 								= loc_var["stroke"]
+	loc_var["fill"] = loc_var["defaultfill"] 													= "none"
+	loc_var["fontstyle"] = loc_var["defaultfontstyle"] 								= "italic"
+	loc_var["fontfamily"] = loc_var["defaultfontfamily"] 							= "times"		
+	loc_var["fontsize"] = loc_var["defaultfontsize"]									= 16
+	loc_var["fontweight"] = loc_var["defaultfontweight"] 							= "normal"
+	loc_var["fontstroke"] = loc_var["defaultfontstroke"] 							= "none"
+	loc_var["fontfill"] = loc_var["defaultfontfill"] 									= "none"    
+	loc_var["markerstrokewidth"] = loc_var["defaultmarkerstrokewidth"]= 1
+	loc_var["markerstroke"] = loc_var["defaultmarkerstroke"] 					= "black"
+	loc_var["markerfill"] = loc_var["defaultmarkerfill"] 							= "yellow"
+	loc_var["markersize"] = loc_var["defaultmarkersize"] 							= 4
+	loc_var["marker"] = loc_var["defaultmarker"] 											= "none"
+	loc_var["dotradius"] = loc_var["defaultdotradius"] 								= 4
+	loc_var["ticklength"] = loc_var["defaultticklength"] 							= 4
+	
 	# ==============================
 	# Initialization
 	# ==============================
@@ -61,6 +63,11 @@ class mySvgCanvas:
 		self.xml_parent.attrib['id'] = name
 		self.initPicture(-5,5,-5,5)
 
+		# Declare Functions as Variables
+		self.loc_var["initPicture"] = self.initPicture
+		self.loc_var["setBorder"] = self.setBorder
+		self.loc_var["rect"] = self.rect
+
 # ===================================================================================	
 
 	def process_ascii(self, ascii_string):
@@ -68,12 +75,17 @@ class mySvgCanvas:
 		for ascii_line in ascii_list:
 			formatted_ascii_line = ascii_line.strip()
 			if len(formatted_ascii_line) > 0:
-				formatted_ascii_line = "self." + ascii_line 		# Adds the 'self.' before the function
 				try:
-					eval(formatted_ascii_line)
-					self.error_string += "<!-- Complete: " + ascii_line + " -->\n"
-				except:	
-					self.error_string += "<!-- Error in: " + ascii_line + " -->\n"
+					exec(formatted_ascii_line, None, self.loc_var)
+					self.error_string += "<!-- Complete (1): " + ascii_line + " -->\n"
+				except:
+					self.error_string += "<!-- Error in (1): " + formatted_ascii_line + " -->\n"
+					try:
+						formatted_ascii_line = "self." + ascii_line 		# Adds the 'self.' before the function
+						exec(formatted_ascii_line, None, self.loc_var)
+						self.error_string += "<!-- Complete (2): " + ascii_line + " -->\n"
+					except: 
+						self.error_string += "<!-- Error in (2): " + formatted_ascii_line + " -->\n"
 					#break
 
 		return ascii_string
@@ -91,91 +103,91 @@ class mySvgCanvas:
 	def reset_variables(self):
 
 		# Canvas Variables
-		self.xmin = self.defaultxmin
-		self.xmax = self.defaultxmax
-		self.ymin = self.defaultymin
-		self.ymax = self.defaultymax
-		self.xscl = self.defaultxscl
-		self.yscl = self.defaultyscl
-		self.xgrid = self.defaultxgrid
-		self.ygrid = self.defaultygrid
-		self.xtick = self.defaultxtick
-		self.ytick = self.defaultytick
-		self.border = self.defaultborder
-		self.height = self.defaultheight
-		self.width = self.defaultwidth
-		self.xunitlength = self.defaultxunitlength
-		self.yunitlength = self.defaultyunitlength
-		self.origin = self.defaultorigin
+		self.loc_var["xmin"] = self.loc_var["defaultxmin"]
+		self.loc_var["xmax"] = self.loc_var["defaultxmax"]
+		self.loc_var["ymin"] = self.loc_var["defaultymin"]
+		self.loc_var["ymax"] = self.loc_var["defaultymax"]
+		self.loc_var["xscl"] = self.loc_var["defaultxscl"]
+		self.loc_var["yscl"] = self.loc_var["defaultyscl"]
+		self.loc_var["xgrid"] = self.loc_var["defaultxgrid"]
+		self.loc_var["ygrid"] = self.loc_var["defaultygrid"]
+		self.loc_var["xtick"] = self.loc_var["defaultxtick"]
+		self.loc_var["ytick"] = self.loc_var["defaultytick"]
+		self.loc_var["border"] = self.loc_var["defaultborder"]
+		self.loc_var["height"] = self.loc_var["defaultheight"]
+		self.loc_var["width"] = self.loc_var["defaultwidth"]
+		self.loc_var["xunitlength"] = self.loc_var["defaultxunitlength"]
+		self.loc_var["yunitlength"] = self.loc_var["defaultyunitlength"]
+		self.loc_var["origin"] = self.loc_var["defaultorigin"]
 
 		# Element Variables
-		self.axesstroke = self.defaultaxesstroke
-		self.gridstroke = self.defaultgridstroke
-		self.strokewidth = self.defaultstrokewidth					
-		self.strokedasharray = self.defaultstrokedasharray
-		self.stroke = self.defaultstroke
-		self.arrowfill = self.defaultarrowfill
-		self.fill = self.defaultfill
-		self.fontstyle = self.defaultfontstyle
-		self.fontfamily = self.defaultfontfamily	
-		self.fontsize = self.defaultfontsize
-		self.fontweight = self.defaultfontweight
-		self.fontstroke = self.defaultfontstroke
-		self.fontfill = self.defaultfontfill  
-		self.markerstrokewidth = self.defaultmarkerstrokewidth
-		self.markerstroke = self.defaultmarkerstroke
-		self.markerfill = self.defaultmarkerfill
-		self.markersize = self.defaultmarkersize
-		self.marker = self.defaultmarker
-		self.dotradius = self.defaultdotradius
-		self.ticklength = self.defaultticklength
+		self.loc_var["axesstroke"] = self.loc_var["defaultaxesstroke"]
+		self.loc_var["gridstroke"] = self.loc_var["defaultgridstroke"]
+		self.loc_var["strokewidth"] = self.loc_var["defaultstrokewidth"]			
+		self.loc_var["strokedasharray"] = self.loc_var["defaultstrokedasharray"]
+		self.loc_var["stroke"] = self.loc_var["defaultstroke"]
+		self.loc_var["arrowfill"] = self.loc_var["defaultarrowfill"]
+		self.loc_var["fill"] = self.loc_var["defaultfill"]
+		self.loc_var["fontstyle"] = self.loc_var["defaultfontstyle"]
+		self.loc_var["fontfamily"] = self.loc_var["defaultfontfamily"]
+		self.loc_var["fontsize"] = self.loc_var["defaultfontsize"]
+		self.loc_var["fontweight"] = self.loc_var["defaultfontweight"]
+		self.loc_var["fontstroke"] = self.loc_var["defaultfontstroke"]
+		self.loc_var["fontfill"] = self.loc_var["defaultfontfill"]
+		self.loc_var["markerstrokewidth"] = self.loc_var["defaultmarkerstrokewidth"]
+		self.loc_var["markerstroke"] = self.loc_var["defaultmarkerstroke"]
+		self.loc_var["markerfill"] = self.loc_var["defaultmarkerfill"]
+		self.loc_var["markersize"] = self.loc_var["defaultmarkersize"]
+		self.loc_var["marker"] = self.loc_var["defaultmarker"]
+		self.loc_var["dotradius"] = self.loc_var["defaultdotradius"]
+		self.loc_var["ticklength"] = self.loc_var["defaultticklength"]
 
 # ========================================================================================
 
 	def initPicture(self,a,b,c,d):
 
 		# Set Variables
-		self.xmin = a or self.xmin
-		self.xmax = b or self.xmax
-		self.ymin = c or self.ymin
-		self.ymax = d or self.ymax
+		self.loc_var["xmin"] = a or self.loc_var["xmin"]
+		self.loc_var["xmax"] = b or self.loc_var["xmax"]
+		self.loc_var["ymin"] = c or self.loc_var["ymin"]
+		self.loc_var["ymax"] = d or self.loc_var["ymax"]
 
 		# Re-calculate variables
-		self.xunitlength = (self.width-2*self.border)/(self.xmax-self.xmin)
-		self.yunitlength = (self.height-2*self.border)/(self.ymax-self.ymin)
-		self.origin = [-self.xmin*self.xunitlength+self.border,-self.ymin*self.yunitlength+self.border]
+		self.loc_var["xunitlength"] = (self.loc_var["width"]-2*self.loc_var["border"])/(self.loc_var["xmax"]-self.loc_var["xmin"])
+		self.loc_var["yunitlength"] = (self.loc_var["height"]-2*self.loc_var["border"])/(self.loc_var["ymax"]-self.loc_var["ymin"])
+		self.loc_var["origin"] = [-self.loc_var["xmin"]*self.loc_var["xunitlength"]+self.loc_var["border"],-self.loc_var["ymin"]*self.loc_var["yunitlength"]+self.loc_var["border"]]
 
 		# Set Attributes
 		self.xml_parent.attrib['style'] = "display:inline"
-		self.xml_parent.attrib['width'] = str(self.width)
-		self.xml_parent.attrib['height'] = str(self.height)
-		self.xml_parent.attrib['xunitlength'] = str(self.xunitlength)
-		self.xml_parent.attrib['yunitlength'] = str(self.yunitlength)
-		self.xml_parent.attrib['xmin'] = str(self.xmin)
-		self.xml_parent.attrib['xmax'] = str(self.xmax)
-		self.xml_parent.attrib['ymin'] = str(self.ymin)
-		self.xml_parent.attrib['ymax'] = str(self.ymax)
-		self.xml_parent.attrib['ox'] = str(self.origin[0])
-		self.xml_parent.attrib['oy'] = str(self.origin[1])
+		self.xml_parent.attrib['width'] = str(self.loc_var["width"])
+		self.xml_parent.attrib['height'] = str(self.loc_var["height"])
+		self.xml_parent.attrib['xunitlength'] = str(self.loc_var["xunitlength"])
+		self.xml_parent.attrib['yunitlength'] = str(self.loc_var["yunitlength"])
+		self.xml_parent.attrib['xmin'] = str(self.loc_var["xmin"])
+		self.xml_parent.attrib['xmax'] = str(self.loc_var["xmax"])
+		self.xml_parent.attrib['ymin'] = str(self.loc_var["ymin"])
+		self.xml_parent.attrib['ymax'] = str(self.loc_var["ymax"])
+		self.xml_parent.attrib['ox'] = str(self.loc_var["origin"][0])
+		self.xml_parent.attrib['oy'] = str(self.loc_var["origin"][1])
 	
 		# Initialize blank background
 		node = etree.fromstring("<rect></rect>")
 		self.xml_parent.append(node)
 		node.attrib['x'] = "0"
 		node.attrib['y'] = "0"
-		node.attrib['width'] = str(self.width)
-		node.attrib['height'] = str(self.height)
-		node.attrib['stroke-width'] = str(self.border)
-		node.attrib['stroke'] = str(self.stroke)
+		node.attrib['width'] = str(self.loc_var["width"])
+		node.attrib['height'] = str(self.loc_var["height"])
+		node.attrib['stroke-width'] = str(self.loc_var["border"])
+		node.attrib['stroke'] = str(self.loc_var["stroke"])
 		node.attrib['fill'] = "white"
 
 # ========================================================================================
 
-	def setBorder(self,x=1,color="white"):
+	def setBorder(self,x=0,color="black"):
 		if (x != None):
-			self.border = x
+			self.loc_var["border"] = x
 		if (color != None):
-			self.stroke = color
+			self.loc_var["stroke"] = color
 
 # ========================================================================================
 
@@ -590,15 +602,16 @@ class mySvgCanvas:
 	def rect(self,p=[0,0],q=[1,1],rx=0,ry=0):
 		node = etree.fromstring("<rect></rect>")
 		self.xml_parent.append(node)
-		node.attrib['x'] = str(p[0]*self.xunitlength+self.origin[0])
-		node.attrib['y'] = str(self.height-q[1]*self.yunitlength-self.origin[1])
-		node.attrib['width'] = str((q[0]-p[0])*self.xunitlength)
-		node.attrib['height'] = str((q[1]-p[1])*self.yunitlength)
-		node.attrib['stroke-width'] = str(self.strokewidth)
-		node.attrib['stroke'] = str(self.stroke)
-		node.attrib['fill'] = str(self.fill)
-		node.attrib['rx'] = str(rx*self.xunitlength)
-		node.attrib['ry'] = str(ry*self.yunitlength)
+		node.attrib['x'] = str(p[0]*self.loc_var["xunitlength"]+self.loc_var["origin"][0])
+		node.attrib['y'] = str(self.loc_var["height"]-q[1]*self.loc_var["yunitlength"]-self.loc_var["origin"][1])
+		node.attrib['width'] = str((q[0]-p[0])*self.loc_var["xunitlength"])
+		node.attrib['height'] = str((q[1]-p[1])*self.loc_var["yunitlength"])
+		node.attrib['stroke-width'] = str(self.loc_var["strokewidth"])
+		node.attrib['stroke'] = str(self.loc_var["stroke"])
+		node.attrib['fill'] = str(self.loc_var["fill"])
+		node.attrib['rx'] = str(rx*self.loc_var["xunitlength"])
+		node.attrib['ry'] = str(ry*self.loc_var["yunitlength"])
+
 
 	'''
 

@@ -1,6 +1,10 @@
-setBorder(0)
+setBorder(1)
 initPicture(-6,6,-6,6)
 axes(2, 1, "labels", 1,1)
+
+stroke = "red"
+rect([1,1], [2,2])
+dot([-1,-1], open)
 
 marker = "none"
 strokewidth="1"

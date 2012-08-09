@@ -1,32 +1,49 @@
-<svg id="svg1" style="display:inline" width="600" height="600" xunitlength="50" yunitlength="50" xmin="-6" xmax="6" ymin="-6" ymax="6" ox="300" oy="300"><rect x="0" y="0" width="600" height="600" stroke-width="0" stroke="black" fill="white"/><rect x="0" y="0" width="600" height="600" stroke-width="0" stroke="white" fill="white"/></svg>
+<svg id="svg1" style="display:inline" width="600" height="600" xunitlength="49" yunitlength="49" xmin="-6" xmax="6" ymin="-6" ymax="6" ox="295" oy="295"><rect x="0" y="0" width="600" height="600" stroke-width="0" stroke="black" fill="white"/><rect x="0" y="0" width="600" height="600" stroke-width="1" stroke="black" fill="white"/><rect x="344" y="207" width="49" height="49" stroke-width="1" stroke="red" fill="none" rx="0" ry="0"/></svg>
 
 <!-- PROCESS LOG: -->
-<!-- Complete: setBorder(0) -->
-<!-- Complete: initPicture(-6,6,-6,6) -->
-<!-- Error in: axes(2, 1, "labels", 1,1) -->
-<!-- Error in: marker = "none" -->
-<!-- Error in: strokewidth="1" -->
-<!-- Error in: stroke = "#ee1122" -->
-<!-- Error in: slopefield("sin(x)")	 -->
-<!-- Error in: marker = "none" -->
-<!-- Error in: strokewidth="2" -->
-<!-- Error in: stroke = "blue" -->
-<!-- Error in: plot("sin(x) - 3") -->
-<!-- Error in: stroke = "black" -->
-<!-- Error in: dot([-5,2]) -->
-<!-- Error in: dot([-3,4]) -->
-<!-- Error in: dot([-1,2]) -->
-<!-- Error in: dot([1,4]) -->
-<!-- Error in: dot([3,2]) -->
-<!-- Error in: dot([5,4]) -->
-<!-- Error in: marker = "none" -->
-<!-- Error in: strokewidth="2" -->
-<!-- Error in: stroke = "green" -->
-<!-- Error in: path([[-5,2],[-3,4],[-1,2],[1,4],[3,2],[5,4]]) -->
-<!-- Error in: stroke = "red" -->
-<!-- Error in: curve([[-5,2],[-3,4],[-1,2],[1,4],[3,2],[5,4]]) -->
-<!-- Error in: stroke = "purple" -->
-<!-- Error in: smoothcurve([[-5,2],[-3,4],[-1,2],[1,4],[3,2],[5,4]]) -->
-<!-- Error in: stroke = "orange" -->
-<!-- Error in: bunnyhop([[5,4],[3,2],[1,4],[-1,2],[-3,4],[-5,2]]) -->
+<!-- Complete (1): setBorder(1) -->
+<!-- Complete (1): initPicture(-6,6,-6,6) -->
+<!-- Error in (1): axes(2, 1, "labels", 1,1) -->
+<!-- Error in (2): self.axes(2, 1, "labels", 1,1) -->
+<!-- Complete (1): stroke = "red" -->
+<!-- Complete (1): rect([1,1], [2,2]) -->
+<!-- Error in (1): dot([-1,-1], open) -->
+<!-- Error in (2): self.dot([-1,-1], open) -->
+<!-- Complete (1): marker = "none" -->
+<!-- Complete (1): strokewidth="1" -->
+<!-- Complete (1): stroke = "#ee1122" -->
+<!-- Error in (1): slopefield("sin(x)") -->
+<!-- Error in (2): self.slopefield("sin(x)")	 -->
+<!-- Complete (1): marker = "none" -->
+<!-- Complete (1): strokewidth="2" -->
+<!-- Complete (1): stroke = "blue" -->
+<!-- Error in (1): plot("sin(x) - 3") -->
+<!-- Error in (2): self.plot("sin(x) - 3") -->
+<!-- Complete (1): stroke = "black" -->
+<!-- Error in (1): dot([-5,2]) -->
+<!-- Error in (2): self.dot([-5,2]) -->
+<!-- Error in (1): dot([-3,4]) -->
+<!-- Error in (2): self.dot([-3,4]) -->
+<!-- Error in (1): dot([-1,2]) -->
+<!-- Error in (2): self.dot([-1,2]) -->
+<!-- Error in (1): dot([1,4]) -->
+<!-- Error in (2): self.dot([1,4]) -->
+<!-- Error in (1): dot([3,2]) -->
+<!-- Error in (2): self.dot([3,2]) -->
+<!-- Error in (1): dot([5,4]) -->
+<!-- Error in (2): self.dot([5,4]) -->
+<!-- Complete (1): marker = "none" -->
+<!-- Complete (1): strokewidth="2" -->
+<!-- Complete (1): stroke = "green" -->
+<!-- Error in (1): path([[-5,2],[-3,4],[-1,2],[1,4],[3,2],[5,4]]) -->
+<!-- Error in (2): self.path([[-5,2],[-3,4],[-1,2],[1,4],[3,2],[5,4]]) -->
+<!-- Complete (1): stroke = "red" -->
+<!-- Error in (1): curve([[-5,2],[-3,4],[-1,2],[1,4],[3,2],[5,4]]) -->
+<!-- Error in (2): self.curve([[-5,2],[-3,4],[-1,2],[1,4],[3,2],[5,4]]) -->
+<!-- Complete (1): stroke = "purple" -->
+<!-- Error in (1): smoothcurve([[-5,2],[-3,4],[-1,2],[1,4],[3,2],[5,4]]) -->
+<!-- Error in (2): self.smoothcurve([[-5,2],[-3,4],[-1,2],[1,4],[3,2],[5,4]]) -->
+<!-- Complete (1): stroke = "orange" -->
+<!-- Error in (1): bunnyhop([[5,4],[3,2],[1,4],[-1,2],[-3,4],[-5,2]]) -->
+<!-- Error in (2): self.bunnyhop([[5,4],[3,2],[1,4],[-1,2],[-3,4],[-5,2]]) -->
 
