@@ -6,6 +6,9 @@ stroke = "red"
 rect([1,1], [2,2])
 dot([-1,-1], open)
 
+text([-1,0], "hello")
+text([-2,0], "hello", null, 90)
+
 marker = "none"
 strokewidth="1"
 stroke = "#ee1122"

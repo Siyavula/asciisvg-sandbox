@@ -42,8 +42,8 @@ class mySvgCanvas:
 	loc_var["fontfamily"] = loc_var["defaultfontfamily"] 							= "times"		
 	loc_var["fontsize"] = loc_var["defaultfontsize"]									= 16
 	loc_var["fontweight"] = loc_var["defaultfontweight"] 							= "normal"
-	loc_var["fontstroke"] = loc_var["defaultfontstroke"] 							= "none"
-	loc_var["fontfill"] = loc_var["defaultfontfill"] 									= "none"    
+	loc_var["fontstroke"] = loc_var["defaultfontstroke"] 							= loc_var["stroke"]
+	loc_var["fontfill"] = loc_var["defaultfontfill"] 									= loc_var["fill"]   
 	loc_var["markerstrokewidth"] = loc_var["defaultmarkerstrokewidth"]= 1
 	loc_var["markerstroke"] = loc_var["defaultmarkerstroke"] 					= "black"
 	loc_var["markerfill"] = loc_var["defaultmarkerfill"] 							= "yellow"
@@ -52,6 +52,18 @@ class mySvgCanvas:
 	loc_var["dotradius"] = loc_var["defaultdotradius"] 								= 4
 	loc_var["ticklength"] = loc_var["defaultticklength"] 							= 4
 	
+	# SVG Labels
+	loc_var["above"] = "above"
+	loc_var["below"] = "below"
+	loc_var["left"] = "left"
+	loc_var["right"] = "right"
+	loc_var["aboveleft"] = "aboveleft"
+	loc_var["aboveright"] = "aboveright"
+	loc_var["belowleft"] = "belowleft"
+	loc_var["belowright"] = "belowright"
+	loc_var["open"] = "open"
+	loc_var["closed"] = "closed"
+
 	# ==============================
 	# Initialization
 	# ==============================
@@ -67,6 +79,7 @@ class mySvgCanvas:
 		self.loc_var["initPicture"] = self.initPicture
 		self.loc_var["setBorder"] = self.setBorder
 		self.loc_var["rect"] = self.rect
+		self.loc_var["text"] = self.text
 
 # ===================================================================================	
 
@@ -75,17 +88,16 @@ class mySvgCanvas:
 		for ascii_line in ascii_list:
 			formatted_ascii_line = ascii_line.strip()
 			if len(formatted_ascii_line) > 0:
+				
+				# Formatting Line
+				formatted_ascii_line = formatted_ascii_line.replace("null", "None")
+
+				# Try Except
 				try:
 					exec(formatted_ascii_line, None, self.loc_var)
-					self.error_string += "<!-- Complete (1): " + ascii_line + " -->\n"
+					self.error_string += "<!-- Complete: " + ascii_line + " -->\n"
 				except:
-					self.error_string += "<!-- Error in (1): " + formatted_ascii_line + " -->\n"
-					try:
-						formatted_ascii_line = "self." + ascii_line 		# Adds the 'self.' before the function
-						exec(formatted_ascii_line, None, self.loc_var)
-						self.error_string += "<!-- Complete (2): " + ascii_line + " -->\n"
-					except: 
-						self.error_string += "<!-- Error in (2): " + formatted_ascii_line + " -->\n"
+					self.error_string += "<!-- Error in: " + ascii_line + " -->\n"
 					#break
 
 		return ascii_string
@@ -215,42 +227,42 @@ class mySvgCanvas:
 		{
 			# If the Type is Defined
 		  var node = myCreateElementSVG("path")
-		  node.setAttribute("id", id)
+		  node.attrib['id", id)
 		  svg_picture.appendChild(node)
 
 		  if (typ=="+") {	
 				# "+" Sign
-		    node.setAttribute("d", 	" M "+(cx-ticklength)+" "+cy+" L "+(cx+ticklength)+" "+cy+
+		    node.attrib['d", 	" M "+(cx-ticklength)+" "+cy+" L "+(cx+ticklength)+" "+cy+
 		      											" M "+cx+" "+(cy-ticklength)+" L "+cx+" "+(cy+ticklength))
-		    node.setAttribute("stroke-width", .5)
-		    node.setAttribute("stroke", axesstroke)
+		    node.attrib['stroke-width", .5)
+		    node.attrib['stroke", axesstroke)
 		  }
 		  if (typ=="-") {
 				# "-" Sign
-				node.setAttribute("d", " M "+(cx-ticklength)+" "+cy+" L "+(cx+ticklength)+" "+cy)
+				node.attrib['d", " M "+(cx-ticklength)+" "+cy+" L "+(cx+ticklength)+" "+cy)
 		  }
 			if (typ=="|") { 
 				# "|" Sign
-				node.setAttribute("d", " M "+cx+" "+(cy-ticklength)+" L "+cx+" "+(cy+ticklength))
-		    node.setAttribute("stroke-width", strokewidth)
-		    node.setAttribute("stroke", stroke)
+				node.attrib['d", " M "+cx+" "+(cy-ticklength)+" L "+cx+" "+(cy+ticklength))
+		    node.attrib['stroke-width", strokewidth)
+		    node.attrib['stroke", stroke)
 		  }
 		} 
 		else {
 			# Type NOT Defined
 		  node = myCreateElementSVG("circle")
-		  node.setAttribute("id", id)
+		  node.attrib['id", id)
 		  svg_picture.appendChild(node)
-		  node.setAttribute("cx",cx)
-		  node.setAttribute("cy",cy)
-		  node.setAttribute("r", dotradius)
-		  node.setAttribute("stroke-width", strokewidth)
-		  node.setAttribute("stroke", stroke)
-		  node.setAttribute("fill", (typ=="open"?"white":stroke))
+		  node.attrib['cx",cx)
+		  node.attrib['cy",cy)
+		  node.attrib['r", dotradius)
+		  node.attrib['stroke-width", strokewidth)
+		  node.attrib['stroke", stroke)
+		  node.attrib['fill", (typ=="open"?"white":stroke))
 		}
 		# Label
-		if (label!=null) {
-			text(center,label,(pos==null?"below":pos),(id==null?id:id+"label"))
+		if (label!=None) {
+			text(center,label,(pos==None?"below":pos),(id==None?id:id+"label"))
 		}
 	}
 
@@ -264,56 +276,75 @@ class mySvgCanvas:
 		  u = [u[0]/d, u[1]/d]	# unit vector
 		  up = [-u[1],u[0]] 		# inverse unit vector
 		  var node = myCreateElementSVG("path")
-		  node.setAttribute("d","M "+(w[0]-15*u[0]-4*up[0])+" "+
+		  node.attrib['d","M "+(w[0]-15*u[0]-4*up[0])+" "+
 		    (w[1]-15*u[1]-4*up[1])+" L "+(w[0]-3*u[0])+" "+(w[1]-3*u[1])+" L "+
 		    (w[0]-15*u[0]+4*up[0])+" "+(w[1]-15*u[1]+4*up[1])+" z")
-		  node.setAttribute("stroke-width", (size!=null?size:markersize))
-		  node.setAttribute("stroke", stroke) /*was markerstroke*/
-		  node.setAttribute("fill", stroke) /*was arrowfill*/
+		  node.attrib['stroke-width", (size!=None?size:markersize))
+		  node.attrib['stroke", stroke) /*was markerstroke*/
+		  node.attrib['fill", stroke) /*was arrowfill*/
 		  svg_picture.appendChild(node)   
 		}
 	}
+	'''
 
-	def text(p,st,pos,angle) {
+	def text(self,p=[0,0],st="text",pos=None,angle=None):
 
 		# Default text positions
-		if (angle == null) {angle = 0}
-		var textanchor = "middle"
-		var dx = 0 
-		var dy = fontsize/3
-	
+		textanchor = "middle"
+		dx = 0
+		dy = self.loc_var["fontsize"]/3
+		if (angle == None):
+			angle = 0
+		
 		# Text Positions
-		if (pos == aboveleft)	{dx = -fontsize/2 	dy = -fontsize/2		textanchor = "end"}
-		if (pos == above)			{dx = 0 						dy = -fontsize/2		textanchor = "middle"}
-		if (pos == aboveright){dx = fontsize/2 	dy = -fontsize/2		textanchor = "start"}
-		if (pos == left)			{dx = -fontsize/2 	dy = fontsize/3		textanchor = "end"}
-		if (pos == right)			{dx = fontsize/2 	dy = fontsize/3		textanchor = "start"}
-		if (pos == belowleft)	{dx = -fontsize/2 	dy = fontsize			textanchor = "end"}
-		if (pos == below)			{dx = 0 						dy = fontsize			textanchor = "middle"}
-		if (pos == belowright){dx = fontsize/2 	dy = fontsize			textanchor = "start"}
-
+		if (pos == self.loc_var["aboveleft"]):	
+			dx = -self.loc_var["fontsize"]/2 	
+			dy = -self.loc_var["fontsize"]/2		
+			textanchor = "end"
+		if (pos == self.loc_var["above"]):
+			dx = 0 														
+			dy = -self.loc_var["fontsize"]/2		
+			textanchor = "middle"
+		if (pos == self.loc_var["aboveright"]):
+			dx = self.loc_var["fontsize"]/2 	
+			dy = -self.loc_var["fontsize"]/2		
+			textanchor = "start"
+		if (pos == self.loc_var["left"]):
+			dx = -self.loc_var["fontsize"]/2 	
+			dy = self.loc_var["fontsize"]/3			
+			textanchor = "end"
+		if (pos == self.loc_var["right"]):
+			dx = self.loc_var["fontsize"]/2 	
+			dy = self.loc_var["fontsize"]/3			
+			textanchor = "start"
+		if (pos == self.loc_var["belowleft"]):
+			dx = -self.loc_var["fontsize"]/2 	
+			dy = self.loc_var["fontsize"]				
+			textanchor = "end"
+		if (pos == self.loc_var["below"]):
+			dx = 0 														
+			dy = self.loc_var["fontsize"]				
+			textanchor = "middle"
+		if (pos == self.loc_var["belowright"]):
+			dx = self.loc_var["fontsize"]/2 	
+			dy = self.loc_var["fontsize"]				
+			textanchor = "start"
+		
 		# Text Rotation
-		var node = myCreateElementSVG("text")
-		var node_text = document.createTextNode(st)
-		node.setAttribute("transform", "	rotate(" + angle + ", " + (p[0]*xunitlength+origin[0]+dx) + ", " + (height-p[1]*yunitlength-origin[1]+dy) + ")")
-		node.appendChild(node_text)
+		node = etree.fromstring("<text>" + st + "</text>")
+		self.xml_parent.append(node)
+		node.attrib['x'] = str(p[0] * self.loc_var["xunitlength"] + self.loc_var["origin"][0] + dx)		
+		node.attrib['y'] = str(self.loc_var["height"] - p[1] * self.loc_var["yunitlength"] - self.loc_var["origin"][1]+dy)
+		node.attrib['transform'] = "rotate("+str(angle)+", "+str(node.attrib['x'])+", "+str(node.attrib['y'])+")"
+		node.attrib['font-style'] = str(self.loc_var["fontstyle"])
+		node.attrib['font-family'] = str(self.loc_var["fontfamily"])
+		node.attrib['font-size'] = str(self.loc_var["fontsize"])
+		node.attrib['font-weight'] = str(self.loc_var["fontweight"])
+		node.attrib['text-anchor'] = str(textanchor)
+		node.attrib['stroke'] = str(self.loc_var["fontstroke"])
+		node.attrib['fill'] = str(self.loc_var["fontfill"])
 	
-		# Node Attributes
-		node.lastChild.nodeValue = st
-		node.setAttribute("x",p[0]*xunitlength+origin[0]+dx)
-		node.setAttribute("y",height-p[1]*yunitlength-origin[1]+dy)
-		node.setAttribute("font-style",fontstyle)
-		node.setAttribute("font-family",fontfamily)
-		node.setAttribute("font-size",fontsize)
-		node.setAttribute("font-weight",fontweight)
-		node.setAttribute("text-anchor",textanchor)
-		if (fontstroke!="none") node.setAttribute("stroke",fontstroke)
-		if (fontfill!="none") node.setAttribute("fill",fontfill)
-	
-		# Attach Nodes
-		svg_picture.appendChild(node)
-
-	}
+	'''
 
 	def mathjs(st) {
 
@@ -449,15 +480,15 @@ class mySvgCanvas:
 
 	def line(p,q,id) {
 		var node = myCreateElementSVG("path")
-		node.setAttribute("id", id)
-		node.setAttribute("d","M"+(p[0]*xunitlength+origin[0])+","+
+		node.attrib['id", id)
+		node.attrib['d","M"+(p[0]*xunitlength+origin[0])+","+
 															(height-p[1]*yunitlength-origin[1])+" "+
 															(q[0]*xunitlength+origin[0])+","+
 															(height-q[1]*yunitlength-origin[1]))
-		node.setAttribute("stroke-width", strokewidth)
-		node.setAttribute("stroke", stroke)
-		node.setAttribute("fill", fill)
-		node.setAttribute("stroke-dasharray", strokedasharray)
+		node.attrib['stroke-width", strokewidth)
+		node.attrib['stroke", stroke)
+		node.attrib['fill", fill)
+		node.attrib['stroke-dasharray", strokedasharray)
 		/* starting point (p) */
 		if (marker=="dot" or marker=="arrowdot") {ASdot(p,markersize,markerstroke,markerfill) }
 		/* ending point (q) */ 
@@ -468,14 +499,14 @@ class mySvgCanvas:
 
 	def ellipse(center,rx,ry,id) {
 		var node = myCreateElementSVG("ellipse")
-		node.setAttribute("id", id)
-		node.setAttribute("cx",center[0]*xunitlength+origin[0])
-		node.setAttribute("cy",height-center[1]*yunitlength-origin[1])
-		node.setAttribute("rx",rx*xunitlength)
-		node.setAttribute("ry",ry*yunitlength)
-		node.setAttribute("stroke-width", strokewidth)
-		node.setAttribute("stroke", stroke)
-		node.setAttribute("fill", fill)
+		node.attrib['id", id)
+		node.attrib['cx",center[0]*xunitlength+origin[0])
+		node.attrib['cy",height-center[1]*yunitlength-origin[1])
+		node.attrib['rx",rx*xunitlength)
+		node.attrib['ry",ry*yunitlength)
+		node.attrib['stroke-width", strokewidth)
+		node.attrib['stroke", stroke)
+		node.attrib['fill", fill)
 		svg_picture.appendChild(node)
 	}
 
@@ -486,21 +517,21 @@ class mySvgCanvas:
 	def arc(start,end,radius,id) {
 		var vector, ab, abn
 		node = myCreateElementSVG("path")
-		node.setAttribute("id", id)
+		node.attrib['id", id)
 		svg_picture.appendChild(node)
 		# Radius
-		if (radius==null) {    
+		if (radius==None) {    
 			vector=[end[0]-start[0],end[1]-start[1]]
 		  radius = Math.sqrt(vector[0]*vector[0]+vector[1]*vector[1])
 		}
 		# Draw Arc
-		node.setAttribute("d","M"+	(start[0]*xunitlength+origin[0])+","+
+		node.attrib['d","M"+	(start[0]*xunitlength+origin[0])+","+
 		  													(height-start[1]*yunitlength-origin[1])+" A"+radius*xunitlength+","+
 		   													(radius*yunitlength)+" 0 0,0 "+(end[0]*xunitlength+origin[0])+","+
 		  													(height-end[1]*yunitlength-origin[1]))
-		node.setAttribute("stroke-width", strokewidth)
-		node.setAttribute("stroke", stroke)
-		node.setAttribute("fill", fill)
+		node.attrib['stroke-width", strokewidth)
+		node.attrib['stroke", stroke)
+		node.attrib['fill", fill)
 		# Markers
 		var dx = (end[0]-start[0])/2
 		var hx = start[0] + dx
@@ -535,15 +566,15 @@ class mySvgCanvas:
 
 	def axes(dx,dy,labels,gdx,gdy) {
 		var pnode, string, i
-		dx = (dx==null?xunitlength:dx*xunitlength)
-		dy = (dy==null?yunitlength:dy*yunitlength)
+		dx = (dx==None?xunitlength:dx*xunitlength)
+		dy = (dy==None?yunitlength:dy*yunitlength)
 		fontsize = Math.min(dx/2,dy/2,16)
 		ticklength = fontsize/4
 		
 		/* === Grid === */
-		if (gdx!=null or gdy!=null) {
-		  gdx = (gdx!=null?gdx*xunitlength:xgrid*xunitlength)
-		  gdy = (gdy!=null?gdy*yunitlength:ygrid*yunitlength)
+		if (gdx!=None or gdy!=None) {
+		  gdx = (gdx!=None?gdx*xunitlength:xgrid*xunitlength)
+		  gdy = (gdy!=None?gdy*yunitlength:ygrid*yunitlength)
 			pnode = myCreateElementSVG("path")
 		  string = ""
 			for (i = origin[0] i<width i = i+gdx) {string += " M"+i+",0"+" "+i+","+height} # x-axis (positive)
@@ -551,10 +582,10 @@ class mySvgCanvas:
 			for (i = height-origin[1] i<height i = i+gdy) {string += " M0,"+i+" "+width+","+i} # y-axis (positive)
 			for (i = height-origin[1]-gdy i>0 i = i-gdy) {string += " M0,"+i+" "+width+","+i} # y-axis (negative)
 			# Create SVG Element
-		  pnode.setAttribute("d",string)
-		  pnode.setAttribute("stroke-width", 0.5)
-		  pnode.setAttribute("stroke", gridstroke)
-		  pnode.setAttribute("fill", fill)
+		  pnode.attrib['d",string)
+		  pnode.attrib['stroke-width", 0.5)
+		  pnode.attrib['stroke", gridstroke)
+		  pnode.attrib['fill", fill)
 		  svg_picture.appendChild(pnode)
 		}
 
@@ -572,7 +603,7 @@ class mySvgCanvas:
 		{string += " M"+(origin[0]+ticklength)+","+i+" "+(origin[0]-ticklength)+","+i} # y-axis (negative)
 
 		/* === Labels === */
-		if (labels!=null) with (Math) {
+		if (labels!=None) with (Math) {
 			var ldx = dx/xunitlength
 		  var ldy = dy/yunitlength
 		  var lx = (xmin>0 or xmax<0?xmin:0)
@@ -585,16 +616,16 @@ class mySvgCanvas:
 		  for (y = -ldy ymin<=y y = y-ldy) {text([lx,y],y,lyp)} # y-axis (negative)
 		}
 		/* Create SVG Element	*/
-		pnode.setAttribute("d",string)
-		pnode.setAttribute("stroke-width", 0.5)
-		pnode.setAttribute("stroke", axesstroke)
-		pnode.setAttribute("fill", fill)
+		pnode.attrib['d",string)
+		pnode.attrib['stroke-width", 0.5)
+		pnode.attrib['stroke", axesstroke)
+		pnode.attrib['fill", fill)
 		svg_picture.appendChild(pnode)
 
 	}
 
 	def grid(dx,dy) { 
-		axes(dx,dy,null,dx,dy)
+		axes(dx,dy,None,dx,dy)
 	}
 
 	'''
@@ -618,7 +649,7 @@ class mySvgCanvas:
 	def path(plist,style,closed,id) {
 		var i
 		var node = myCreateElementSVG("path")
-		node.setAttribute("id", id)
+		node.attrib['id", id)
 		svg_picture.appendChild(node)
 		
 		# =================================================================================================
@@ -633,7 +664,7 @@ class mySvgCanvas:
 		# =================================================================================================
 
 		# Style default = L
-		if (style == null) {style = "L"}	
+		if (style == None) {style = "L"}	
 
 		# Move Command
 		string = "M" + (plist[0][0]*xunitlength+origin[0])+","+ (height-plist[0][1]*yunitlength-origin[1])
@@ -647,13 +678,13 @@ class mySvgCanvas:
 		}
 
 		# Close the Path
-		if (closed != null) {string += " Z"}	
+		if (closed != None) {string += " Z"}	
 
-		node.setAttribute("d", string)
-		node.setAttribute("stroke-width", strokewidth)
-		node.setAttribute("stroke-dasharray", strokedasharray)
-		node.setAttribute("stroke", stroke)
-		node.setAttribute("fill", fill)
+		node.attrib['d", string)
+		node.attrib['stroke-width", strokewidth)
+		node.attrib['stroke-dasharray", strokedasharray)
+		node.attrib['stroke", stroke)
+		node.attrib['fill", fill)
 		
 		# Dots
 		if (marker=="dot" or marker=="arrowdot")
@@ -668,8 +699,8 @@ class mySvgCanvas:
 	def plot(func,x_min,x_max,points,id) {
 	
 		var f = function(x) {return x}
-		x_min = (x_min==null?xmin:x_min)
-		x_max = (x_max==null?xmax:x_max)
+		x_min = (x_min==None?xmin:x_min)
+		x_max = (x_max==None?xmax:x_max)
 		var name
 		var array_points = []
 
@@ -684,7 +715,7 @@ class mySvgCanvas:
 		}
 		
 		# Number of points
-		var inc = (points==null?(x_max-x_min)/200:inc/points)
+		var inc = (points==None?(x_max-x_min)/200:inc/points)
 
 		# Fill the array_points
 		var fout, gout
@@ -714,20 +745,20 @@ class mySvgCanvas:
 	}
 
 	def petal(p,d,id) {
-		if (d==null) d=[1,1]
+		if (d==None) d=[1,1]
 		path([p,[p[0]+d[0],p[1]+d[1]],[p[0]-d[1],p[1]+d[0]],p],"C")
 	}
 
 	def heart(p,size){
-		if (size==null) size = 1
+		if (size==None) size = 1
 		path([[p[0],p[1]], [p[0]+size,p[1]+size], [p[0],p[1]+size*1.25], [p[0],p[1]+size*0.75]], "C")
 		path([[p[0],p[1]+size*0.75],[p[0],p[1]+size*1.25], [p[0]-size,p[1]+size], [p[0],p[1]]], "C")
 	}
 
 	def slopefield(func,dx,dy) {
 
-		if (dx==nullordx<=0) dx=1
-		if (dy==nullordy<=0) dy=1
+		if (dx==Noneordx<=0) dx=1
+		if (dy==Noneordy<=0) dy=1
 
 		# def 
 		var g, gout	  
