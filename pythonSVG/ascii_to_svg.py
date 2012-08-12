@@ -1,5 +1,6 @@
 import lxml
 from lxml import etree
+import math
 
 class mySvgCanvas:
 
@@ -80,6 +81,7 @@ class mySvgCanvas:
 		self.loc_var["setBorder"] = self.setBorder
 		self.loc_var["rect"] = self.rect
 		self.loc_var["text"] = self.text
+		self.loc_var["arrowhead"] = self.arrowhead
 
 # ===================================================================================	
 
@@ -265,27 +267,30 @@ class mySvgCanvas:
 			text(center,label,(pos==None?"below":pos),(id==None?id:id+"label"))
 		}
 	}
-
-	def arrowhead(p,q,size) {
-		var up
-		var v = [p[0]*xunitlength+origin[0],height-p[1]*yunitlength-origin[1]]		# adjusted start point
-		var w = [q[0]*xunitlength+origin[0],height-q[1]*yunitlength-origin[1]]		# adjusted end point
-		var u = [w[0]-v[0],w[1]-v[1]] # unit vector * length
-		var d = Math.sqrt(u[0]*u[0]+u[1]*u[1]) #length of unit vector
-		if (d > 0.00000001) {
-		  u = [u[0]/d, u[1]/d]	# unit vector
-		  up = [-u[1],u[0]] 		# inverse unit vector
-		  var node = myCreateElementSVG("path")
-		  node.attrib['d","M "+(w[0]-15*u[0]-4*up[0])+" "+
-		    (w[1]-15*u[1]-4*up[1])+" L "+(w[0]-3*u[0])+" "+(w[1]-3*u[1])+" L "+
-		    (w[0]-15*u[0]+4*up[0])+" "+(w[1]-15*u[1]+4*up[1])+" z")
-		  node.attrib['stroke-width", (size!=None?size:markersize))
-		  node.attrib['stroke", stroke) /*was markerstroke*/
-		  node.attrib['fill", stroke) /*was arrowfill*/
-		  svg_picture.appendChild(node)   
-		}
-	}
 	'''
+
+# ========================================================================================
+	
+	def arrowhead(self,p=[0,0],q=[1,1],size=None):
+		v = [p[0]*self.loc_var["xunitlength"]+self.loc_var["origin"][0],self.loc_var["height"]-p[1]*self.loc_var["yunitlength"]-self.loc_var["origin"][1]]		# adjusted start point
+		w = [q[0]*self.loc_var["xunitlength"]+self.loc_var["origin"][0],self.loc_var["height"]-q[1]*self.loc_var["yunitlength"]-self.loc_var["origin"][1]]		# adjusted end point
+		u = [w[0]-v[0],w[1]-v[1]] # unit vector * length
+		d = math.sqrt(u[0]*u[0]+u[1]*u[1]) #length of unit vector
+		if (d > 0.00000001):
+			u = [u[0]/d, u[1]/d]	# unit vector
+			up = [-u[1],u[0]] 		# inverse unit vector
+			node = etree.fromstring("<path></path>")
+			self.xml_parent.append(node)
+			node.attrib['d'] = str("M " + str(w[0]-15*u[0]-4*up[0]) + " " + str(w[1]-15*u[1]-4*up[1]) + " L " + str(w[0]-3*u[0]) + " " + str(w[1]-3*u[1]) + " L " + str(w[0]-15*u[0]+4*up[0]) + " " + str(w[1]-15*u[1]+4*up[1]) + " Z")
+			if (size != None):
+				stroke_width = size
+			else:
+				stroke_width = self.loc_var["markersize"]
+			node.attrib['stroke-width'] = str(stroke_width)
+			node.attrib['stroke'] = self.loc_var["stroke"]
+			node.attrib['fill'] = self.loc_var["stroke"]
+
+# ========================================================================================
 
 	def text(self,p=[0,0],st="text",pos=None,angle=None):
 
@@ -343,6 +348,8 @@ class mySvgCanvas:
 		node.attrib['text-anchor'] = str(textanchor)
 		node.attrib['stroke'] = str(self.loc_var["fontstroke"])
 		node.attrib['fill'] = str(self.loc_var["fontfill"])
+
+# ========================================================================================
 	
 	'''
 
@@ -630,6 +637,8 @@ class mySvgCanvas:
 
 	'''
 
+# ========================================================================================
+
 	def rect(self,p=[0,0],q=[1,1],rx=0,ry=0):
 		node = etree.fromstring("<rect></rect>")
 		self.xml_parent.append(node)
@@ -643,6 +652,7 @@ class mySvgCanvas:
 		node.attrib['rx'] = str(rx*self.loc_var["xunitlength"])
 		node.attrib['ry'] = str(ry*self.loc_var["yunitlength"])
 
+# ========================================================================================
 
 	'''
 
