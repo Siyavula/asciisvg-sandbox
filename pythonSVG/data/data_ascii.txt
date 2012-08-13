@@ -3,28 +3,9 @@ initPicture(-10,10,-10,10)
 axes(2, 1, "labels", 1,1)
 
 stroke = "red"
-rect([1,1], [2,2])
-dot([-1,-1], open)
 
-text([-1,0], "hello")
-text([-2,0], "hello", null, 90)
-text([-2, -2], "Label", below, None)
-
-arrowhead([0,0],[1,1],1)
-arrowhead([0,0],[-1,-1],10)
-arrowhead([0,0],[-1,1])
-
-dot ([-2,-1])
-dot ([-2,-2], "open", "Label")
-dot ([-2,-3], "open", "Label", right)
-dot ([-2,-4], "open", "Label", right, 90)
-
-marker = "dot"
-line ([-4,-2], [-5,-3])
-marker = "arrow"
-line ([-4,-3], [-5,-4])
-marker = "arrowdot"
-line ([-4,-4], [-5,-5])
+ellipse([1,1])
+ellipse([1,1],2,3)
 
 marker = "none"
 strokewidth="1"

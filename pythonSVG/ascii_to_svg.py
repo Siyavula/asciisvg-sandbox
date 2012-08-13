@@ -85,7 +85,7 @@ class mySvgCanvas:
 		self.loc_var["dot"] = self.dot
 		#self.loc_var["mathjs"] = self.mathjs
 		self.loc_var["line"] = self.line
-		#self.loc_var["ellipse"] = self.ellipse
+		self.loc_var["ellipse"] = self.ellipse
 		#self.loc_var["circle"] = self.circle
 		#self.loc_var["arc"] = self.arc
 		#self.loc_var["noaxes"] = self.noaxes
@@ -227,7 +227,7 @@ class mySvgCanvas:
 	Functions (BASIC SVG ELEMENTS)
 	==============================
 	> myCreateElementSVG(t)
-	> dot(center, typ, label, pos, id)
+	> dot(center, typ, label, pos)
 	> arrowhead(p,q)
 	> text(p,st,pos,angle)
 	> mathjs(st)
@@ -488,10 +488,10 @@ class mySvgCanvas:
 	==============================
 	Functions (COMPOUND SVG ELEMENTS)
 	==============================
-	> line(p,q,id)
-	> ellipse(center,rx,ry,id)
-	> circle(center,radius,id)
-	> arc(start,end,radius,id)
+	> line(p,q)
+	> ellipse(center,rx,ry)
+	> circle(center,radius)
+	> arc(start,end,radius)
 	============================== 
 	*/
 
@@ -527,24 +527,30 @@ class mySvgCanvas:
 
 # ========================================================================================
 
-	'''
+	def ellipse(self, center=[0,0], rx=1, ry=2):
+		node = etree.fromstring("<ellipse></ellipse>")
+		self.xml_parent.append(node)
+		node.attrib['cx'] = str(center[0] * self.loc_var["xunitlength"] + self.loc_var["origin"][0])
+		node.attrib['cy'] = str(self.loc_var["height"] - center[1] * self.loc_var["yunitlength"] - self.loc_var["origin"][1])
+		node.attrib['rx'] = str(rx * self.loc_var["xunitlength"])
+		node.attrib['ry'] = str(ry * self.loc_var["yunitlength"])
+		node.attrib['stroke-width'] = str(self.loc_var["strokewidth"])
+		node.attrib['stroke'] = str(self.loc_var["stroke"])
+		node.attrib['fill'] = str(self.loc_var["fill"])
 
-	def ellipse(center,rx,ry,id) {
-		var node = myCreateElementSVG("ellipse")
-		node.attrib['id", id)
-		node.attrib['cx",center[0]*xunitlength+origin[0])
-		node.attrib['cy",height-center[1]*yunitlength-origin[1])
-		node.attrib['rx",rx*xunitlength)
-		node.attrib['ry",ry*yunitlength)
-		node.attrib['stroke-width", strokewidth)
-		node.attrib['stroke", stroke)
-		node.attrib['fill", fill)
-		svg_picture.appendChild(node)
-	}
+# ========================================================================================
+
+	'''
 
 	def circle(center,radius,id) {
 		ellipse(center,radius,radius,id)
 	}
+
+	'''
+
+# ========================================================================================
+
+	'''
 
 	def arc(start,end,radius,id) {
 		var vector, ab, abn
