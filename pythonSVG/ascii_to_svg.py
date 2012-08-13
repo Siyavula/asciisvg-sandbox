@@ -91,7 +91,7 @@ class mySvgCanvas:
 		self.loc_var["arc"] = self.arc
 		self.loc_var["noaxes"] = self.noaxes
 		self.loc_var["axes"] = self.axes
-		#self.loc_var["grid"] = self.grid
+		self.loc_var["grid"] = self.grid
 		self.loc_var["rect"] = self.rect
 		#self.loc_var["path"] = self.path
 		#self.loc_var["plot"] = self.plot
@@ -634,7 +634,7 @@ class mySvgCanvas:
 
 # ========================================================================================
 
-	def axes(self,dx=1,dy=1,labels=None,gdx=1,gdy=1):
+	def axes(self,dx=None,dy=None,labels=None,gdx=None,gdy=None):
 
 		tdx = (dx != None and dx*self.loc_var["xunitlength"] or self.loc_var["xunitlength"])
 		tdy = (dy != None and dy*self.loc_var["yunitlength"] or self.loc_var["yunitlength"])
@@ -642,56 +642,69 @@ class mySvgCanvas:
 		ticklength = self.loc_var["fontsize"]/4
 
 		# Grid
-		gdx = (gdx != None and gdx*self.loc_var["xunitlength"] or xgrid*self.loc_var["xunitlength"])
-		gdy = (gdy != None and gdy*self.loc_var["yunitlength"] or ygrid*self.loc_var["yunitlength"])
-		string = ""
-		for i in self.frange(self.loc_var["origin"][0], self.loc_var["width"], gdx):
-			string += " M " + str(i) + ",0 " + str(i) + "," + str(self.loc_var["height"]) # x-axis (positive)
-		for i in self.frange(self.loc_var["origin"][0], 0, -gdx):
-			string += " M " + str(i) + ",0 " + str(i) + "," + str(self.loc_var["height"]) # x-axis (negative)
-		for i in self.frange(self.loc_var["origin"][1], self.loc_var["height"], gdy):
-			string += " M 0," + str(i) + " " + str(self.loc_var["width"]) + "," + str(i) # y-axis (positive)
-		for i in self.frange(self.loc_var["origin"][1], 0, -gdy):
-			string += " M 0," + str(i) + " " + str(self.loc_var["width"]) + "," + str(i) # y-axis (negative)
+		if (gdx != None):
+			gdx = (gdx != None and gdx*self.loc_var["xunitlength"] or xgrid*self.loc_var["xunitlength"])
+			gdy = (gdy != None and gdy*self.loc_var["yunitlength"] or ygrid*self.loc_var["yunitlength"])
+			string = ""
+			for i in self.frange(self.loc_var["origin"][0], self.loc_var["width"], gdx):
+				string += " M " + str(i) + ",0 " + str(i) + "," + str(self.loc_var["height"]) # x-axis (positive)
+			for i in self.frange(self.loc_var["origin"][0], 0, -gdx):
+				string += " M " + str(i) + ",0 " + str(i) + "," + str(self.loc_var["height"]) # x-axis (negative)
+			for i in self.frange(self.loc_var["origin"][1], self.loc_var["height"], gdy):
+				string += " M 0," + str(i) + " " + str(self.loc_var["width"]) + "," + str(i) # y-axis (positive)
+			for i in self.frange(self.loc_var["origin"][1], 0, -gdy):
+				string += " M 0," + str(i) + " " + str(self.loc_var["width"]) + "," + str(i) # y-axis (negative)
 
-		# Create SVG Element
-		pnode = etree.fromstring("<path></path>")
-		self.xml_parent.append(pnode)
-		pnode.attrib['d'] = str(string)
-		pnode.attrib['stroke-width'] = str(0.5)
-		pnode.attrib['stroke'] = str(self.loc_var["gridstroke"])
-		pnode.attrib['fill'] = str(self.loc_var["fill"])
+			# Create SVG Element
+			pnode = etree.fromstring("<path></path>")
+			self.xml_parent.append(pnode)
+			pnode.attrib['d'] = str(string)
+			pnode.attrib['stroke-width'] = str(0.5)
+			pnode.attrib['stroke'] = str(self.loc_var["gridstroke"])
+			pnode.attrib['fill'] = str(self.loc_var["fill"])
 
-		# Axes
-		pnode = etree.fromstring("<path></path>")
-		self.xml_parent.append(pnode)
+		if (dx != None):
 
-		# Thicker Axes lines
-		string = " M 0," + str(self.loc_var["height"]-self.loc_var["origin"][1]) + \
+			# Thicker Axes lines
+			string = " M 0," + str(self.loc_var["height"]-self.loc_var["origin"][1]) + \
 			" " + str(self.loc_var["width"]) + "," + str(self.loc_var["height"]-self.loc_var["origin"][1]) + \
-			" M " + str(self.loc_var["origin"][0]) + ",0 " + str(self.loc_var["origin"][0]) + "," + str(self.loc_var["height"])
+			" M " + str(self.loc_var["origin"][0]) + ",0 " + \
+			str(self.loc_var["origin"][0]) + "," + str(self.loc_var["height"])
 
-		# Ticks
-		for i in self.frange(self.loc_var["origin"][0], self.loc_var["width"], tdx): 
-			string += " M " + str(i) + \
-			"," + str(self.loc_var["height"] - self.loc_var["origin"][1] + self.loc_var["ticklength"]) + " " + \
-			str(i) + "," + str(self.loc_var["height"]-self.loc_var["origin"][1]-self.loc_var["ticklength"]) # x-axis (positive)
+			# Ticks
+			for i in self.frange(self.loc_var["origin"][0], self.loc_var["width"], tdx): 
+				string += " M " + str(i) + \
+				"," + str(self.loc_var["height"] - self.loc_var["origin"][1] + self.loc_var["ticklength"]) + " " + \
+				str(i) + "," + \
+				str(self.loc_var["height"]-self.loc_var["origin"][1]-self.loc_var["ticklength"]) # x-axis (positive)
 		
-		for i in self.frange(self.loc_var["origin"][0], 0, -tdx):
-			string += " M " + str(i) + \
-			"," + str(self.loc_var["height"] - self.loc_var["origin"][1] + self.loc_var["ticklength"]) + " " + \
-			str(i) + "," + str(self.loc_var["height"]-self.loc_var["origin"][1]-self.loc_var["ticklength"]) # x-axis (positive)
+			for i in self.frange(self.loc_var["origin"][0], 0, -tdx):
+				string += " M " + str(i) + \
+				"," + str(self.loc_var["height"] - self.loc_var["origin"][1] + self.loc_var["ticklength"]) + " " + \
+				str(i) + "," + \
+				str(self.loc_var["height"]-self.loc_var["origin"][1]-self.loc_var["ticklength"]) # x-axis (positive)
 
-		for i in self.frange(self.loc_var["origin"][1], self.loc_var["height"], tdy):
-			string += " M " + str(self.loc_var["origin"][0] + self.loc_var["ticklength"]) + \
-			"," + str(i) + " " + str(self.loc_var["origin"][0] - self.loc_var["ticklength"]) + "," + str(i) # y-axis (positive)
+			for i in self.frange(self.loc_var["origin"][1], self.loc_var["height"], tdy):
+				string += " M " + str(self.loc_var["origin"][0] + self.loc_var["ticklength"]) + \
+				"," + str(i) + " " + \
+				str(self.loc_var["origin"][0] - self.loc_var["ticklength"]) + "," + str(i) # y-axis (positive)
 
-		for i in self.frange(self.loc_var["origin"][1], 0, -tdy): 
-			string += " M " + str(self.loc_var["origin"][0] + self.loc_var["ticklength"]) + \
-			"," + str(i) + " " + str(self.loc_var["origin"][0] - self.loc_var["ticklength"]) + "," + str(i) # y-axis (negative)
+			for i in self.frange(self.loc_var["origin"][1], 0, -tdy): 
+				string += " M " + str(self.loc_var["origin"][0] + self.loc_var["ticklength"]) + \
+				"," + str(i) + " " + \
+				str(self.loc_var["origin"][0] - self.loc_var["ticklength"]) + "," + str(i) # y-axis (negative)
 		
-		# Labels
+			# Axes
+			pnode = etree.fromstring("<path></path>")
+			self.xml_parent.append(pnode)
+			pnode.attrib['d'] = str(string)
+			pnode.attrib['stroke-width'] = str(0.5)
+			pnode.attrib['stroke'] = str(self.loc_var["axesstroke"])
+			pnode.attrib['fill'] = str(self.loc_var["fill"])
+
 		if (labels!=None):
+
+			# Labels
 			for i in self.frange(dx, self.loc_var["xmax"], dx):
 				self.text([i,0],str(int(i)),"below") # x-axis (positive)
 			for i in self.frange(-dx, self.loc_var["xmin"], -dx):
@@ -701,21 +714,10 @@ class mySvgCanvas:
 			for i in self.frange(-dx, self.loc_var["ymin"], -dy): 
 				self.text([0,i],str(int(i)),"left") # y-axis (negative)
 
-		# Create SVG Element
-		pnode.attrib['d'] = str(string)
-		pnode.attrib['stroke-width'] = str(0.5)
-		pnode.attrib['stroke'] = str(self.loc_var["axesstroke"])
-		pnode.attrib['fill'] = str(self.loc_var["fill"])
-
 # ========================================================================================
 
-	'''
-
-	def grid(dx,dy) { 
-		axes(dx,dy,None,dx,dy)
-	}
-
-	'''
+	def grid(self,dx=1,dy=1):
+		self.axes(None,None,None,dx,dy)
 
 # ========================================================================================
 
