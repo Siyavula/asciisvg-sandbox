@@ -742,13 +742,13 @@ class mySvgCanvas:
 	def path(self,plist=[[0,0]],style=None,closed=None):
 	
 		# =================================================================================================
-		# Source:												http:#www.w3schools.com/svg/svg_path.asp
-		# Line:													M 0 0 L 100 100 200 0 ... 														(any number)	
+		# Source:													http:#www.w3schools.com/svg/svg_path.asp
+		# Line:														M 0 0 L 100 100 200 0 ... 														(any number)	
 		# Curve:													M 0 0 C {100 100 200 0 300 100} 											(only 3)
 		# Smooth Curve: 									M 0 0 S {50 50 100 0} {150 50 200 0} {250 50 300 0}" 	(in pairs)
 		# Quadratic Bezier curve: 				M 0 0 Q {50 50 100 0} {150 50 200 0} {250 50 300 0}" 	(in pairs)
 		# Smooth quadratic Bezier curve:	M 0 0 T 50 50 100 0 150 50 200 0 250 50 300 0" 				(any number)
-		# Close Loop:										M 0 0 ............... Z	
+		# Close Loop:											M 0 0 ............... Z	
 		# Eliptical Curve:								Complex!
 		# =================================================================================================
 
@@ -783,8 +783,7 @@ class mySvgCanvas:
 		# Dots
 		if (self.loc_var["marker"] == "dot" or self.loc_var["marker"] == "arrowdot"):
 			for i in range (1, len(plist)):
-				if (style == "L" or style == "C" or style == "S" or style == "Q" or style == "T"): 
-					self.dot(plist[i])
+				self.dot(plist[i])
 
 # ========================================================================================
 
