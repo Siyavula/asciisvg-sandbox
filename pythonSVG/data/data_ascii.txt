@@ -1,21 +1,19 @@
-setBorder(1)
+setBorder(0)
 initPicture(-10,10,-10,10)
 axes(2, 2, 1, 1,1)
 
 marker = "none"
 stroke = "red"
 
-a = 2
-b = sin(a)
-c = cos(a)
-line([0,0],[b,c])
-
 marker = "none"
 strokewidth="1"
-stroke = "#ee1122"
+stroke = "green"
 slopefield("sin(x)")	
 
 marker = "none"
 strokewidth="2"
 stroke = "blue"
 plot("sin(x) - 3")
+
+stroke = "red"
+plot(["t", "sin(t)"])

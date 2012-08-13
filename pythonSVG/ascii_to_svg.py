@@ -55,6 +55,10 @@ class mySvgCanvas:
 	loc_var["dotradius"] = loc_var["defaultdotradius"] 								= 4
 	loc_var["ticklength"] = loc_var["defaultticklength"] 							= 4
 	
+	# Function Variables
+	loc_var["f"] = None
+	loc_var["g"] = None
+
 	# SVG Labels
 	loc_var["above"] = "above"
 	loc_var["below"] = "below"
@@ -94,7 +98,7 @@ class mySvgCanvas:
 		self.loc_var["grid"] = self.grid
 		self.loc_var["rect"] = self.rect
 		self.loc_var["path"] = self.path
-		#self.loc_var["plot"] = self.plot
+		self.loc_var["plot"] = self.plot
 		self.loc_var["curve"] = self.curve
 		self.loc_var["bunnyhop"] = self.bunnyhop
 		self.loc_var["smoothcurve"] = self.smoothcurve
@@ -219,13 +223,13 @@ class mySvgCanvas:
 		result = []
 		cur=start
 		if (leap > 0 and end > start):
-			while (cur < end):
-				result.append(round(cur,2))
+			while (cur <= end):
+				result.append(round(cur,3))
 				cur += leap
 			return result
 		elif (leap < 0 and end < start):
-			while (cur > end):
-				result.append(round(cur,2))
+			while (cur >= end):
+				result.append(round(cur,3))
 				cur += leap
 			return result
 		else:
@@ -368,13 +372,13 @@ class mySvgCanvas:
 # ========================================================================================
 	
 	def mathjs(self, string):
-
+	
 		# Replace all unknown characters to know characters
 		string = string.replace("^", "**")
-		
+
 		# stringrip Library call
-		string = string.replace("math", "")
-		string = string.replace("Math", "")
+		string = string.replace("math.", "")
+		string = string.replace("Math.", "")
 		
 		# Attach library prefix to functions
 		string = string.replace("sin", "math.sin")
@@ -428,13 +432,13 @@ class mySvgCanvas:
 		node = etree.fromstring("<path></path>")
 		self.xml_parent.append(node)
 		node.attrib['d'] = 	str(	" M " + \
-												str(p[0] * self.loc_var["xunitlength"] + self.loc_var["origin"][0]) + \
-												"," + \
-												str(self.loc_var["height"] - p[1] * self.loc_var["yunitlength"] - self.loc_var["origin"][1]) + \
-												" "+ \
-												str(q[0] * self.loc_var["xunitlength"] + self.loc_var["origin"][0]) + \
-												"," + \
-												str(self.loc_var["height"] - q[1] * self.loc_var["yunitlength"] - self.loc_var["origin"][1]))
+			str(p[0] * self.loc_var["xunitlength"] + self.loc_var["origin"][0]) + \
+			"," + \
+			str(self.loc_var["height"] - p[1] * self.loc_var["yunitlength"] - self.loc_var["origin"][1]) + \
+			" "+ \
+			str(q[0] * self.loc_var["xunitlength"] + self.loc_var["origin"][0]) + \
+			"," + \
+			str(self.loc_var["height"] - q[1] * self.loc_var["yunitlength"] - self.loc_var["origin"][1]))
 		node.attrib['stroke-width'] = str(self.loc_var["strokewidth"])
 		node.attrib['stroke'] = str(self.loc_var["stroke"])
 		node.attrib['fill'] = str(self.loc_var["fill"])
@@ -700,45 +704,48 @@ class mySvgCanvas:
 
 # ========================================================================================
 
-	'''
+	def plot(self,func="sin(x)",x_min=None,x_max=None,points=200):
 
-	def plot(func,x_min,x_max,points,id) {
+		x_min = (x_min == None and self.loc_var["xmin"] or x_min)
+		x_max = (x_max == None and self.loc_var["xmax"] or x_max)
+		array_points = []
 	
-		var f = function(x) {return x}
-		x_min = (x_min==None?xmin:x_min)
-		x_max = (x_max==None?xmax:x_max)
-		var name
-		var array_points = []
-
 		# plot ("sin(x)") 
-		if (typeof func=="string"){
-			eval("g = function(x){ with(Math) return "+mathjs(func)+" }")
-		}
+		if (isinstance(func, str)):
+			exec ("def f(x): return (x)", None, self.loc_var)
+			exec ("def g(x): return (" + self.mathjs(func) + ")", None, self.loc_var)
+
 		# plot (["t", "sin(t)"])
-		else if (typeof func=="object") {
-		  eval("f = function(t){ with(Math) return "+mathjs(func[0])+" }")
-		  eval("g = function(t){ with(Math) return "+mathjs(func[1])+" }")
-		}
-		
+		elif (isinstance(func, list)):
+			exec("def f(t): return (" + self.mathjs(func[0]) + ")", None, self.loc_var)
+			exec("def g(t): return (" + self.mathjs(func[1]) + ")", None, self.loc_var)
+
 		# Number of points
-		var inc = (points==None?(x_max-x_min)/200:inc/points)
+		inc = (points == None and (x_max-x_min)/points or (x_max-x_min+0.0000001)/points)
 
 		# Fill the array_points
-		var fout, gout
-		for (var t = x_min t <= x_max t += inc) {
-			fout = f(t)
-			gout = g(t)
-			# Try
-			if (!(isNaN(fout)orisNaN(gout)orMath.abs(fout)=="Infinity"orMath.abs(gout)=="Infinity")){
-				try{data = [fout, gout]}
-				catch(err) { continue }
-			}
-			array_points[array_points.length] = data
-		}
-		path(array_points)
-	}
+		for i in self.frange(x_min, x_max+0.01, inc):
 
-	'''
+			error_count = 0
+
+			# f(x)
+			try:
+				fout = min(max(self.loc_var["f"](i), -10000), 10000)
+			except:
+				error_count += 1
+			
+			# g(x)
+			try:
+				gout = min(max(self.loc_var["g"](i), -10000), 10000)
+			except:
+				error_count += 1
+
+			# Append
+			if (error_count == 0):
+				array_points.append([fout, gout])
+		
+		#	Draw Graph
+		self.path(array_points)
 
 # ========================================================================================
 
