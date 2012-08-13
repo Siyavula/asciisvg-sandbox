@@ -1,6 +1,6 @@
 setBorder(1)
 initPicture(-10,10,-10,10)
-grid(1,1)
+axes(2, 2, 1, 1,1)
 
 stroke = "red"
 

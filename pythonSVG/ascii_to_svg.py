@@ -93,7 +93,7 @@ class mySvgCanvas:
 		self.loc_var["axes"] = self.axes
 		self.loc_var["grid"] = self.grid
 		self.loc_var["rect"] = self.rect
-		#self.loc_var["path"] = self.path
+		self.loc_var["path"] = self.path
 		#self.loc_var["plot"] = self.plot
 		#self.loc_var["curve"] = self.curve
 		#self.loc_var["petal"] = self.petal
@@ -313,7 +313,7 @@ class mySvgCanvas:
 		dy = self.loc_var["fontsize"]/3
 		if (angle == None):
 			angle = 0
-		
+
 		# Text Positions
 		if (pos == self.loc_var["aboveleft"]):	
 			dx = -self.loc_var["fontsize"]/2 	
@@ -353,7 +353,8 @@ class mySvgCanvas:
 		self.xml_parent.append(node)
 		node.attrib['x'] = str(p[0] * self.loc_var["xunitlength"] + self.loc_var["origin"][0] + dx)		
 		node.attrib['y'] = str(self.loc_var["height"] - p[1] * self.loc_var["yunitlength"] - self.loc_var["origin"][1]+dy)
-		node.attrib['transform'] = "rotate("+str(angle)+", "+str(node.attrib['x'])+", "+str(node.attrib['y'])+")"
+		if (angle != 0):
+			node.attrib['transform'] = "rotate("+str(angle)+", "+str(node.attrib['x'])+", "+str(node.attrib['y'])+")"
 		node.attrib['font-style'] = str(self.loc_var["fontstyle"])
 		node.attrib['font-family'] = str(self.loc_var["fontfamily"])
 		node.attrib['font-size'] = str(self.loc_var["fontsize"])
@@ -736,14 +737,8 @@ class mySvgCanvas:
 
 # ========================================================================================
 
-	'''
-
-	def path(plist,style,closed,id) {
-		var i
-		var node = myCreateElementSVG("path")
-		node.attrib['id", id)
-		svg_picture.appendChild(node)
-		
+	def path(self,plist=[0,0],style=None,closed=None):
+	
 		# =================================================================================================
 		# Source:												http:#www.w3schools.com/svg/svg_path.asp
 		# Line:													M 0 0 L 100 100 200 0 ... 														(any number)	
@@ -756,39 +751,38 @@ class mySvgCanvas:
 		# =================================================================================================
 
 		# Style default = L
-		if (style == None) {style = "L"}	
-
+		if (style == None):
+			style = "L"
+	
 		# Move Command
-		string = "M" + (plist[0][0]*xunitlength+origin[0])+","+ (height-plist[0][1]*yunitlength-origin[1])
+		string = " M " + \
+		str(plist[0][0] * self.loc_var["xunitlength"] + self.loc_var["origin"][0]) + "," + \
+		str(self.loc_var["height"] - plist[0][1]*self.loc_var["yunitlength"] - self.loc_var["origin"][1])
 	
 		# Draw the line	
-		if (style == "L" or style == "C" or style == "S" or style == "Q" or style == "T") 
-		{
-			string += " " + style + " "
-			for (i=1 i<plist.length i++)
-				{string += (plist[i][0]*xunitlength+origin[0])+","+ (height-plist[i][1]*yunitlength-origin[1]) + " "}
-		}
+		if (style == "L" or style == "C" or style == "S" or style == "Q" or style == "T"):
+			string += " " + str(style) + " "
+			for i in range (1, len(plist)):
+				string += str(plist[i][0] * self.loc_var["xunitlength"] + self.loc_var["origin"][0]) + "," + \
+				str(self.loc_var["height"] - plist[i][1] * self.loc_var["yunitlength"] - self.loc_var["origin"][1]) + " "
 
 		# Close the Path
-		if (closed != None) {string += " Z"}	
+		if (closed != None):
+			string += " Z"
 
-		node.attrib['d", string)
-		node.attrib['stroke-width", strokewidth)
-		node.attrib['stroke-dasharray", strokedasharray)
-		node.attrib['stroke", stroke)
-		node.attrib['fill", fill)
-		
+		node = etree.fromstring("<path></path>")
+		self.xml_parent.append(node)
+		node.attrib['d'] = str(string)
+		node.attrib['stroke-width'] = str(self.loc_var["strokewidth"])
+		node.attrib['stroke-dasharray'] = str(self.loc_var["strokedasharray"])
+		node.attrib['stroke'] = str(self.loc_var["stroke"])
+		node.attrib['fill'] = str(self.loc_var["fill"])
+
 		# Dots
-		if (marker=="dot" or marker=="arrowdot")
-		{
-		  for (i=0 i<plist.length i++)
-			{
-		    if (style!="C" and style!="T" or i!=1 and i!=2) {dot(plist[i])}
-			}
-		}
-	}
-
-	'''
+		if (marker=="dot" or marker=="arrowdot"):
+		  for i in range (1, len(plist)):
+		    if (style == "L" or style == "C" or style == "S" or style == "Q" or style == "T"): 
+					self.dot(plist[i])
 
 # ========================================================================================
 
