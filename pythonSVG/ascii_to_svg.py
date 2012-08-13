@@ -83,6 +83,21 @@ class mySvgCanvas:
 		self.loc_var["text"] = self.text
 		self.loc_var["arrowhead"] = self.arrowhead
 		self.loc_var["dot"] = self.dot
+		#self.loc_var["mathjs"] = self.mathjs
+		self.loc_var["line"] = self.line
+		#self.loc_var["ellipse"] = self.ellipse
+		#self.loc_var["circle"] = self.circle
+		#self.loc_var["arc"] = self.arc
+		#self.loc_var["noaxes"] = self.noaxes
+		#self.loc_var["axes"] = self.axes
+		#self.loc_var["grid"] = self.grid
+		#self.loc_var["rect"] = self.rect
+		#self.loc_var["path"] = self.path
+		#self.loc_var["plot"] = self.plot
+		#self.loc_var["curve"] = self.curve
+		#self.loc_var["petal"] = self.petal
+		#self.loc_var["heart"] = self.heart
+		#self.loc_var["slopefield"] = self.slopefield
 
 # ===================================================================================	
 
@@ -98,7 +113,8 @@ class mySvgCanvas:
 				# Try Except
 				try:
 					exec(formatted_ascii_line, None, self.loc_var)
-					self.error_string += "<!-- Complete: " + ascii_line + " -->\n"
+					#self.error_string += "<!-- Complete: " + ascii_line + " -->\n"
+					self.error_string += "<!--         : " + ascii_line + " -->\n"
 				except:
 					self.error_string += "<!-- Error in: " + ascii_line + " -->\n"
 					#break
@@ -462,6 +478,12 @@ class mySvgCanvas:
 
 	}
 
+	'''
+
+# ========================================================================================
+
+	'''
+	
 	/* 
 	==============================
 	Functions (COMPOUND SVG ELEMENTS)
@@ -473,24 +495,39 @@ class mySvgCanvas:
 	============================== 
 	*/
 
-	def line(p,q,id) {
-		var node = myCreateElementSVG("path")
-		node.attrib['id", id)
-		node.attrib['d","M"+(p[0]*xunitlength+origin[0])+","+
-															(height-p[1]*yunitlength-origin[1])+" "+
-															(q[0]*xunitlength+origin[0])+","+
-															(height-q[1]*yunitlength-origin[1]))
-		node.attrib['stroke-width", strokewidth)
-		node.attrib['stroke", stroke)
-		node.attrib['fill", fill)
-		node.attrib['stroke-dasharray", strokedasharray)
-		/* starting point (p) */
-		if (marker=="dot" or marker=="arrowdot") {ASdot(p,markersize,markerstroke,markerfill) }
-		/* ending point (q) */ 
-		if (marker=="arrowdot" or marker=="arrow") {arrowhead(p,q)}
-		if (marker=="dot") {dot(q)}
-		svg_picture.appendChild(node)
-	}
+	'''
+	
+# ========================================================================================
+	
+	def line(self,p,q):
+		node = etree.fromstring("<path></path>")
+		self.xml_parent.append(node)
+		node.attrib['d'] = 	str(	" M " + \
+												str(p[0] * self.loc_var["xunitlength"] + self.loc_var["origin"][0]) + \
+												"," + \
+												str(self.loc_var["height"] - p[1] * self.loc_var["yunitlength"] - self.loc_var["origin"][1]) + \
+												" "+ \
+												str(q[0] * self.loc_var["xunitlength"] + self.loc_var["origin"][0]) + \
+												"," + \
+												str(self.loc_var["height"] - q[1] * self.loc_var["yunitlength"] - self.loc_var["origin"][1]))
+		node.attrib['stroke-width'] = str(self.loc_var["strokewidth"])
+		node.attrib['stroke'] = str(self.loc_var["stroke"])
+		node.attrib['fill'] = str(self.loc_var["fill"])
+		node.attrib['stroke-dasharray'] = str(self.loc_var["strokedasharray"])
+		
+		# starting point (p)
+		if (self.loc_var["marker"] == "dot" or self.loc_var["marker"] == "arrowdot"):
+			self.dot(p,self.loc_var["markersize"], self.loc_var["markerstroke"], self.loc_var["markerfill"])
+
+		# ending point (q) 
+		if (self.loc_var["marker"] == "arrowdot" or self.loc_var["marker"] == "arrow"):	
+			self.arrowhead(p,q)
+		if (self.loc_var["marker"] == "dot"):
+			self.dot(q)
+
+# ========================================================================================
+
+	'''
 
 	def ellipse(center,rx,ry,id) {
 		var node = myCreateElementSVG("ellipse")
@@ -538,6 +575,12 @@ class mySvgCanvas:
 		if (marker=="arrow") {arrowhead(tangent,end)}
 	}
 
+	'''
+
+# ========================================================================================
+
+	'''
+
 	/*
 	==============================
 	Functions (COMPLEX SVG ELEMENTS)
@@ -549,11 +592,19 @@ class mySvgCanvas:
 	> path(plist,id,c)
 	> plot(fun,x_min,x_max,points,id)
 	> curve(plist,id)
+	> bunnyhop(plist,id)
+	> smoothcurve(plist,id)
 	> petal(p,d,id)
 	> heart(p,size)
 	> slopefield(fun,dx,dy)
 	============================== 
 	*/
+
+	'''
+
+# ========================================================================================
+
+	'''
 
 	def noaxes() {
 		initPicture()
@@ -618,6 +669,12 @@ class mySvgCanvas:
 		svg_picture.appendChild(pnode)
 
 	}
+
+	'''
+
+# ========================================================================================
+
+	'''
 
 	def grid(dx,dy) { 
 		axes(dx,dy,None,dx,dy)
@@ -694,6 +751,12 @@ class mySvgCanvas:
 		}
 	}
 
+	'''
+
+# ========================================================================================
+
+	'''
+
 	def plot(func,x_min,x_max,points,id) {
 	
 		var f = function(x) {return x}
@@ -730,28 +793,64 @@ class mySvgCanvas:
 		path(array_points)
 	}
 
+	'''
+
+# ========================================================================================
+
+	'''
+
 	def curve(plist,id) { 
 		path(plist,"T")
 	}
+
+	'''
+
+# ========================================================================================
+
+	'''
 
 	def bunnyhop(plist,id) { 
 		path(plist,"Q")
 	}
 
+	'''
+
+# ========================================================================================
+
+	'''
+
 	def smoothcurve(plist,id) { 
 		path(plist,"S")
 	}
+
+	'''
+
+# ========================================================================================
+
+	'''
 
 	def petal(p,d,id) {
 		if (d==None) d=[1,1]
 		path([p,[p[0]+d[0],p[1]+d[1]],[p[0]-d[1],p[1]+d[0]],p],"C")
 	}
 
+	'''
+
+# ========================================================================================
+
+	'''
+
 	def heart(p,size){
 		if (size==None) size = 1
 		path([[p[0],p[1]], [p[0]+size,p[1]+size], [p[0],p[1]+size*1.25], [p[0],p[1]+size*0.75]], "C")
 		path([[p[0],p[1]+size*0.75],[p[0],p[1]+size*1.25], [p[0]-size,p[1]+size], [p[0],p[1]]], "C")
 	}
+
+	'''
+
+# ========================================================================================
+
+	'''
 
 	def slopefield(func,dx,dy) {
 
