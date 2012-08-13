@@ -88,7 +88,7 @@ class mySvgCanvas:
 		self.loc_var["ellipse"] = self.ellipse
 		self.loc_var["circle"] = self.circle
 		self.loc_var["arc"] = self.arc
-		#self.loc_var["noaxes"] = self.noaxes
+		self.loc_var["noaxes"] = self.noaxes
 		#self.loc_var["axes"] = self.axes
 		#self.loc_var["grid"] = self.grid
 		#self.loc_var["rect"] = self.rect
@@ -200,17 +200,8 @@ class mySvgCanvas:
 		self.xml_parent.attrib['ymax'] = str(self.loc_var["ymax"])
 		self.xml_parent.attrib['ox'] = str(self.loc_var["origin"][0])
 		self.xml_parent.attrib['oy'] = str(self.loc_var["origin"][1])
-	
-		# Initialize blank background
-		node = etree.fromstring("<rect></rect>")
-		self.xml_parent.append(node)
-		node.attrib['x'] = "0"
-		node.attrib['y'] = "0"
-		node.attrib['width'] = str(self.loc_var["width"])
-		node.attrib['height'] = str(self.loc_var["height"])
-		node.attrib['stroke-width'] = str(self.loc_var["border"])
-		node.attrib['stroke'] = str(self.loc_var["stroke"])
-		node.attrib['fill'] = "white"
+
+		self.noaxes()
 
 # ========================================================================================
 
@@ -610,11 +601,22 @@ class mySvgCanvas:
 
 # ========================================================================================
 
-	'''
+	def noaxes(self):
 
-	def noaxes() {
-		initPicture()
-	}
+		# Initialize blank background
+		node = etree.fromstring("<rect></rect>")
+		self.xml_parent.append(node)
+		node.attrib['x'] = "0"
+		node.attrib['y'] = "0"
+		node.attrib['width'] = str(self.loc_var["width"])
+		node.attrib['height'] = str(self.loc_var["height"])
+		node.attrib['stroke-width'] = str(self.loc_var["border"])
+		node.attrib['stroke'] = str(self.loc_var["stroke"])
+		node.attrib['fill'] = "white"
+
+# ========================================================================================
+
+	'''
 
 	def axes(dx,dy,labels,gdx,gdy) {
 		var pnode, string, i

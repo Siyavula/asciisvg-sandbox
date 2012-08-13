@@ -2,7 +2,14 @@ setBorder(1)
 initPicture(-10,10,-10,10)
 axes(2, 1, "labels", 1,1)
 
+noaxes()
+
 stroke = "red"
+
+arc()
+arc([2,2], [3,3])
+arc([-2,-2], [-1,-1], 3)
+arc([-2,-2], [-5,-5], 0.1)
 
 marker = "none"
 strokewidth="1"
