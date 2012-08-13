@@ -104,7 +104,7 @@ class mySvgCanvas:
 		self.loc_var["smoothcurve"] = self.smoothcurve
 		self.loc_var["petal"] = self.petal
 		self.loc_var["heart"] = self.heart
-		#self.loc_var["slopefield"] = self.slopefield
+		self.loc_var["slopefield"] = self.slopefield
 
 # ===================================================================================	
 
@@ -779,42 +779,34 @@ class mySvgCanvas:
 
 # ========================================================================================
 
-	'''
+	def slopefield(self,func="sin(x)",dx=None,dy=None):
 
-	def slopefield(func,dx,dy) {
+		if (dx == None or dx <= 0): dx=1
+		if (dy == None or dy <= 0): dy=1
 
-		if (dx==Noneordx<=0) dx=1
-		if (dy==Noneordy<=0) dy=1
+		# plot ("sin(x)")
+		exec ("def g(x,y): return (" + self.mathjs(func) + ")", None, self.loc_var)
 
-		# def 
-		var g, gout	  
-		if (typeof func=="string")
-		  eval("g = function(x,y){ with(Math) return "+mathjs(func)+" }")
-		
 		# Length of Line
-		var dz = Math.sqrt(dx*dx+dy*dy)/6
-	
-		# Loop	
-		var x,y,u,v
-		for (x = xmin x <= xmax x += dx)
-		{
-		  for (y = ymin y <= ymax y += dy) 
-			{
-				# Calculate the Instantaneous Gradient
-				ddx = 0.0001
-				gout = (g(x+ddx,y)-g(x-ddx,y))/(2*ddx)
-				# Plot Line
-				if (!isNaN(gout))
-				{
-					if (Math.abs(gout)=="Infinity") {u = 0 v = dz}
-					else {u = dz/Math.sqrt(1+gout*gout) v = gout*u}
-					line([x-u,y-v],[x+u,y+v])
-				}
-		  }
-		}
-	}
+		dz = math.sqrt(dx*dx+dy*dy)/6
 
-	'''
+		# Loop	
+		ddx = 0.001
+		for x in self.frange(self.loc_var["xmin"], self.loc_var["xmax"], dx):
+		  for y in self.frange(self.loc_var["ymin"], self.loc_var["ymax"], dy):
+				
+				# Calculate the Instantaneous Gradient
+				try:
+					gout = (self.loc_var["g"](x+ddx,y) - self.loc_var["g"](x-ddx,y))/(2.0*ddx)
+					error_flag = 0
+				except:
+					error_flag += 1		
+		
+				# Plot Line
+				if (error_flag == 0):
+					u = dz/math.sqrt(1 + gout*gout)
+					v = gout * u
+					self.line([x-u,y-v],[x+u,y+v])
 
 # ========================================================================================
 # Main Code

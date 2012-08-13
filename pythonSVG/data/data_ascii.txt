@@ -10,10 +10,10 @@ strokewidth="1"
 stroke = "green"
 slopefield("sin(x)")	
 
-marker = "none"
 strokewidth="2"
 stroke = "blue"
-plot("sin(x) - 3")
+plot("sin(x) + 2")	
 
-stroke = "red"
-plot(["t", "sin(t)"])
+plot("sin(x)")
+
+plot("sin(x) - 2")
