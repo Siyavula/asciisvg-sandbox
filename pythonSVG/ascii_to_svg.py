@@ -926,20 +926,21 @@ class mySvgCanvas:
 # Main Code
 # ========================================================================================
 
-a = mySvgCanvas("svg1")
+if __name__ == '__main__':
+	a = mySvgCanvas("svg1")
 
-ascii_string= ""
-while True:
-	try:
-		new_line = raw_input()
-		ascii_string += new_line + "\n"
-	except:
-		break	
+	ascii_string= ""
+	while True:
+		try:
+			new_line = raw_input()
+			ascii_string += new_line + "\n"
+		except:
+			break	
 
-a.process_ascii(ascii_string)
-xml = a.generate_string()
+	a.process_ascii(ascii_string)
+	xml = a.generate_string()
 
-print xml
+	print xml
 
 # ========================================================================================
 
