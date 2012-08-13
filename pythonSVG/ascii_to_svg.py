@@ -82,6 +82,7 @@ class mySvgCanvas:
 		self.loc_var["rect"] = self.rect
 		self.loc_var["text"] = self.text
 		self.loc_var["arrowhead"] = self.arrowhead
+		self.loc_var["dot"] = self.dot
 
 # ===================================================================================	
 
@@ -218,54 +219,48 @@ class mySvgCanvas:
 	'''
 
 # ========================================================================================
-	'''
-	def dot(self, center=[0,0], typ=None, label="text", pos=None):
+	
+	def dot(self, center=[0,0], typ=None, label=None, pos=None, angle=None):
 
-		cx = center[0]*self.loc_var["xunitlength + self.loc_var["origin[0]
-		cy = self.loc_var["height - center[1]*self.loc_var["yunitlength - self.loc_var["origin[1]
+		cx = center[0] * self.loc_var["xunitlength"] + self.loc_var["origin"][0]
+		cy = self.loc_var["height"] - center[1] * self.loc_var["yunitlength"] - self.loc_var["origin"][1]
 
-		if (typ=="+" or typ=="-" or typ=="|"):
-		{
-			# If the Type is Defined
-		  var node = myCreateElementSVG("path")
-		  node.attrib['id", id)
-		  svg_picture.appendChild(node)
+		# If the Type is Defined
+		if (typ == "+" or typ == "-" or typ == "|"):
+			node = etree.fromstring("<path></path>")
+			self.xml_parent.append(node)
+			if (typ=="+"):					
+				node.attrib['d'] = 	" M " + str(cx - self.loc_var["ticklength"]) + " " + str(cy) + \
+														" L " + str(cx + self.loc_var["ticklength"]) + " " + str(cy) + \
+														" M " + str(cx) + " " + str(cy - self.loc_var["ticklength"]) + \
+														" L " + str(cx) + " " + str(cy + self.loc_var["ticklength"])
+				node.attrib['stroke-width'] = str(0.5)
+				node.attrib['stroke'] = str(self.loc_var["axesstroke"])
+			elif (typ=="-"):
+				node.attrib['d'] = 	" M " + str(cx - self.loc_var["ticklength"]) + " " + str(cy) + \
+														" L " + str(cx + self.loc_var["ticklength"]) + " " + str(cy)
+			elif (typ=="|"):
+				node.attrib['d'] = 	" M " + str(cx) + " " + str(cy - self.loc_var["ticklength"]) + \
+														" L " + str(cx) + " " + str(cy + self.loc_var["ticklength"])
+				node.attrib['stroke-width'] = str(self.loc_var["strokewidth"])
+				node.attrib['stroke'] = str(self.loc_var["stroke"])
 
-		  if (typ=="+") {	
-				# "+" Sign
-		    node.attrib['d", 	" M "+(cx-ticklength)+" "+cy+" L "+(cx+ticklength)+" "+cy+
-		      											" M "+cx+" "+(cy-self.loc_var["ticklength)+" L "+cx+" "+(cy+self.loc_var["ticklength))
-		    node.attrib['stroke-width", .5)
-		    node.attrib['stroke", axesstroke)
-		  }
-		  if (typ=="-") {
-				# "-" Sign
-				node.attrib['d", " M "+(cx-self.loc_var["ticklength)+" "+cy+" L "+(cx+self.loc_var["ticklength)+" "+cy)
-		  }
-			if (typ=="|") { 
-				# "|" Sign
-				node.attrib['d", " M "+cx+" "+(cy-self.loc_var["ticklength)+" L "+cx+" "+(cy+self.loc_var["ticklength))
-		    node.attrib['stroke-width", self.loc_var["strokewidth)
-		    node.attrib['stroke", self.loc_var["stroke)
-		  }
-		} 
-		else {
-			# Type NOT Defined
-		  node = myCreateElementSVG("circle")
-		  svg_picture.appendChild(node)
-		  node.attrib['cx",cx)
-		  node.attrib['cy",cy)
-		  node.attrib['r", dotradius)
-		  node.attrib['stroke-width", self.loc_var["strokewidth)
-		  node.attrib['stroke", self.loc_var["stroke)
-		  node.attrib['fill", (typ=="open"?"white":stroke))
-		}
+		# Type NOT Defined
+		else:
+
+			node = etree.fromstring("<circle></circle>")
+			self.xml_parent.append(node)
+			node.attrib['cx'] = str(cx)
+			node.attrib['cy'] = str(cy)
+			node.attrib['r'] = str(self.loc_var["dotradius"])
+			node.attrib['stroke-width'] = str(self.loc_var["strokewidth"])
+			node.attrib['stroke'] = str(self.loc_var["stroke"])
+			node.attrib['fill'] = str(typ == "open" and "white" or self.loc_var["stroke"])
+
 		# Label
-		if (label!=None) {
-			text(center,label,(pos==None?"below":pos),(id==None?id:id+"label"))
-		}
-	}
-	'''
+		if (label != None):
+			self.text(center,label,(pos == None and "below" or pos), (angle == None and 0 or angle))
+	
 # ========================================================================================
 	
 	def arrowhead(self,p=[0,0],q=[1,1],size=None):

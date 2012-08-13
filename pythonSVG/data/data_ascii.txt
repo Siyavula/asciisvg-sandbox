@@ -8,10 +8,16 @@ dot([-1,-1], open)
 
 text([-1,0], "hello")
 text([-2,0], "hello", null, 90)
+text([-2, -2], "Label", below, None)
 
 arrowhead([0,0],[1,1],1)
 arrowhead([0,0],[-1,-1],10)
 arrowhead([0,0],[-1,1])
+
+dot ([-2,-1])
+dot ([-2,-2], "open", "Label")
+dot ([-2,-3], "open", "Label", right)
+dot ([-2,-4], "open", "Label", right, 90)
 
 marker = "none"
 strokewidth="1"
