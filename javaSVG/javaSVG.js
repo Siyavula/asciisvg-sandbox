@@ -683,7 +683,7 @@ function plot(func,x_min,x_max,points,id) {
   }
   
 	// Number of points
-  var inc = (points==null?(x_max-x_min)/200:inc/points);
+  var inc = (points==null?(x_max-x_min)/200:(x_max-x_min+0.0000001)/points);
 
 	// Fill the array_points
   var fout, gout;
