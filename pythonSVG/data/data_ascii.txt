@@ -10,6 +10,8 @@ text([-1,0], "hello")
 text([-2,0], "hello", null, 90)
 
 arrowhead([0,0],[1,1],1)
+arrowhead([0,0],[-1,-1],10)
+arrowhead([0,0],[-1,1])
 
 marker = "none"
 strokewidth="1"

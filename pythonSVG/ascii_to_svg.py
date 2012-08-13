@@ -218,12 +218,11 @@ class mySvgCanvas:
 	'''
 
 # ========================================================================================
-
 	'''
 	def dot(self, center=[0,0], typ=None, label="text", pos=None):
 
-		cx = center[0]*self.xunitlength + self.origin[0]
-		cy = self.height - center[1]*self.yunitlength - self.origin[1]
+		cx = center[0]*self.loc_var["xunitlength + self.loc_var["origin[0]
+		cy = self.loc_var["height - center[1]*self.loc_var["yunitlength - self.loc_var["origin[1]
 
 		if (typ=="+" or typ=="-" or typ=="|"):
 		{
@@ -235,31 +234,30 @@ class mySvgCanvas:
 		  if (typ=="+") {	
 				# "+" Sign
 		    node.attrib['d", 	" M "+(cx-ticklength)+" "+cy+" L "+(cx+ticklength)+" "+cy+
-		      											" M "+cx+" "+(cy-ticklength)+" L "+cx+" "+(cy+ticklength))
+		      											" M "+cx+" "+(cy-self.loc_var["ticklength)+" L "+cx+" "+(cy+self.loc_var["ticklength))
 		    node.attrib['stroke-width", .5)
 		    node.attrib['stroke", axesstroke)
 		  }
 		  if (typ=="-") {
 				# "-" Sign
-				node.attrib['d", " M "+(cx-ticklength)+" "+cy+" L "+(cx+ticklength)+" "+cy)
+				node.attrib['d", " M "+(cx-self.loc_var["ticklength)+" "+cy+" L "+(cx+self.loc_var["ticklength)+" "+cy)
 		  }
 			if (typ=="|") { 
 				# "|" Sign
-				node.attrib['d", " M "+cx+" "+(cy-ticklength)+" L "+cx+" "+(cy+ticklength))
-		    node.attrib['stroke-width", strokewidth)
-		    node.attrib['stroke", stroke)
+				node.attrib['d", " M "+cx+" "+(cy-self.loc_var["ticklength)+" L "+cx+" "+(cy+self.loc_var["ticklength))
+		    node.attrib['stroke-width", self.loc_var["strokewidth)
+		    node.attrib['stroke", self.loc_var["stroke)
 		  }
 		} 
 		else {
 			# Type NOT Defined
 		  node = myCreateElementSVG("circle")
-		  node.attrib['id", id)
 		  svg_picture.appendChild(node)
 		  node.attrib['cx",cx)
 		  node.attrib['cy",cy)
 		  node.attrib['r", dotradius)
-		  node.attrib['stroke-width", strokewidth)
-		  node.attrib['stroke", stroke)
+		  node.attrib['stroke-width", self.loc_var["strokewidth)
+		  node.attrib['stroke", self.loc_var["stroke)
 		  node.attrib['fill", (typ=="open"?"white":stroke))
 		}
 		# Label
@@ -268,7 +266,6 @@ class mySvgCanvas:
 		}
 	}
 	'''
-
 # ========================================================================================
 	
 	def arrowhead(self,p=[0,0],q=[1,1],size=None):
@@ -282,11 +279,7 @@ class mySvgCanvas:
 			node = etree.fromstring("<path></path>")
 			self.xml_parent.append(node)
 			node.attrib['d'] = str("M " + str(w[0]-15*u[0]-4*up[0]) + " " + str(w[1]-15*u[1]-4*up[1]) + " L " + str(w[0]-3*u[0]) + " " + str(w[1]-3*u[1]) + " L " + str(w[0]-15*u[0]+4*up[0]) + " " + str(w[1]-15*u[1]+4*up[1]) + " Z")
-			if (size != None):
-				stroke_width = size
-			else:
-				stroke_width = self.loc_var["markersize"]
-			node.attrib['stroke-width'] = str(stroke_width)
+			node.attrib['stroke-width'] = str(size != None and size or self.loc_var["markersize"])
 			node.attrib['stroke'] = self.loc_var["stroke"]
 			node.attrib['fill'] = self.loc_var["stroke"]
 
