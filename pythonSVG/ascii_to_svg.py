@@ -98,7 +98,7 @@ class mySvgCanvas:
 		self.loc_var["curve"] = self.curve
 		self.loc_var["bunnyhop"] = self.bunnyhop
 		self.loc_var["smoothcurve"] = self.smoothcurve
-		#self.loc_var["petal"] = self.petal
+		self.loc_var["petal"] = self.petal
 		#self.loc_var["heart"] = self.heart
 		#self.loc_var["slopefield"] = self.slopefield
 
@@ -844,14 +844,10 @@ class mySvgCanvas:
 
 # ========================================================================================
 
-	'''
-
-	def petal(p,d,id) {
-		if (d==None) d=[1,1]
-		path([p,[p[0]+d[0],p[1]+d[1]],[p[0]-d[1],p[1]+d[0]],p],"C")
-	}
-
-	'''
+	def petal(self,p,d):
+		if (d==None):
+			d=[1,1]
+		self.path([p,[p[0]+d[0],p[1]+d[1]],[p[0]-d[1],p[1]+d[0]],p],"C")
 
 # ========================================================================================
 
