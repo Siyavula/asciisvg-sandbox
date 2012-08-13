@@ -586,13 +586,13 @@ class mySvgCanvas:
 		dy = (end[0]-start[0])/2
 		hy = start[1] + dy
 		tangent = [hx+dy/(radius*radius),hy-dx/(radius*radius)]
-		if (marker=="dot"):
+		if (self.loc_var["marker"] == "dot"):
 			self.dot(start)
 			self.dot(end)
-		if (marker=="arrowdot"):
+		if (self.loc_var["marker"] == "arrowdot"):
 			self.dot(start) 
 			self.arrowhead(tangent,end)
-		if (marker=="arrow"):
+		if (self.loc_var["marker"] == "arrow"):
 			self.arrowhead(tangent,end)
 
 # ========================================================================================
