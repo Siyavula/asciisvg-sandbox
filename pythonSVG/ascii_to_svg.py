@@ -84,7 +84,7 @@ class mySvgCanvas:
 		self.loc_var["text"] = self.text
 		self.loc_var["arrowhead"] = self.arrowhead
 		self.loc_var["dot"] = self.dot
-		#self.loc_var["mathjs"] = self.mathjs
+		self.loc_var["mathjs"] = self.mathjs
 		self.loc_var["line"] = self.line
 		self.loc_var["ellipse"] = self.ellipse
 		self.loc_var["circle"] = self.circle
@@ -112,14 +112,14 @@ class mySvgCanvas:
 				
 				# Formatting Line
 				formatted_ascii_line = formatted_ascii_line.replace("null", "None")
+				formatted_ascii_line = self.mathjs(formatted_ascii_line)
 
 				# Try Except
 				try:
 					exec(formatted_ascii_line, None, self.loc_var)
-					#self.error_string += "<!-- Complete: " + ascii_line + " -->\n"
-					self.error_string += "<!--         : " + ascii_line + " -->\n"
-				except:
-					self.error_string += "<!-- Error in: " + ascii_line + " -->\n"
+					self.error_string += "<!--   OK : " + ascii_line + " -->\n"
+				except:				
+					self.error_string += "<!-- Error: " + ascii_line + " -->\n"
 					#break
 
 		return ascii_string
@@ -367,130 +367,43 @@ class mySvgCanvas:
 
 # ========================================================================================
 	
-	'''
+	def mathjs(self, string):
 
-	def mathjs(st) {
+		# Replace all unknown characters to know characters
+		string = string.replace("^", "**")
+		
+		# stringrip Library call
+		string = string.replace("math", "")
+		string = string.replace("Math", "")
+		
+		# Attach library prefix to functions
+		string = string.replace("sin", "math.sin")
+		string = string.replace("cos", "math.cos")
+		string = string.replace("tan", "math.tan")
+		string = string.replace("asin", "math.asin")
+		string = string.replace("acos", "math.acos")
+		string = string.replace("atan", "math.atan")
+		string = string.replace("sinh", "math.sinh")
+		string = string.replace("cosh", "math.cosh")
+		string = string.replace("tanh", "math.tanh")
+		string = string.replace("asinh", "math.asinh")
+		string = string.replace("acosh", "math.acosh")
+		string = string.replace("atanh", "math.atanh")
 
-		# Working (from ASCIISVG) - remains uncleaned for javaSVG. 
+		string = string.replace("sec", "1/math.sin")
+		string = string.replace("sec", "1/math.cos")
+		string = string.replace("cot", "1/math.tan")
+		string = string.replace("asec", "1/math.asin")
+		string = string.replace("asec", "1/math.acos")
+		string = string.replace("acot", "1/math.atan")
+		string = string.replace("sech", "1/math.sinh")
+		string = string.replace("sech", "1/math.cosh")
+		string = string.replace("coth", "1/math.tanh")
+		string = string.replace("asech", "1/math.asinh")
+		string = string.replace("asech", "1/math.acosh")
+		string = string.replace("acoth", "1/math.atanh")
 
-		st = st.replace(/\s/g,"")
-		if (st.indexOf("^-1")!=-1) {
-		  st = st.replace(/sin\^-1/g,"arcsin")
-		  st = st.replace(/cos\^-1/g,"arccos")
-		  st = st.replace(/tan\^-1/g,"arctan")
-		  st = st.replace(/sec\^-1/g,"arcsec")
-		  st = st.replace(/csc\^-1/g,"arccsc")
-		  st = st.replace(/cot\^-1/g,"arccot")
-		  st = st.replace(/sinh\^-1/g,"arcsinh")
-		  st = st.replace(/cosh\^-1/g,"arccosh")
-		  st = st.replace(/tanh\^-1/g,"arctanh")
-		  st = st.replace(/sech\^-1/g,"arcsech")
-		  st = st.replace(/csch\^-1/g,"arccsch")
-		  st = st.replace(/coth\^-1/g,"arccoth")
-		}
-		st = st.replace(/^e$/g,"(E)")
-		st = st.replace(/^e([^a-zA-Z])/g,"(E)$1")
-		st = st.replace(/([^a-zA-Z])e([^a-zA-Z])/g,"$1(E)$2")
-		st = st.replace(/([0-9])([\(a-zA-Z])/g,"$1*$2")
-		st = st.replace(/\)([\(0-9a-zA-Z])/g,"\)*$1")
-		var i,j,k, ch, nested
-		while ((i=st.indexOf("^"))!=-1) {
-		  #find left argument
-		  if (i==0) return "Error: missing argument"
-		  j = i-1
-		  ch = st.charAt(j)
-		  if (ch>="0" and ch<="9") {# look for (decimal) number
-		    j--
-		    while (j>=0 and (ch=st.charAt(j))>="0" and ch<="9") j--
-		    if (ch==".") {
-		      j--
-		      while (j>=0 and (ch=st.charAt(j))>="0" and ch<="9") j--
-		    }
-		  } else if (ch==")") {# look for matching opening bracket and def name
-		    nested = 1
-		    j--
-		    while (j>=0 and nested>0) {
-		      ch = st.charAt(j)
-		      if (ch=="(") nested--
-		      else if (ch==")") nested++
-		      j--
-		    }
-		    while (j>=0 and (ch=st.charAt(j))>="a" and ch<="z" or ch>="A" and ch<="Z")
-		      j--
-		  } else if (ch>="a" and ch<="z" or ch>="A" and ch<="Z") {# look for variable
-		    j--
-		    while (j>=0 and (ch=st.charAt(j))>="a" and ch<="z" or ch>="A" and ch<="Z")
-		      j--
-		  } else { 
-		    return "Error: incorrect syntax in "+st+" at position "+j
-		  }
-		  #find right argument
-		  if (i==st.length-1) return "Error: missing argument"
-		  k = i+1
-		  ch = st.charAt(k)
-		  if (ch>="0" and ch<="9" or ch=="-") {# look for signed (decimal) number
-		    k++
-		    while (k<st.length and (ch=st.charAt(k))>="0" and ch<="9") k++
-		    if (ch==".") {
-		      k++
-		      while (k<st.length and (ch=st.charAt(k))>="0" and ch<="9") k++
-		    }
-		  } else if (ch=="(") {# look for matching closing bracket and def name
-		    nested = 1
-		    k++
-		    while (k<st.length and nested>0) {
-		      ch = st.charAt(k)
-		      if (ch=="(") nested++
-		      else if (ch==")") nested--
-		      k++
-		    }
-		  } else if (ch>="a" and ch<="z" or ch>="A" and ch<="Z") {# look for variable
-		    k++
-		    while (k<st.length and (ch=st.charAt(k))>="a" and ch<="z" or
-		             ch>="A" and ch<="Z") k++
-		  } else { 
-		    return "Error: incorrect syntax in "+st+" at position "+k
-		  }
-		  st = st.slice(0,j+1)+"pow("+st.slice(j+1,i)+","+st.slice(i+1,k)+")"+
-		         st.slice(k)
-		}
-		while ((i=st.indexOf("!"))!=-1) {
-		  #find left argument
-		  if (i==0) return "Error: missing argument"
-		  j = i-1
-		  ch = st.charAt(j)
-		  if (ch>="0" and ch<="9") {# look for (decimal) number
-		    j--
-		    while (j>=0 and (ch=st.charAt(j))>="0" and ch<="9") j--
-		    if (ch==".") {
-		      j--
-		      while (j>=0 and (ch=st.charAt(j))>="0" and ch<="9") j--
-		    }
-		  } else if (ch==")") {# look for matching opening bracket and def name
-		    nested = 1
-		    j--
-		    while (j>=0 and nested>0) {
-		      ch = st.charAt(j)
-		      if (ch=="(") nested--
-		      else if (ch==")") nested++
-		      j--
-		    }
-		    while (j>=0 and (ch=st.charAt(j))>="a" and ch<="z" or ch>="A" and ch<="Z")
-		      j--
-		  } else if (ch>="a" and ch<="z" or ch>="A" and ch<="Z") {# look for variable
-		    j--
-		    while (j>=0 and (ch=st.charAt(j))>="a" and ch<="z" or ch>="A" and ch<="Z")
-		      j--
-		  } else { 
-		    return "Error: incorrect syntax in "+st+" at position "+j
-		  }
-		  st = st.slice(0,j+1)+"factorial("+st.slice(j+1,i)+")"+st.slice(i+1)
-		}
-		return st
-
-	}
-
-	'''
+		return string
 
 # ========================================================================================
 
@@ -579,7 +492,7 @@ class mySvgCanvas:
 		node.attrib['stroke-width'] = str(self.loc_var["strokewidth"])
 		node.attrib['stroke'] = str(self.loc_var["stroke"])
 		node.attrib['fill'] = str(self.loc_var["fill"])
-	
+
 		# Markers
 		dx = (end[0]-start[0])/2
 		hx = start[0] + dx
