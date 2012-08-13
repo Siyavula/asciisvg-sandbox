@@ -86,7 +86,7 @@ class mySvgCanvas:
 		#self.loc_var["mathjs"] = self.mathjs
 		self.loc_var["line"] = self.line
 		self.loc_var["ellipse"] = self.ellipse
-		#self.loc_var["circle"] = self.circle
+		self.loc_var["circle"] = self.circle
 		#self.loc_var["arc"] = self.arc
 		#self.loc_var["noaxes"] = self.noaxes
 		#self.loc_var["axes"] = self.axes
@@ -540,13 +540,8 @@ class mySvgCanvas:
 
 # ========================================================================================
 
-	'''
-
-	def circle(center,radius,id) {
-		ellipse(center,radius,radius,id)
-	}
-
-	'''
+	def circle(self,center=[0,0],radius=1):
+		self.ellipse(center,radius,radius)
 
 # ========================================================================================
 

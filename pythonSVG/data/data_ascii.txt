@@ -4,8 +4,9 @@ axes(2, 1, "labels", 1,1)
 
 stroke = "red"
 
-ellipse([1,1])
-ellipse([1,1],2,3)
+circle()
+circle([1,1])
+circle([1,1],2)
 
 marker = "none"
 strokewidth="1"
