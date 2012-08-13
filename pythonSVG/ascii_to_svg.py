@@ -95,7 +95,9 @@ class mySvgCanvas:
 		self.loc_var["rect"] = self.rect
 		self.loc_var["path"] = self.path
 		#self.loc_var["plot"] = self.plot
-		#self.loc_var["curve"] = self.curve
+		self.loc_var["curve"] = self.curve
+		self.loc_var["bunnyhop"] = self.bunnyhop
+		self.loc_var["smoothcurve"] = self.smoothcurve
 		#self.loc_var["petal"] = self.petal
 		#self.loc_var["heart"] = self.heart
 		#self.loc_var["slopefield"] = self.slopefield
@@ -737,7 +739,7 @@ class mySvgCanvas:
 
 # ========================================================================================
 
-	def path(self,plist=[0,0],style=None,closed=None):
+	def path(self,plist=[[0,0]],style=None,closed=None):
 	
 		# =================================================================================================
 		# Source:												http:#www.w3schools.com/svg/svg_path.asp
@@ -759,7 +761,7 @@ class mySvgCanvas:
 		str(plist[0][0] * self.loc_var["xunitlength"] + self.loc_var["origin"][0]) + "," + \
 		str(self.loc_var["height"] - plist[0][1]*self.loc_var["yunitlength"] - self.loc_var["origin"][1])
 	
-		# Draw the line	
+		# Draw the line
 		if (style == "L" or style == "C" or style == "S" or style == "Q" or style == "T"):
 			string += " " + str(style) + " "
 			for i in range (1, len(plist)):
@@ -779,9 +781,9 @@ class mySvgCanvas:
 		node.attrib['fill'] = str(self.loc_var["fill"])
 
 		# Dots
-		if (marker=="dot" or marker=="arrowdot"):
-		  for i in range (1, len(plist)):
-		    if (style == "L" or style == "C" or style == "S" or style == "Q" or style == "T"): 
+		if (self.loc_var["marker"] == "dot" or self.loc_var["marker"] == "arrowdot"):
+			for i in range (1, len(plist)):
+				if (style == "L" or style == "C" or style == "S" or style == "Q" or style == "T"): 
 					self.dot(plist[i])
 
 # ========================================================================================
@@ -828,33 +830,18 @@ class mySvgCanvas:
 
 # ========================================================================================
 
-	'''
-
-	def curve(plist,id) { 
-		path(plist,"T")
-	}
-
-	'''
+	def curve(self, plist):
+		self.path(plist,"T")
 
 # ========================================================================================
 
-	'''
-
-	def bunnyhop(plist,id) { 
-		path(plist,"Q")
-	}
-
-	'''
+	def bunnyhop(self, plist): 
+		self.path(plist,"Q")
 
 # ========================================================================================
 
-	'''
-
-	def smoothcurve(plist,id) { 
-		path(plist,"S")
-	}
-
-	'''
+	def smoothcurve(self, plist):
+		self.path(plist,"S")
 
 # ========================================================================================
 
