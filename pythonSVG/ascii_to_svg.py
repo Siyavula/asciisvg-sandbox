@@ -87,7 +87,7 @@ class mySvgCanvas:
 		self.loc_var["line"] = self.line
 		self.loc_var["ellipse"] = self.ellipse
 		self.loc_var["circle"] = self.circle
-		#self.loc_var["arc"] = self.arc
+		self.loc_var["arc"] = self.arc
 		#self.loc_var["noaxes"] = self.noaxes
 		#self.loc_var["axes"] = self.axes
 		#self.loc_var["grid"] = self.grid
@@ -545,38 +545,43 @@ class mySvgCanvas:
 
 # ========================================================================================
 
-	'''
 
-	def arc(start,end,radius,id) {
-		var vector, ab, abn
-		node = myCreateElementSVG("path")
-		node.attrib['id", id)
-		svg_picture.appendChild(node)
+	def arc(self,start=[0,0],end=[1,1],radius=None):
+		node = etree.fromstring("<path></path>")
+		self.xml_parent.append(node)
+		
 		# Radius
-		if (radius==None) {    
-			vector=[end[0]-start[0],end[1]-start[1]]
-		  radius = Math.sqrt(vector[0]*vector[0]+vector[1]*vector[1])
-		}
-		# Draw Arc
-		node.attrib['d","M"+	(start[0]*xunitlength+origin[0])+","+
-		  													(height-start[1]*yunitlength-origin[1])+" A"+radius*xunitlength+","+
-		   													(radius*yunitlength)+" 0 0,0 "+(end[0]*xunitlength+origin[0])+","+
-		  													(height-end[1]*yunitlength-origin[1]))
-		node.attrib['stroke-width", strokewidth)
-		node.attrib['stroke", stroke)
-		node.attrib['fill", fill)
-		# Markers
-		var dx = (end[0]-start[0])/2
-		var hx = start[0] + dx
-		var dy = (end[0]-start[0])/2
-		var hy = start[1] + dy
-		var tangent = [hx+dy/(radius*radius),hy-dx/(radius*radius)]
-		if (marker=="dot") {dot(start) dot(end)}
-		if (marker=="arrowdot") {dot(start) arrowhead(tangent,end)}
-		if (marker=="arrow") {arrowhead(tangent,end)}
-	}
+		if (radius==None):  
+			vector = [end[0]-start[0],end[1]-start[1]]
+			radius = math.sqrt(vector[0]*vector[0] + vector[1]*vector[1])
 
-	'''
+		# Draw Arc
+		node.attrib['d'] = 	" M " +	\
+			str(start[0] * self.loc_var["xunitlength"] + self.loc_var["origin"][0]) + "," + \
+			str(self.loc_var["height"] - start[1] * self.loc_var["yunitlength"] - self.loc_var["origin"][1]) + \
+			" A " + \
+			str(radius * self.loc_var["xunitlength"]) + "," + \
+			str(radius * self.loc_var["yunitlength"]) + " 0 0,0 " + \
+			str(end[0] * self.loc_var["xunitlength"] + self.loc_var["origin"][0]) + "," + \
+			str(self.loc_var["height"] - end[1] * self.loc_var["yunitlength"] - self.loc_var["origin"][1])
+		node.attrib['stroke-width'] = str(self.loc_var["strokewidth"])
+		node.attrib['stroke'] = str(self.loc_var["stroke"])
+		node.attrib['fill'] = str(self.loc_var["fill"])
+	
+		# Markers
+		dx = (end[0]-start[0])/2
+		hx = start[0] + dx
+		dy = (end[0]-start[0])/2
+		hy = start[1] + dy
+		tangent = [hx+dy/(radius*radius),hy-dx/(radius*radius)]
+		if (marker=="dot"):
+			self.dot(start)
+			self.dot(end)
+		if (marker=="arrowdot"):
+			self.dot(start) 
+			self.arrowhead(tangent,end)
+		if (marker=="arrow"):
+			self.arrowhead(tangent,end)
 
 # ========================================================================================
 
@@ -589,13 +594,13 @@ class mySvgCanvas:
 	> noaxes()
 	> axes(dx,dy,labels,gdx,gdy)
 	> grid(dx,dy)
-	> rect(p,q,id,rx,ry)
-	> path(plist,id,c)
-	> plot(fun,x_min,x_max,points,id)
-	> curve(plist,id)
-	> bunnyhop(plist,id)
-	> smoothcurve(plist,id)
-	> petal(p,d,id)
+	> rect(p,q,rx,ry)
+	> path(plist,c)
+	> plot(fun,x_min,x_max,points)
+	> curve(plist)
+	> bunnyhop(plist)
+	> smoothcurve(plist)
+	> petal(p,d)
 	> heart(p,size)
 	> slopefield(fun,dx,dy)
 	============================== 

@@ -4,10 +4,6 @@ axes(2, 1, "labels", 1,1)
 
 stroke = "red"
 
-circle()
-circle([1,1])
-circle([1,1],2)
-
 marker = "none"
 strokewidth="1"
 stroke = "#ee1122"
