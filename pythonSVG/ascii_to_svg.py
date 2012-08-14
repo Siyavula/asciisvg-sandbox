@@ -15,6 +15,9 @@ class mySvgCanvas:
 
 	loc_var = {}
 
+	# Error Handling
+	loc_var["log"] = 1
+
 	# Canvas Variables
 	loc_var["xmin"] = loc_var["defaultxmin"] 								= -5
 	loc_var["xmax"] = loc_var["defaultxmax"] 								= 5
@@ -109,23 +112,29 @@ class mySvgCanvas:
 # ===================================================================================	
 
 	def process_ascii(self, ascii_string):
+		
 		ascii_list = ascii_string.split('\n')
+		final_string = ""
+		
 		for ascii_line in ascii_list:
-			formatted_ascii_line = ascii_line.strip()
-			if len(formatted_ascii_line) > 0:
-				
+			if len(ascii_line) > 0:
+
 				# Formatting Line
-				formatted_ascii_line = formatted_ascii_line.replace("null", "None")
+				formatted_ascii_line = ascii_line.replace("null", "None")
 				formatted_ascii_line = self.mathjs(formatted_ascii_line)
 				formatted_ascii_line = formatted_ascii_line.replace("//", "#")
 
-				# Try Except
-				try:
-					exec(formatted_ascii_line, None, self.loc_var)
-					self.error_string += "<!--   OK : " + ascii_line + " -->\n"
-				except:				
-					self.error_string += "<!-- Error: " + ascii_line + " -->\n"
-					#break
+				# Concatenate always, clear if successful!
+				final_string += formatted_ascii_line + " \n"
+		
+		# print "<!-- " + str(final_string) + " -->"	
+
+		# Try Except
+		try:
+			exec(final_string, None, self.loc_var)
+			self.error_string += "Code Complete."
+		except Exception, err:				
+			self.error_string += "Error in code: " + str(err)
 
 		return ascii_string
 
@@ -134,8 +143,10 @@ class mySvgCanvas:
 	def generate_string(self):
 
 		self.str_parent = etree.tostring(self.xml_parent)	
-		self.error_string = "\n\n<!-- PROCESS LOG: -->\n" + self.error_string
-		return self.str_parent + self.error_string
+		if (self.loc_var["log"] == 1):
+			self.error_string = "\n\n<!-- " + self.error_string + " -->\n"
+			self.str_parent += self.error_string
+		return self.str_parent
 
 # ========================================================================================
 
@@ -200,8 +211,6 @@ class mySvgCanvas:
 		self.xml_parent.attrib['style'] = "display:inline"
 		self.xml_parent.attrib['width'] = str(self.loc_var["width"])
 		self.xml_parent.attrib['height'] = str(self.loc_var["height"])
-		self.xml_parent.attrib['xunitlength'] = str(self.loc_var["xunitlength"])
-		self.xml_parent.attrib['yunitlength'] = str(self.loc_var["yunitlength"])
 		self.xml_parent.attrib['xmin'] = str(self.loc_var["xmin"])
 		self.xml_parent.attrib['xmax'] = str(self.loc_var["xmax"])
 		self.xml_parent.attrib['ymin'] = str(self.loc_var["ymin"])
@@ -213,6 +222,7 @@ class mySvgCanvas:
 # ========================================================================================
 
 	def setBorder(self,x=0,color="black"):
+
 		if (x != None):
 			self.loc_var["border"] = x
 		if (color != None):
@@ -292,10 +302,11 @@ class mySvgCanvas:
 		# Label
 		if (label != None):
 			self.text(center,label,(pos == None and "below" or pos), (angle == None and 0 or angle))
-	
+
 # ========================================================================================
 	
 	def arrowhead(self,p=[0,0],q=[1,1],size=None):
+
 		v = [p[0]*self.loc_var["xunitlength"]+self.loc_var["origin"][0],self.loc_var["height"]-p[1]*self.loc_var["yunitlength"]-self.loc_var["origin"][1]]		# adjusted start point
 		w = [q[0]*self.loc_var["xunitlength"]+self.loc_var["origin"][0],self.loc_var["height"]-q[1]*self.loc_var["yunitlength"]-self.loc_var["origin"][1]]		# adjusted end point
 		u = [w[0]-v[0],w[1]-v[1]] # unit vector * length
@@ -358,8 +369,8 @@ class mySvgCanvas:
 		# Text Rotation
 		node = etree.fromstring("<text>" + st + "</text>")
 		self.xml_parent.append(node)
-		node.attrib['x'] = str(p[0] * self.loc_var["xunitlength"] + self.loc_var["origin"][0] + dx)		
-		node.attrib['y'] = str(self.loc_var["height"] - p[1] * self.loc_var["yunitlength"] - self.loc_var["origin"][1]+dy)
+		node.attrib['x'] = str(round(p[0] * self.loc_var["xunitlength"] + self.loc_var["origin"][0] + dx,2))		
+		node.attrib['y'] = str(round(self.loc_var["height"] - p[1] * self.loc_var["yunitlength"] - self.loc_var["origin"][1]+dy,2))
 		if (angle != 0):
 			node.attrib['transform'] = "rotate("+str(angle)+", "+str(node.attrib['x'])+", "+str(node.attrib['y'])+")"
 		node.attrib['font-style'] = str(self.loc_var["fontstyle"])
@@ -430,16 +441,17 @@ class mySvgCanvas:
 # ========================================================================================
 	
 	def line(self,p,q):
+
 		node = etree.fromstring("<path></path>")
 		self.xml_parent.append(node)
 		node.attrib['d'] = 	str(	" M " + \
-			str(p[0] * self.loc_var["xunitlength"] + self.loc_var["origin"][0]) + \
+			str(round(p[0] * self.loc_var["xunitlength"] + self.loc_var["origin"][0],2)) + \
 			"," + \
-			str(self.loc_var["height"] - p[1] * self.loc_var["yunitlength"] - self.loc_var["origin"][1]) + \
+			str(round(self.loc_var["height"] - p[1] * self.loc_var["yunitlength"] - self.loc_var["origin"][1],2)) + \
 			" "+ \
-			str(q[0] * self.loc_var["xunitlength"] + self.loc_var["origin"][0]) + \
+			str(round(q[0] * self.loc_var["xunitlength"] + self.loc_var["origin"][0],2)) + \
 			"," + \
-			str(self.loc_var["height"] - q[1] * self.loc_var["yunitlength"] - self.loc_var["origin"][1]))
+			str(round(self.loc_var["height"] - q[1] * self.loc_var["yunitlength"] - self.loc_var["origin"][1],2)))
 		node.attrib['stroke-width'] = str(self.loc_var["strokewidth"])
 		node.attrib['stroke'] = str(self.loc_var["stroke"])
 		node.attrib['fill'] = str(self.loc_var["fill"])
@@ -447,7 +459,7 @@ class mySvgCanvas:
 		
 		# starting point (p)
 		if (self.loc_var["marker"] == "dot" or self.loc_var["marker"] == "arrowdot"):
-			self.dot(p,self.loc_var["markersize"], self.loc_var["markerstroke"], self.loc_var["markerfill"])
+			self.dot(p)
 
 		# ending point (q) 
 		if (self.loc_var["marker"] == "arrowdot" or self.loc_var["marker"] == "arrow"):	
@@ -458,12 +470,13 @@ class mySvgCanvas:
 # ========================================================================================
 
 	def ellipse(self, center=[0,0], rx=1, ry=2):
+
 		node = etree.fromstring("<ellipse></ellipse>")
 		self.xml_parent.append(node)
-		node.attrib['cx'] = str(center[0] * self.loc_var["xunitlength"] + self.loc_var["origin"][0])
-		node.attrib['cy'] = str(self.loc_var["height"] - center[1] * self.loc_var["yunitlength"] - self.loc_var["origin"][1])
-		node.attrib['rx'] = str(rx * self.loc_var["xunitlength"])
-		node.attrib['ry'] = str(ry * self.loc_var["yunitlength"])
+		node.attrib['cx'] = str(round(center[0] * self.loc_var["xunitlength"] + self.loc_var["origin"][0],2))
+		node.attrib['cy'] = str(round(self.loc_var["height"] - center[1] * self.loc_var["yunitlength"] - self.loc_var["origin"][1],2))
+		node.attrib['rx'] = str(round(rx * self.loc_var["xunitlength"],2))
+		node.attrib['ry'] = str(round(ry * self.loc_var["yunitlength"],2))
 		node.attrib['stroke-width'] = str(self.loc_var["strokewidth"])
 		node.attrib['stroke'] = str(self.loc_var["stroke"])
 		node.attrib['fill'] = str(self.loc_var["fill"])
@@ -503,7 +516,7 @@ class mySvgCanvas:
 		hx = start[0] + dx
 		dy = (end[0]-start[0])/2
 		hy = start[1] + dy
-		tangent = [hx+dy/(radius*radius),hy-dx/(radius*radius)]
+		tangent = [round(hx+dy/(radius*radius),2),round(hy-dx/(radius*radius),2)]
 		if (self.loc_var["marker"] == "dot"):
 			self.dot(start)
 			self.dot(end)
@@ -652,8 +665,8 @@ class mySvgCanvas:
 		node.attrib['stroke-width'] = str(self.loc_var["strokewidth"])
 		node.attrib['stroke'] = str(self.loc_var["stroke"])
 		node.attrib['fill'] = str(self.loc_var["fill"])
-		node.attrib['rx'] = str(rx*self.loc_var["xunitlength"])
-		node.attrib['ry'] = str(ry*self.loc_var["yunitlength"])
+		node.attrib['rx'] = str(round(rx*self.loc_var["xunitlength"],2))
+		node.attrib['ry'] = str(round(ry*self.loc_var["yunitlength"],2))
 
 # ========================================================================================
 
@@ -676,15 +689,15 @@ class mySvgCanvas:
 	
 		# Move Command
 		string = " M " + \
-		str(plist[0][0] * self.loc_var["xunitlength"] + self.loc_var["origin"][0]) + "," + \
-		str(self.loc_var["height"] - plist[0][1]*self.loc_var["yunitlength"] - self.loc_var["origin"][1])
+		str(round(plist[0][0] * self.loc_var["xunitlength"] + self.loc_var["origin"][0],2)) + "," + \
+		str(round(self.loc_var["height"] - plist[0][1]*self.loc_var["yunitlength"] - self.loc_var["origin"][1],2))
 	
 		# Draw the line
 		if (style == "L" or style == "C" or style == "S" or style == "Q" or style == "T"):
 			string += " " + str(style) + " "
 			for i in range (1, len(plist)):
-				string += str(plist[i][0] * self.loc_var["xunitlength"] + self.loc_var["origin"][0]) + "," + \
-				str(self.loc_var["height"] - plist[i][1] * self.loc_var["yunitlength"] - self.loc_var["origin"][1]) + " "
+				string += str(round(plist[i][0] * self.loc_var["xunitlength"] + self.loc_var["origin"][0],2)) + "," + \
+				str(round(self.loc_var["height"] - plist[i][1] * self.loc_var["yunitlength"] - self.loc_var["origin"][1],2)) + " "
 
 		# Close the Path
 		if (closed != None):
@@ -807,7 +820,7 @@ class mySvgCanvas:
 				if (error_flag == 0):
 					u = dz/math.sqrt(1 + gout*gout)
 					v = gout * u
-					self.line([x-u,y-v],[x+u,y+v])
+					self.line([round(x-u,2),round(y-v,2)],[round(x+u,2),round(y+v,2)])
 
 # ========================================================================================
 # Main Code

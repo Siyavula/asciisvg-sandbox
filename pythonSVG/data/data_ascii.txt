@@ -1,20 +1,8 @@
-// Comment
+# Comment
 setBorder(0)
 initPicture(-10,10,-10,10)
-axes(2, 2, 1, 1,1)
-
-marker = "none"
-stroke = "red"
-
-marker = "none"
-strokewidth="1"
-stroke = "green"
-slopefield("sin(x)")	
-
-strokewidth="2"
-stroke = "blue"
-plot("sin(x) + 2")	
-
-plot("sin(x)")
-
-plot("sin(x) - 2")
+axes(2, 2, 1, 1, 1)
+marker = "dot"
+for i in range (-1,1):
+	line ([0,0],[2,i])
+	line ([0,0],[-2,i])
