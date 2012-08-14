@@ -215,7 +215,7 @@ class mySvgCanvas:
 
 # ========================================================================================
 
-	def initPicture(self,a,b,c,d):
+	def initPicture(self,a=None,b=None,c=None,d=None):
 
 		# Set Variables
 		self.loc_var["xmin"] = a or self.loc_var["xmin"]
