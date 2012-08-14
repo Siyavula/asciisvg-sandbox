@@ -128,19 +128,27 @@ class mySvgCanvas:
 				#formatted_ascii_line = formatted_ascii_line.replace("{", ":")			# Multi-line statments (start)
 				#formatted_ascii_line = formatted_ascii_line.replace("}", "")			# Multi-line statments (end)
 
+				# Try Except
+				try:
+					exec(formatted_ascii_line, None, self.loc_var)
+					self.error_string += "\n Complete: " + str(formatted_ascii_line)
+				except Exception, err:				
+					self.error_string += "\n\n    Error: " + str(formatted_ascii_line) + "\n  Message: " + str(err) 
+					break
+
 				# Concatenate always, clear if successful!
-				final_string += formatted_ascii_line + " \n"
+				#final_string += formatted_ascii_line + " \n"
 		
-		self.error_string += "\n\n====================\nExecuted Code: \n====================\n\n" + str(final_string)
+		#self.error_string += "\n\n====================\nExecuted Code: \n====================\n\n" + str(final_string)
 
 		# print "<!-- " + str(final_string) + " -->"	
 
 		# Try Except
-		try:
-			exec(final_string, None, self.loc_var)
-			self.error_string += "\n====================\nCode Complete.\n===================="
-		except Exception, err:				
-			self.error_string += "\n====================\nError in code: " + str(err) + "\n===================="
+		#try:
+		#	exec(final_string, None, self.loc_var)
+		#	self.error_string += "\n====================\nCode Complete.\n===================="
+		#except Exception, err:				
+		#	self.error_string += "\n====================\nError in code: " + str(err) + "\n===================="
 
 		return ascii_string
 
@@ -209,14 +217,14 @@ class mySvgCanvas:
 		self.loc_var["ymax"] = d or self.loc_var["ymax"]
 
 		# Re-calculate variables
-		self.loc_var["xunitlength"] = float(self.loc_var["width"]-2*self.loc_var["border"])/(self.loc_var["xmax"]-self.loc_var["xmin"])
-		self.loc_var["yunitlength"] = float(self.loc_var["height"]-2*self.loc_var["border"])/(self.loc_var["ymax"]-self.loc_var["ymin"])
+		self.loc_var["xunitlength"] = float(float(self.loc_var["width"])-2*self.loc_var["border"])/(self.loc_var["xmax"]-self.loc_var["xmin"])
+		self.loc_var["yunitlength"] = float(float(self.loc_var["height"])-2*self.loc_var["border"])/(self.loc_var["ymax"]-self.loc_var["ymin"])
 		self.loc_var["origin"] = [-self.loc_var["xmin"]*self.loc_var["xunitlength"]+self.loc_var["border"],-self.loc_var["ymin"]*self.loc_var["yunitlength"]+self.loc_var["border"]]
 
 		# Set Attributes
 		self.xml_parent.attrib['style'] = "display:inline"
-		self.xml_parent.attrib['width'] = str(self.loc_var["width"])
-		self.xml_parent.attrib['height'] = str(self.loc_var["height"])
+		self.xml_parent.attrib['width'] = str(float(self.loc_var["width"]))
+		self.xml_parent.attrib['height'] = str(float(self.loc_var["height"]))
 		self.xml_parent.attrib['xmin'] = str(self.loc_var["xmin"])
 		self.xml_parent.attrib['xmax'] = str(self.loc_var["xmax"])
 		self.xml_parent.attrib['ymin'] = str(self.loc_var["ymin"])
@@ -271,7 +279,7 @@ class mySvgCanvas:
 	def dot(self, center=[0,0], typ=None, label=None, pos=None, angle=None):
 
 		cx = center[0] * self.loc_var["xunitlength"] + self.loc_var["origin"][0]
-		cy = self.loc_var["height"] - center[1] * self.loc_var["yunitlength"] - self.loc_var["origin"][1]
+		cy = float(self.loc_var["height"]) - center[1] * self.loc_var["yunitlength"] - self.loc_var["origin"][1]
 
 		# If the Type is Defined
 		if (typ == "+" or typ == "-" or typ == "|"):
@@ -313,8 +321,8 @@ class mySvgCanvas:
 	
 	def arrowhead(self,p=[0,0],q=[1,1],size=None):
 
-		v = [p[0]*self.loc_var["xunitlength"]+self.loc_var["origin"][0],self.loc_var["height"]-p[1]*self.loc_var["yunitlength"]-self.loc_var["origin"][1]]		# adjusted start point
-		w = [q[0]*self.loc_var["xunitlength"]+self.loc_var["origin"][0],self.loc_var["height"]-q[1]*self.loc_var["yunitlength"]-self.loc_var["origin"][1]]		# adjusted end point
+		v = [p[0]*self.loc_var["xunitlength"]+self.loc_var["origin"][0],float(self.loc_var["height"])-p[1]*self.loc_var["yunitlength"]-self.loc_var["origin"][1]]		# adjusted start point
+		w = [q[0]*self.loc_var["xunitlength"]+self.loc_var["origin"][0],float(self.loc_var["height"])-q[1]*self.loc_var["yunitlength"]-self.loc_var["origin"][1]]		# adjusted end point
 		u = [w[0]-v[0],w[1]-v[1]] # unit vector * length
 		d = math.sqrt(u[0]*u[0]+u[1]*u[1]) #length of unit vector
 		if (d > 0.00000001):
@@ -376,7 +384,7 @@ class mySvgCanvas:
 		node = etree.fromstring("<text>" + st + "</text>")
 		self.xml_parent.append(node)
 		node.attrib['x'] = str(round(p[0] * self.loc_var["xunitlength"] + self.loc_var["origin"][0] + dx,2))		
-		node.attrib['y'] = str(round(self.loc_var["height"] - p[1] * self.loc_var["yunitlength"] - self.loc_var["origin"][1]+dy,2))
+		node.attrib['y'] = str(round(float(self.loc_var["height"]) - p[1] * self.loc_var["yunitlength"] - self.loc_var["origin"][1]+dy,2))
 		if (angle != 0):
 			node.attrib['transform'] = "rotate("+str(angle)+", "+str(node.attrib['x'])+", "+str(node.attrib['y'])+")"
 		node.attrib['font-style'] = str(self.loc_var["fontstyle"])
@@ -453,11 +461,11 @@ class mySvgCanvas:
 		node.attrib['d'] = 	str(	" M " + \
 			str(round(p[0] * self.loc_var["xunitlength"] + self.loc_var["origin"][0],2)) + \
 			"," + \
-			str(round(self.loc_var["height"] - p[1] * self.loc_var["yunitlength"] - self.loc_var["origin"][1],2)) + \
+			str(round(float(self.loc_var["height"]) - p[1] * self.loc_var["yunitlength"] - self.loc_var["origin"][1],2)) + \
 			" "+ \
 			str(round(q[0] * self.loc_var["xunitlength"] + self.loc_var["origin"][0],2)) + \
 			"," + \
-			str(round(self.loc_var["height"] - q[1] * self.loc_var["yunitlength"] - self.loc_var["origin"][1],2)))
+			str(round(float(self.loc_var["height"]) - q[1] * self.loc_var["yunitlength"] - self.loc_var["origin"][1],2)))
 		node.attrib['stroke-width'] = str(self.loc_var["strokewidth"])
 		node.attrib['stroke'] = str(self.loc_var["stroke"])
 		node.attrib['fill'] = str(self.loc_var["fill"])
@@ -480,7 +488,7 @@ class mySvgCanvas:
 		node = etree.fromstring("<ellipse></ellipse>")
 		self.xml_parent.append(node)
 		node.attrib['cx'] = str(round(center[0] * self.loc_var["xunitlength"] + self.loc_var["origin"][0],2))
-		node.attrib['cy'] = str(round(self.loc_var["height"] - center[1] * self.loc_var["yunitlength"] - self.loc_var["origin"][1],2))
+		node.attrib['cy'] = str(round(float(self.loc_var["height"]) - center[1] * self.loc_var["yunitlength"] - self.loc_var["origin"][1],2))
 		node.attrib['rx'] = str(round(rx * self.loc_var["xunitlength"],2))
 		node.attrib['ry'] = str(round(ry * self.loc_var["yunitlength"],2))
 		node.attrib['stroke-width'] = str(self.loc_var["strokewidth"])
@@ -507,12 +515,12 @@ class mySvgCanvas:
 		# Draw Arc
 		node.attrib['d'] = 	" M " +	\
 			str(start[0] * self.loc_var["xunitlength"] + self.loc_var["origin"][0]) + "," + \
-			str(self.loc_var["height"] - start[1] * self.loc_var["yunitlength"] - self.loc_var["origin"][1]) + \
+			str(float(self.loc_var["height"]) - start[1] * self.loc_var["yunitlength"] - self.loc_var["origin"][1]) + \
 			" A " + \
 			str(radius * self.loc_var["xunitlength"]) + "," + \
 			str(radius * self.loc_var["yunitlength"]) + " 0 0,0 " + \
 			str(end[0] * self.loc_var["xunitlength"] + self.loc_var["origin"][0]) + "," + \
-			str(self.loc_var["height"] - end[1] * self.loc_var["yunitlength"] - self.loc_var["origin"][1])
+			str(float(self.loc_var["height"]) - end[1] * self.loc_var["yunitlength"] - self.loc_var["origin"][1])
 		node.attrib['stroke-width'] = str(self.loc_var["strokewidth"])
 		node.attrib['stroke'] = str(self.loc_var["stroke"])
 		node.attrib['fill'] = str(self.loc_var["fill"])
@@ -566,8 +574,8 @@ class mySvgCanvas:
 		self.xml_parent.append(node)
 		node.attrib['x'] = "0"
 		node.attrib['y'] = "0"
-		node.attrib['width'] = str(self.loc_var["width"])
-		node.attrib['height'] = str(self.loc_var["height"])
+		node.attrib['width'] = str(float(self.loc_var["width"]))
+		node.attrib['height'] = str(float(self.loc_var["height"]))
 		node.attrib['stroke-width'] = str(self.loc_var["border"])
 		node.attrib['stroke'] = str(self.loc_var["stroke"])
 		node.attrib['fill'] = "white"
@@ -583,17 +591,17 @@ class mySvgCanvas:
 
 		# Grid
 		if (gdx != None):
-			gdx = (gdx != None and gdx*self.loc_var["xunitlength"] or xgrid*self.loc_var["xunitlength"])
-			gdy = (gdy != None and gdy*self.loc_var["yunitlength"] or ygrid*self.loc_var["yunitlength"])
+			gdx = (gdx != None and gdx*self.loc_var["xunitlength"] or self.loc_var["xgrid"]*self.loc_var["xunitlength"])
+			gdy = (gdy != None and gdy*self.loc_var["yunitlength"] or self.loc_var["ygrid"]*self.loc_var["yunitlength"])
 			string = ""
-			for i in self.frange(self.loc_var["origin"][0], self.loc_var["width"], gdx):
-				string += " M " + str(i) + ",0 " + str(i) + "," + str(self.loc_var["height"]) # x-axis (positive)
+			for i in self.frange(self.loc_var["origin"][0], float(self.loc_var["width"]), gdx):
+				string += " M " + str(i) + ",0 " + str(i) + "," + str(float(self.loc_var["height"])) # x-axis (positive)
 			for i in self.frange(self.loc_var["origin"][0], 0, -gdx):
-				string += " M " + str(i) + ",0 " + str(i) + "," + str(self.loc_var["height"]) # x-axis (negative)
-			for i in self.frange(self.loc_var["origin"][1], self.loc_var["height"], gdy):
-				string += " M 0," + str(i) + " " + str(self.loc_var["width"]) + "," + str(i) # y-axis (positive)
+				string += " M " + str(i) + ",0 " + str(i) + "," + str(float(self.loc_var["height"])) # x-axis (negative)
+			for i in self.frange(self.loc_var["origin"][1], float(self.loc_var["height"]), gdy):
+				string += " M 0," + str(i) + " " + str(float(self.loc_var["width"])) + "," + str(i) # y-axis (positive)
 			for i in self.frange(self.loc_var["origin"][1], 0, -gdy):
-				string += " M 0," + str(i) + " " + str(self.loc_var["width"]) + "," + str(i) # y-axis (negative)
+				string += " M 0," + str(i) + " " + str(float(self.loc_var["width"])) + "," + str(i) # y-axis (negative)
 
 			# Create SVG Element
 			pnode = etree.fromstring("<path></path>")
@@ -606,25 +614,25 @@ class mySvgCanvas:
 		if (dx != None):
 
 			# Thicker Axes lines
-			string = " M 0," + str(self.loc_var["height"]-self.loc_var["origin"][1]) + \
-			" " + str(self.loc_var["width"]) + "," + str(self.loc_var["height"]-self.loc_var["origin"][1]) + \
+			string = " M 0," + str(float(self.loc_var["height"])-self.loc_var["origin"][1]) + \
+			" " + str(float(self.loc_var["width"])) + "," + str(float(self.loc_var["height"])-self.loc_var["origin"][1]) + \
 			" M " + str(self.loc_var["origin"][0]) + ",0 " + \
-			str(self.loc_var["origin"][0]) + "," + str(self.loc_var["height"])
+			str(self.loc_var["origin"][0]) + "," + str(float(self.loc_var["height"]))
 
 			# Ticks
-			for i in self.frange(self.loc_var["origin"][0], self.loc_var["width"], tdx): 
+			for i in self.frange(self.loc_var["origin"][0], float(self.loc_var["width"]), tdx): 
 				string += " M " + str(i) + \
-				"," + str(self.loc_var["height"] - self.loc_var["origin"][1] + self.loc_var["ticklength"]) + " " + \
+				"," + str(float(self.loc_var["height"]) - self.loc_var["origin"][1] + self.loc_var["ticklength"]) + " " + \
 				str(i) + "," + \
-				str(self.loc_var["height"]-self.loc_var["origin"][1]-self.loc_var["ticklength"]) # x-axis (positive)
+				str(float(self.loc_var["height"])-self.loc_var["origin"][1]-self.loc_var["ticklength"]) # x-axis (positive)
 		
 			for i in self.frange(self.loc_var["origin"][0], 0, -tdx):
 				string += " M " + str(i) + \
-				"," + str(self.loc_var["height"] - self.loc_var["origin"][1] + self.loc_var["ticklength"]) + " " + \
+				"," + str(float(self.loc_var["height"]) - self.loc_var["origin"][1] + self.loc_var["ticklength"]) + " " + \
 				str(i) + "," + \
-				str(self.loc_var["height"]-self.loc_var["origin"][1]-self.loc_var["ticklength"]) # x-axis (positive)
+				str(float(self.loc_var["height"])-self.loc_var["origin"][1]-self.loc_var["ticklength"]) # x-axis (positive)
 
-			for i in self.frange(self.loc_var["origin"][1], self.loc_var["height"], tdy):
+			for i in self.frange(self.loc_var["origin"][1], float(self.loc_var["height"]), tdy):
 				string += " M " + str(self.loc_var["origin"][0] + self.loc_var["ticklength"]) + \
 				"," + str(i) + " " + \
 				str(self.loc_var["origin"][0] - self.loc_var["ticklength"]) + "," + str(i) # y-axis (positive)
@@ -665,7 +673,7 @@ class mySvgCanvas:
 		node = etree.fromstring("<rect></rect>")
 		self.xml_parent.append(node)
 		node.attrib['x'] = str(p[0]*self.loc_var["xunitlength"]+self.loc_var["origin"][0])
-		node.attrib['y'] = str(self.loc_var["height"]-q[1]*self.loc_var["yunitlength"]-self.loc_var["origin"][1])
+		node.attrib['y'] = str(float(self.loc_var["height"])-q[1]*self.loc_var["yunitlength"]-self.loc_var["origin"][1])
 		node.attrib['width'] = str((q[0]-p[0])*self.loc_var["xunitlength"])
 		node.attrib['height'] = str((q[1]-p[1])*self.loc_var["yunitlength"])
 		node.attrib['stroke-width'] = str(self.loc_var["strokewidth"])
@@ -696,14 +704,14 @@ class mySvgCanvas:
 		# Move Command
 		string = " M " + \
 		str(round(plist[0][0] * self.loc_var["xunitlength"] + self.loc_var["origin"][0],2)) + "," + \
-		str(round(self.loc_var["height"] - plist[0][1]*self.loc_var["yunitlength"] - self.loc_var["origin"][1],2))
+		str(round(float(self.loc_var["height"]) - plist[0][1]*self.loc_var["yunitlength"] - self.loc_var["origin"][1],2))
 	
 		# Draw the line
 		if (style == "L" or style == "C" or style == "S" or style == "Q" or style == "T"):
 			string += " " + str(style) + " "
 			for i in range (1, len(plist)):
 				string += str(round(plist[i][0] * self.loc_var["xunitlength"] + self.loc_var["origin"][0],2)) + "," + \
-				str(round(self.loc_var["height"] - plist[i][1] * self.loc_var["yunitlength"] - self.loc_var["origin"][1],2)) + " "
+				str(round(float(self.loc_var["height"]) - plist[i][1] * self.loc_var["yunitlength"] - self.loc_var["origin"][1],2)) + " "
 
 		# Close the Path
 		if (closed != None):
@@ -729,11 +737,15 @@ class mySvgCanvas:
 		x_min = (x_min == None and self.loc_var["xmin"] or x_min)
 		x_max = (x_max == None and self.loc_var["xmax"] or x_max)
 		array_points = []
-	
+
+		# Precautionary string formatting
+		func = func.replace("**", "^")
+		func = func.replace("x", "t")
+
 		# plot ("sin(x)") 
 		if (isinstance(func, str)):
-			exec ("def f(x): return (x)", None, self.loc_var)
-			exec ("def g(x): return (" + self.mathjs(func) + ")", None, self.loc_var)
+			exec ("def f(t): return (t)", None, self.loc_var)
+			exec ("def g(t): return (" + self.mathjs(func) + ")", None, self.loc_var)
 
 		# plot (["t", "sin(t)"])
 		elif (isinstance(func, list)):
