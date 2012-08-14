@@ -78,11 +78,13 @@ class mySvgCanvas:
 	# Initialization
 	# ==============================
 
-	def __init__(self, name):
+	def __init__(self, name, width=None, height=None):
 
 		self.reset_variables()		# Reset variables
 		self.xml_parent = etree.fromstring("<svg></svg>")		# Initialize SVG Canvas
-		self.xml_parent.attrib['id'] = name
+		self.xml_parent.attrib['id'] = str(name)
+		if (width != None): self.loc_var["width"] = width
+		if (height != None): self.loc_var["height"] = height
 		self.initPicture(-5,5,-5,5)
 
 		# Declare Functions as Variables
@@ -831,7 +833,7 @@ class mySvgCanvas:
 # ========================================================================================
 
 if __name__ == '__main__':
-	a = mySvgCanvas("svg1")
+	a = mySvgCanvas("svg1", 200, 400)
 
 	ascii_string= ""
 	while True:
