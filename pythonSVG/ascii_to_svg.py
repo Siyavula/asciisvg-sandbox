@@ -1,6 +1,7 @@
 import lxml
 from lxml import etree
 import math
+from __future__ import division
 
 # ===================================================================================	
 
@@ -49,7 +50,7 @@ class mySvgCanvas:
 	loc_var["fontsize"] = loc_var["defaultfontsize"]									= 16
 	loc_var["fontweight"] = loc_var["defaultfontweight"] 							= "normal"
 	loc_var["fontstroke"] = loc_var["defaultfontstroke"] 							= loc_var["stroke"]
-	loc_var["fontfill"] = loc_var["defaultfontfill"] 									= loc_var["fill"]   
+	loc_var["fontfill"] = loc_var["defaultfontfill"] 									= "black"  
 	loc_var["markerstrokewidth"] = loc_var["defaultmarkerstrokewidth"]= 1
 	loc_var["markerstroke"] = loc_var["defaultmarkerstroke"] 					= "black"
 	loc_var["markerfill"] = loc_var["defaultmarkerfill"] 							= "yellow"
@@ -165,7 +166,7 @@ class mySvgCanvas:
 
 		self.str_parent = etree.tostring(self.xml_parent)	
 		if (self.loc_var["log"] == 1):
-			self.error_string = "\n\n<!-- " + self.error_string + " \n\n-->\n"
+			self.error_string = "\n\n<!-- " + self.error_string + "\n-->\n"
 			self.str_parent += self.error_string
 		return self.str_parent
 
@@ -344,47 +345,47 @@ class mySvgCanvas:
 
 # ========================================================================================
 
-	def text(self,p=[0,0],st="text",pos=None,angle=None):
+	def text(self,p=[0,0],st=None,pos=None,angle=None):
 
 		# Default text positions
 		textanchor = "middle"
 		dx = 0
-		dy = self.loc_var["fontsize"]/3
+		dy = int(float(self.loc_var["fontsize"]))/3
 		if (angle == None):
 			angle = 0
 
 		# Text Positions
 		if (pos == self.loc_var["aboveleft"]):	
-			dx = -self.loc_var["fontsize"]/2 	
-			dy = -self.loc_var["fontsize"]/2		
+			dx = -int(float(self.loc_var["fontsize"]))/2 	
+			dy = -int(float(self.loc_var["fontsize"]))/2		
 			textanchor = "end"
 		if (pos == self.loc_var["above"]):
 			dx = 0 														
-			dy = -self.loc_var["fontsize"]/2		
+			dy = -int(float(self.loc_var["fontsize"]))/2		
 			textanchor = "middle"
 		if (pos == self.loc_var["aboveright"]):
-			dx = self.loc_var["fontsize"]/2 	
-			dy = -self.loc_var["fontsize"]/2		
+			dx = int(float(self.loc_var["fontsize"]))/2 	
+			dy = -int(float(self.loc_var["fontsize"]))/2		
 			textanchor = "start"
 		if (pos == self.loc_var["left"]):
-			dx = -self.loc_var["fontsize"]/2 	
-			dy = self.loc_var["fontsize"]/3			
+			dx = -int(float(self.loc_var["fontsize"]))/2 	
+			dy = int(float(self.loc_var["fontsize"]))/3			
 			textanchor = "end"
 		if (pos == self.loc_var["right"]):
-			dx = self.loc_var["fontsize"]/2 	
-			dy = self.loc_var["fontsize"]/3			
+			dx = int(float(self.loc_var["fontsize"]))/2 	
+			dy = int(float(self.loc_var["fontsize"]))/3			
 			textanchor = "start"
 		if (pos == self.loc_var["belowleft"]):
-			dx = -self.loc_var["fontsize"]/2 	
-			dy = self.loc_var["fontsize"]				
+			dx = -int(float(self.loc_var["fontsize"]))/2 	
+			dy = int(float(self.loc_var["fontsize"]))				
 			textanchor = "end"
 		if (pos == self.loc_var["below"]):
 			dx = 0 														
-			dy = self.loc_var["fontsize"]				
+			dy = int(float(self.loc_var["fontsize"]))				
 			textanchor = "middle"
 		if (pos == self.loc_var["belowright"]):
-			dx = self.loc_var["fontsize"]/2 	
-			dy = self.loc_var["fontsize"]				
+			dx = int(float(self.loc_var["fontsize"]))/2 	
+			dy = int(float(self.loc_var["fontsize"]))				
 			textanchor = "start"
 		
 		# Text Rotation
@@ -396,7 +397,7 @@ class mySvgCanvas:
 			node.attrib['transform'] = "rotate("+str(angle)+", "+str(node.attrib['x'])+", "+str(node.attrib['y'])+")"
 		node.attrib['font-style'] = str(self.loc_var["fontstyle"])
 		node.attrib['font-family'] = str(self.loc_var["fontfamily"])
-		node.attrib['font-size'] = str(self.loc_var["fontsize"])
+		node.attrib['font-size'] = str(int(float(self.loc_var["fontsize"])))
 		node.attrib['font-weight'] = str(self.loc_var["fontweight"])
 		node.attrib['text-anchor'] = str(textanchor)
 		node.attrib['stroke'] = str(self.loc_var["fontstroke"])
@@ -478,8 +479,8 @@ class mySvgCanvas:
 		node.attrib['stroke-width'] = str(self.loc_var["strokewidth"])
 		node.attrib['stroke'] = str(self.loc_var["stroke"])
 		node.attrib['fill'] = str(self.loc_var["fill"])
-		node.attrib['stroke-dasharray'] = str(self.loc_var["strokedasharray"])
-		
+		node.attrib['stroke-dasharray'] = 	str(self.loc_var["strokedasharray"][0]) + ", " + \
+																				str(self.loc_var["strokedasharray"][1])		
 		# starting point (p)
 		if (self.loc_var["marker"] == "dot" or self.loc_var["marker"] == "arrowdot"):
 			self.dot(p)
@@ -596,7 +597,7 @@ class mySvgCanvas:
 		tdx = (dx != None and dx*self.loc_var["xunitlength"] or self.loc_var["xunitlength"])
 		tdy = (dy != None and dy*self.loc_var["yunitlength"] or self.loc_var["yunitlength"])
 		fontsize = min(tdx/2,tdy/2,16)
-		ticklength = self.loc_var["fontsize"]/4
+		ticklength = int(float(self.loc_var["fontsize"]))/4
 
 		# Grid
 		if (gdx != None):
@@ -730,7 +731,8 @@ class mySvgCanvas:
 		self.xml_parent.append(node)
 		node.attrib['d'] = str(string)
 		node.attrib['stroke-width'] = str(self.loc_var["strokewidth"])
-		node.attrib['stroke-dasharray'] = str(self.loc_var["strokedasharray"])
+		node.attrib['stroke-dasharray'] = 	str(self.loc_var["strokedasharray"][0]) + ", " + \
+																				str(self.loc_var["strokedasharray"][1])
 		node.attrib['stroke'] = str(self.loc_var["stroke"])
 		node.attrib['fill'] = str(self.loc_var["fill"])
 
@@ -747,17 +749,21 @@ class mySvgCanvas:
 		x_max = (x_max == None and self.loc_var["xmax"] or x_max)
 		array_points = []
 
-		# Precautionary string formatting
-		func = func.replace("**", "^")
-		func = func.replace("x", "t")
-
 		# plot ("sin(x)") 
 		if (isinstance(func, str)):
+			# Precautionary string formatting
+			func = func.replace("**", "^")
+			func = func.replace("x", "t")
+			#Exec
 			exec ("def f(t): return (t)", None, self.loc_var)
 			exec ("def g(t): return (" + self.mathjs(func) + ")", None, self.loc_var)
 
 		# plot (["t", "sin(t)"])
 		elif (isinstance(func, list)):
+			# Precautionary string formatting
+			func[0] = func[0].replace("**", "^")
+			func[1] = func[1].replace("**", "^")
+			#Exec
 			exec("def f(t): return (" + self.mathjs(func[0]) + ")", None, self.loc_var)
 			exec("def g(t): return (" + self.mathjs(func[1]) + ")", None, self.loc_var)
 
