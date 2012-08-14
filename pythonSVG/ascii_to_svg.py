@@ -120,21 +120,25 @@ class mySvgCanvas:
 			if len(ascii_line) > 0:
 
 				# Formatting Line
-				formatted_ascii_line = ascii_line.replace("null", "None")
-				formatted_ascii_line = self.mathjs(formatted_ascii_line)
-				formatted_ascii_line = formatted_ascii_line.replace("//", "#")
+				formatted_ascii_line = ascii_line.replace("null", "None")					# None elements
+				formatted_ascii_line = self.mathjs(formatted_ascii_line)					# Math Library
+				formatted_ascii_line = formatted_ascii_line.replace("//", "#")		# Comments
+				#formatted_ascii_line = formatted_ascii_line.replace("{", ":")			# Multi-line statments (start)
+				#formatted_ascii_line = formatted_ascii_line.replace("}", "")			# Multi-line statments (end)
 
 				# Concatenate always, clear if successful!
 				final_string += formatted_ascii_line + " \n"
 		
+		self.error_string += "\n\n====================\nExecuted Code: \n====================\n\n" + str(final_string)
+
 		# print "<!-- " + str(final_string) + " -->"	
 
 		# Try Except
 		try:
 			exec(final_string, None, self.loc_var)
-			self.error_string += "Code Complete."
+			self.error_string += "\n====================\nCode Complete.\n===================="
 		except Exception, err:				
-			self.error_string += "Error in code: " + str(err)
+			self.error_string += "\n====================\nError in code: " + str(err) + "\n===================="
 
 		return ascii_string
 
@@ -144,7 +148,7 @@ class mySvgCanvas:
 
 		self.str_parent = etree.tostring(self.xml_parent)	
 		if (self.loc_var["log"] == 1):
-			self.error_string = "\n\n<!-- " + self.error_string + " -->\n"
+			self.error_string = "\n\n<!-- " + self.error_string + " \n\n-->\n"
 			self.str_parent += self.error_string
 		return self.str_parent
 
