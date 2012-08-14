@@ -62,6 +62,13 @@ class mySvgCanvas:
 	loc_var["f"] = None
 	loc_var["g"] = None
 
+	# Formula Variables
+	loc_var["cpi"] 		= u"\u03C0"
+	loc_var["ctheta"] = u"\u03B8"
+	loc_var["pi"] 		= math.pi
+	loc_var["ln"]			= math.log
+	loc_var["e"]			= math.e
+
 	# SVG Labels
 	loc_var["above"] = "above"
 	loc_var["below"] = "below"
@@ -407,6 +414,8 @@ class mySvgCanvas:
 		string = string.replace("Math.", "")
 		
 		# Attach library prefix to functions
+		string = string.replace("pi", "math.pi")
+
 		string = string.replace("sin", "math.sin")
 		string = string.replace("cos", "math.cos")
 		string = string.replace("tan", "math.tan")
@@ -845,7 +854,7 @@ class mySvgCanvas:
 # ========================================================================================
 
 if __name__ == '__main__':
-	a = mySvgCanvas("svg1", 200, 400)
+	a = mySvgCanvas("svg1", 600, 600)
 
 	ascii_string= ""
 	while True:
