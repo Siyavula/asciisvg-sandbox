@@ -117,6 +117,7 @@ class mySvgCanvas:
 				# Formatting Line
 				formatted_ascii_line = formatted_ascii_line.replace("null", "None")
 				formatted_ascii_line = self.mathjs(formatted_ascii_line)
+				formatted_ascii_line = formatted_ascii_line.replace("//", "#")
 
 				# Try Except
 				try:

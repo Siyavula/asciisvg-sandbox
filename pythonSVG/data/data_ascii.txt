@@ -1,3 +1,4 @@
+// Comment
 setBorder(0)
 initPicture(-10,10,-10,10)
 axes(2, 2, 1, 1,1)
