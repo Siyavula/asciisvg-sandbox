@@ -1,7 +1,7 @@
-import lxml
+from __future__ import division
 from lxml import etree
 import math
-from __future__ import division
+import lxml
 
 # ===================================================================================	
 
@@ -141,7 +141,7 @@ class mySvgCanvas:
 					exec(formatted_ascii_line, None, self.loc_var)
 					self.error_string += "\n Complete: " + str(formatted_ascii_line)
 				except Exception, err:				
-					self.error_string += "\n\n    Error: " + str(formatted_ascii_line) + "\n  Message: " + str(err) 
+					self.error_string += "\n\n    ERROR: " + str(formatted_ascii_line) + "\n  Message: " + str(err) 
 					break
 
 				# Concatenate always, clear if successful!
