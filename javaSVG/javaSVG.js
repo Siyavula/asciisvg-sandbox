@@ -460,7 +460,7 @@ function line(p,q,id) {
   node.setAttribute("fill", fill);
 	node.setAttribute("stroke-dasharray", strokedasharray);
 	/* starting point (p) */
-	if (marker=="dot" || marker=="arrowdot") {ASdot(p,markersize,markerstroke,markerfill); }
+	if (marker=="dot" || marker=="arrowdot") {dot(p);}
 	/* ending point (q) */ 
 	if (marker=="arrowdot" || marker=="arrow") {arrowhead(p,q);}
   if (marker=="dot") {dot(q);}
@@ -473,7 +473,7 @@ function ellipse(center,rx,ry,id) {
   node.setAttribute("cx",center[0]*xunitlength+origin[0]);
   node.setAttribute("cy",height-center[1]*yunitlength-origin[1]);
   node.setAttribute("rx",rx*xunitlength);
-  node.setAttribute("ry",ry*yunitlength);
+  node.setAttribute("ry",(ry==null?rx*xunitlength:ry*yunitlength));
   node.setAttribute("stroke-width", strokewidth);
   node.setAttribute("stroke", stroke);
   node.setAttribute("fill", fill);
@@ -481,7 +481,7 @@ function ellipse(center,rx,ry,id) {
 }
 
 function circle(center,radius,id) {
-	ellipse(center,radius,radius,id);
+	ellipse(center,radius,null,id);
 }
 
 function arc(start,end,radius,id) {
