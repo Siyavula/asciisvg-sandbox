@@ -424,9 +424,7 @@ class mySvgCanvas:
 		string = string.replace("Math.", "")
 		
 		# Attach library prefix to functions
-		string = string.replace("pink", "pnnnk")		# Encode "pink"
-		string = string.replace("pi", "math.pi")
-		string = string.replace("pnnnk", "pink")		# Decode "pink"
+		string = string.replace("sqrt", "math.sqrt")
 
 		string = string.replace("sin", "math.sin")
 		string = string.replace("cos", "math.cos")
