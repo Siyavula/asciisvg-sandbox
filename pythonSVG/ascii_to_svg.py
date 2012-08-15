@@ -11,16 +11,16 @@ class mySvgCanvas:
 	# Variables
 	# ==============================
 
+	loc_var = {}
 	complete_string = ""
 	error_string = ""	
 	xml_parent = None
 
 	# Error Handling
-	loc_var["complete_log"] = 1
-	loc_var["error_log"] 		= 1
+	loc_var["complete_log"] = 1			# Screen-dump Flag: Completed lines of code
+	loc_var["error_log"] 		= 1			# Screen-dump Flag: Errors that occur
 
 	# Canvas Variables
-	loc_var = {}
 	loc_var["xmin"] = loc_var["defaultxmin"] 								= -5
 	loc_var["xmax"] = loc_var["defaultxmax"] 								= 5
 	loc_var["ymin"] = loc_var["defaultymin"] 								= -5
