@@ -131,6 +131,7 @@ class mySvgCanvas:
 
 				# Formatting Line
 				formatted_ascii_line = ascii_line.replace("null", "None")											# None elements
+				formatted_ascii_line = self.mathjs(formatted_ascii_line)											# Math Formulas		
 				formatted_ascii_line = formatted_ascii_line.replace("//", "#")								# Comments		
 				formatted_ascii_line = formatted_ascii_line.replace('"green"', '"darkgreen"') # Colours
 		
