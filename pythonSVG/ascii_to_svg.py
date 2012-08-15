@@ -139,9 +139,9 @@ class mySvgCanvas:
 				# Try Except
 				try:
 					exec(formatted_ascii_line, None, self.loc_var)
-					self.error_string += "\n Complete: " + str(formatted_ascii_line)
+					#self.error_string += "\n Complete: " + str(formatted_ascii_line)
 				except Exception, err:				
-					self.error_string += "\n\n    ERROR: " + str(formatted_ascii_line) + "\n  Message: " + str(err) 
+					self.error_string += "\n\nERROR: " + str(formatted_ascii_line) + "\n\nMessage: " + str(err) + "\n" 
 					break
 
 				# Concatenate always, clear if successful!
