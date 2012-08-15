@@ -10,16 +10,17 @@ class mySvgCanvas:
 	# ==============================
 	# Variables
 	# ==============================
-	
-	xml_parent = None
-	error_string = ""
 
-	loc_var = {}
+	complete_string = ""
+	error_string = ""	
+	xml_parent = None
 
 	# Error Handling
-	loc_var["log"] = 1
+	loc_var["complete_log"] = 1
+	loc_var["error_log"] 		= 1
 
 	# Canvas Variables
+	loc_var = {}
 	loc_var["xmin"] = loc_var["defaultxmin"] 								= -5
 	loc_var["xmax"] = loc_var["defaultxmax"] 								= 5
 	loc_var["ymin"] = loc_var["defaultymin"] 								= -5
@@ -124,7 +125,7 @@ class mySvgCanvas:
 	def process_ascii(self, ascii_string):
 		
 		ascii_list = ascii_string.split('\n')
-		final_string = ""
+		#final_string = ""
 		
 		for ascii_line in ascii_list:
 			if len(ascii_line) > 0:
@@ -141,9 +142,9 @@ class mySvgCanvas:
 				# Try Except
 				try:
 					exec(formatted_ascii_line, None, self.loc_var)
-					self.error_string += "\n Complete: " + str(formatted_ascii_line)
+					self.complete_string += "\nComplete: " + str(formatted_ascii_line)
 				except Exception, err:				
-					self.error_string += "\n\nERROR: " + str(formatted_ascii_line) + "\n\nMessage: " + str(err) + "\n" 
+					self.error_string += "\nERROR: " + str(formatted_ascii_line) + "\nMessage: " + str(err)
 					break
 
 				# Concatenate always, clear if successful!
@@ -156,7 +157,7 @@ class mySvgCanvas:
 		# Try Except
 		#try:
 		#	exec(final_string, None, self.loc_var)
-		#	self.error_string += "\n====================\nCode Complete.\n===================="
+		#	self.complete_string += "\n====================\nCode Complete.\n===================="
 		#except Exception, err:				
 		#	self.error_string += "\n====================\nError in code: " + str(err) + "\n===================="
 
@@ -167,9 +168,15 @@ class mySvgCanvas:
 	def generate_string(self):
 
 		self.str_parent = etree.tostring(self.xml_parent)	
-		if (self.loc_var["log"] == 1 and len(self.error_string) > 0):
-			self.error_string = "\n\n<!-- " + self.error_string + "\n-->\n"
-			self.str_parent += self.error_string
+
+		if (self.loc_var["error_log"] == 1 or self.loc_var["complete_log"] == 1):
+			self.str_parent += "\n\n<!-- \n"
+			# Error
+			if (self.loc_var["complete_log"] == 1 and len(self.complete_string) > 0):
+				self.str_parent += self.complete_string + "\n"
+			if (self.loc_var["error_log"] == 1 and len(self.error_string) > 0):
+				self.str_parent += self.error_string + "\n"
+			self.str_parent += "\n-->\n"
 		return self.str_parent
 
 # ========================================================================================
