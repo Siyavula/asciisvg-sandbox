@@ -504,14 +504,15 @@ class mySvgCanvas:
 
 # ========================================================================================
 
-	def ellipse(self, center=[0,0], rx=1, ry=2):
+	def ellipse(self, center=[0,0], rx=1, ry=None):
+
 
 		node = etree.fromstring("<ellipse></ellipse>")
 		self.xml_parent.append(node)
 		node.attrib['cx'] = str(round(center[0] * self.loc_var["xunitlength"] + self.loc_var["origin"][0],2))
 		node.attrib['cy'] = str(round(float(self.loc_var["height"]) - center[1] * self.loc_var["yunitlength"] - self.loc_var["origin"][1],2))
 		node.attrib['rx'] = str(round(rx * self.loc_var["xunitlength"],2))
-		node.attrib['ry'] = str(round(ry * self.loc_var["yunitlength"],2))
+		node.attrib['ry'] = (ry == None and (str(round(ry * self.loc_var["yunitlength"],2))) or node.attrib['rx'])
 		node.attrib['stroke-width'] = str(self.loc_var["strokewidth"])
 		node.attrib['stroke'] = str(self.loc_var["stroke"])
 		node.attrib['fill'] = str(self.loc_var["fill"])
