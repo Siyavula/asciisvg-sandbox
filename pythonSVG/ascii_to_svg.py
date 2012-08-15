@@ -598,19 +598,21 @@ class mySvgCanvas:
 		tdy = (dy != None and dy*self.loc_var["yunitlength"] or self.loc_var["yunitlength"])
 		fontsize = min(tdx/2,tdy/2,16)
 		ticklength = int(float(self.loc_var["fontsize"]))/4
+		string = ""
 
 		# Grid
-		if (gdx != None):
-			gdx = (gdx != None and gdx*self.loc_var["xunitlength"] or self.loc_var["xgrid"]*self.loc_var["xunitlength"])
-			gdy = (gdy != None and gdy*self.loc_var["yunitlength"] or self.loc_var["ygrid"]*self.loc_var["yunitlength"])
-			string = ""
+		if (gdx != None or gdy != None):
+
+			gdx = (gdx != None and gdx*self.loc_var["xunitlength"] or dx*self.loc_var["xunitlength"])
 			for i in self.frange(self.loc_var["origin"][0], float(self.loc_var["width"]), gdx):
 				string += " M " + str(i) + ",0 " + str(i) + "," + str(float(self.loc_var["height"])) # x-axis (positive)
 			for i in self.frange(self.loc_var["origin"][0], 0, -gdx):
 				string += " M " + str(i) + ",0 " + str(i) + "," + str(float(self.loc_var["height"])) # x-axis (negative)
-			for i in self.frange(self.loc_var["origin"][1], float(self.loc_var["height"]), gdy):
+
+			gdy = (gdy != None and gdy*self.loc_var["yunitlength"] or dy*self.loc_var["yunitlength"])
+			for i in self.frange((self.loc_var["height"] - self.loc_var["origin"][1]), float(self.loc_var["height"]), gdy):
 				string += " M 0," + str(i) + " " + str(float(self.loc_var["width"])) + "," + str(i) # y-axis (positive)
-			for i in self.frange(self.loc_var["origin"][1], 0, -gdy):
+			for i in self.frange((self.loc_var["height"] - self.loc_var["origin"][1]), 0, -gdy):
 				string += " M 0," + str(i) + " " + str(float(self.loc_var["width"])) + "," + str(i) # y-axis (negative)
 
 			# Create SVG Element
@@ -642,12 +644,12 @@ class mySvgCanvas:
 				str(i) + "," + \
 				str(float(self.loc_var["height"])-self.loc_var["origin"][1]-self.loc_var["ticklength"]) # x-axis (positive)
 
-			for i in self.frange(self.loc_var["origin"][1], float(self.loc_var["height"]), tdy):
+			for i in self.frange((self.loc_var["height"] - self.loc_var["origin"][1]), float(self.loc_var["height"]), tdy):
 				string += " M " + str(self.loc_var["origin"][0] + self.loc_var["ticklength"]) + \
 				"," + str(i) + " " + \
 				str(self.loc_var["origin"][0] - self.loc_var["ticklength"]) + "," + str(i) # y-axis (positive)
 
-			for i in self.frange(self.loc_var["origin"][1], 0, -tdy): 
+			for i in self.frange((self.loc_var["height"] - self.loc_var["origin"][1]), 0, -tdy): 
 				string += " M " + str(self.loc_var["origin"][0] + self.loc_var["ticklength"]) + \
 				"," + str(i) + " " + \
 				str(self.loc_var["origin"][0] - self.loc_var["ticklength"]) + "," + str(i) # y-axis (negative)
@@ -669,7 +671,7 @@ class mySvgCanvas:
 				self.text([i,0],str(int(i)),"below") # x-axis (positive)
 			for i in self.frange(dy, self.loc_var["ymax"], dy):
 				self.text([0,i],str(int(i)),"left") # y-axis (positive)
-			for i in self.frange(-dx, self.loc_var["ymin"], -dy): 
+			for i in self.frange(-dy, self.loc_var["ymin"], -dy): 
 				self.text([0,i],str(int(i)),"left") # y-axis (negative)
 
 # ========================================================================================
