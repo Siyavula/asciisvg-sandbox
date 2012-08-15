@@ -536,15 +536,15 @@ function noaxes() {
 
 function axes(dx,dy,labels,gdx,gdy) {
 	var pnode, string, i;
-  dx = (dx==null?xunitlength:dx*xunitlength);
-  dy = (dy==null?yunitlength:dy*yunitlength);
-  fontsize = Math.min(dx/2,dy/2,16);
+  var tdx = (dx==null?xunitlength:dx*xunitlength);
+  var tdy = (dy==null?yunitlength:dy*yunitlength);
+  fontsize = Math.min(tdx/2,tdy/2,16);
   ticklength = fontsize/4;
   
 	/* === Grid === */
 	if (gdx!=null || gdy!=null) {
-    gdx = (gdx!=null?gdx*xunitlength:xgrid*xunitlength);
-    gdy = (gdy!=null?gdy*yunitlength:ygrid*yunitlength);
+    gdx = (gdx!=null?gdx*xunitlength:dx*xunitlength);
+    gdy = (gdy!=null?gdy*yunitlength:dy*yunitlength);
 		pnode = myCreateElementSVG("path");
     string = "";
 		for (i = origin[0]; i<width; i = i+gdx) {string += " M"+i+",0"+" "+i+","+height;} // x-axis (positive)
@@ -563,19 +563,19 @@ function axes(dx,dy,labels,gdx,gdy) {
   pnode = myCreateElementSVG("path");
 	// Thicker Axes lines
 	string = "M0,"+(height-origin[1])+" "+width+","+(height-origin[1])+" M"+origin[0]+",0 "+origin[0]+","+height;
-	for (i = origin[0]+dx; i<width; i+=dx) 
+	for (i = origin[0]+tdx; i<width; i+=tdx) 
 	{string += " M"+i+","+(height-origin[1]+ticklength)+" "+i+","+(height-origin[1]-ticklength);} // x-axis (positive)
-	for (i = origin[0]-dx; i>0; i-=dx) 
+	for (i = origin[0]-tdx; i>0; i-=tdx) 
 	{string += " M"+i+","+(height-origin[1]+ticklength)+" "+i+","+(height-origin[1]-ticklength);} // x-axis (negative)
-	for (i = height-origin[1]+dy; i<height; i+=dy)	
+	for (i = height-origin[1]+tdy; i<height; i+=tdy)	
 	{string += " M"+(origin[0]+ticklength)+","+i+" "+(origin[0]-ticklength)+","+i;} // y-axis (positive)
-	for (i = height-origin[1]-dy; i>0; i-=dy) 
+	for (i = height-origin[1]-tdy; i>0; i-=tdy) 
 	{string += " M"+(origin[0]+ticklength)+","+i+" "+(origin[0]-ticklength)+","+i;} // y-axis (negative)
 
 	/* === Labels === */
 	if (labels!=null) with (Math) {
-		var ldx = dx/xunitlength;
-    var ldy = dy/yunitlength;
+		var ldx = tdx/xunitlength;
+    var ldy = tdy/yunitlength;
     var lx = (xmin>0 || xmax<0?xmin:0);
     var ly = (ymin>0 || ymax<0?ymin:0);
     var lxp = (ly==0?"below":"above");
