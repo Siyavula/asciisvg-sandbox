@@ -165,7 +165,7 @@ class mySvgCanvas:
 	def generate_string(self):
 
 		self.str_parent = etree.tostring(self.xml_parent)	
-		if (self.loc_var["log"] == 1):
+		if (self.loc_var["log"] == 1 and len(self.error_string) > 0):
 			self.error_string = "\n\n<!-- " + self.error_string + "\n-->\n"
 			self.str_parent += self.error_string
 		return self.str_parent
@@ -468,6 +468,17 @@ class mySvgCanvas:
 
 		node = etree.fromstring("<path></path>")
 		self.xml_parent.append(node)
+		
+		# Formatting
+		if (self.loc_var["strokedasharray"] == None):
+			self.loc_var["strokedasharray"] = [1,0]
+		if (isinstance(self.loc_var["strokedasharray"], str)):
+			try:
+				self.loc_var["strokedasharray"] = eval("[" + self.loc_var["strokedasharray"] + "]")
+			except:
+				self.loc_var["strokedasharray"] = [1,0]
+
+		# Attributes
 		node.attrib['d'] = 	str(	" M " + \
 			str(round(p[0] * self.loc_var["xunitlength"] + self.loc_var["origin"][0],2)) + \
 			"," + \
@@ -479,8 +490,8 @@ class mySvgCanvas:
 		node.attrib['stroke-width'] = str(self.loc_var["strokewidth"])
 		node.attrib['stroke'] = str(self.loc_var["stroke"])
 		node.attrib['fill'] = str(self.loc_var["fill"])
-		node.attrib['stroke-dasharray'] = 	str(self.loc_var["strokedasharray"][0]) + ", " + \
-																				str(self.loc_var["strokedasharray"][1])		
+		node.attrib['stroke-dasharray'] = str(self.loc_var["strokedasharray"][0]) + ", " + \
+																			str(self.loc_var["strokedasharray"][1])
 		# starting point (p)
 		if (self.loc_var["marker"] == "dot" or self.loc_var["marker"] == "arrowdot"):
 			self.dot(p)
