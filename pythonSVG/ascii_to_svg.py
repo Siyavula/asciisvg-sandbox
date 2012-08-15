@@ -130,16 +130,17 @@ class mySvgCanvas:
 			if len(ascii_line) > 0:
 
 				# Formatting Line
-				formatted_ascii_line = ascii_line.replace("null", "None")					# None elements
-				formatted_ascii_line = self.mathjs(formatted_ascii_line)					# Math Library
-				formatted_ascii_line = formatted_ascii_line.replace("//", "#")		# Comments
+				formatted_ascii_line = ascii_line.replace("null", "None")											# None elements
+				formatted_ascii_line = formatted_ascii_line.replace("//", "#")								# Comments		
+				formatted_ascii_line = formatted_ascii_line.replace('"green"', '"darkgreen"') # Colours
+		
 				#formatted_ascii_line = formatted_ascii_line.replace("{", ":")			# Multi-line statments (start)
 				#formatted_ascii_line = formatted_ascii_line.replace("}", "")			# Multi-line statments (end)
 
 				# Try Except
 				try:
 					exec(formatted_ascii_line, None, self.loc_var)
-					#self.error_string += "\n Complete: " + str(formatted_ascii_line)
+					self.error_string += "\n Complete: " + str(formatted_ascii_line)
 				except Exception, err:				
 					self.error_string += "\n\nERROR: " + str(formatted_ascii_line) + "\n\nMessage: " + str(err) + "\n" 
 					break
@@ -415,7 +416,9 @@ class mySvgCanvas:
 		string = string.replace("Math.", "")
 		
 		# Attach library prefix to functions
+		string = string.replace("pink", "pnnnk")		# Encode "pink"
 		string = string.replace("pi", "math.pi")
+		string = string.replace("pnnnk", "pink")		# Decode "pink"
 
 		string = string.replace("sin", "math.sin")
 		string = string.replace("cos", "math.cos")
