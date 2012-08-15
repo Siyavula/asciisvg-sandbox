@@ -91,8 +91,8 @@ class mySvgCanvas:
 		self.reset_variables()		# Reset variables
 		self.xml_parent = etree.fromstring("<svg></svg>")		# Initialize SVG Canvas
 		self.xml_parent.attrib['id'] = str(name)
-		if (width != None): self.loc_var["width"] = width
-		if (height != None): self.loc_var["height"] = height
+		if (width != None): self.loc_var["width"] = int(float(width))
+		if (height != None): self.loc_var["height"] = int(float(height)) 
 		self.initPicture(-5,5,-5,5)
 
 		# Declare Functions as Variables
@@ -610,9 +610,9 @@ class mySvgCanvas:
 				string += " M " + str(i) + ",0 " + str(i) + "," + str(float(self.loc_var["height"])) # x-axis (negative)
 
 			gdy = (gdy != None and gdy*self.loc_var["yunitlength"] or dy*self.loc_var["yunitlength"])
-			for i in self.frange((self.loc_var["height"] - self.loc_var["origin"][1]), float(self.loc_var["height"]), gdy):
+			for i in self.frange((float(self.loc_var["height"]) - self.loc_var["origin"][1]), float(self.loc_var["height"]), gdy):
 				string += " M 0," + str(i) + " " + str(float(self.loc_var["width"])) + "," + str(i) # y-axis (positive)
-			for i in self.frange((self.loc_var["height"] - self.loc_var["origin"][1]), 0, -gdy):
+			for i in self.frange((float(self.loc_var["height"]) - self.loc_var["origin"][1]), 0, -gdy):
 				string += " M 0," + str(i) + " " + str(float(self.loc_var["width"])) + "," + str(i) # y-axis (negative)
 
 			# Create SVG Element
@@ -644,12 +644,12 @@ class mySvgCanvas:
 				str(i) + "," + \
 				str(float(self.loc_var["height"])-self.loc_var["origin"][1]-self.loc_var["ticklength"]) # x-axis (positive)
 
-			for i in self.frange((self.loc_var["height"] - self.loc_var["origin"][1]), float(self.loc_var["height"]), tdy):
+			for i in self.frange((float(self.loc_var["height"]) - self.loc_var["origin"][1]), float(self.loc_var["height"]), tdy):
 				string += " M " + str(self.loc_var["origin"][0] + self.loc_var["ticklength"]) + \
 				"," + str(i) + " " + \
 				str(self.loc_var["origin"][0] - self.loc_var["ticklength"]) + "," + str(i) # y-axis (positive)
 
-			for i in self.frange((self.loc_var["height"] - self.loc_var["origin"][1]), 0, -tdy): 
+			for i in self.frange((float(self.loc_var["height"]) - self.loc_var["origin"][1]), 0, -tdy): 
 				string += " M " + str(self.loc_var["origin"][0] + self.loc_var["ticklength"]) + \
 				"," + str(i) + " " + \
 				str(self.loc_var["origin"][0] - self.loc_var["ticklength"]) + "," + str(i) # y-axis (negative)
