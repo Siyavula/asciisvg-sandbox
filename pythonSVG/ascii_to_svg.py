@@ -67,7 +67,6 @@ class mySvgCanvas:
 	# Formula Variables
 	loc_var["cpi"] 		= u"\u03C0"
 	loc_var["ctheta"] = u"\u03B8"
-	loc_var["pi"] 		= math.pi
 	loc_var["ln"]			= math.log
 	loc_var["e"]			= math.e
 
@@ -425,6 +424,10 @@ class mySvgCanvas:
 		
 		# Attach library prefix to functions
 		string = string.replace("sqrt", "math.sqrt")
+
+		string = string.replace("pink", "pnnk")
+		string = string.replace("pi", "math.pi")
+		string = string.replace("pnnk", "pink")
 
 		string = string.replace("sin", "math.sin")
 		string = string.replace("cos", "math.cos")
