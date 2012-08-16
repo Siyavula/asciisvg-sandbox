@@ -17,7 +17,7 @@ class mySvgCanvas:
 	xml_parent = None
 
 	# Error Handling
-	loc_var["complete_log"] = 1			# Screen-dump Flag: Completed lines of code
+	loc_var["complete_log"] = 0			# Screen-dump Flag: Completed lines of code
 	loc_var["error_log"] 		= 1			# Screen-dump Flag: Errors that occur
 
 	# Canvas Variables
@@ -169,7 +169,7 @@ class mySvgCanvas:
 
 		self.str_parent = etree.tostring(self.xml_parent)	
 
-		if (self.loc_var["error_log"] == 1 or self.loc_var["complete_log"] == 1):
+		if ((self.loc_var["complete_log"] == 1 and len(self.complete_string) > 0) or (self.loc_var["error_log"] == 1 and len(self.error_string) > 0)):
 			self.str_parent += "\n\n<!-- \n"
 			# Error
 			if (self.loc_var["complete_log"] == 1 and len(self.complete_string) > 0):
