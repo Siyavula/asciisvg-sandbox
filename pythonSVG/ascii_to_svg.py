@@ -557,11 +557,22 @@ class mySvgCanvas:
 		node.attrib['fill'] = str(self.loc_var["fill"])
 
 		# Markers
-		dx = (end[0]-start[0])/2
-		hx = start[0] + dx
-		dy = (end[0]-start[0])/2
-		hy = start[1] + dy
-		tangent = [round(hx+dy/(radius*radius),2),round(hy-dx/(radius*radius),2)]
+
+		sign_rad = ((end[1]-start[1]) >= 0 and -1 or 1)
+		len_m = math.sqrt((end[0]-start[0])*(end[0]-start[0]) + (end[1]-start[1])*(end[1]-start[1]))/2
+		radius = max(radius,len_m)
+		if ((end[0]-start[0]) != 0):
+			grad = (end[1]-start[1])/(end[0]-start[0])
+		else:
+			grad = (end[1]-start[1])/0.000000001
+		inv_grad = -1/grad
+		xm = start[0] + (end[0]-start[0])/2
+		ym = start[1] + (end[1]-start[1])/2
+		distance = sign_rad * math.sqrt(radius*radius - len_m*len_m)
+		xc = xm + distance*math.cos(math.atan(inv_grad))
+		yc = ym + distance*math.sin(math.atan(inv_grad))
+		tangent = [end[0]-(yc-end[1]),end[1]+(xc-end[0])]
+
 		if (self.loc_var["marker"] == "dot"):
 			self.dot(start)
 			self.dot(end)

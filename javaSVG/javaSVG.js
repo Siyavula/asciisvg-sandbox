@@ -484,6 +484,89 @@ function circle(center,radius,id) {
 	ellipse(center,radius,null,id);
 }
 
+/*
+
+initPicture(-8,8,-8,8)
+grid(1,1)
+
+x1=0
+y1=0
+x2=3
+y2=2
+radius = 5
+grad = (y2-y1)/(x2-x1)
+inv_grad = -1/grad
+xm = x1 + (x2-x1)/2
+ym = y1 + (y2-y1)/2
+sign_rad = -sign(y2-y1)
+len_m = Math.sqrt((x2-x1)*(x2-x1) + (y2-y1)*(y2-y1))/2
+radius = max(radius,len_m)
+
+stroke = "black"
+arc([x1,y1],[x2,y2], radius)
+dot([x1,y1])
+dot([x2,y2])
+
+stroke = "red"
+dot([xm,ym])
+plot("t * " + grad + " + "+(ym-(grad)*xm), min(x1,x2), max(x1,x2))
+
+stroke = "orange"
+plot("t * " + inv_grad + " + "+(ym-(inv_grad)*xm))
+
+stroke = "green"
+distance = sign_rad * Math.sqrt(radius*radius - len_m*len_m)
+text([-5,-3], "distance = " + distance)
+xc = xm + distance*Math.cos(Math.atan(inv_grad))
+yc = ym + distance*Math.sin(Math.atan(inv_grad))
+dot([xc,yc])
+line([x1,y1],[xc,yc])
+line([x2,y2],[xc,yc])
+
+stroke = "purple"
+//circle([xc,yc],radius)
+
+grad_tan_inv = (y2-yc)/(x2-xc)
+grad_tan = (-1/grad_tan_inv)
+text([-1,-1], grad_tan)
+
+plot("t*" + grad_tan + " + " + (y2-(grad_tan)*x2))
+
+stroke = "purple"
+vector_from = [x2-(yc-y2),y2+(xc-x2)]
+dot(vector_from)
+arrowhead(vector_from,[x2,y2],1)
+
+=============
+
+x1=0
+y1=1
+x2=6
+y2=2
+
+sign_rad = -sign(y2-y1)
+len_m = Math.sqrt((x2-x1)*(x2-x1) + (y2-y1)*(y2-y1))/2
+
+radius = 1
+radius = max(radius,len_m)
+
+arc([x1,y1],[x2,y2], radius)
+
+grad = (y2-y1)/(x2-x1)
+inv_grad = -1/grad
+
+xm = x1 + (x2-x1)/2
+ym = y1 + (y2-y1)/2
+
+distance = sign_rad * Math.sqrt(radius*radius - len_m*len_m)
+
+xc = xm + distance*Math.cos(Math.atan(inv_grad))
+yc = ym + distance*Math.sin(Math.atan(inv_grad))
+
+arrowhead([x2-(yc-y2),y2+(xc-x2)],[x2,y2],1)
+
+*/
+
 function arc(start,end,radius,id) {
   var vector, ab, abn;
 	node = myCreateElementSVG("path");
@@ -502,12 +585,22 @@ function arc(start,end,radius,id) {
   node.setAttribute("stroke-width", strokewidth);
   node.setAttribute("stroke", stroke);
   node.setAttribute("fill", fill);
+	
 	// Markers
-	var dx = (end[0]-start[0])/2;
-	var hx = start[0] + dx;
-	var dy = (end[0]-start[0])/2;
-	var hy = start[1] + dy;
-	var tangent = [hx+dy/(radius*radius),hy-dx/(radius*radius)];
+
+	var sign_rad = -sign(end[1]-start[1])
+	var len_m = Math.sqrt((end[0]-start[0])*(end[0]-start[0]) + (end[1]-start[1])*(end[1]-start[1]))/2
+	radius = Math.max(radius,len_m)
+	if ((end[0]-start[0]) != 0) {var grad = (end[1]-start[1])/(end[0]-start[0])}
+	else {var grad = (end[1]-start[1])/0.000000001}
+	var inv_grad = -1/grad
+	var xm = start[0] + (end[0]-start[0])/2
+	var ym = start[1] + (end[1]-start[1])/2
+	var distance = sign_rad * Math.sqrt(radius*radius - len_m*len_m)
+	var xc = xm + distance*Math.cos(Math.atan(inv_grad))
+	var yc = ym + distance*Math.sin(Math.atan(inv_grad))
+	var tangent = [end[0]-(yc-end[1]),end[1]+(xc-end[0])]
+
   if (marker=="dot") {dot(start); dot(end);}
 	if (marker=="arrowdot") {dot(start); arrowhead(tangent,end);}
   if (marker=="arrow") {arrowhead(tangent,end)};
