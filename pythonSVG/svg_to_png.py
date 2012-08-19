@@ -24,7 +24,7 @@ def create_png(filename, width, height, svg_string):
 
 svg_string = raw_input("").strip()
 svg_object = etree.fromstring(svg_string)
-create_png(svg_object.attrib['id'], int(svg_object.attrib['width']), int(svg_object.attrib['height']), svg_string) 
+create_png(svg_object.attrib['id'], int(float(svg_object.attrib['width'])), int(float(svg_object.attrib['height'])), svg_string) 
 
 # ========================================================================================
 

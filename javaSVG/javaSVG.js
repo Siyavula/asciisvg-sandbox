@@ -460,7 +460,7 @@ function line(p,q,id) {
   node.setAttribute("fill", fill);
 	node.setAttribute("stroke-dasharray", strokedasharray);
 	/* starting point (p) */
-	if (marker=="dot" || marker=="arrowdot") {ASdot(p,markersize,markerstroke,markerfill); }
+	if (marker=="dot" || marker=="arrowdot") {dot(p);}
 	/* ending point (q) */ 
 	if (marker=="arrowdot" || marker=="arrow") {arrowhead(p,q);}
   if (marker=="dot") {dot(q);}
@@ -473,7 +473,7 @@ function ellipse(center,rx,ry,id) {
   node.setAttribute("cx",center[0]*xunitlength+origin[0]);
   node.setAttribute("cy",height-center[1]*yunitlength-origin[1]);
   node.setAttribute("rx",rx*xunitlength);
-  node.setAttribute("ry",ry*yunitlength);
+  node.setAttribute("ry",(ry==null?rx*xunitlength:ry*yunitlength));
   node.setAttribute("stroke-width", strokewidth);
   node.setAttribute("stroke", stroke);
   node.setAttribute("fill", fill);
@@ -481,7 +481,7 @@ function ellipse(center,rx,ry,id) {
 }
 
 function circle(center,radius,id) {
-	ellipse(center,radius,radius,id);
+	ellipse(center,radius,null,id);
 }
 
 function arc(start,end,radius,id) {
@@ -502,12 +502,22 @@ function arc(start,end,radius,id) {
   node.setAttribute("stroke-width", strokewidth);
   node.setAttribute("stroke", stroke);
   node.setAttribute("fill", fill);
+	
 	// Markers
-	var dx = (end[0]-start[0])/2;
-	var hx = start[0] + dx;
-	var dy = (end[0]-start[0])/2;
-	var hy = start[1] + dy;
-	var tangent = [hx+dy/(radius*radius),hy-dx/(radius*radius)];
+
+	var sign_rad = -sign(end[1]-start[1])
+	var len_m = Math.sqrt((end[0]-start[0])*(end[0]-start[0]) + (end[1]-start[1])*(end[1]-start[1]))/2
+	radius = Math.max(radius,len_m)
+	if ((end[0]-start[0]) != 0) {var grad = (end[1]-start[1])/(end[0]-start[0])}
+	else {var grad = (end[1]-start[1])/0.000000001}
+	var inv_grad = -1/grad
+	var xm = start[0] + (end[0]-start[0])/2
+	var ym = start[1] + (end[1]-start[1])/2
+	var distance = sign_rad * Math.sqrt(radius*radius - len_m*len_m)
+	var xc = xm + distance*Math.cos(Math.atan(inv_grad))
+	var yc = ym + distance*Math.sin(Math.atan(inv_grad))
+	var tangent = [end[0]-(yc-end[1]),end[1]+(xc-end[0])]
+
   if (marker=="dot") {dot(start); dot(end);}
 	if (marker=="arrowdot") {dot(start); arrowhead(tangent,end);}
   if (marker=="arrow") {arrowhead(tangent,end)};
@@ -536,15 +546,15 @@ function noaxes() {
 
 function axes(dx,dy,labels,gdx,gdy) {
 	var pnode, string, i;
-  dx = (dx==null?xunitlength:dx*xunitlength);
-  dy = (dy==null?yunitlength:dy*yunitlength);
-  fontsize = Math.min(dx/2,dy/2,16);
+  var tdx = (dx==null?xunitlength:dx*xunitlength);
+  var tdy = (dy==null?yunitlength:dy*yunitlength);
+  fontsize = Math.min(tdx/2,tdy/2,16);
   ticklength = fontsize/4;
   
 	/* === Grid === */
 	if (gdx!=null || gdy!=null) {
-    gdx = (gdx!=null?gdx*xunitlength:xgrid*xunitlength);
-    gdy = (gdy!=null?gdy*yunitlength:ygrid*yunitlength);
+    gdx = (gdx!=null?gdx*xunitlength:dx*xunitlength);
+    gdy = (gdy!=null?gdy*yunitlength:dy*yunitlength);
 		pnode = myCreateElementSVG("path");
     string = "";
 		for (i = origin[0]; i<width; i = i+gdx) {string += " M"+i+",0"+" "+i+","+height;} // x-axis (positive)
@@ -563,19 +573,19 @@ function axes(dx,dy,labels,gdx,gdy) {
   pnode = myCreateElementSVG("path");
 	// Thicker Axes lines
 	string = "M0,"+(height-origin[1])+" "+width+","+(height-origin[1])+" M"+origin[0]+",0 "+origin[0]+","+height;
-	for (i = origin[0]+dx; i<width; i+=dx) 
+	for (i = origin[0]+tdx; i<width; i+=tdx) 
 	{string += " M"+i+","+(height-origin[1]+ticklength)+" "+i+","+(height-origin[1]-ticklength);} // x-axis (positive)
-	for (i = origin[0]-dx; i>0; i-=dx) 
+	for (i = origin[0]-tdx; i>0; i-=tdx) 
 	{string += " M"+i+","+(height-origin[1]+ticklength)+" "+i+","+(height-origin[1]-ticklength);} // x-axis (negative)
-	for (i = height-origin[1]+dy; i<height; i+=dy)	
+	for (i = height-origin[1]+tdy; i<height; i+=tdy)	
 	{string += " M"+(origin[0]+ticklength)+","+i+" "+(origin[0]-ticklength)+","+i;} // y-axis (positive)
-	for (i = height-origin[1]-dy; i>0; i-=dy) 
+	for (i = height-origin[1]-tdy; i>0; i-=tdy) 
 	{string += " M"+(origin[0]+ticklength)+","+i+" "+(origin[0]-ticklength)+","+i;} // y-axis (negative)
 
 	/* === Labels === */
 	if (labels!=null) with (Math) {
-		var ldx = dx/xunitlength;
-    var ldy = dy/yunitlength;
+		var ldx = tdx/xunitlength;
+    var ldy = tdy/yunitlength;
     var lx = (xmin>0 || xmax<0?xmin:0);
     var ly = (ymin>0 || ymax<0?ymin:0);
     var lxp = (ly==0?"below":"above");
