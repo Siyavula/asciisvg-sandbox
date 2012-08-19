@@ -43,14 +43,14 @@ class mySvgCanvas:
 	loc_var["gridstroke"] = loc_var["defaultgridstroke"] 							= "grey"
 	loc_var["strokewidth"] = loc_var["defaultstrokewidth"] 						= 1 					
 	loc_var["strokedasharray"] = loc_var["defaultstrokedasharray"] 		= [1, 0]
-	loc_var["stroke"] = loc_var["defaultstroke"] 											= "none"
+	loc_var["stroke"] = loc_var["defaultstroke"] 											= "black"
 	loc_var["arrowfill"] = loc_var["defaultarrowfill"] 								= loc_var["stroke"]
-	loc_var["fill"] = loc_var["defaultfill"] 													= "black"
+	loc_var["fill"] = loc_var["defaultfill"] 													= "none"
 	loc_var["fontstyle"] = loc_var["defaultfontstyle"] 								= "italic"
 	loc_var["fontfamily"] = loc_var["defaultfontfamily"] 							= "times"		
 	loc_var["fontsize"] = loc_var["defaultfontsize"]									= 16
 	loc_var["fontweight"] = loc_var["defaultfontweight"] 							= "normal"
-	loc_var["fontstroke"] = loc_var["defaultfontstroke"] 							= loc_var["stroke"]
+	loc_var["fontstroke"] = loc_var["defaultfontstroke"] 							= "none"
 	loc_var["fontfill"] = loc_var["defaultfontfill"] 									= "black"  
 	loc_var["markerstrokewidth"] = loc_var["defaultmarkerstrokewidth"]= 1
 	loc_var["markerstroke"] = loc_var["defaultmarkerstroke"] 					= "black"
@@ -347,7 +347,7 @@ class mySvgCanvas:
 			node = etree.fromstring("<path></path>")
 			self.xml_parent.append(node)
 			node.attrib['d'] = str("M " + str(w[0]-15*u[0]-4*up[0]) + " " + str(w[1]-15*u[1]-4*up[1]) + " L " + str(w[0]-3*u[0]) + " " + str(w[1]-3*u[1]) + " L " + str(w[0]-15*u[0]+4*up[0]) + " " + str(w[1]-15*u[1]+4*up[1]) + " Z")
-			node.attrib['stroke-width'] = str(size != None and size or self.loc_var["markersize"])
+			node.attrib['stroke-width'] = str(size != None and size or self.loc_var["markerstrokewidth"])
 			node.attrib['stroke'] = self.loc_var["stroke"]
 			node.attrib['fill'] = self.loc_var["stroke"]
 
@@ -405,7 +405,7 @@ class mySvgCanvas:
 			node.attrib['transform'] = "rotate("+str(angle)+", "+str(node.attrib['x'])+", "+str(node.attrib['y'])+")"
 		node.attrib['font-style'] = str(self.loc_var["fontstyle"])
 		node.attrib['font-family'] = str(self.loc_var["fontfamily"])
-		node.attrib['font-size'] = str(int(float(self.loc_var["fontsize"])))
+		node.attrib['font-size'] = str(self.loc_var["fontsize"])
 		node.attrib['font-weight'] = str(self.loc_var["fontweight"])
 		node.attrib['text-anchor'] = str(textanchor)
 		node.attrib['stroke'] = str(self.loc_var["fontstroke"])
@@ -631,7 +631,7 @@ class mySvgCanvas:
 
 		tdx = (dx != None and dx*self.loc_var["xunitlength"] or self.loc_var["xunitlength"])
 		tdy = (dy != None and dy*self.loc_var["yunitlength"] or self.loc_var["yunitlength"])
-		fontsize = min(tdx/2,tdy/2,16)
+		self.loc_var["fontsize"] = min(tdx/2,tdy/2,16)
 		ticklength = int(float(self.loc_var["fontsize"]))/4
 		string = ""
 
