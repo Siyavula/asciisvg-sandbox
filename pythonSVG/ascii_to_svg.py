@@ -43,9 +43,9 @@ class mySvgCanvas:
 	loc_var["gridstroke"] = loc_var["defaultgridstroke"] 							= "grey"
 	loc_var["strokewidth"] = loc_var["defaultstrokewidth"] 						= 1 					
 	loc_var["strokedasharray"] = loc_var["defaultstrokedasharray"] 		= [1, 0]
-	loc_var["stroke"] = loc_var["defaultstroke"] 											= "black"
+	loc_var["stroke"] = loc_var["defaultstroke"] 											= "none"
 	loc_var["arrowfill"] = loc_var["defaultarrowfill"] 								= loc_var["stroke"]
-	loc_var["fill"] = loc_var["defaultfill"] 													= "none"
+	loc_var["fill"] = loc_var["defaultfill"] 													= "black"
 	loc_var["fontstyle"] = loc_var["defaultfontstyle"] 								= "italic"
 	loc_var["fontfamily"] = loc_var["defaultfontfamily"] 							= "times"		
 	loc_var["fontsize"] = loc_var["defaultfontsize"]									= 16
