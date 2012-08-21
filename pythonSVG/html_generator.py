@@ -7,9 +7,8 @@ from lxml import etree
 
 # HTML Contents
 contents = "<html> \
-<head><meta http-equiv='refresh' content='5' ></head> \
 <body> \
-<table border='1'>"
+<table border='1' cellpadding=10><tr><td bgcolor='#86cd78'>PNG Image</td><td bgcolor='#cd7879'>SVG Image</td><td>Refresh Page</td><tr>"
 
 # ============================================================
 
@@ -28,7 +27,7 @@ for fname in dirList:
 		g.close()
 
 		# SVG (xml script)
-		my_svg = pythonsvg.mySvgCanvas("svg1", 600, 600) # default size of SVG
+		my_svg = pythonsvg.mySvgCanvas("svg1", 400, 400) # default size of SVG
 		my_svg.process_ascii(ascii_text)
 		xml = my_svg.generate_string()	
 
@@ -39,10 +38,12 @@ for fname in dirList:
 		pythonsvg.create_png("png_images/" + str(i), int(float(svg_object.attrib['width'])), int(float(svg_object.attrib['height'])), xml) 
 
 		# Append contents to the HTML page
-		contents += "<tr><td>"
+		contents += "<tr><td bgcolor='#86cd78'>"
 		contents += "<img src='png_images/" + str(i) + ".png'/>"
-		contents += "</td><td>"
+		contents += "</td><td bgcolor='#cd7879'>"
 		contents += xml
+		contents += "</td><td>"
+		contents += '<form><input type=button value="Refresh" onClick="window.location.reload()"></form>'
 		contents += "</td></tr>"
 		
 		# Increment file name counter
