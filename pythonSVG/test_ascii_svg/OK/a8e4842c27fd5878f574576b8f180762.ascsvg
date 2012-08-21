@@ -1,0 +1,19 @@
+setBorder(0)
+initPicture(-6,6,-1.5,1.5)
+
+marker="arrow"
+line([5,0],[-5,0])
+line([-0.5,0.5],[-4.5,0.5])
+line([-4.5,1],[-0.5,1])
+line([4.5,0.5],[0.5,0.5])
+line([0.5,1],[4.5,1])
+
+fontstyle="normal"
+text( [0,0], "4", below)
+text( [-2.5,0.5], "boiling", below)
+text( [2.5,0.5], "2", below)
+text( [-2.5,1], "1", above)
+text( [2.5,1], "freezing", above)
+text( [-5,0.75], "3")
+text( [0,0.75], "liquid")
+text( [5,0.75], "solid")

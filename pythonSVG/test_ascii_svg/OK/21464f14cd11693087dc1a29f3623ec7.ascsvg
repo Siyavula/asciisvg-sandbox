@@ -1,0 +1,47 @@
+setBorder(0)
+
+// define forces and angles
+
+F1 = 14
+F2 = 5
+phi = 60
+R = 17.1
+theta = 9
+
+// define image limits
+
+initPicture(-2,18.9,-2,4.7)
+
+fontstyle = "normal"
+
+// FORCES
+
+// Force along horizontal
+marker = "arrow"
+line([0,0],[F1,0])
+text([F1/2,0],"14 N",below)
+
+// Force at angle
+line([0,0],[F2*cos(phi*pi/180),F2*sin(phi*pi/180)])
+text([F2*cos(phi*pi/180)/2,F2*sin(phi*pi/180)/2],"5 N",aboveleft)
+
+// PARALLELOGRAM
+
+//Force along horizontal
+marker = "none"
+strokedasharray = "5,5"
+line([F2*cos(phi*pi/180),F2*sin(phi*pi/180)],[F2*cos(phi*pi/180)+F1,F2*sin(phi*pi/180)])
+
+// Force at angle
+line([F1,0],[F2*cos(phi*pi/180)+F1,F2*sin(phi*pi/180)])
+
+// RESULTANT
+
+marker = "arrow"
+strokedasharray = "15,5"
+line([0,0],[F2*cos(phi*pi/180)+F1,F2*sin(phi*pi/180)])
+text([0.5*F2*cos(phi*pi/180)+0.5*F1,0.5*F2*sin(phi*pi/180)],"R",aboveleft)
+
+// ANGLE
+text([0.2*R*cos(0.4*theta*pi/180),0.2*R*sin(0.4*theta*pi/180)],ctheta,right)
+

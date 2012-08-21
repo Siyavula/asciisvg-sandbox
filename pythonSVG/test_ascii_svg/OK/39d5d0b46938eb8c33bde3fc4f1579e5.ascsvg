@@ -1,0 +1,28 @@
+setBorder(0)
+//given
+d = 4
+e = 20
+f = 10
+//calculated
+b = d+e
+h = 10.7703296143
+xmin = -10
+xmax = b + 10
+ymin = -10
+ymax = h + 10
+initPicture(xmin,xmax,ymin,ymax)
+
+//makes the parm and the right angle
+path([[0,0],[b,0],[b+d,h],[d,h],[0,0]])
+path([[d+0.2*d,0],[d+0.2*d,0.1*h],[d,0.1*h]])
+
+//makes the line for perpendicular height
+strokedasharray=[10,5]
+line([d,0],[d,h])
+
+//places the numbers and the markers to show what is parallel
+text([.5*d,0],"4",below)
+text([.5*e+d,0],"20",below)
+text([.5*d,.5*h],"10",left)
+text([.4*e+d,0],"> |")
+text([.4*e+d,h],"> |")

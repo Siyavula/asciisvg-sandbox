@@ -1,0 +1,46 @@
+setBorder(0)
+initPicture(-10,10,-5,5)
+
+// before collision
+fontstyle = "normal"
+text([-5.5,3],"Before Collision")
+// before collision
+// ball 1 and ball 2
+strokewidth = "2"
+stroke = "black"
+circle( [-8,0], 1 )
+circle( [-3,0], 1 )
+// arrows
+marker = "arrow"
+line([-7,0], [-6,0])
+// text
+text([-8,0], "2")
+//text([-8,2],"vi1 m/s")
+text([-8,2],"2 m/s")
+text([-8,1.5],"160 g")
+text([-3,0], "1")
+//text([-3,2],"vi2 m/s")
+text([-3,2],"0 m/s")
+text([-3,1.5],"80 g")
+
+// after collision
+fontstyle = "normal"
+text([5,3],"After Collision")
+// ball 1 and ball 2
+strokewidth = "2"
+stroke = "black"
+circle( [3,0], 1 )
+circle( [7,0], 1 )
+// arrows
+marker = "arrow"
+line([4,0], [5,0])
+line([8,0], [9,0])
+// text
+text([3,0], "2")
+text([3,2], "?")
+text([3,1.5], "160 g")
+//text([3,2], "? m/s")
+text([7,0], "1")
+text([7,2], "?")
+text([7,1.5], "80 g")
+

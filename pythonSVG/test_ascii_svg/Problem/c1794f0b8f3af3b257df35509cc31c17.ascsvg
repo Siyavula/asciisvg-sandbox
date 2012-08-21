@@ -1,0 +1,120 @@
+setBorder(0)
+
+s = 4                                // side
+//orientation = "vertical"
+//orientation = "horizontal"
+//orientation = "parallel"
+orientation = "horizontal"
+label1 = ['S', 'N'] //["N","S"]
+label2 = ['N', 'S'] //["N","S"]
+//lines = "attract"
+//lines = "repel"
+lines = "nolines"
+
+initPicture(-16,12,-4,8)
+
+with (Math)
+//marker =  "arrow" 
+                      // attraction
+
+if (lines == "attract") arc ([-3*s/2,s/2],[s/2,s/2], 1.25*s)
+//if (lines == "attract") arc ([-3*s/2,s/2],[s/2,s/2], 1.5*s)
+if (lines == "attract") arc ([-3*s/2,s/2],[s/2,s/2], 2*s)
+//if (lines == "attract") arc ([-3*s/2,s/2],[s/2,s/2], 3*s)
+if (lines == "attract") arc ([-3*s/2,s/2],[s/2,s/2], 5*s)
+//if (lines == "attract") line([-3*s/2,s/2],[s/2,s/2])
+if (lines == "attract") arc ([s/2,s/2],[-3*s/2,s/2], 1.25*s)
+//if (lines == "attract") arc ([s/2,s/2],[-3*s/2,s/2], 1.5*s)
+if (lines == "attract") arc ([s/2,s/2],[-3*s/2,s/2], 2*s)
+//if (lines == "attract") arc ([s/2,s/2],[-3*s/2,s/2], 3*s)
+if (lines == "attract") arc ([s/2,s/2],[-3*s/2,s/2], 5*s)
+
+                      // repelling
+if (lines == "repel") x1 = -1.4s
+if (lines == "repel") y1 = s/2
+
+if (lines == "repel") x2 = 0.4*s
+if (lines == "repel") y2 = s/2
+
+if (lines == "repel") sc = s-1
+
+// Text
+
+//text ([x1 - 0.5, y1], "1")
+//text ([x2 + 0.5, y2], "2")
+
+// Left Down
+
+if (lines == "repel") arc ([x1 + 1*sc,y1-1*sc],[x1,y1], sc)
+if (lines == "repel") arc ([x1 + 0.8*sc,y1-1*sc],[x1,y1], sc)
+if (lines == "repel") arc ([x1 + 0.6*sc,y1-1*sc],[x1,y1], sc)
+
+// Left Up
+
+if (lines == "repel") arc ([x1,y1],[x1 + 1*sc,y1+1*sc], 1*sc)
+if (lines == "repel") arc ([x1,y1],[x1 + 0.8*sc,y1+1*sc], 1*sc)
+if (lines == "repel") arc ([x1,y1],[x1 + 0.6*sc,y1+1*sc], 1*sc)
+// Right Up
+
+if (lines == "repel") arc ([x2 - 1*sc,y2+1*sc],[x2,y2], 1*sc)
+if (lines == "repel") arc ([x2 - 0.8*sc,y2+1*sc],[x2,y2], 1*sc)
+if (lines == "repel") arc ([x2 - 0.6*sc,y2+1*sc],[x2,y2], 1*sc)
+
+// Right Down
+
+if (lines == "repel") arc ([x2,y2],[x2 - 1*sc,y2-1*sc], 1*sc)
+if (lines == "repel") arc ([x2,y2],[x2 - 0.8*sc,y2-1*sc], 1*sc)
+if (lines == "repel") arc ([x2,y2],[x2 - 0.6*sc,y2-1*sc], 1*sc)
+
+fill = "white"
+//marker = "none"
+                      // horizontal
+
+if (orientation == "horizontal")       // right bar magnet
+  path([[0,0],[0,s],[2*s,s],[2*s,0],[0,0]])
+if (orientation == "horizontal")       // text
+  text([s/2,s/2],label1[0])
+if (orientation == "horizontal")       // text
+  text([3*s/2,s/2],label1[1])
+
+if (orientation == "horizontal")       // left bar magnet
+  path([[-s,0],[-s,s],[-3*s,s],[-3*s,0],[-s,0]])
+if (orientation == "horizontal")       // text
+  text([-3*s/2,s/2],label2[0])
+if (orientation == "horizontal")       // text
+  text([-5*s/2,s/2],label2[1])
+
+
+                      // vertical
+
+if (orientation == "vertical")     // top bar magnet
+  path([[0,s],[-s,s],[-s,3*s],[0,3*s],[0,s]])
+if (orientation == "vertical")       // text
+  text([-s/2,3*s/2],label1[0])
+if (orientation == "vertical")       // text
+  text([-s/2,5*s/2],label1[1])
+
+if (orientation == "vertical")     // bottom bar magnet
+  path([[0,0],[-s,0],[-s,-2*s],[0,-2*s],[0,0]])
+if (orientation == "vertical")       // text
+  text([-s/2,-s/2],label2[0])
+if (orientation == "vertical")       // text
+  text([-s/2,-3*s/2],label2[1])
+
+
+                      // parallel
+
+if (orientation == "parallel")     // right bar magnet
+  path([[0,s],[s,s],[s,-s],[0,-s],[0,s]])
+if (orientation == "parallel")       // text
+  text([s/2,s/2],label1[0])
+if (orientation == "parallel")       // text
+  text([s/2,-s/2],label1[1])
+
+
+if (orientation == "parallel")     // left bar magnet
+  path([[-s,s],[-2*s,s],[-2*s,-s],[-s,-s],[-s,s]])
+if (orientation == "parallel")       // text
+  text([-3*s/2,s/2],label2[0])
+if (orientation == "parallel")       // text
+  text([-3*s/2,-s/2],label2[1])

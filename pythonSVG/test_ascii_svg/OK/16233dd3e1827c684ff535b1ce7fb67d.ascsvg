@@ -1,0 +1,27 @@
+setBorder(0)
+
+// defined
+side = 5 // sides of block
+angle =  35*pi/180 // degrees
+fric_mag = 5
+
+// size of image
+initPicture(-10,20,-5,13)
+//initPicture(-20,20,-20,20)
+
+// ground and slope
+path([[15*cos(angle),0],[15*cos(angle),15*sin(angle)],[0,0],[15,0]])
+// box
+path([[0.5*side*cos(angle),0.5*side*sin(angle)],[0.5*side*cos(angle)-0.5*side*cos(pi/2-angle),0.5*side*sin(angle)+0.5*side*sin(pi/2-angle)],[0.5*2*side*cos(angle)-0.5*side*cos(pi/2-angle),0.5*2*side*sin(angle)+0.5*side*sin(pi/2-angle)],[0.5*2*side*cos(angle),0.5*2*side*sin(angle)]])
+
+// forces
+marker = "arrow"
+line([0.5*2*side*cos(angle)-0.5*0.5*side*cos(pi/2-angle),0.5*2*side*sin(angle)+0.5*0.5*side*sin(pi/2-angle)],[0.5*2*side*cos(angle)-0.5*0.5*side*cos(pi/2-angle)+fric_mag*cos(angle),0.5*2*side*sin(angle)+0.5*0.5*side*sin(pi/2-angle)+fric_mag*sin(angle)]) //friction
+
+//labels
+fontstyle = "normal"
+text([2*side/3*cos(angle/2),2*side/3*sin(angle/2)],"35°")
+//text([2*side/3*cos(angle/2),2*side/3*sin(angle/2)],"60°")
+//fontstyle = "italic"
+text([15*cos(angle),0.5*15*sin(angle)],"80 m",right)
+

@@ -1,0 +1,35 @@
+setBorder(0)
+
+// define distance
+x1 =  15
+x2 =  9
+
+
+// define image limits
+xmin = -1
+xmax = x1 + 1
+ymin = -2
+ymax = 2
+initPicture(xmin,xmax,ymin,ymax)
+
+fontstyle = "normal"
+
+// START 
+strokedasharray = "10,5"
+line([0,1],[0,-1])
+// WALL
+strokedasharray = null
+line([x1,1],[x1,-1])
+
+// to wall
+marker = "arrow"
+line([0,0.5],[x1,0.5])
+text([x1/2,0.5],"15 m",above)
+// bounce back
+line([x1,-0.5],[x1-x2,-0.5])
+text([x1-x2/2,-0.5],"9 m",above)
+
+
+// LABELS
+text([0,-1],"Start",below)
+text([x1,0],"Wall",right)

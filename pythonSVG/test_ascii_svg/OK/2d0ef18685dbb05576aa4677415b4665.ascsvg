@@ -1,0 +1,44 @@
+setBorder(0)
+
+// given
+T1     = 1200 // N.
+theta1 = 50
+theta2 = 65
+phi = 90-theta2
+
+// calculated
+T2  =  T1*cos(theta1*pi/180)/cos(phi*pi/180)
+W = T1*sin(theta1*pi/180)+T2*sin(phi*pi/180)
+
+// plotting lengths
+T10 = T1/100
+T20 = T2/100
+
+// define image limits
+xmin = -T20*cos(phi*pi/180)-10
+xmax = T20*cos(phi*pi/180)+10
+ymin = -T10*sin(theta1*pi/180)-10
+ymax = T10*sin(theta1*pi/180)+10
+initPicture(xmin,xmax,ymin,ymax)
+
+// strings
+// T1
+line([0,0],[T10*cos(theta1*pi/180),T10*sin(theta1*pi/180)])
+text([0.4*T10*cos(theta1*pi/180),0.4*T10*sin(theta1*pi/180)],"T1",aboveleft)
+text([0.9T10*cos(theta1*pi/180),0.9T10*sin(theta1*pi/180)],ctheta+"1",left)
+// T2
+line([0,0],[-T20*cos(phi*pi/180),T20*sin(phi*pi/180)])
+text([-0.4*T20*cos(phi*pi/180),0.4*T20*sin(phi*pi/180)],"T2",belowleft)
+text([-0.9*T20*cos(phi*pi/180),0.9*T20*sin(phi*pi/180)],ctheta+"2",below)
+
+// weight
+line([0,0],[0,-5])
+line([-2,-5],[2,-5])
+line([-2,-5],[-2,-9])
+line([-2,-9],[2,-9])
+line([2,-9],[2,-5])
+text([0,-7],"W")
+
+// walls
+line([-T20*cos(phi*pi/180),T10*sin(theta1*pi/180)],[T10*cos(theta1*pi/180)+5,T10*sin(theta1*pi/180)])
+line([-T20*cos(phi*pi/180),T10*sin(theta1*pi/180)],[-T20*cos(phi*pi/180),-14])

@@ -1,0 +1,50 @@
+//brittle
+
+setBorder(0)
+
+// variables
+s = 9
+m = 2
+a = 1.7
+
+//initPicture(-10,10,-10,10)
+initPicture(-2,9,-1,8)
+
+// x axis
+line([0,0],[s-2,0])
+
+// y axis
+line([0,0],[0,s-2])
+
+// elastic region
+endx = 0.2*s
+endy = m*0.2*s
+
+// plastic region
+p = []
+maxi = 0.05*s+0.5
+with (Math) 
+ for (var d = 0; d < maxi + 0.01 ; d += 0.01)
+   p[p.length] = [endx+d,endy+sin(d*a)]
+path(p)
+endpx = endx+(d-0.01)
+endpy = endy+sin((d-0.01)*a)
+
+// point of fracture
+x = [0.3*s+0.05*s,m*0.3*s+0.05*s]
+
+// graph
+line( [0,0],[endx,endy])
+line([endpx,endpy],[endpx+0.2,endpy])
+
+// fracture
+fontsize = "14" 
+fontfamily = "sansserif"
+fontstyle = "normal"
+text([endpx+0.2,endpy],"X")
+
+// labels
+fontsize = "12" 
+text([(s-2)/2,-0.5],"extension") // x-axis
+text([-1,(s-2)/2],"force") // y-axis
+text([endpx+0.2,endpy],"fracture", belowright) // fracture

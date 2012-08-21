@@ -1,0 +1,53 @@
+// ===================================================================================
+// Name: MONASSIS Templates - ASCII SVG Template
+// Source: http://www1.chapman.edu/~jipsen/svg/asciisvgeditor.html
+// File Author: Leen Remmelzwaal
+// Date: 7th May 2012
+// ===================================================================================
+
+// =======================================
+// Variables
+// =======================================
+
+float_x_int = 1.33333333333
+float_y_int = 0.75
+
+float_x_A = 1
+float_y_A = -0.25
+
+float_x_B = -1
+float_y_B = 1.75
+
+// =======================================
+// Image Settings
+// =======================================
+
+width="400"
+height="400"
+initPicture(-7, 7, -7, 7)	// xmin,xmax,ymin,ymax
+
+setBorder(0)
+axes(1, 1, "labels", 1)	// (dx, dy, "labels", grid size)
+
+// =======================================
+// Line Drawing
+// =======================================
+
+stroke = "red"
+strokewidth = "2"
+marker = "arrow" // "dot", "arrow", "arrowdot", "none"
+plot("-1 * t^-1 + 0.75 * t^0 ",-10,-0.0001)	//(["f(t)", "g(t)"],tmin,tmax)	
+plot("-1 * t^-1 + 0.75 * t^0 ",0.0001,10)	//(["f(t)", "g(t)"],tmin,tmax)	
+
+// =======================================
+// Dot
+// =======================================
+
+stroke = "black"
+strokewidth = "4"
+dot([float_x_int,0], "open")
+stroke = "yellow"
+strokewidth = "1"
+dot([float_x_int,0], "closed", "x-intercept", aboveleft)
+
+

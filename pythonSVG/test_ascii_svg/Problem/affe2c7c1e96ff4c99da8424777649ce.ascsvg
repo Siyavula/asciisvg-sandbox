@@ -1,0 +1,105 @@
+setBorder(0)
+//initPicture(-10,10,-10,10)
+//initPicture(-15,15,-15,15)
+
+
+// number electrons max 5
+n=0 // number of electrons in ground state
+m=1 // number of electrons in excited state
+
+// absorption and emission photons
+a =0 // absorption
+e =0 // emission
+
+// energy levels
+h = 5
+w = 8
+
+initPicture(-4,w+4,-1,h+1)
+
+// energy levels
+line([0,0],[w,0])      // ground state
+line([0,h],[w,h]) // excited state
+text([0,0],"E₁",left)
+text([0,h],"E₂",left)
+
+// electrons in ground state
+fill = "black" 
+// ground state
+for (var x = 1; x < n+1; x += 1 )
+ {
+  if (x==6)  circle([w/2-3,0],0.2)
+  if (x==2)  circle([w/2-2,0],0.2)
+  if (x==4)  circle([w/2-1,0],0.2)
+  if (x==1)  circle([w/2  ,0],0.2)
+  if (x==5)  circle([w/2+1,0],0.2)
+  if (x==3)  circle([w/2+2,0],0.2)
+  if (x==7)  circle([w/2+3,0],0.2)
+ }
+//excited state
+for (var x = 1; x < m+1; x += 1 )
+ {
+  if (x==6)  circle([w/2-3,h],0.2)
+  if (x==2)  circle([w/2-2,h],0.2)
+  if (x==4)  circle([w/2-1,h],0.2)
+  if (x==1)  circle([w/2  ,h],0.2)
+  if (x==5)  circle([w/2+1,h],0.2)
+  if (x==3)  circle([w/2+2,h],0.2)
+  if (x==7)  circle([w/2+3,h],0.2)
+ }
+fill = "none" 
+
+// photons
+p = 6
+
+// absorption photon 1
+if (a>0)
+{
+  for (var x = 0; x < p; x += 2 )
+    {
+      arc([-4+x/2,h-3],[-3.5+x/2,h-3],0.25)
+      arc([-3.5+x/2+0.5,h-3],[-4+x/2+0.5,h-3],0.25)
+    }
+  marker = "arrow" 
+  line([-3.5+5/2,h-3],[-3.5+5/2+1,h-3])
+  marker = "none"
+}
+
+// absorption photon 2
+if (a>1)
+{
+  for (var x = 0; x < p; x += 2 )
+    {
+      arc([-4+x/2,h-2],[-3.5+x/2,h-2],0.25)
+      arc([-3.5+x/2+0.5,h-2],[-4+x/2+0.5,h-2],0.25)
+    }
+  marker = "arrow" 
+  line([-3.5+5/2,h-2],[-3.5+5/2+1,h-2])
+  marker = "none"
+}
+
+// emission photon 1
+if (e>0)
+{
+  for (var x = 0; x < p; x += 2 )
+    {
+      arc([w+x/2,h-3],[w+0.5+x/2,h-3],0.25)
+      arc([w+0.5+x/2+0.5,h-3],[w+x/2+0.5,h-3],0.25)
+    }
+  marker = "arrow" 
+  line([w+0.5+5/2,h-3],[w+0.5+5/2+1,h-3])
+  marker = "none"
+}
+
+// emission photon 2
+if (e>1)
+{
+  for (var x = 0; x < p; x += 2 )
+    {
+      arc([w+x/2,h-2],[w+0.5+x/2,h-2],0.25)
+      arc([w+0.5+x/2+0.5,h-2],[w+x/2+0.5,h-2],0.25)
+    }
+  marker = "arrow" 
+  line([w+0.5+5/2,h-2],[w+0.5+5/2+1,h-2])
+  marker = "none"
+}

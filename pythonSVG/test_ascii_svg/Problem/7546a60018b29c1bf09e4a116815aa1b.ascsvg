@@ -1,0 +1,50 @@
+setBorder(0)
+molecule = 2
+initPicture(-3,3,-3,3)
+
+if (molecule == 1)
+	{//water
+	fill="red"
+	circle([-1.2,0.2],0.7)
+	circle([1.2,0.2],0.7)
+	fill="blue"
+	circle([0,1],1)
+	}
+else 
+	{if (molecule==2)
+		{//carbon dioxide
+		fill="red"
+		circle([-1.2,1],0.8)
+		fill="blue"
+		circle([0,1],1)
+		fill="red"
+		circle([1.2,1],0.8)}
+	else
+		{
+		if (molecule==3)
+			{//salt
+			fill="green"
+			circle([-0.9,1],0.4)
+			circle([0,0.1],0.4)
+			circle([-0.9,-0.8],0.4)
+			circle([0.9,1],0.4)
+			circle([0.9,-.8],0.4)
+			fill="gray"
+			circle([0,1],0.5)
+			circle([-0.9,0.1],0.5)
+			circle([0.9,0.1],0.5)
+			circle([0,-0.8],0.5)}
+		else
+		{
+		if (molecule==4)
+			{//ammonia
+			fill="blue"
+			circle([-1.1,1.2],0.7)
+			circle([0,0],0.7)
+			circle([1.1,1.2],0.7)
+			fill="red"
+			circle([0,1],1)
+			}
+		}
+	}
+	}

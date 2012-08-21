@@ -1,0 +1,32 @@
+setBorder(0)
+
+// defined
+side = 5 // sides of block
+angle = 45*pi/180 // degrees
+grav_mag = 617/80
+fric_mag = 437/80
+normal_mag = 437/80
+
+// size of image
+initPicture(-10,20,-12.7125,17)
+
+
+// ground and slope
+path([[15*cos(angle),15*sin(angle)],[0,0],[15,0]])
+// box
+path([[side*cos(angle),side*sin(angle)],[side*cos(angle)-side*cos(pi/2-angle),side*sin(angle)+side*sin(pi/2-angle)],[2*side*cos(angle)-side*cos(pi/2-angle),2*side*sin(angle)+side*sin(pi/2-angle)],[2*side*cos(angle),2*side*sin(angle)]])
+
+// forces
+marker = "arrow"
+line([2*side*cos(angle)-0.5*side*cos(pi/2-angle),2*side*sin(angle)+0.5*side*sin(pi/2-angle)],[2*side*cos(angle)-0.5*side*cos(pi/2-angle)+fric_mag*cos(angle),2*side*sin(angle)+0.5*side*sin(pi/2-angle)+fric_mag*sin(angle)]) //friction
+line([1.5*side*cos(angle),1.5*side*sin(angle)],[1.5*side*cos(angle),1.5*side*sin(angle)-grav_mag]) //gravity
+line([1.5*side*cos(angle)-side*cos(pi/2-angle),1.5*side*sin(angle)+side*sin(pi/2-angle)],[1.5*side*cos(angle)-side*cos(pi/2-angle)-normal_mag*cos(pi/2-angle),1.5*side*sin(angle)+side*sin(pi/2-angle)+normal_mag*sin(pi/2-angle)]) //normal
+
+//labels
+fontstyle = "normal"
+text([1.5*side*cos(angle)-side*cos(pi/2-angle)/2,1.5*side*sin(angle)+side*sin(pi/2-angle)/2],"63 kg")
+text([2*side/3*cos(angle/2),2*side/3*sin(angle/2)],"45°")
+fontstyle = "italic"
+text( [2*side*cos(angle)-0.5*side*cos(pi/2-angle)+fric_mag*cos(angle),2*side*sin(angle)+0.5*side*sin(pi/2-angle)+fric_mag*sin(angle)], "Ff" , aboveleft )
+text([1.5*side*cos(angle),1.5*side*sin(angle)-grav_mag/2],"Fg",right)
+text([1.5*side*cos(angle)-side*cos(pi/2-angle)-normal_mag*cos(pi/2-angle),1.5*side*sin(angle)+side*sin(pi/2-angle)+normal_mag*sin(pi/2-angle)],"N",belowleft)

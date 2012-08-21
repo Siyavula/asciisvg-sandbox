@@ -1,0 +1,128 @@
+setBorder(0)
+x = 0
+initPicture(-4,4,-2,2)
+
+fontstyle="normal"
+fontfamily="sanserif"
+//makes the C-C backbone
+//first the C's
+text([-0.5,0],"C")
+text([0.5,0],"C")
+text([-1.5,0],"C")
+text([1.5,0],"C")
+text([-2.5,0],"C")
+text([2.5,0],"C")
+
+//then the lines connecting the C
+line([-0.3,0],[0.3,0])
+line([-0.7,0],[-1.3,0])
+line([-1.7,0],[-2.3,0])
+line([0.7,0],[1.3,0])
+line([1.7,0],[2.3,0])
+line([-2.7,0],[-3.3,0])
+line([2.7,0],[3.3,0])
+
+//then the lines to the terminal atoms
+line([0.5,0.2],[0.5,0.5])
+line([0.5,-0.2],[0.5,-0.5])
+line([-0.5,0.2],[-0.5,0.5])
+line([-0.5,-0.2],[-0.5,-0.5])
+line([1.5,0.2],[1.5,0.5])
+line([1.5,-0.2],[1.5,-0.5])
+line([-1.5,0.2],[-1.5,0.5])
+line([-1.5,-0.2],[-1.5,-0.5])
+line([-2.5,0.2],[-2.5,0.5])
+line([-2.5,-0.2],[-2.5,-0.5])
+line([2.5,0.2],[2.5,0.5])
+line([2.5,-0.2],[2.5,-0.5])
+
+//makes the terminal bits
+if (x == 0)
+//polymer is polyethene
+	{
+	text([-2.5,0.6],"H")
+	text([-1.5,0.6],"H")
+	text([-0.5,0.6],"H")
+	text([0.5,0.6],"H")
+    text([1.5,0.6],"H")
+	text([2.5,0.6],"H")
+	text([-2.5,-0.6],"H")
+	text([-1.5,-0.6],"H")
+    text([-0.5,-0.6],"H")
+	text([0.5,-0.6],"H")
+	text([1.5,-0.6],"H")
+	text([2.5,-0.6],"H")
+	}
+else
+	{if (x == 1)
+	//monomer is chloroethene
+		{
+		text([-2.5,0.6],"H")
+		text([-1.5,0.6],"Cl")
+		text([-0.5,0.6],"H")
+		text([0.5,0.6],"Cl")
+    	text([1.5,0.6],"H")
+		text([2.5,0.6],"Cl")
+		text([-2.5,-0.6],"H")
+		text([-1.5,-0.6],"H")
+    	text([-0.5,-0.6],"H")
+		text([0.5,-0.6],"H")
+		text([1.5,-0.6],"H")
+		text([2.5,-0.6],"H")
+		}
+		else
+		{
+			if (x == 2)
+			//monomer is tetrafluoroethene
+			{
+			text([-2.5,0.6],"F")
+			text([-1.5,0.6],"F")
+			text([-0.5,0.6],"F")
+			text([0.5,0.6],"F")
+    		text([1.5,0.6],"F")
+			text([2.5,0.6],"F")
+			text([-2.5,-0.6],"F")
+			text([-1.5,-0.6],"F")
+    		text([-0.5,-0.6],"F")
+			text([0.5,-0.6],"F")
+			text([1.5,-0.6],"F")
+			text([2.5,-0.6],"F")
+			}
+			else
+			{
+				if (x == 3)
+				//monomer is polypropene
+				{
+				text([-2.5,0.6],"H")
+				text([-1.5,0.6],"CH₃")
+				text([-0.5,0.6],"H")
+				text([0.5,0.6],"CH₃")
+    			text([1.5,0.6],"H")
+				text([2.5,0.6],"CH₃")
+				text([-2.5,-0.6],"H")
+				text([-1.5,-0.6],"H")
+    			text([-0.5,-0.6],"H")
+				text([0.5,-0.6],"H")
+				text([1.5,-0.6],"H")
+				text([2.5,-0.6],"H")
+				}
+			
+			else
+				//monomer is polystyrene
+				{
+				text([-2.5,0.6],"H")
+				text([-1.5,0.6],"C₆H₅")
+				text([-0.5,0.6],"H")
+				text([0.5,0.6],"C₆H₅")
+    			text([1.5,0.6],"H")
+				text([2.5,0.6],"C₆H₅")
+				text([-2.5,-0.6],"H")
+				text([-1.5,-0.6],"H")
+    			text([-0.5,-0.6],"H")
+				text([0.5,-0.6],"H")
+				text([1.5,-0.6],"H")
+				text([2.5,-0.6],"H")
+				}
+				}
+			}
+		}

@@ -1,0 +1,57 @@
+
+
+
+setBorder(0)
+initPicture(-16, 52, -140, 1190.0)
+axes(5, 100, "labels", 5)
+
+stroke = "blue"
+strokewidth = '2'
+plot("0.001*79881.82008*(1-(1.0766)^(-x*2))/(0.0766)", 0, 40)
+
+
+stroke = "green"
+strokewidth = "1"
+marker = "dot"
+dot([40, 1040.0])
+
+
+
+fontstyle = 'normal'
+fontsize = '13'
+
+
+text([41, 1060.0], "Starting Point", above)
+
+
+marker = 'arrow'
+
+
+
+text([35, 908.420277664], "When there are", belowright)
+text([35, 858.420277664], "29 years remaining", belowright)
+
+
+
+text([-8, 1028.42027766], "P")
+fontsize = '10'
+text([-8, 1028.42027766], "29", belowright)
+
+marker = "dot"
+dot([29, 1028.42027766])
+marker = 'arrow'
+line([29, 1028.42027766],[29,0])
+line([29, 1028.42027766],[0, 1028.42027766])
+
+line([35, 908.420277664],[30.5, 998.420277664])
+
+
+fontsize = '15'
+
+text([-7.5,570.0], "Rand")
+text([-7.5,520.0], "(x1000)")
+text([30, -90], "Years remaining")
+
+
+
+

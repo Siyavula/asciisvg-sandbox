@@ -1,0 +1,65 @@
+setBorder(0)
+x = 0
+initPicture(-5,5)
+
+if (x==0)
+{fill="black"
+circle([0.3,-0.1],0.05)
+circle([-0.3,0.1],0.05)
+circle([-0.1,-0.3],0.05)
+circle([-0.1,0.3],0.05)
+circle([0.1,0.3],0.05)
+circle([0.3,0.1],0.05)
+text([-0.3,-0.1] , "x", fontstyle="normal" , fontsize="18")
+text([0.1,-0.3] , "x" )
+text([0,0], "X", fontstyle="normal", fontsize="21")
+text([-0.6,0] , "Y")
+text([0,-0.6] , "Y")}
+	else
+	{
+		if (x==1)
+		{fill="black" 
+		circle([0.3,-0.1],0.05)
+		circle([-0.3,0.1],0.05)
+		circle([-0.1,-0.3],0.05)
+		circle([-0.1,0.3],0.05)
+		circle([0.1,0.3],0.05)
+		text([-0.3,-0.1] , "x", fontstyle="normal" , fontsize="18")
+		text([0.1,-0.3] , "x" )
+		text([0.3,0.1], "x")
+		text([0,0], "X", fontstyle="normal", fontsize="21")
+		text([-0.6,0] , "Y")
+		text([0,-0.6] , "Y")
+		text([0.6,0] , "Y")}
+			else
+			{
+				if (x==2)
+				{fill="black"
+				circle([0.35,-0.1],0.05)
+				circle([0.35,0.1],0.05)
+				circle([-0.1,-0.35],0.05)
+				circle([0.1,-0.35],0.05)
+				circle([-0.35,0.1],0.05)
+				circle([-0.1,0.35],0.05)
+				circle([0.1,0.35],0.05)
+				text([-0.35,-0.1] , "x", fontstyle="normal" ,fontsize="16")
+				text([0,0], "X", fontstyle="normal", fontsize="21")
+				text([-0.7,0] , "Y")}
+						else
+							{fill="black"
+							circle([0.3,-0.1],0.05)
+							circle([-0.3,0.1],0.05)
+							circle([-0.1,-0.3],0.05)
+							circle([0.1,0.3],0.05)
+							text([-0.3,-0.1] , "x", fontstyle="normal" , fontsize="18")
+							text([0.1,-0.3] , "x" )
+							text([0.3,0.1], "x")
+							text([-0.1,0.3],"x")
+							text([0,0], "X", fontstyle="normal", fontsize="21")
+							text([-0.6,0] , "Y")
+							text([0,-0.6] , "Y")
+							text([0.6,0] , "Y")
+							text([0,0.6],"Y")}
+						
+					}
+				}

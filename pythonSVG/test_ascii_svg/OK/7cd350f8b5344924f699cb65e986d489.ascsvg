@@ -1,0 +1,69 @@
+// ===================================================================================
+// Name: MONASSIS Templates - ASCII SVG Template
+// Source: http://www1.chapman.edu/~jipsen/svg/asciisvgeditor.html
+// File Author: Leen Remmelzwaal
+// Date: 31st May 2012	
+// ===================================================================================
+
+// =======================================
+// Variables
+// =======================================
+
+float_x_1_int = -2.16227766017
+float_x_2_int = 4.16227766017
+float_y_int = -1.8
+
+// =======================================
+// Image Settings
+// =======================================
+
+width="400"
+height="400"
+initPicture(-8, 8, -8, 8)	// xmin,xmax,ymin,ymax
+
+setBorder(0)
+axes(1, 1, "labels", 1)	// (dx, dy, "labels", grid size)
+
+// =======================================
+// Line Drawing
+// =======================================
+
+stroke = "red"
+strokewidth = "2"
+marker = "arrow" // "dot", "arrow", "arrowdot", "none"
+plot("0.2 * (t + -1) ^2 + -2",-10,10)	//(["f(t)", "g(t)"],tmin,tmax)	
+
+// =======================================
+// Dot - x1
+// =======================================
+
+stroke = "black"
+strokewidth = "4"
+dot([float_x_1_int, 0], "open")
+stroke = "yellow"
+strokewidth = "1"
+dot([float_x_1_int, 0], "closed", "x-intercept", aboveleft)
+
+// =======================================
+// Dot - x2
+// =======================================
+
+stroke = "black"
+strokewidth = "4"
+dot([float_x_2_int, 0], "open")
+stroke = "yellow"
+strokewidth = "1"
+dot([float_x_2_int, 0], "closed", "x-intercept", aboveright)
+
+// =======================================
+// Dot - y
+// =======================================
+
+stroke = "black"
+strokewidth = "4"
+dot([0,float_y_int], "open")
+stroke = "yellow"
+strokewidth = "1"
+dot([0,float_y_int], "closed", "y-intercept", aboveleft)
+
+// =======================================

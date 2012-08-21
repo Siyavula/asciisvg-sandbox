@@ -1,0 +1,28 @@
+setBorder(0)
+initPicture(-5,5,-5,5)
+
+line([-5,0],[5,0])
+line([-5,1],[5,1])
+line([-5,2],[5,2])
+line([-5,-1],[5,-1])
+
+strokewidth = "2"
+line([2,1.1],[2,1.7])
+line([2,1.7],[3,1.7])
+line([3,1.7],[3,1.1])
+line([3,1.1],[2,1.1])
+
+strokewidth="1"
+strokedasharray = "5,5"
+line([-4,-1.5],[-4,1.5])
+line([2,-1.5],[2,1.5])
+
+fontstyle="normal"
+text([2.5,1.4],"car")
+text([-4,-1.7], "x")
+
+marker="arrow"
+line([-4,-1.5],[2,-1.5])
+line([-3.8,-1.5],[-4,-1.5])
+
+text([-1,-1.8],"100", below)

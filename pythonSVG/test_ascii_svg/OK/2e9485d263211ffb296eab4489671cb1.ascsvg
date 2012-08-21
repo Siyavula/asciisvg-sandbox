@@ -1,0 +1,15 @@
+setBorder(0)
+initPicture(-15,15)
+
+rect([-8,0],[-4,4])
+rect([0,0],[4,4])
+rect([8,0],[12,4])
+
+fontstyle="normal"
+text([-6,2],"classroom")
+text([2,2],"tuckshop")
+text([10,2],"pool")
+
+marker="arrow"
+line([0,-1],[4,-1])
+text([2,-1],"positive direction",below)

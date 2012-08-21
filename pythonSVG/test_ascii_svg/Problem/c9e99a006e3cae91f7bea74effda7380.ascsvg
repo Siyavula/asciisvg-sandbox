@@ -1,0 +1,64 @@
+setBorder(0)
+
+s = 4                                // side
+//orientation = "vertical"
+//orientation = "horizontal"
+//orientation = "parallel"
+orientation = "horizontal"
+label1 = ['S', 'N'] //["N","S"]
+label2 = ['S', 'N'] //["N","S"]
+
+initPicture(-16,12,-4,8)
+
+with (Math)
+
+                      // horizontal
+
+if (orientation == "horizontal")       // right bar magnet
+  path([[0,0],[0,s],[2*s,s],[2*s,0],[0,0]])
+if (orientation == "horizontal")       // text
+  text([s/2,s/2],label1[0])
+if (orientation == "horizontal")       // text
+  text([3*s/2,s/2],label1[1])
+
+if (orientation == "horizontal")       // left bar magnet
+  path([[-s,0],[-s,s],[-3*s,s],[-3*s,0],[-s,0]])
+if (orientation == "horizontal")       // text
+  text([-3*s/2,s/2],label2[0])
+if (orientation == "horizontal")       // text
+  text([-5*s/2,s/2],label2[1])
+
+
+                      // vertical
+
+if (orientation == "vertical")     // top bar magnet
+  path([[0,s],[-s,s],[-s,3*s],[0,3*s],[0,s]])
+if (orientation == "vertical")       // text
+  text([-s/2,3*s/2],label1[0])
+if (orientation == "vertical")       // text
+  text([-s/2,5*s/2],label1[1])
+
+if (orientation == "vertical")     // bottom bar magnet
+  path([[0,0],[-s,0],[-s,-2*s],[0,-2*s],[0,0]])
+if (orientation == "vertical")       // text
+  text([-s/2,-s/2],label2[0])
+if (orientation == "vertical")       // text
+  text([-s/2,-3*s/2],label2[1])
+
+
+                      // parallel
+
+if (orientation == "parallel")     // right bar magnet
+  path([[0,s],[s,s],[s,-s],[0,-s],[0,s]])
+if (orientation == "parallel")       // text
+  text([s/2,s/2],label1[0])
+if (orientation == "parallel")       // text
+  text([s/2,-s/2],label1[1])
+
+
+if (orientation == "parallel")     // left bar magnet
+  path([[-s,s],[-2*s,s],[-2*s,-s],[-s,-s],[-s,s]])
+if (orientation == "parallel")       // text
+  text([-3*s/2,s/2],label2[0])
+if (orientation == "parallel")       // text
+  text([-3*s/2,-s/2],label2[1])

@@ -1,0 +1,60 @@
+// ===================================================================================
+// Name: MONASSIS Templates - ASCII SVG Template
+// Source: http://www1.chapman.edu/~jipsen/svg/asciisvgeditor.html
+// File Author: Leen Remmelzwaal
+// Date: 4th June 2012	
+// ===================================================================================
+
+// =======================================
+// Variables
+// =======================================
+
+float_x_A = -1
+float_y_A = 1.9375
+
+float_x_B = 1
+float_y_B = 1.75
+
+// =======================================
+// Image Settings
+// =======================================
+
+width="400"
+height="400"
+initPicture(-8, 8, -8, 8)	// xmin,xmax,ymin,ymax
+
+setBorder(0)
+axes(1, 1, "labels", 1)	// (dx, dy, "labels", grid size)
+
+// =======================================
+// Line Drawing
+// =======================================
+
+stroke = "red"
+strokewidth = "2"
+marker = "arrow" // "dot", "arrow", "arrowdot", "none"
+plot("-0.25 * 2 ^ (t + -1) + 2",-10,10)	//(["f(t)", "g(t)"],tmin,tmax)	
+
+// =======================================
+// Dot
+// =======================================
+
+stroke = "black"
+strokewidth = "4"
+dot([float_x_B,float_y_B], "open")
+stroke = "yellow"
+strokewidth = "1"
+dot([float_x_B,float_y_B], "closed", "Point B", aboveright)
+
+// =======================================
+// Dot
+// =======================================
+
+stroke = "black"
+strokewidth = "4"
+dot([float_x_A,float_y_A], "open")
+stroke = "yellow"
+strokewidth = "1"
+dot([float_x_A,float_y_A], "closed", "Point A", aboveright)
+
+// =======================================

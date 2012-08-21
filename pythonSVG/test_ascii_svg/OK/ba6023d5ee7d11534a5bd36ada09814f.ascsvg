@@ -1,0 +1,88 @@
+// ===================================================================================
+// Name: MONASSIS Templates - ASCII SVG Template
+// Source: http://www1.chapman.edu/~jipsen/svg/asciisvgeditor.html
+// File Author: Leen Remmelzwaal
+// Date: 2 August 2012
+// ===================================================================================
+
+// =======================================
+// Image Settings
+// =======================================
+
+setBorder(0)
+initPicture(-8.5, 8.5, -8.5, 8.5)
+
+// =======================================
+// Axis
+// =======================================
+
+stroke = "pink"
+fill = "pink"
+rect ([-10,-10],[10,10])
+
+stroke = "lightgreen"
+fill = "lightgreen"
+rect ([-10,-3],[10,10])
+
+fill = "none"
+
+axes(1, 1, "labels", 1)
+
+// =======================================
+// Line of reflection
+// =======================================
+
+stroke = "gray"
+strokewidth = 2
+strokedasharray = [5, 5]
+plot(["t","t"], -10, 10)
+
+// =======================================
+// Inverse Graph
+// =======================================
+
+stroke = "green"
+strokewidth = 2
+strokedasharray = [10, 0]
+plot(["t","2^t-3"], -10, 10)
+
+// =======================================
+// Inverse Graph
+// =======================================
+
+text([-8,8], "blue = f(x)", right)
+text([-8,7], "green = inverse function", right)
+text([7,8], "line of reflection (y = x)", left)
+
+// =======================================
+// Arrows (domain)
+// =======================================
+
+stroke = "black"
+strokewidth = 1.5
+marker = "arrow"
+fill = "white"
+
+line([0,-7.5],[-3, -7.5]); line([0,-7.5],[3, -7.5]); text([3,-7.5], 'domain', right); 
+
+// =======================================
+// Arrows (range)
+// =======================================
+
+stroke = "black"
+strokewidth = 1.5
+marker = "arrow"
+fill = "white"
+
+line([7.5,-3],[7.5,0]); circle([7.5,-3],0.2); text([7.5,0.5], 'range', null); 
+
+
+
+// =======================================
+
+
+
+
+
+// =======================================
+

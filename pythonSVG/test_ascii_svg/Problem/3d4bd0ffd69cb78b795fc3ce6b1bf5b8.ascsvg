@@ -1,0 +1,147 @@
+
+setBorder(0)
+initPicture(-15,23,-4,23)
+
+problem = "extension"
+//problem = "compression"
+
+with (Math)
+if (problem == "extension"){
+//
+// EXTENSION
+//
+// termination dot 
+// dot([x,y])
+// coils
+stroke = "blue" 
+plot(["-0.5*cos(pi*t)+0.5t","2*sin(pi*t)+16"],-10,11)
+a = 11
+b1 = -0.5*cos(pi*a)+0.5a
+c =  2*sin(pi*a)+16
+dot([b1,c])
+dot([b1,10])
+//connect the dots 
+stroke = "black"
+strokedasharray = "3 3" 
+line([b1,c+3],[b1,7]) 
+strokedasharray = "1 0" 
+//
+stroke = "red" 
+plot(["-0.7*cos(pi*t)+0.8t","2*sin(pi*t)+5"],-6,15)
+a = 15
+b2 = -0.7*cos(pi*a)+0.8a
+c =  2*sin(pi*a)+5
+dot([b2,c])
+dot([b2,0])
+dot([b2,10])
+//connect the dots 
+stroke = "black"
+strokedasharray = "3 3" 
+path([[b2,-3],[b2,0],[b2,13]]) 
+strokedasharray = "1 0" 
+//
+// displacement
+stroke = "black" 
+marker = "arrow"
+line([b1,10],[b2,10])
+text([(b2+b1)/2,10],"x",below)
+marker = "none"
+// wall
+stroke = "gray"
+strokewidth = "4"
+line([-5.6,2],[-5.6,9])
+line([-5.6,13],[-5.6,20])
+strokewidth = "1"
+fontstyle = "normal"
+text([-5.6,16.5],"BEFORE",left)
+text([-5.6,5.5],"AFTER",left)
+fontstyle = "italic" 
+// forces
+strokewidth = "2"
+marker = "arrow"
+// restorative
+stroke = "black"
+line([b2,0],[b2-7,0])
+text([b2-5,0],"F(restore)",below)
+// applied
+//stroke = "red"
+line([b2,0],[20,0])
+text([b2+5,0],"F(applied)",below)
+line([b2,22],[22,22])
+strokewidth = "1"
+fontstyle = "normal"
+text([b2+5,22],"+ direction",below)
+fontstyle = "italic" 
+strokewidth = "1"
+marker = "none"
+}
+
+if (problem == "compression"){
+//
+// COMPRESSION
+//
+// termination dot 
+// dot([x,y])
+// coils
+stroke = "blue" 
+plot(["-0.5*cos(pi*t)+0.5t","2*sin(pi*t)+16"],-10,11)
+a = 11
+b1 = -0.5*cos(pi*a)+0.5a
+c =  2*sin(pi*a)+16
+dot([b1,c])
+dot([b1,10])
+//connect the dots 
+stroke = "black"
+strokedasharray = "3 3" 
+line([b1,c+3],[b1,7]) 
+strokedasharray = "1 0" 
+//
+stroke = "red" 
+plot(["-0.3*cos(pi*t)+0.3t","2*sin(pi*t)+5"],-18,3)
+a = 3
+b2 = -0.3*cos(pi*a)+0.3a
+c =  2*sin(pi*a)+5
+dot([b2,c])
+dot([b2,0])
+dot([b2,10])
+//connect the dots 
+stroke = "black"
+strokedasharray = "3 3" 
+path([[b2,-3],[b2,0],[b2,13]]) 
+strokedasharray = "1 0" 
+//
+// displacement
+stroke = "black" 
+marker = "arrow"
+line([b1,10],[b2,10])
+text([(b2+b1)/2,10],"x",below)
+marker = "none"
+// wall
+stroke = "gray"
+strokewidth = "4"
+line([-5.6,2],[-5.6,9])
+line([-5.6,13],[-5.6,20])
+strokewidth = "1"
+fontstyle = "normal"
+text([-5.6,16.5],"BEFORE",left)
+text([-5.6,5.5],"AFTER",left)
+fontstyle = "italic" 
+// forces
+strokewidth = "2"
+marker = "arrow"
+// restorative
+stroke = "black"
+line([b2,0],[b2-7,0])
+text([b2-5,0],"F(applied)",below)
+// applied
+//stroke = "red"
+line([b2,0],[b2+7,0])
+text([b2+5,0],"F(restore)",below)
+line([22-9.5,22],[22,22])
+strokewidth = "1"
+fontstyle = "normal"
+text([22-4.5,22],"+ direction",below)
+fontstyle = "italic" 
+strokewidth = "1"
+marker = "none"
+}

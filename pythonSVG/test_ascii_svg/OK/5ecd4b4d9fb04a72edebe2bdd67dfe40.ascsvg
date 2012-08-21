@@ -1,0 +1,37 @@
+// ===================================================================================
+// Name: MONASSIS Templates - ASCII SVG Template
+// Source: http://www1.chapman.edu/~jipsen/svg/asciisvgeditor.html
+// File Author: Eric
+// Date: 18th July 2012
+// ===================================================================================
+// Editors Log: 
+// 
+// ===================================================================================
+
+// This file creates a picture of "play money" to be used in a calculus template (OptimizationMedium)
+// =======================================
+// Variables
+// =======================================
+
+setBorder(0)
+initPicture(-4, 4, -4, 4)
+
+stroke = "blue"
+strokewidth = '2'
+fill = "darkorange"
+rect([-3, -2],[2, 2])
+path([[-3, 2], [-1.5, 3], [3, 3], [2, 2], [-3, 2]])
+path([[2, -2], [2, 2], [3, 3], [3, -1], [2, -2]])
+
+
+fontweight = "bold"
+fontsize = "16"
+text([-3.5,0], "h")
+text([-0.5, -2],"4 x", below)
+text([2.45, -1.6], "x", right)
+
+fontsize = "20"
+text([-0.5, 0], "Yummy in", above)
+text([-0.5, 0], "My Tummy", below)
+
+

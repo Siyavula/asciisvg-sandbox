@@ -1,34 +1,54 @@
-This is a modified version of the ASCIIsvg editor from
+This is a modified version of the ASCIIsvg editor from: http://www1.chapman.edu/~jipsen/svg/asciisvgeditor.html
 
-  http://www1.chapman.edu/~jipsen/svg/asciisvgeditor.html
-
+==========================================================
+ASCII -> SVG PIPELINE
 ==========================================================
 
 Creating an SVG string from ASCII code:
 
 Files:
 
-	> ascii_to_svg.py (class & main)
-	> data/data_ascii.txt (input data)
-	> data/data_svg.txt (output data)
+	> pythonsvg.py (class definition)
+	> ascii_to_svg.py (main code)
+	> output_data/data_ascii.txt (input data)
+	> output_data/data_svg.txt (output data)
 
-Terminal Command: 
+Terminal Command Example: 
 
-	> python ascii_to_svg.py < data/data_ascii.txt > data/data_svg.txt
+	> python ascii_to_svg.py < output_data/data_ascii.txt > output_data/data_svg.txt
 
-
+==========================================================
+SVG -> PNG PIPELINE
 ==========================================================
 
 Creating an PNG file from SVG string:
 
 Files:
 
+	> pythonsvg.py (function definition)
 	> svg_to_png.py
-	> data/data_svg.txt (input data)
+	> output_data/data_svg.txt (input data)
 
-Terminal Command: 
+Terminal Command Example: 
 
-	> python svg_to_png.py < data/data_svg.txt
+	> python svg_to_png.py < putputdata/data_svg.txt
+
+==========================================================
+TESTING
+==========================================================
+
+Generating an HTML file with PNG vs SVG comparison:
+
+Files:
+
+	> pythonsvg.py (function definition)
+	> test_ascii_svg/OK/* (folder of asciisvg files for tesing scripts)
+	> html_generator.py (main function)
+	> compare_graphs.html (output file)
+
+Terminal Command Example:
+
+	> python html_generator.py
 
 ==========================================================
 

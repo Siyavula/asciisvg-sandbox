@@ -1,0 +1,55 @@
+// ===================================================================================
+// Name: MONASSIS Templates - ASCII SVG Template
+// Source: http://www1.chapman.edu/~jipsen/svg/asciisvgeditor.html
+// File Author: Eric
+// Date: 18th July 2012
+// ===================================================================================
+// Editors Log: 
+// 
+// ===================================================================================
+
+// This file creates a picture of "play money" to be used in a calculus template (OptimizationMedium)
+// =======================================
+// Variables
+// =======================================
+
+
+
+initPicture(-6,6)
+
+
+
+// create some labels around the shape
+marker = 'arrow'
+line([0,-2.1], [4,-2.1])
+line([0,-2.1], [-4,-2.1])
+text([0, -2.1],"width = 9 cm", below)
+
+line([-4.3, 0],[-4.3, 1.8])
+line([-4.3, 0],[-4.3, -1.8])
+text([-4.3, 0], "height = 5 x", left)
+
+//create the main part of the shape, a large rectangle
+marker = "none"
+fill = 'burlywood'
+rect([-4,-1.8],[4,1.8])
+
+//create the circle  and small rectanglges in the centre of the money
+fill = 'white'
+rect([-3.7,0.5],[-2.5,1.6])
+rect([2.5,-1.6],[3.7,-0.5])
+circle([0,0], 1.8)
+
+//label some more stuff
+marker = 'arrow'
+line([0,0], [0,1.8])
+text([0.2,0.9],"r")
+text([-3.1, 0.7], "x")
+text([-2.65, 1.1], "x")
+
+//label the picture at the top!
+fontfamily = 'serif'
+fontstyle = "normal"
+text([-2.2,2.3], "Langalibalele's fake money")
+
+

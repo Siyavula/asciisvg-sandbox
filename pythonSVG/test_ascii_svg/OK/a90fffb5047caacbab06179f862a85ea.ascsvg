@@ -1,0 +1,31 @@
+setBorder(0)
+d1 = 3
+d2 = 6
+w1 = 500
+w2 = 1000
+xMin = 5
+xMax = 8
+initPicture(-xMin,xMax,-2.5,2.5)
+
+path([[0,0],[0.5,-0.5],[-0.5,-0.5],[0,0]])
+line([-(d1+1),0],[(d2+1),0])
+line([0,0],[0,2])
+
+strokewidth="4"
+line([-d1,0],[-d1,1])
+line([d2,0],[d2,1])
+strokewidth="1"
+dot([-d1,1],closed)
+dot([d2,1],closed)
+
+marker="arrow"
+line([-d1,0],[-d1,-2])
+line([d2,0],[d2,-1])
+line([d2,1],[0,1])
+line([-d1,1],[0,1])
+
+fontstyle="normal"
+text([-d1,-1],"1000 N",right)
+text([d2,-0.5],"500 N",right)
+text([-d1/2,1],"3 m",above)
+text([d2/2,1],"6 m",above)

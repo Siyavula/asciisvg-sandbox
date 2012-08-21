@@ -1,0 +1,11 @@
+setBorder(0)
+initPicture(-2,15,-2,2)
+
+marker="arrow"
+line([0,0],[14,0])
+line([0,-1.5],[0,1.5])
+
+stroke = "blue"
+marker="none"
+//distractor2
+line([0,-1],[12,-1])
