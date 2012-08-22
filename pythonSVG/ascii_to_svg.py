@@ -1,7 +1,5 @@
 from __future__ import division
-from lxml import etree
 import math
-import lxml
 import pythonsvg
 
 # ========================================================================================
@@ -19,7 +17,7 @@ if __name__ == '__main__':
 		except:
 			break	
 
-	a.process_ascii(ascii_string)
+	a.process_ascii_single_line(ascii_string)
 	xml = a.generate_string()
 
 	print xml

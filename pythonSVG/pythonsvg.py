@@ -3,6 +3,7 @@ import math
 from lxml import etree
 import cairo
 import rsvg
+import re
 
 # ===================================================================================	
 
@@ -18,7 +19,7 @@ class mySvgCanvas:
 	xml_parent = None
 
 	# Error Handling
-	loc_var["complete_log"] = 0			# Screen-dump Flag: Completed lines of code
+	loc_var["complete_log"] = 1			# Screen-dump Flag: Completed lines of code
 	loc_var["error_log"] 		= 1			# Screen-dump Flag: Errors that occur
 
 	# Canvas Variables
@@ -62,14 +63,12 @@ class mySvgCanvas:
 	loc_var["ticklength"] = loc_var["defaultticklength"] 							= 4
 	
 	# Function Variables
-	loc_var["f"] = None
-	loc_var["g"] = None
+	loc_var["f_func"] = None
+	loc_var["g_func"] = None
 
 	# Formula Variables
 	loc_var["cpi"] 		= u"\u03C0"
 	loc_var["ctheta"] = u"\u03B8"
-	loc_var["ln"]			= math.log
-	loc_var["e"]			= math.e
 
 	# SVG Labels
 	loc_var["above"] = "above"
@@ -83,9 +82,26 @@ class mySvgCanvas:
 	loc_var["open"] = "open"
 	loc_var["closed"] = "closed"
 
-	# ==============================
-	# Initialization
-	# ==============================
+	# ========================================================================================
+
+	'''
+	==============================
+	Functions (Initialization)
+	==============================
+	> __init__
+	> convert_ascii_to_python()
+	> mathjs
+	> process_ascii_multi_line
+	> process_ascii_single_line
+	> generate_string
+	> reset_variables
+	> frange
+	> initPicture
+	> setBorder
+	============================== 
+	'''
+
+	# ========================================================================================
 
 	def __init__(self, name, width=None, height=None):
 
@@ -120,12 +136,82 @@ class mySvgCanvas:
 		self.loc_var["heart"] = self.heart
 		self.loc_var["slopefield"] = self.slopefield
 
+		# Special Functions
+		self.loc_var["frange"] = self.frange
+
+		# Math Functions
+		for key in ['sin','cos','tan','asin','acos','atan','sinh','cosh','tanh','asinh','acosh','atanh','log','pi','e']:
+			self.loc_var[key] = math.__getattribute__(key)
+
 # ===================================================================================	
 
-	def process_ascii(self, ascii_string):
+	def convert_ascii_to_python(self,ascii_str):
+		
+		a = ascii_str							# Storing string as a new variable
+		nl_char = str(chr(10))		# Define: New Line character
+		tab_char = str(chr(9))		# Define: TAB character
+
+		# Clean spacing before opening/closing braces
+		while(a != a.replace(" {", "{")): a = a.replace(" {", "{")	
+		while(a != a.replace(tab_char+"{", "{")): a = a.replace(tab_char+"{", "{")
+		while(a != a.replace(nl_char+"{", "{")): a = a.replace(nl_char+"{", "{")
+		while(a != a.replace(" }", "}")): a = a.replace(" }", "}")
+
+		# Formatting Line
+		a = a.replace("^", "**")																# Exponent
+		a = a.replace("||", " or ")												  		# OR
+		a = a.replace("&&", " and ")														# AND
+		a = a.replace("else if", "elif")												# IF / ELSE IF / ELSE statements
+		a = a.replace("null", "None")														# "None" elements
+		a = a.replace("//", "#")																# Single-line Comments
+		a = a.replace("/*", "'''")															# Multi-line Comments
+		a = a.replace("*/", "'''")															# Multi-line Comments
+		a = a.replace('"green"', '"darkgreen"') 								# Colours
+		a = a.replace('{', ':') 																# Opening Braces
+		a = a.replace('}', '') 																	# Closing Braces
+
+		return a
+
+# ========================================================================================
+
+	def mathjs(self, string):
+	
+		# Replace all un-defined functions
+		string = string.replace("cosec", "1/math.sin")
+		string = string.replace("sec", "1/math.cos")
+		string = string.replace("cot", "1/math.tan")
+		string = string.replace("acosec", "1/math.asin")
+		string = string.replace("asec", "1/math.acos")
+		string = string.replace("acot", "1/math.atan")
+		string = string.replace("cosech", "1/math.sinh")
+		string = string.replace("sech", "1/math.cosh")
+		string = string.replace("coth", "1/math.tanh")
+		string = string.replace("acosech", "1/math.asinh")
+		string = string.replace("asech", "1/math.acosh")
+		string = string.replace("acoth", "1/math.atanh")
+
+		return string
+
+# ===================================================================================	
+
+	def process_ascii_multi_line(self, ascii_str):
+
+		a = ascii_str													# Storing string as a new variable
+		a = self.convert_ascii_to_python(a)		# Convert Ascii to Python (except FOR loops)
+		a = self.mathjs(a)										# Math Formulas
+
+		# Try Except
+		try:
+			exec(a, None, self.loc_var)
+			self.complete_string += "\nASCII -> SVG conversion complete. \n\nOriginal Code:\n\n" + str(ascii_str) + "\n\nCode Processed:\n\n" + str(a) 
+		except Exception, err:				
+			self.error_string += "\nASCII -> SVG conversion ERROR: " + str(err) + "\n\nOriginal Code:\n\n" + str(ascii_str) + "\n\nCode Processed:\n\n" + str(a) 
+
+# ===================================================================================	
+
+	def process_ascii_single_line(self, ascii_string):
 		
 		ascii_list = ascii_string.split('\n')
-		#final_string = ""
 		
 		for ascii_line in ascii_list:
 			if len(ascii_line) > 0:
@@ -135,31 +221,14 @@ class mySvgCanvas:
 				formatted_ascii_line = self.mathjs(formatted_ascii_line)											# Math Formulas		
 				formatted_ascii_line = formatted_ascii_line.replace("//", "#")								# Comments		
 				formatted_ascii_line = formatted_ascii_line.replace('"green"', '"darkgreen"') # Colours
-		
-				#formatted_ascii_line = formatted_ascii_line.replace("{", ":")			# Multi-line statments (start)
-				#formatted_ascii_line = formatted_ascii_line.replace("}", "")			# Multi-line statments (end)
-
-				# Try Except
+				
+				# Try Except	
 				try:
 					exec(formatted_ascii_line, None, self.loc_var)
 					self.complete_string += "\nComplete: " + str(formatted_ascii_line)
 				except Exception, err:				
 					self.error_string += "\nERROR: " + str(formatted_ascii_line) + "\nMessage: " + str(err)
 					break
-
-				# Concatenate always, clear if successful!
-				#final_string += formatted_ascii_line + " \n"
-		
-		#self.error_string += "\n\n====================\nExecuted Code: \n====================\n\n" + str(final_string)
-
-		# print "<!-- " + str(final_string) + " -->"	
-
-		# Try Except
-		#try:
-		#	exec(final_string, None, self.loc_var)
-		#	self.complete_string += "\n====================\nCode Complete.\n===================="
-		#except Exception, err:				
-		#	self.error_string += "\n====================\nError in code: " + str(err) + "\n===================="
 
 		return ascii_string
 
@@ -225,6 +294,24 @@ class mySvgCanvas:
 
 # ========================================================================================
 
+	def frange(self, start, end, leap):
+		result = []
+		cur=start
+		if (leap > 0 and end > start):
+			while (cur <= end):
+				result.append(round(cur,3))
+				cur += leap
+			return result
+		elif (leap < 0 and end < start):
+			while (cur >= end):
+				result.append(round(cur,3))
+				cur += leap
+			return result
+		else:
+			return [0]
+		
+# ========================================================================================
+
 	def initPicture(self,a=None,b=None,c=None,d=None):
 
 		# Set Variables
@@ -261,24 +348,6 @@ class mySvgCanvas:
 
 # ========================================================================================
 
-	def frange(self, start, end, leap):
-		result = []
-		cur=start
-		if (leap > 0 and end > start):
-			while (cur <= end):
-				result.append(round(cur,3))
-				cur += leap
-			return result
-		elif (leap < 0 and end < start):
-			while (cur >= end):
-				result.append(round(cur,3))
-				cur += leap
-			return result
-		else:
-			return [0]
-		
-# ========================================================================================
-
 	'''
 	==============================
 	Functions (BASIC SVG ELEMENTS)
@@ -287,7 +356,6 @@ class mySvgCanvas:
 	> dot(center, typ, label, pos)
 	> arrowhead(p,q)
 	> text(p,st,pos,angle)
-	> mathjs(st)
 	============================== 
 	'''
 
@@ -398,7 +466,7 @@ class mySvgCanvas:
 			textanchor = "start"
 		
 		# Text Rotation
-		node = etree.fromstring("<text>" + st + "</text>")
+		node = etree.fromstring("<text>" + str(st) + "</text>")
 		self.xml_parent.append(node)
 		node.attrib['x'] = str(round(p[0] * self.loc_var["xunitlength"] + self.loc_var["origin"][0] + dx,2))		
 		node.attrib['y'] = str(round(float(self.loc_var["height"]) - p[1] * self.loc_var["yunitlength"] - self.loc_var["origin"][1]+dy,2))
@@ -414,55 +482,8 @@ class mySvgCanvas:
 
 # ========================================================================================
 	
-	def mathjs(self, string):
-	
-		# Replace all unknown characters to know characters
-		string = string.replace("^", "**")
-
-		# stringrip Library call
-		string = string.replace("math.", "")
-		string = string.replace("Math.", "")
-		
-		# Attach library prefix to functions
-		string = string.replace("sqrt", "math.sqrt")
-
-		string = string.replace("pink", "pnnk")
-		string = string.replace("pi", "math.pi")
-		string = string.replace("pnnk", "pink")
-
-		string = string.replace("sin", "math.sin")
-		string = string.replace("cos", "math.cos")
-		string = string.replace("tan", "math.tan")
-		string = string.replace("asin", "math.asin")
-		string = string.replace("acos", "math.acos")
-		string = string.replace("atan", "math.atan")
-		string = string.replace("sinh", "math.sinh")
-		string = string.replace("cosh", "math.cosh")
-		string = string.replace("tanh", "math.tanh")
-		string = string.replace("asinh", "math.asinh")
-		string = string.replace("acosh", "math.acosh")
-		string = string.replace("atanh", "math.atanh")
-
-		string = string.replace("sec", "1/math.sin")
-		string = string.replace("sec", "1/math.cos")
-		string = string.replace("cot", "1/math.tan")
-		string = string.replace("asec", "1/math.asin")
-		string = string.replace("asec", "1/math.acos")
-		string = string.replace("acot", "1/math.atan")
-		string = string.replace("sech", "1/math.sinh")
-		string = string.replace("sech", "1/math.cosh")
-		string = string.replace("coth", "1/math.tanh")
-		string = string.replace("asech", "1/math.asinh")
-		string = string.replace("asech", "1/math.acosh")
-		string = string.replace("acoth", "1/math.atanh")
-
-		return string
-
-# ========================================================================================
-
 	'''
 	
-	/* 
 	==============================
 	Functions (COMPOUND SVG ELEMENTS)
 	==============================
@@ -471,7 +492,6 @@ class mySvgCanvas:
 	> circle(center,radius)
 	> arc(start,end,radius)
 	============================== 
-	*/
 
 	'''
 	
@@ -590,7 +610,6 @@ class mySvgCanvas:
 
 	'''
 
-	/*
 	==============================
 	Functions (COMPLEX SVG ELEMENTS)
 	==============================
@@ -607,7 +626,6 @@ class mySvgCanvas:
 	> heart(p,size)
 	> slopefield(fun,dx,dy)
 	============================== 
-	*/
 
 	'''
 
@@ -793,8 +811,8 @@ class mySvgCanvas:
 			func = func.replace("**", "^")
 			func = func.replace("x", "t")
 			#Exec
-			exec ("def f(t): return (t)", None, self.loc_var)
-			exec ("def g(t): return (" + self.mathjs(func) + ")", None, self.loc_var)
+			exec ("def f_func(t): return (t)", self.loc_var)								# Note: Global Scope used here!
+			exec ("def g_func(t): return (" + func + ")", self.loc_var)		# Note: Global Scope used here!
 
 		# plot (["t", "sin(t)"])
 		elif (isinstance(func, list)):
@@ -802,8 +820,9 @@ class mySvgCanvas:
 			func[0] = func[0].replace("**", "^")
 			func[1] = func[1].replace("**", "^")
 			#Exec
-			exec("def f(t): return (" + self.mathjs(func[0]) + ")", None, self.loc_var)
-			exec("def g(t): return (" + self.mathjs(func[1]) + ")", None, self.loc_var)
+			exec("def f_func(t): return (" + func[0] + ")", self.loc_var)	# Note: Global Scope used here!
+			exec("def g_func(t): return (" + func[1] + ")", self.loc_var)	# Note: Global Scope used here!
+
 
 		# Number of points
 		inc = (points == None and (x_max-x_min)/points or (x_max-x_min+0.0000001)/points)
@@ -815,20 +834,20 @@ class mySvgCanvas:
 
 			# f(x)
 			try:
-				fout = min(max(self.loc_var["f"](i), -10000), 10000)
+				exec("fout = min(max(self.loc_var['f_func'](" + str(i) + "), -10000), 10000)")
 			except:
 				error_count += 1
 			
 			# g(x)
 			try:
-				gout = min(max(self.loc_var["g"](i), -10000), 10000)
+				exec("gout = min(max(self.loc_var['g_func'](" + str(i) + "), -10000), 10000)")
 			except:
 				error_count += 1
 
 			# Append
 			if (error_count == 0):
 				array_points.append([fout, gout])
-		
+
 		#	Draw Graph
 		self.path(array_points)
 
@@ -894,7 +913,15 @@ class mySvgCanvas:
 					self.line([round(x-u,2),round(y-v,2)],[round(x+u,2),round(y+v,2)])
 
 # ========================================================================================
-# SVG -> PNG
+
+	'''
+	==============================
+	Functions (SVG -> PNG)
+	==============================
+	> create_png
+	============================== 
+	'''
+
 # ========================================================================================
 
 def create_png(filename, width, height, svg_string):
@@ -907,5 +934,7 @@ def create_png(filename, width, height, svg_string):
 	handler= rsvg.Handle(None, svg_string)
 	handler.render_cairo(ctx)
 	img.write_to_png(filename+".png")
+
+# ========================================================================================
 
 

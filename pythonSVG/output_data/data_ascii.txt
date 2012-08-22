@@ -1,8 +1,5 @@
-# Comment
-setBorder(0)
-initPicture(-10,10,-10,10)
-axes(2, 2, 1, 1, 1)
-marker = "none"
-for i in range (-6,7):
-	line ([0,0],[4,i])
-	line ([0,0],[-4,i])
+initPicture(-5,5)
+axes(1,1,1)
+f = 4
+plot ("sin(x)")
+text([1,1], f)

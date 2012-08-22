@@ -17,6 +17,22 @@ Terminal Command Example:
 
 	> python ascii_to_svg.py < output_data/data_ascii.txt > output_data/data_svg.txt
 
+Options:
+
+	> There exist 2 functions for executing ASCII -> SVG
+
+			1) process_ascii_single(ascii_string)
+
+					> Pros: For executing & error handling one line at a time.
+					> Cons: This can not deal with multi-line statements.
+
+			2) process_ascii_multi(ascii_string)
+
+					> Pros: Executes the entire code as a BLOCK.
+									Deals with multi-line function successfully. 
+					> Cons: Does not have line-by-line feedback. Only error reporting.
+									Currently requires input asciisvg to be writted in Python (not Javascript).
+
 ==========================================================
 SVG -> PNG PIPELINE
 ==========================================================
@@ -31,7 +47,7 @@ Files:
 
 Terminal Command Example: 
 
-	> python svg_to_png.py < putputdata/data_svg.txt
+	> python svg_to_png.py < outputdata/data_svg.txt
 
 ==========================================================
 TESTING
