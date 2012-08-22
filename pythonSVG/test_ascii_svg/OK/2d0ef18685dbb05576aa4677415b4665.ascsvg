@@ -25,7 +25,7 @@ initPicture(xmin,xmax,ymin,ymax)
 // T1
 line([0,0],[T10*cos(theta1*pi/180),T10*sin(theta1*pi/180)])
 text([0.4*T10*cos(theta1*pi/180),0.4*T10*sin(theta1*pi/180)],"T1",aboveleft)
-text([0.9T10*cos(theta1*pi/180),0.9T10*sin(theta1*pi/180)],ctheta+"1",left)
+text([0.9*T10*cos(theta1*pi/180),0.9*T10*sin(theta1*pi/180)],ctheta+"1",left)
 // T2
 line([0,0],[-T20*cos(phi*pi/180),T20*sin(phi*pi/180)])
 text([-0.4*T20*cos(phi*pi/180),0.4*T20*sin(phi*pi/180)],"T2",belowleft)
