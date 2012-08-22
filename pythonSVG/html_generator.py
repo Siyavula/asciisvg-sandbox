@@ -28,7 +28,7 @@ for dirpath, dirnames, filenames in os.walk(path):
 
 			# SVG (xml script)
 			my_svg = pythonsvg.mySvgCanvas(filename.split(".")[0], 400, 400) # default size of SVG
-			my_svg.process_ascii_multi(ascii_text)
+			my_svg.process_ascii_multi_line(ascii_text)
 			xml = my_svg.generate_string()	
 
 			# XML object
@@ -51,8 +51,8 @@ for dirpath, dirnames, filenames in os.walk(path):
 			contents += "</td></tr>"
 		
 			# Increment file name counter
-			i = i + 1
 			print i
+			i = i + 1			
 			if i >= 20: break
 
 # ============================================================

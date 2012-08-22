@@ -296,16 +296,16 @@ class mySvgCanvas:
 
 	def frange(self, start, end, leap):
 		result = []
-		cur=start
+		current = start
 		if (leap > 0 and end > start):
-			while (cur <= end):
-				result.append(round(cur,3))
-				cur += leap
+			while (current <= end):
+				result.append(round(current,3))
+				current += leap
 			return result
 		elif (leap < 0 and end < start):
-			while (cur >= end):
-				result.append(round(cur,3))
-				cur += leap
+			while (current >= end):
+				result.append(round(current,3))
+				current += leap
 			return result
 		else:
 			return [0]
@@ -808,7 +808,6 @@ class mySvgCanvas:
 		# plot ("sin(x)") 
 		if (isinstance(func, str)):
 			# Precautionary string formatting
-			func = func.replace("**", "^")
 			func = func.replace("x", "t")
 			#Exec
 			exec ("def f_func(t): return (t)", self.loc_var)								# Note: Global Scope used here!
@@ -816,13 +815,9 @@ class mySvgCanvas:
 
 		# plot (["t", "sin(t)"])
 		elif (isinstance(func, list)):
-			# Precautionary string formatting
-			func[0] = func[0].replace("**", "^")
-			func[1] = func[1].replace("**", "^")
 			#Exec
 			exec("def f_func(t): return (" + func[0] + ")", self.loc_var)	# Note: Global Scope used here!
 			exec("def g_func(t): return (" + func[1] + ")", self.loc_var)	# Note: Global Scope used here!
-
 
 		# Number of points
 		inc = (points == None and (x_max-x_min)/points or (x_max-x_min+0.0000001)/points)

@@ -41,18 +41,24 @@ Code Processed:
 # File Author: Leen Remmelzwaal
 # Date: 2 August 2012
 # ===================================================================================
+
 # =======================================
 # Image Settings
 # =======================================
+
 setBorder(0)
 initPicture(-8.5, 8.5, -8.5, 8.5)
 axes(1, 1, "labels", 1)
+
 # =======================================
 # Line Drawing (question)
 # =======================================
+
 stroke = "blue"
 strokewidth = 2
+
 plot(["t","-1*t**2  + 4"], -10, 10)
+
 # =======================================
 
 
@@ -100,18 +106,24 @@ Code Processed:
 # File Author: Leen Remmelzwaal
 # Date: 2 August 2012
 # ===================================================================================
+
 # =======================================
 # Image Settings
 # =======================================
+
 setBorder(0)
 initPicture(-8.5, 8.5, -8.5, 8.5)
 axes(1, 1, "labels", 1)
+
 # =======================================
 # Line Drawing (question)
 # =======================================
+
 stroke = "blue"
 strokewidth = 2
+
 plot(["t","-1*t**2  + 4"], -10, 10)
+
 # =======================================
 
 
@@ -194,46 +206,59 @@ Code Processed:
 # File Author: Leen Remmelzwaal
 # Date: 4th June 2012	
 # ===================================================================================
+
 # =======================================
 # Variables
 # =======================================
+
 float_x_A = -1
 float_y_A = -0.9
+
 float_x_B = 1
 float_y_B = -0.6
+
 # =======================================
 # Image Settings
 # =======================================
+
 width="400"
 height="400"
 initPicture(-8, 8, -8, 8)	# xmin,xmax,ymin,ymax
+
 setBorder(0)
 axes(1, 1, "labels", 1)	# (dx, dy, "labels", grid size)
+
 # =======================================
 # Line Drawing
 # =======================================
+
 stroke = "red"
 strokewidth = "2"
 marker = "arrow" # "dot", "arrow", "arrowdot", "none"
 plot("0.2 * 2 ** (t + 0) + -1",-10,10)	#(["f(t)", "g(t)"],tmin,tmax)	
+
 # =======================================
 # Dot
 # =======================================
+
 stroke = "black"
 strokewidth = "4"
 dot([float_x_B,float_y_B], "open")
 stroke = "yellow"
 strokewidth = "1"
 dot([float_x_B,float_y_B], "closed", "Point B", aboveright)
+
 # =======================================
 # Dot
 # =======================================
+
 stroke = "black"
 strokewidth = "4"
 dot([float_x_A,float_y_A], "open")
 stroke = "yellow"
 strokewidth = "1"
 dot([float_x_A,float_y_A], "closed", "Point A", aboveright)
+
 # =======================================
 
 
@@ -316,46 +341,59 @@ Code Processed:
 # File Author: Leen Remmelzwaal
 # Date: 4th June 2012	
 # ===================================================================================
+
 # =======================================
 # Variables
 # =======================================
+
 float_x_A = -1
 float_y_A = -0.9
+
 float_x_B = 1
 float_y_B = -0.6
+
 # =======================================
 # Image Settings
 # =======================================
+
 width="400"
 height="400"
 initPicture(-8, 8, -8, 8)	# xmin,xmax,ymin,ymax
+
 setBorder(0)
 axes(1, 1, "labels", 1)	# (dx, dy, "labels", grid size)
+
 # =======================================
 # Line Drawing
 # =======================================
+
 stroke = "red"
 strokewidth = "2"
 marker = "arrow" # "dot", "arrow", "arrowdot", "none"
 plot("0.2 * 2 ** (t + 0) + -1",-10,10)	#(["f(t)", "g(t)"],tmin,tmax)	
+
 # =======================================
 # Dot
 # =======================================
+
 stroke = "black"
 strokewidth = "4"
 dot([float_x_B,float_y_B], "open")
 stroke = "yellow"
 strokewidth = "1"
 dot([float_x_B,float_y_B], "closed", "Point B", aboveright)
+
 # =======================================
 # Dot
 # =======================================
+
 stroke = "black"
 strokewidth = "4"
 dot([float_x_A,float_y_A], "open")
 stroke = "yellow"
 strokewidth = "1"
 dot([float_x_A,float_y_A], "closed", "Point A", aboveright)
+
 # =======================================
 
 
@@ -438,46 +476,59 @@ Code Processed:
 # File Author: Leen Remmelzwaal
 # Date: 11th June 2012	
 # ===================================================================================
+
 # =======================================
 # Variables
 # =======================================
+
 float_x_int = -1.33333333333
 float_y_int = -0.333333333333
+
 float_p = -2.0
+
 # =======================================
 # Image Settings
 # =======================================
+
 width="400"
 height="400"
 initPicture(-8, 8, -8, 8)	# xmin,xmax,ymin,ymax
+
 setBorder(0)
 axes(1, 1, "labels", 1)	# (dx, dy, "labels", grid size)
+
 # =======================================
 # Line Drawing
 # =======================================
+
 stroke = "red"
 strokewidth = "2"
 marker = "arrow" # "dot", "arrow", "arrowdot", "none"
 plot("1.67 / (t + -2) + 0.5",-10, - float_p - 0.01)	#(["f(t)", "g(t)"],tmin,tmax)	
 plot("1.67 / (t + -2) + 0.5", - float_p + 0.01,10)	#(["f(t)", "g(t)"],tmin,tmax)	
+
 # =======================================
 # y-int
 # =======================================
+
 stroke = "black"
 strokewidth = "4"
 dot([0,float_y_int], "open")
 stroke = "yellow"
 strokewidth = "1"
 dot([0,float_y_int], "closed", "y-intercept", aboveright)
+
 # =======================================
 # x-int
 # =======================================
+
 stroke = "black"
 strokewidth = "4"
 dot([float_x_int,0], "open")
 stroke = "yellow"
 strokewidth = "1"
 dot([float_x_int,0], "closed", "x-intercept", aboveright)
+
 # =======================================
 
 
@@ -560,46 +611,59 @@ Code Processed:
 # File Author: Leen Remmelzwaal
 # Date: 11th June 2012	
 # ===================================================================================
+
 # =======================================
 # Variables
 # =======================================
+
 float_x_int = -1.33333333333
 float_y_int = -0.333333333333
+
 float_p = -2.0
+
 # =======================================
 # Image Settings
 # =======================================
+
 width="400"
 height="400"
 initPicture(-8, 8, -8, 8)	# xmin,xmax,ymin,ymax
+
 setBorder(0)
 axes(1, 1, "labels", 1)	# (dx, dy, "labels", grid size)
+
 # =======================================
 # Line Drawing
 # =======================================
+
 stroke = "red"
 strokewidth = "2"
 marker = "arrow" # "dot", "arrow", "arrowdot", "none"
 plot("1.67 / (t + -2) + 0.5",-10, - float_p - 0.01)	#(["f(t)", "g(t)"],tmin,tmax)	
 plot("1.67 / (t + -2) + 0.5", - float_p + 0.01,10)	#(["f(t)", "g(t)"],tmin,tmax)	
+
 # =======================================
 # y-int
 # =======================================
+
 stroke = "black"
 strokewidth = "4"
 dot([0,float_y_int], "open")
 stroke = "yellow"
 strokewidth = "1"
 dot([0,float_y_int], "closed", "y-intercept", aboveright)
+
 # =======================================
 # x-int
 # =======================================
+
 stroke = "black"
 strokewidth = "4"
 dot([float_x_int,0], "open")
 stroke = "yellow"
 strokewidth = "1"
 dot([float_x_int,0], "closed", "x-intercept", aboveright)
+
 # =======================================
 
 
@@ -682,46 +746,59 @@ Code Processed:
 # File Author: Leen Remmelzwaal
 # Date: 31st May 2012
 # ===================================================================================
+
 # =======================================
 # Variables
 # =======================================
+
 float_x_A = -0.0
 float_y_A = -2.0
+
 float_x_B = -3.0
 float_y_B = 1.0
+
 # =======================================
 # Image Settings
 # =======================================
+
 width="400"
 height="400"
 initPicture(-8, 8, -8, 8)	# xmin,xmax,ymin,ymax
+
 setBorder(0)
 axes(1, 1, "labels", 1)	# (dx, dy, "labels", grid size)
+
 # =======================================
 # Line Drawing
 # =======================================
+
 stroke = "red"
 strokewidth = "2"
 marker = "arrow" # "dot", "arrow", "arrowdot", "none"
 plot("0.33 * (t + 0) **2 + -2",-10,10)	#(["f(t)", "g(t)"],tmin,tmax)	
+
 # =======================================
 # Dot
 # =======================================
+
 stroke = "black"
 strokewidth = "4"
 dot([float_x_B,float_y_B], "open")
 stroke = "yellow"
 strokewidth = "1"
 dot([float_x_B,float_y_B], "closed", "Point B", aboveright)
+
 # =======================================
 # Dot
 # =======================================
+
 stroke = "black"
 strokewidth = "4"
 dot([float_x_A,float_y_A], "open")
 stroke = "yellow"
 strokewidth = "1"
 dot([float_x_A,float_y_A], "closed", "Point A", aboveright)
+
 # =======================================
 
 
@@ -804,46 +881,59 @@ Code Processed:
 # File Author: Leen Remmelzwaal
 # Date: 31st May 2012
 # ===================================================================================
+
 # =======================================
 # Variables
 # =======================================
+
 float_x_A = -0.0
 float_y_A = -2.0
+
 float_x_B = -3.0
 float_y_B = 1.0
+
 # =======================================
 # Image Settings
 # =======================================
+
 width="400"
 height="400"
 initPicture(-8, 8, -8, 8)	# xmin,xmax,ymin,ymax
+
 setBorder(0)
 axes(1, 1, "labels", 1)	# (dx, dy, "labels", grid size)
+
 # =======================================
 # Line Drawing
 # =======================================
+
 stroke = "red"
 strokewidth = "2"
 marker = "arrow" # "dot", "arrow", "arrowdot", "none"
 plot("0.33 * (t + 0) **2 + -2",-10,10)	#(["f(t)", "g(t)"],tmin,tmax)	
+
 # =======================================
 # Dot
 # =======================================
+
 stroke = "black"
 strokewidth = "4"
 dot([float_x_B,float_y_B], "open")
 stroke = "yellow"
 strokewidth = "1"
 dot([float_x_B,float_y_B], "closed", "Point B", aboveright)
+
 # =======================================
 # Dot
 # =======================================
+
 stroke = "black"
 strokewidth = "4"
 dot([float_x_A,float_y_A], "open")
 stroke = "yellow"
 strokewidth = "1"
 dot([float_x_A,float_y_A], "closed", "Point A", aboveright)
+
 # =======================================
 
 
@@ -852,7 +942,7 @@ dot([float_x_A,float_y_A], "closed", "Point A", aboveright)
 
 <!-- 
 
-ASCII -> SVG conversion ERROR: invalid syntax (<string>, line 50)
+ASCII -> SVG conversion ERROR: invalid syntax (<string>, line 65)
 
 Original Code:
 
@@ -939,50 +1029,67 @@ Code Processed:
 # Editors Log: 
 # 13 June 2012 -> Leen Remmelzwaal -> re-work image size, arc, plot
 # ===================================================================================
+
 # ===================================================================================
 # a - hypot
 # b - vertical
 # c - horizontal
 # ===================================================================================
+
 # =======================================
 # Variables
 # =======================================
+
 a = 6
 b = 3.44145861811
 c = 4.91491226573
 theta = 35
+
 # =======================================
 # Image Settings
 # =======================================
+
 setBorder(0)
 axis_size = max(c + 0.5, b + 0.5) # Ensure that the pic is square
 initPicture(-2, axis_size, -2, axis_size)
+
 # =======================================
 # Calculations
 # =======================================
-c = a*math.cos(theta*((math.pi)/180))
+
+c = a*cos(theta*(pi/180))
+
 # =======================================
 # Draw Triangle
 # =======================================
+
 path([[0,0],[c,0],[0,b],[0,0]])
+
 # =======================================
 # Draw Right Angle
 # =======================================
+
 square_radius = c/8
 path([[square_radius,0],[square_radius,square_radius],[0,square_radius]])
+
 # =======================================
 # Draw THETA Angle Arc
 # =======================================
+
 # arc_radius = c/3
-# arc([c - arc_radius*math.cos(theta*(math.pi)/180), arc_radius*math.sin(theta*(math.pi)/180)], [c-arc_radius,0], arc_radius)
+# arc([c - arc_radius*cos(theta*pi/180), arc_radius*sin(theta*pi/180)], [c-arc_radius,0], arc_radius)
+
 # =======================================
 # Text
 # =======================================
-#text([c-c/4*math.cos(0.5*theta*(math.pi)/180),c/4*math.sin(0.5*theta*(math.pi)/180)],"35")
-text([c-a/2math.cos(theta*(math.pi)/180),a/2math.sin(theta*(math.pi)/180)],"x",aboveright)
+
+#text([c-c/4*cos(0.5*theta*pi/180),c/4*sin(0.5*theta*pi/180)],"35")
+text([c-a/2cos(theta*pi/180),a/2sin(theta*pi/180)],"x",aboveright)
 text([0,b/2],"3,44",left)
 text([c/2,0],"4,91",below)
+
 # =======================================
+
 
 
 -->
@@ -990,7 +1097,7 @@ text([c/2,0],"4,91",below)
 
 <!-- 
 
-ASCII -> SVG conversion ERROR: invalid syntax (<string>, line 50)
+ASCII -> SVG conversion ERROR: invalid syntax (<string>, line 65)
 
 Original Code:
 
@@ -1077,50 +1184,67 @@ Code Processed:
 # Editors Log: 
 # 13 June 2012 -> Leen Remmelzwaal -> re-work image size, arc, plot
 # ===================================================================================
+
 # ===================================================================================
 # a - hypot
 # b - vertical
 # c - horizontal
 # ===================================================================================
+
 # =======================================
 # Variables
 # =======================================
+
 a = 6
 b = 3.44145861811
 c = 4.91491226573
 theta = 35
+
 # =======================================
 # Image Settings
 # =======================================
+
 setBorder(0)
 axis_size = max(c + 0.5, b + 0.5) # Ensure that the pic is square
 initPicture(-2, axis_size, -2, axis_size)
+
 # =======================================
 # Calculations
 # =======================================
-c = a*math.cos(theta*((math.pi)/180))
+
+c = a*cos(theta*(pi/180))
+
 # =======================================
 # Draw Triangle
 # =======================================
+
 path([[0,0],[c,0],[0,b],[0,0]])
+
 # =======================================
 # Draw Right Angle
 # =======================================
+
 square_radius = c/8
 path([[square_radius,0],[square_radius,square_radius],[0,square_radius]])
+
 # =======================================
 # Draw THETA Angle Arc
 # =======================================
+
 # arc_radius = c/3
-# arc([c - arc_radius*math.cos(theta*(math.pi)/180), arc_radius*math.sin(theta*(math.pi)/180)], [c-arc_radius,0], arc_radius)
+# arc([c - arc_radius*cos(theta*pi/180), arc_radius*sin(theta*pi/180)], [c-arc_radius,0], arc_radius)
+
 # =======================================
 # Text
 # =======================================
-#text([c-c/4*math.cos(0.5*theta*(math.pi)/180),c/4*math.sin(0.5*theta*(math.pi)/180)],"35")
-text([c-a/2math.cos(theta*(math.pi)/180),a/2math.sin(theta*(math.pi)/180)],"x",aboveright)
+
+#text([c-c/4*cos(0.5*theta*pi/180),c/4*sin(0.5*theta*pi/180)],"35")
+text([c-a/2cos(theta*pi/180),a/2sin(theta*pi/180)],"x",aboveright)
 text([0,b/2],"3,44",left)
 text([c/2,0],"4,91",below)
+
 # =======================================
+
 
 
 -->
@@ -1170,22 +1294,28 @@ text([x1,0],"Wall",right)
 Code Processed:
 
 setBorder(0)
-# define dismath.tance
+
+# define distance
 x1 =  10/2
 x2 =  5/2
+
+
 # define image limits
 xmin = -1
 xmax = x1 + 2
 ymin = -2
 ymax = 2
 initPicture(xmin,xmax,ymin,ymax)
+
 fontstyle = "normal"
+
 # START 
 strokedasharray = "10,5"
 line([0,1],[0,-1])
 # WALL
 strokedasharray = None
 line([x1,1],[x1,-1])
+
 # to wall
 marker = "arrow"
 line([0,0.5],[x1,0.5])
@@ -1193,6 +1323,7 @@ text([x1/2,0.5],"10 m/s",above)
 # bounce back
 line([x1,-0.5],[x1-x2,-0.5])
 text([x1-x2/2,-0.5],"5 m/s",above)
+
 # LABELS
 text([0,-1],"Start",below)
 text([x1,0],"Wall",right)
@@ -1244,22 +1375,28 @@ text([x1,0],"Wall",right)
 Code Processed:
 
 setBorder(0)
-# define dismath.tance
+
+# define distance
 x1 =  10/2
 x2 =  5/2
+
+
 # define image limits
 xmin = -1
 xmax = x1 + 2
 ymin = -2
 ymax = 2
 initPicture(xmin,xmax,ymin,ymax)
+
 fontstyle = "normal"
+
 # START 
 strokedasharray = "10,5"
 line([0,1],[0,-1])
 # WALL
 strokedasharray = None
 line([x1,1],[x1,-1])
+
 # to wall
 marker = "arrow"
 line([0,0.5],[x1,0.5])
@@ -1267,6 +1404,7 @@ text([x1/2,0.5],"10 m/s",above)
 # bounce back
 line([x1,-0.5],[x1-x2,-0.5])
 text([x1-x2/2,-0.5],"5 m/s",above)
+
 # LABELS
 text([0,-1],"Start",below)
 text([x1,0],"Wall",right)
@@ -1345,38 +1483,49 @@ Code Processed:
 # File Author: Leen Remmelzwaal
 # Date: 7th May 2012
 # ===================================================================================
+
 # =======================================
 # Variables
 # =======================================
+
 float_x_int = 1.32
 float_y_int = -1.2
+
 # =======================================
 # Image Settings
 # =======================================
+
 width="400"
 height="400"
 initPicture(-6, 6, -6, 6)	# xmin,xmax,ymin,ymax
+
 setBorder(0)
 axes(1, 1, "labels", 1)	# (dx, dy, "labels", grid size)
+
 # =======================================
 # Line Drawing
 # =======================================
+
 stroke = "red"
 strokewidth = "2"
 marker = "arrow" # "dot", "arrow", "arrowdot", "none"
 plot("0.2 * 2 ** (t + 2) + -2",-10,10)	#(["f(t)", "g(t)"],tmin,tmax)	
+
 # =======================================
 # Dot
 # =======================================
+
 stroke = "black"
 strokewidth = "4"
 dot([float_x_int,0], "open")
 stroke = "yellow"
 strokewidth = "1"
 dot([float_x_int,0], "closed", "x-intercept", aboveright)
+
 # =======================================
 # Dot
 # =======================================
+
 stroke = "black"
 strokewidth = "4"
 dot([0,float_y_int], "open")
@@ -1459,38 +1608,49 @@ Code Processed:
 # File Author: Leen Remmelzwaal
 # Date: 7th May 2012
 # ===================================================================================
+
 # =======================================
 # Variables
 # =======================================
+
 float_x_int = 1.32
 float_y_int = -1.2
+
 # =======================================
 # Image Settings
 # =======================================
+
 width="400"
 height="400"
 initPicture(-6, 6, -6, 6)	# xmin,xmax,ymin,ymax
+
 setBorder(0)
 axes(1, 1, "labels", 1)	# (dx, dy, "labels", grid size)
+
 # =======================================
 # Line Drawing
 # =======================================
+
 stroke = "red"
 strokewidth = "2"
 marker = "arrow" # "dot", "arrow", "arrowdot", "none"
 plot("0.2 * 2 ** (t + 2) + -2",-10,10)	#(["f(t)", "g(t)"],tmin,tmax)	
+
 # =======================================
 # Dot
 # =======================================
+
 stroke = "black"
 strokewidth = "4"
 dot([float_x_int,0], "open")
 stroke = "yellow"
 strokewidth = "1"
 dot([float_x_int,0], "closed", "x-intercept", aboveright)
+
 # =======================================
 # Dot
 # =======================================
+
 stroke = "black"
 strokewidth = "4"
 dot([0,float_y_int], "open")
@@ -1504,7 +1664,7 @@ dot([0,float_y_int], "closed", "y-intercept", aboveleft)
 
 <!-- 
 
-ASCII -> SVG conversion ERROR: invalid syntax (<string>, line 50)
+ASCII -> SVG conversion ERROR: invalid syntax (<string>, line 65)
 
 Original Code:
 
@@ -1591,50 +1751,67 @@ Code Processed:
 # Editors Log: 
 # 13 June 2012 -> Leen Remmelzwaal -> re-work image size, arc, plot
 # ===================================================================================
+
 # ===================================================================================
 # a - hypot
 # b - vertical
 # c - horizontal
 # ===================================================================================
+
 # =======================================
 # Variables
 # =======================================
+
 a = 10
 b = 5.0
 c = 8.66025403784
 theta = 30
+
 # =======================================
 # Image Settings
 # =======================================
+
 setBorder(0)
 axis_size = max(c + 0.5, b + 0.5) # Ensure that the pic is square
 initPicture(-2, axis_size, -2, axis_size)
+
 # =======================================
 # Calculations
 # =======================================
-c = a*math.cos(theta*((math.pi)/180))
+
+c = a*cos(theta*(pi/180))
+
 # =======================================
 # Draw Triangle
 # =======================================
+
 path([[0,0],[c,0],[0,b],[0,0]])
+
 # =======================================
 # Draw Right Angle
 # =======================================
+
 square_radius = c/8
 path([[square_radius,0],[square_radius,square_radius],[0,square_radius]])
+
 # =======================================
 # Draw THETA Angle Arc
 # =======================================
+
 arc_radius = c/3
-arc([c - arc_radius*math.cos(theta*(math.pi)/180), arc_radius*math.sin(theta*(math.pi)/180)], [c-arc_radius,0], arc_radius)
+arc([c - arc_radius*cos(theta*pi/180), arc_radius*sin(theta*pi/180)], [c-arc_radius,0], arc_radius)
+
 # =======================================
 # Text
 # =======================================
-text([c-c/4*math.cos(0.5*theta*(math.pi)/180),c/4*math.sin(0.5*theta*(math.pi)/180)],"x")
-text([c-a/2math.cos(theta*(math.pi)/180),a/2math.sin(theta*(math.pi)/180)],"10",aboveright)
+
+text([c-c/4*cos(0.5*theta*pi/180),c/4*sin(0.5*theta*pi/180)],"x")
+text([c-a/2cos(theta*pi/180),a/2sin(theta*pi/180)],"10",aboveright)
 #text([0,b/2],"5,0",left)
 text([c/2,0],"8,66",below)
+
 # =======================================
+
 
 
 -->
@@ -1642,7 +1819,7 @@ text([c/2,0],"8,66",below)
 
 <!-- 
 
-ASCII -> SVG conversion ERROR: invalid syntax (<string>, line 50)
+ASCII -> SVG conversion ERROR: invalid syntax (<string>, line 65)
 
 Original Code:
 
@@ -1729,50 +1906,67 @@ Code Processed:
 # Editors Log: 
 # 13 June 2012 -> Leen Remmelzwaal -> re-work image size, arc, plot
 # ===================================================================================
+
 # ===================================================================================
 # a - hypot
 # b - vertical
 # c - horizontal
 # ===================================================================================
+
 # =======================================
 # Variables
 # =======================================
+
 a = 10
 b = 5.0
 c = 8.66025403784
 theta = 30
+
 # =======================================
 # Image Settings
 # =======================================
+
 setBorder(0)
 axis_size = max(c + 0.5, b + 0.5) # Ensure that the pic is square
 initPicture(-2, axis_size, -2, axis_size)
+
 # =======================================
 # Calculations
 # =======================================
-c = a*math.cos(theta*((math.pi)/180))
+
+c = a*cos(theta*(pi/180))
+
 # =======================================
 # Draw Triangle
 # =======================================
+
 path([[0,0],[c,0],[0,b],[0,0]])
+
 # =======================================
 # Draw Right Angle
 # =======================================
+
 square_radius = c/8
 path([[square_radius,0],[square_radius,square_radius],[0,square_radius]])
+
 # =======================================
 # Draw THETA Angle Arc
 # =======================================
+
 arc_radius = c/3
-arc([c - arc_radius*math.cos(theta*(math.pi)/180), arc_radius*math.sin(theta*(math.pi)/180)], [c-arc_radius,0], arc_radius)
+arc([c - arc_radius*cos(theta*pi/180), arc_radius*sin(theta*pi/180)], [c-arc_radius,0], arc_radius)
+
 # =======================================
 # Text
 # =======================================
-text([c-c/4*math.cos(0.5*theta*(math.pi)/180),c/4*math.sin(0.5*theta*(math.pi)/180)],"x")
-text([c-a/2math.cos(theta*(math.pi)/180),a/2math.sin(theta*(math.pi)/180)],"10",aboveright)
+
+text([c-c/4*cos(0.5*theta*pi/180),c/4*sin(0.5*theta*pi/180)],"x")
+text([c-a/2cos(theta*pi/180),a/2sin(theta*pi/180)],"10",aboveright)
 #text([0,b/2],"5,0",left)
 text([c/2,0],"8,66",below)
+
 # =======================================
+
 
 
 -->
@@ -1909,83 +2103,109 @@ Code Processed:
 # Editors Log: 
 # 14 June 2012 -> Leen Remmelzwaal -> re-work image size, arc, plot
 # ===================================================================================
+
 # ===================================================================================
 # a - hypot
 # b - vertical
 # c - horizontal
 # ===================================================================================
+
 # =======================================
 # Variables
 # =======================================
+
 a = 11.5470053838
 b = 10
 c = 5.7735026919
 theta = 60
+
 # =======================================
 # Image Settings
 # =======================================
+
 setBorder(0)
 axis_size = max(c + 0.5, b + 1.5) # Ensure that the pic is square
 initPicture(-b/5-1, axis_size, -1, axis_size)
+
 # =======================================
 # Calculations
 # =======================================
-c = a*math.cos(theta*((math.pi)/180))
+
+c = a*cos(theta*(pi/180))
+
 # =======================================
 # Draw Tree
 # =======================================
+
 radius = b/5
 stroke = "black"
 strokewidth = "2"
 fill = "brown"
 rect([-0.25, 0], [0.25, b-radius])
+
 stroke = "darkgreen"
 strokewidth = "2"
 fill = "lightgreen"
 circle([0,b-radius],radius)
+
 stroke = "black"
 strokewidth = "1.5"
 fill = "none"
+
 # =======================================
 # Draw Triangle
 # =======================================
+
 path([[0,0],[c,0],[0,b],[0,0]])
+
 # =======================================
 # Draw Right Angle
 # =======================================
+
 square_radius = axis_size/12
 path([[square_radius,0],[square_radius,square_radius],[0,square_radius]])
+
 # =======================================
 # Draw THETA Angle Arc
 # =======================================
+
 # arc_radius = c/3
-# arc([c - arc_radius*math.cos(theta*(math.pi)/180), arc_radius*math.sin(theta*(math.pi)/180)], [c-arc_radius,0], arc_radius)
+# arc([c - arc_radius*cos(theta*pi/180), arc_radius*sin(theta*pi/180)], [c-arc_radius,0], arc_radius)
+
+
 # =======================================
 # Dot
 # =======================================
+
 stroke = "black"
 strokewidth = "4"
 dot([c,0], "open")
 stroke = "darkgreen"
 strokewidth = "1"
 dot([c,0], "closed", "Point A", belowleft)
+
 # =======================================
 # Dot
 # =======================================
+
 stroke = "black"
 strokewidth = "4"
 dot([0,b], "open")
 stroke = "red"
 strokewidth = "1"
 dot([0,b], "closed", "Point B", right)
+
 # =======================================
 # Text
 # =======================================
-#text([c-c/4*math.cos(0.5*theta*(math.pi)/180),c/4*math.sin(0.5*theta*(math.pi)/180)],"60")
-text([c-a/2*math.cos(theta*(math.pi)/180),a/2*math.sin(theta*(math.pi)/180)],"11,55",aboveright)
+
+#text([c-c/4*cos(0.5*theta*pi/180),c/4*sin(0.5*theta*pi/180)],"60")
+text([c-a/2*cos(theta*pi/180),a/2*sin(theta*pi/180)],"11,55",aboveright)
 text([0,2*b/3],"x",right)
 text([c/2,0],"5,77",above)
+
 # =======================================
+
 
 
 -->
@@ -2122,83 +2342,109 @@ Code Processed:
 # Editors Log: 
 # 14 June 2012 -> Leen Remmelzwaal -> re-work image size, arc, plot
 # ===================================================================================
+
 # ===================================================================================
 # a - hypot
 # b - vertical
 # c - horizontal
 # ===================================================================================
+
 # =======================================
 # Variables
 # =======================================
+
 a = 11.5470053838
 b = 10
 c = 5.7735026919
 theta = 60
+
 # =======================================
 # Image Settings
 # =======================================
+
 setBorder(0)
 axis_size = max(c + 0.5, b + 1.5) # Ensure that the pic is square
 initPicture(-b/5-1, axis_size, -1, axis_size)
+
 # =======================================
 # Calculations
 # =======================================
-c = a*math.cos(theta*((math.pi)/180))
+
+c = a*cos(theta*(pi/180))
+
 # =======================================
 # Draw Tree
 # =======================================
+
 radius = b/5
 stroke = "black"
 strokewidth = "2"
 fill = "brown"
 rect([-0.25, 0], [0.25, b-radius])
+
 stroke = "darkgreen"
 strokewidth = "2"
 fill = "lightgreen"
 circle([0,b-radius],radius)
+
 stroke = "black"
 strokewidth = "1.5"
 fill = "none"
+
 # =======================================
 # Draw Triangle
 # =======================================
+
 path([[0,0],[c,0],[0,b],[0,0]])
+
 # =======================================
 # Draw Right Angle
 # =======================================
+
 square_radius = axis_size/12
 path([[square_radius,0],[square_radius,square_radius],[0,square_radius]])
+
 # =======================================
 # Draw THETA Angle Arc
 # =======================================
+
 # arc_radius = c/3
-# arc([c - arc_radius*math.cos(theta*(math.pi)/180), arc_radius*math.sin(theta*(math.pi)/180)], [c-arc_radius,0], arc_radius)
+# arc([c - arc_radius*cos(theta*pi/180), arc_radius*sin(theta*pi/180)], [c-arc_radius,0], arc_radius)
+
+
 # =======================================
 # Dot
 # =======================================
+
 stroke = "black"
 strokewidth = "4"
 dot([c,0], "open")
 stroke = "darkgreen"
 strokewidth = "1"
 dot([c,0], "closed", "Point A", belowleft)
+
 # =======================================
 # Dot
 # =======================================
+
 stroke = "black"
 strokewidth = "4"
 dot([0,b], "open")
 stroke = "red"
 strokewidth = "1"
 dot([0,b], "closed", "Point B", right)
+
 # =======================================
 # Text
 # =======================================
-#text([c-c/4*math.cos(0.5*theta*(math.pi)/180),c/4*math.sin(0.5*theta*(math.pi)/180)],"60")
-text([c-a/2*math.cos(theta*(math.pi)/180),a/2*math.sin(theta*(math.pi)/180)],"11,55",aboveright)
+
+#text([c-c/4*cos(0.5*theta*pi/180),c/4*sin(0.5*theta*pi/180)],"60")
+text([c-a/2*cos(theta*pi/180),a/2*sin(theta*pi/180)],"11,55",aboveright)
 text([0,2*b/3],"x",right)
 text([c/2,0],"5,77",above)
+
 # =======================================
+
 
 
 -->
@@ -2259,11 +2505,13 @@ Code Processed:
 
 setBorder(0)
 # forces on car
+
 # given
 Fg = 10780/3000    # m*g
 FN = Fg                                # m*g
 Ff = 260/200         # N
 F1 = 2200/800         # N
+
 # define image limits
 xmin=-3.3 - F1
 xmax=3.3 + F1
@@ -2271,6 +2519,7 @@ ymin=-FN - 2
 ymax=FN + 2
 initPicture(xmin,xmax,ymin,ymax)
 fontstyle = "normal"
+
 # car
 path([[-2.3,-0.7],[-2.3,0],[-1.5,0],[-1,1],[1,1],[1.5,0],[2.3,0],[2.3,-0.7]])
 line([-1,-0.7],[1,-0.7])
@@ -2278,6 +2527,7 @@ circle( [1.6,-0.7], 0.4 )
 circle( [-1.6,-0.7], 0.4 )
 arc([2.5,-0.2],[2.5,-0.6],0.2)
 line([2.5,-0.2],[2.5,-0.6])
+
 # forces
 marker = "arrow" 
 # FN
@@ -2294,6 +2544,8 @@ text([-F1/3-2.3,-0.35],"C",above)
 # Ff
 line([-1.6,-1.1],[-Ff-1.6,-1.1])
 text([-Ff/3-1.6,-1.1],"D",below)
+
+
 
 
 -->
@@ -2354,11 +2606,13 @@ Code Processed:
 
 setBorder(0)
 # forces on car
+
 # given
 Fg = 10780/3000    # m*g
 FN = Fg                                # m*g
 Ff = 260/200         # N
 F1 = 2200/800         # N
+
 # define image limits
 xmin=-3.3 - F1
 xmax=3.3 + F1
@@ -2366,6 +2620,7 @@ ymin=-FN - 2
 ymax=FN + 2
 initPicture(xmin,xmax,ymin,ymax)
 fontstyle = "normal"
+
 # car
 path([[-2.3,-0.7],[-2.3,0],[-1.5,0],[-1,1],[1,1],[1.5,0],[2.3,0],[2.3,-0.7]])
 line([-1,-0.7],[1,-0.7])
@@ -2373,6 +2628,7 @@ circle( [1.6,-0.7], 0.4 )
 circle( [-1.6,-0.7], 0.4 )
 arc([2.5,-0.2],[2.5,-0.6],0.2)
 line([2.5,-0.2],[2.5,-0.6])
+
 # forces
 marker = "arrow" 
 # FN
@@ -2389,6 +2645,8 @@ text([-F1/3-2.3,-0.35],"C",above)
 # Ff
 line([-1.6,-1.1],[-Ff-1.6,-1.1])
 text([-Ff/3-1.6,-1.1],"D",below)
+
+
 
 
 -->
@@ -2469,9 +2727,11 @@ Code Processed:
 # File Author: Leen Remmelzwaal
 # Date: 7th May 2012
 # ===================================================================================
+
 # =======================================
 # Image Settings
 # =======================================
+
 float_x_int = -0.75
 float_y_int = 3.0
 float_x_B = -1
@@ -2480,36 +2740,46 @@ float_x_1 = -10
 float_y_1 = -37.0
 float_x_2 = 10
 float_y_2 = 43.0
+
 width="400"
 height="400"
 initPicture(-6, 6, -6, 6)	# xmin,xmax,ymin,ymax
+
 setBorder(0)
 axes(1, 1, "labels", 1)	# (dx, dy, "labels", grid size)
+
 # =======================================
 # Line Drawing
 # =======================================
+
 stroke = "red"
 strokewidth = "2"
 marker = "arrow" # "dot", "arrow", "arrowdot", "none"
 line([float_x_1,float_y_1],[float_x_2,float_y_2])
+
 # =======================================
 # Dot
 # =======================================
+
 stroke = "black"
 strokewidth = "4"
 dot([float_x_B,float_y_B], "open")
 stroke = "yellow"
 strokewidth = "1"
 dot([float_x_B,float_y_B], "closed", "Point B", aboveright)
+
 # =======================================
 # Dot
 # =======================================
+
 stroke = "black"
 strokewidth = "4"
 dot([0,float_y_int], "open")
 stroke = "yellow"
 strokewidth = "1"
 dot([0,float_y_int], "closed", "Point A: y-intercept", aboveleft)
+
+
 
 
 -->
@@ -2590,9 +2860,11 @@ Code Processed:
 # File Author: Leen Remmelzwaal
 # Date: 7th May 2012
 # ===================================================================================
+
 # =======================================
 # Image Settings
 # =======================================
+
 float_x_int = -0.75
 float_y_int = 3.0
 float_x_B = -1
@@ -2601,36 +2873,46 @@ float_x_1 = -10
 float_y_1 = -37.0
 float_x_2 = 10
 float_y_2 = 43.0
+
 width="400"
 height="400"
 initPicture(-6, 6, -6, 6)	# xmin,xmax,ymin,ymax
+
 setBorder(0)
 axes(1, 1, "labels", 1)	# (dx, dy, "labels", grid size)
+
 # =======================================
 # Line Drawing
 # =======================================
+
 stroke = "red"
 strokewidth = "2"
 marker = "arrow" # "dot", "arrow", "arrowdot", "none"
 line([float_x_1,float_y_1],[float_x_2,float_y_2])
+
 # =======================================
 # Dot
 # =======================================
+
 stroke = "black"
 strokewidth = "4"
 dot([float_x_B,float_y_B], "open")
 stroke = "yellow"
 strokewidth = "1"
 dot([float_x_B,float_y_B], "closed", "Point B", aboveright)
+
 # =======================================
 # Dot
 # =======================================
+
 stroke = "black"
 strokewidth = "4"
 dot([0,float_y_int], "open")
 stroke = "yellow"
 strokewidth = "1"
 dot([0,float_y_int], "closed", "Point A: y-intercept", aboveleft)
+
+
 
 
 -->
@@ -2710,45 +2992,58 @@ Code Processed:
 # File Author: Leen Remmelzwaal
 # Date: 7th May 2012
 # ===================================================================================
+
 # =======================================
 # Image Settings
 # =======================================
+
 float_x_int = -2.0
 float_y_int = -4.0
+
 float_x_1 = -10
 float_y_1 = 16.0
 float_x_2 = 10
 float_y_2 = -24.0
+
 width="400"
 height="400"
 initPicture(-6, 6, -6, 6)	# xmin,xmax,ymin,ymax
+
 setBorder(0)
 axes(1, 1, "labels", 1)	# (dx, dy, "labels", grid size)
+
 # =======================================
 # Line Drawing
 # =======================================
+
 stroke = "red"
 strokewidth = "2"
 marker = "arrow" # "dot", "arrow", "arrowdot", "none"
 line([float_x_1,float_y_1],[float_x_2,float_y_2])
+
 # =======================================
 # Dot
 # =======================================
+
 stroke = "black"
 strokewidth = "4"
 dot([float_x_int,0], "open")
 stroke = "yellow"
 strokewidth = "1"
 dot([float_x_int,0], "closed", "x-intercept", aboveright)
+
 # =======================================
 # Dot
 # =======================================
+
 stroke = "black"
 strokewidth = "4"
 dot([0,float_y_int], "open")
 stroke = "yellow"
 strokewidth = "1"
 dot([0,float_y_int], "closed", "y-intercept", aboveleft)
+
+
 
 
 -->
@@ -2828,39 +3123,50 @@ Code Processed:
 # File Author: Leen Remmelzwaal
 # Date: 7th May 2012
 # ===================================================================================
+
 # =======================================
 # Image Settings
 # =======================================
+
 float_x_int = -2.0
 float_y_int = -4.0
+
 float_x_1 = -10
 float_y_1 = 16.0
 float_x_2 = 10
 float_y_2 = -24.0
+
 width="400"
 height="400"
 initPicture(-6, 6, -6, 6)	# xmin,xmax,ymin,ymax
+
 setBorder(0)
 axes(1, 1, "labels", 1)	# (dx, dy, "labels", grid size)
+
 # =======================================
 # Line Drawing
 # =======================================
+
 stroke = "red"
 strokewidth = "2"
 marker = "arrow" # "dot", "arrow", "arrowdot", "none"
 line([float_x_1,float_y_1],[float_x_2,float_y_2])
+
 # =======================================
 # Dot
 # =======================================
+
 stroke = "black"
 strokewidth = "4"
 dot([float_x_int,0], "open")
 stroke = "yellow"
 strokewidth = "1"
 dot([float_x_int,0], "closed", "x-intercept", aboveright)
+
 # =======================================
 # Dot
 # =======================================
+
 stroke = "black"
 strokewidth = "4"
 dot([0,float_y_int], "open")
@@ -2869,12 +3175,14 @@ strokewidth = "1"
 dot([0,float_y_int], "closed", "y-intercept", aboveleft)
 
 
+
+
 -->
-</td><td><form><input type=button value="Refresh" onClick="window.location.reload()"></form></td></tr><tr><td bgcolor='#DDDDDD'>Folder: /OK/<br><br>File: 52aae6fe596382e081bf82f136726ac1.png<br><br><textarea rows=20 cols=40><svg id="52aae6fe596382e081bf82f136726ac1" style="display:inline" width="400.0" height="400.0" xmin="-2" xmax="14.2872806643" ymin="-2" ymax="12.78" ox="49.1180827842" oy="54.1271989175"><rect x="0" y="0" width="400.0" height="400.0" stroke-width="0" stroke="black" fill="white"/><rect x="0" y="0" width="400.0" height="400.0" stroke-width="0" stroke="black" fill="white"/><path d=" M 49.12,345.87 350.88,113.03" stroke-width="1" stroke="black" fill="none" stroke-dasharray="1, 0"/><path d=" M 49.12,345.87 230.18,345.87" stroke-width="1" stroke="black" fill="none" stroke-dasharray="15, 5"/><path d=" M 122.79520696,345.872801083 A 73.6771241763,81.1907983762 0 0,0 109.470849671,299.303672285" stroke-width="1" stroke="black" fill="none"/><text x="91.51" y="336.66" font-style="italic" font-family="times" font-size="16" font-weight="normal" text-anchor="start" stroke="none" fill="black">&#952;</text><path d=" M 169.82,252.73 127.56,186.23" stroke-width="1" stroke="black" fill="none" stroke-dasharray="1, 0"/><path d=" M 127.56,186.23 187.92,139.66" stroke-width="1" stroke="black" fill="none" stroke-dasharray="1, 0"/><path d=" M 230.18,206.17 187.92,139.66" stroke-width="1" stroke="black" fill="none" stroke-dasharray="1, 0"/><path d=" M 178.87,196.2 178.87,342.07" stroke-width="1" stroke="black" fill="none" stroke-dasharray="1, 0"/><path d="M 182.870268837 327.068975939 L 178.870268837 339.068975939 L 174.870268837 327.068975939 Z" stroke-width="1" stroke="black" fill="black"/><text x="178.87" y="358.07" font-style="italic" font-family="times" font-size="16" font-weight="normal" text-anchor="middle" stroke="none" fill="black">Fg</text><path d=" M 178.87,196.2 116.68,244.19" stroke-width="1" stroke="black" fill="none" stroke-dasharray="10, 5"/><path d="M 130.994438845 238.190256728 L 119.050325731 242.35416858 L 126.10726911 231.85657123 Z" stroke-width="1" stroke="black" fill="black"/><text x="108.68" y="249.52" font-style="italic" font-family="times" font-size="16" font-weight="normal" text-anchor="end" stroke="none" fill="black">Fg||</text><path d=" M 178.87,196.2 241.07,294.08" stroke-width="1" stroke="black" fill="none" stroke-dasharray="10, 5"/><path d="M 236.396932108 279.27268887 L 239.456440306 291.546213612 L 229.644718903 283.563098737 Z" stroke-width="1" stroke="black" fill="black"/><path d=" M 178.87,196.2 241.07,148.21" stroke-width="2" stroke="black" fill="none" stroke-dasharray="1, 0"/><path d="M 226.74609883 154.202092985 L 238.690211944 150.038181132 L 231.633268564 160.535778483 Z" stroke-width="1" stroke="black" fill="black"/><text x="249.07" y="153.54" font-style="italic" font-family="times" font-size="16" font-weight="normal" text-anchor="start" stroke="none" fill="black">F</text></svg>
+</td><td><form><input type=button value="Refresh" onClick="window.location.reload()"></form></td></tr><tr><td bgcolor='#DDDDDD'>Folder: /OK/<br><br>File: 52aae6fe596382e081bf82f136726ac1.png<br><br><textarea rows=20 cols=40><svg id="52aae6fe596382e081bf82f136726ac1" style="display:inline" width="400.0" height="400.0" xmin="-2" xmax="14.2872806643" ymin="-2" ymax="12.78" ox="49.1180827842" oy="54.1271989175"><rect x="0" y="0" width="400.0" height="400.0" stroke-width="0" stroke="black" fill="white"/><rect x="0" y="0" width="400.0" height="400.0" stroke-width="0" stroke="black" fill="white"/><path d=" M 49.12,345.87 350.88,113.03" stroke-width="1" stroke="black" fill="none" stroke-dasharray="1, 0"/><path d=" M 49.12,345.87 230.18,345.87" stroke-width="1" stroke="black" fill="none" stroke-dasharray="15, 5"/><path d=" M 122.79520696,345.872801083 A 73.6771241763,81.1907983762 0 0,0 109.470849671,299.303672285" stroke-width="1" stroke="black" fill="none"/></svg>
 
 <!-- 
 
-ASCII -> SVG conversion complete. 
+ASCII -> SVG conversion ERROR: 'ascii' codec can't encode character u'\u03b8' in position 0: ordinal not in range(128)
 
 Original Code:
 
@@ -2943,65 +3251,73 @@ text([slope*cos(theta*pi/180)/2-boxside*sin(theta*pi/180)/2+Gpar*cos(theta*pi/18
 Code Processed:
 
 setBorder(0)
+
 # given
 m     = 11 # kg
 theta = 35 # degrees
 g     = 9.8 # m/s**2
+
 # define fixed length
 slope   = 15 # units
 boxside =  3 # units
+
 # calculated
 G = m*g/20
-Gpar = G*math.sin(theta*(math.pi)/180)
-Gper = G*math.cos(theta*(math.pi)/180)
+Gpar = G*sin(theta*pi/180)
+Gper = G*cos(theta*pi/180)
+
 # define image limits
 xmin = -2
-xmax = slope*math.cos(theta*(math.pi)/180) + 2
+xmax = slope*cos(theta*pi/180) + 2
 ymin = -2
 ymax = 2*G + 2
 initPicture(xmin,xmax,ymin,ymax)
+
 # build
 # slope
-line([0,0],[slope*math.cos(theta*(math.pi)/180),slope*math.sin(theta*(math.pi)/180)])
+line([0,0],[slope*cos(theta*pi/180),slope*sin(theta*pi/180)])
 # horisontal
 strokedasharray = "15,5"
-line([0,0],[0.6*slope*math.cos(theta*(math.pi)/180),0])
+line([0,0],[0.6*slope*cos(theta*pi/180),0])
 # angle
-arc([0.2*slope,0],[0.2*slope*math.cos(theta*(math.pi)/180),0.2*slope*math.sin(theta*(math.pi)/180)],0.2*slope)
-text([0.1*slope*math.cos(0.6*theta*(math.pi)/180),0.1*slope*math.sin(0.6*theta*(math.pi)/180)],ctheta,right)
+arc([0.2*slope,0],[0.2*slope*cos(theta*pi/180),0.2*slope*sin(theta*pi/180)],0.2*slope)
+text([0.1*slope*cos(0.6*theta*pi/180),0.1*slope*sin(0.6*theta*pi/180)],ctheta,right)
+
 # box
 strokedasharray = [1,0]
 # up
-line([2*slope*math.cos(theta*(math.pi)/180)/5,2*slope*math.sin(theta*(math.pi)/180)/5],[2*slope*math.cos(theta*(math.pi)/180)/5-slope*math.sin(theta*(math.pi)/180)/5,2*slope*math.sin(theta*(math.pi)/180)/5+slope*math.cos(theta*(math.pi)/180)/5])
+line([2*slope*cos(theta*pi/180)/5,2*slope*sin(theta*pi/180)/5],[2*slope*cos(theta*pi/180)/5-slope*sin(theta*pi/180)/5,2*slope*sin(theta*pi/180)/5+slope*cos(theta*pi/180)/5])
 # across
-line([2*slope*math.cos(theta*(math.pi)/180)/5-slope*math.sin(theta*(math.pi)/180)/5,2*slope*math.sin(theta*(math.pi)/180)/5+slope*math.cos(theta*(math.pi)/180)/5],[3*slope*math.cos(theta*(math.pi)/180)/5-slope*math.sin(theta*(math.pi)/180)/5,3*slope*math.sin(theta*(math.pi)/180)/5+slope*math.cos(theta*(math.pi)/180)/5])
+line([2*slope*cos(theta*pi/180)/5-slope*sin(theta*pi/180)/5,2*slope*sin(theta*pi/180)/5+slope*cos(theta*pi/180)/5],[3*slope*cos(theta*pi/180)/5-slope*sin(theta*pi/180)/5,3*slope*sin(theta*pi/180)/5+slope*cos(theta*pi/180)/5])
 # down
-line([3*slope*math.cos(theta*(math.pi)/180)/5,3*slope*math.sin(theta*(math.pi)/180)/5],[3*slope*math.cos(theta*(math.pi)/180)/5-slope*math.sin(theta*(math.pi)/180)/5,3*slope*math.sin(theta*(math.pi)/180)/5+slope*math.cos(theta*(math.pi)/180)/5])
+line([3*slope*cos(theta*pi/180)/5,3*slope*sin(theta*pi/180)/5],[3*slope*cos(theta*pi/180)/5-slope*sin(theta*pi/180)/5,3*slope*sin(theta*pi/180)/5+slope*cos(theta*pi/180)/5])
+
 # Force arrows
 # gravity
+
 marker = "arrow"
-line([slope*math.cos(theta*(math.pi)/180)/2-boxside*math.sin(theta*(math.pi)/180)/2,slope*math.sin(theta*(math.pi)/180)/2+boxside*math.cos(theta*(math.pi)/180)/2],[slope*math.cos(theta*(math.pi)/180)/2-boxside*math.sin(theta*(math.pi)/180)/2,slope*math.sin(theta*(math.pi)/180)/2+boxside*math.cos(theta*(math.pi)/180)/2-G])
-text([slope*math.cos(theta*(math.pi)/180)/2-boxside*math.sin(theta*(math.pi)/180)/2,slope*math.sin(theta*(math.pi)/180)/2+boxside*math.cos(theta*(math.pi)/180)/2-G],"Fg",below)
+line([slope*cos(theta*pi/180)/2-boxside*sin(theta*pi/180)/2,slope*sin(theta*pi/180)/2+boxside*cos(theta*pi/180)/2],[slope*cos(theta*pi/180)/2-boxside*sin(theta*pi/180)/2,slope*sin(theta*pi/180)/2+boxside*cos(theta*pi/180)/2-G])
+text([slope*cos(theta*pi/180)/2-boxside*sin(theta*pi/180)/2,slope*sin(theta*pi/180)/2+boxside*cos(theta*pi/180)/2-G],"Fg",below)
 # components
 strokedasharray = "10,5"
-# g ||
-line([slope*math.cos(theta*(math.pi)/180)/2-boxside*math.sin(theta*(math.pi)/180)/2,slope*math.sin(theta*(math.pi)/180)/2+boxside*math.cos(theta*(math.pi)/180)/2],[slope*math.cos(theta*(math.pi)/180)/2-boxside*math.sin(theta*(math.pi)/180)/2-Gpar*math.cos(theta*(math.pi)/180),slope*math.sin(theta*(math.pi)/180)/2+boxside*math.cos(theta*(math.pi)/180)/2-Gpar*math.sin(theta*(math.pi)/180)])
-text([slope*math.cos(theta*(math.pi)/180)/2-boxside*math.sin(theta*(math.pi)/180)/2-Gpar*math.cos(theta*(math.pi)/180),slope*math.sin(theta*(math.pi)/180)/2+boxside*math.cos(theta*(math.pi)/180)/2-Gpar*math.sin(theta*(math.pi)/180)],"Fg||",left)
+# g  or 
+line([slope*cos(theta*pi/180)/2-boxside*sin(theta*pi/180)/2,slope*sin(theta*pi/180)/2+boxside*cos(theta*pi/180)/2],[slope*cos(theta*pi/180)/2-boxside*sin(theta*pi/180)/2-Gpar*cos(theta*pi/180),slope*sin(theta*pi/180)/2+boxside*cos(theta*pi/180)/2-Gpar*sin(theta*pi/180)])
+text([slope*cos(theta*pi/180)/2-boxside*sin(theta*pi/180)/2-Gpar*cos(theta*pi/180),slope*sin(theta*pi/180)/2+boxside*cos(theta*pi/180)/2-Gpar*sin(theta*pi/180)],"Fg or ",left)
 # g _|_
-line([slope*math.cos(theta*(math.pi)/180)/2-boxside*math.sin(theta*(math.pi)/180)/2,slope*math.sin(theta*(math.pi)/180)/2+boxside*math.cos(theta*(math.pi)/180)/2],[slope*math.cos(theta*(math.pi)/180)/2-boxside*math.sin(theta*(math.pi)/180)/2+Gper*math.sin(theta*(math.pi)/180),slope*math.sin(theta*(math.pi)/180)/2+boxside*math.cos(theta*(math.pi)/180)/2-Gper*math.cos(theta*(math.pi)/180)])
+line([slope*cos(theta*pi/180)/2-boxside*sin(theta*pi/180)/2,slope*sin(theta*pi/180)/2+boxside*cos(theta*pi/180)/2],[slope*cos(theta*pi/180)/2-boxside*sin(theta*pi/180)/2+Gper*sin(theta*pi/180),slope*sin(theta*pi/180)/2+boxside*cos(theta*pi/180)/2-Gper*cos(theta*pi/180)])
 # required force
 strokewidth = 2
 strokedasharray = None
-line([slope*math.cos(theta*(math.pi)/180)/2-boxside*math.sin(theta*(math.pi)/180)/2,slope*math.sin(theta*(math.pi)/180)/2+boxside*math.cos(theta*(math.pi)/180)/2],[slope*math.cos(theta*(math.pi)/180)/2-boxside*math.sin(theta*(math.pi)/180)/2+Gpar*math.cos(theta*(math.pi)/180),slope*math.sin(theta*(math.pi)/180)/2+boxside*math.cos(theta*(math.pi)/180)/2+Gpar*math.sin(theta*(math.pi)/180)])
-text([slope*math.cos(theta*(math.pi)/180)/2-boxside*math.sin(theta*(math.pi)/180)/2+Gpar*math.cos(theta*(math.pi)/180),slope*math.sin(theta*(math.pi)/180)/2+boxside*math.cos(theta*(math.pi)/180)/2+Gpar*math.sin(theta*(math.pi)/180)],"F",right)
+line([slope*cos(theta*pi/180)/2-boxside*sin(theta*pi/180)/2,slope*sin(theta*pi/180)/2+boxside*cos(theta*pi/180)/2],[slope*cos(theta*pi/180)/2-boxside*sin(theta*pi/180)/2+Gpar*cos(theta*pi/180),slope*sin(theta*pi/180)/2+boxside*cos(theta*pi/180)/2+Gpar*sin(theta*pi/180)])
+text([slope*cos(theta*pi/180)/2-boxside*sin(theta*pi/180)/2+Gpar*cos(theta*pi/180),slope*sin(theta*pi/180)/2+boxside*cos(theta*pi/180)/2+Gpar*sin(theta*pi/180)],"F",right)
 
 
 -->
-</textarea></td><td bgcolor='#86cd78'><img src='png_images/52aae6fe596382e081bf82f136726ac1.png'/></td><td bgcolor='#cd7879'><svg id="52aae6fe596382e081bf82f136726ac1" style="display:inline" width="400.0" height="400.0" xmin="-2" xmax="14.2872806643" ymin="-2" ymax="12.78" ox="49.1180827842" oy="54.1271989175"><rect x="0" y="0" width="400.0" height="400.0" stroke-width="0" stroke="black" fill="white"/><rect x="0" y="0" width="400.0" height="400.0" stroke-width="0" stroke="black" fill="white"/><path d=" M 49.12,345.87 350.88,113.03" stroke-width="1" stroke="black" fill="none" stroke-dasharray="1, 0"/><path d=" M 49.12,345.87 230.18,345.87" stroke-width="1" stroke="black" fill="none" stroke-dasharray="15, 5"/><path d=" M 122.79520696,345.872801083 A 73.6771241763,81.1907983762 0 0,0 109.470849671,299.303672285" stroke-width="1" stroke="black" fill="none"/><text x="91.51" y="336.66" font-style="italic" font-family="times" font-size="16" font-weight="normal" text-anchor="start" stroke="none" fill="black">&#952;</text><path d=" M 169.82,252.73 127.56,186.23" stroke-width="1" stroke="black" fill="none" stroke-dasharray="1, 0"/><path d=" M 127.56,186.23 187.92,139.66" stroke-width="1" stroke="black" fill="none" stroke-dasharray="1, 0"/><path d=" M 230.18,206.17 187.92,139.66" stroke-width="1" stroke="black" fill="none" stroke-dasharray="1, 0"/><path d=" M 178.87,196.2 178.87,342.07" stroke-width="1" stroke="black" fill="none" stroke-dasharray="1, 0"/><path d="M 182.870268837 327.068975939 L 178.870268837 339.068975939 L 174.870268837 327.068975939 Z" stroke-width="1" stroke="black" fill="black"/><text x="178.87" y="358.07" font-style="italic" font-family="times" font-size="16" font-weight="normal" text-anchor="middle" stroke="none" fill="black">Fg</text><path d=" M 178.87,196.2 116.68,244.19" stroke-width="1" stroke="black" fill="none" stroke-dasharray="10, 5"/><path d="M 130.994438845 238.190256728 L 119.050325731 242.35416858 L 126.10726911 231.85657123 Z" stroke-width="1" stroke="black" fill="black"/><text x="108.68" y="249.52" font-style="italic" font-family="times" font-size="16" font-weight="normal" text-anchor="end" stroke="none" fill="black">Fg||</text><path d=" M 178.87,196.2 241.07,294.08" stroke-width="1" stroke="black" fill="none" stroke-dasharray="10, 5"/><path d="M 236.396932108 279.27268887 L 239.456440306 291.546213612 L 229.644718903 283.563098737 Z" stroke-width="1" stroke="black" fill="black"/><path d=" M 178.87,196.2 241.07,148.21" stroke-width="2" stroke="black" fill="none" stroke-dasharray="1, 0"/><path d="M 226.74609883 154.202092985 L 238.690211944 150.038181132 L 231.633268564 160.535778483 Z" stroke-width="1" stroke="black" fill="black"/><text x="249.07" y="153.54" font-style="italic" font-family="times" font-size="16" font-weight="normal" text-anchor="start" stroke="none" fill="black">F</text></svg>
+</textarea></td><td bgcolor='#86cd78'><img src='png_images/52aae6fe596382e081bf82f136726ac1.png'/></td><td bgcolor='#cd7879'><svg id="52aae6fe596382e081bf82f136726ac1" style="display:inline" width="400.0" height="400.0" xmin="-2" xmax="14.2872806643" ymin="-2" ymax="12.78" ox="49.1180827842" oy="54.1271989175"><rect x="0" y="0" width="400.0" height="400.0" stroke-width="0" stroke="black" fill="white"/><rect x="0" y="0" width="400.0" height="400.0" stroke-width="0" stroke="black" fill="white"/><path d=" M 49.12,345.87 350.88,113.03" stroke-width="1" stroke="black" fill="none" stroke-dasharray="1, 0"/><path d=" M 49.12,345.87 230.18,345.87" stroke-width="1" stroke="black" fill="none" stroke-dasharray="15, 5"/><path d=" M 122.79520696,345.872801083 A 73.6771241763,81.1907983762 0 0,0 109.470849671,299.303672285" stroke-width="1" stroke="black" fill="none"/></svg>
 
 <!-- 
 
-ASCII -> SVG conversion complete. 
+ASCII -> SVG conversion ERROR: 'ascii' codec can't encode character u'\u03b8' in position 0: ordinal not in range(128)
 
 Original Code:
 
@@ -3070,57 +3386,65 @@ text([slope*cos(theta*pi/180)/2-boxside*sin(theta*pi/180)/2+Gpar*cos(theta*pi/18
 Code Processed:
 
 setBorder(0)
+
 # given
 m     = 11 # kg
 theta = 35 # degrees
 g     = 9.8 # m/s**2
+
 # define fixed length
 slope   = 15 # units
 boxside =  3 # units
+
 # calculated
 G = m*g/20
-Gpar = G*math.sin(theta*(math.pi)/180)
-Gper = G*math.cos(theta*(math.pi)/180)
+Gpar = G*sin(theta*pi/180)
+Gper = G*cos(theta*pi/180)
+
 # define image limits
 xmin = -2
-xmax = slope*math.cos(theta*(math.pi)/180) + 2
+xmax = slope*cos(theta*pi/180) + 2
 ymin = -2
 ymax = 2*G + 2
 initPicture(xmin,xmax,ymin,ymax)
+
 # build
 # slope
-line([0,0],[slope*math.cos(theta*(math.pi)/180),slope*math.sin(theta*(math.pi)/180)])
+line([0,0],[slope*cos(theta*pi/180),slope*sin(theta*pi/180)])
 # horisontal
 strokedasharray = "15,5"
-line([0,0],[0.6*slope*math.cos(theta*(math.pi)/180),0])
+line([0,0],[0.6*slope*cos(theta*pi/180),0])
 # angle
-arc([0.2*slope,0],[0.2*slope*math.cos(theta*(math.pi)/180),0.2*slope*math.sin(theta*(math.pi)/180)],0.2*slope)
-text([0.1*slope*math.cos(0.6*theta*(math.pi)/180),0.1*slope*math.sin(0.6*theta*(math.pi)/180)],ctheta,right)
+arc([0.2*slope,0],[0.2*slope*cos(theta*pi/180),0.2*slope*sin(theta*pi/180)],0.2*slope)
+text([0.1*slope*cos(0.6*theta*pi/180),0.1*slope*sin(0.6*theta*pi/180)],ctheta,right)
+
 # box
 strokedasharray = [1,0]
 # up
-line([2*slope*math.cos(theta*(math.pi)/180)/5,2*slope*math.sin(theta*(math.pi)/180)/5],[2*slope*math.cos(theta*(math.pi)/180)/5-slope*math.sin(theta*(math.pi)/180)/5,2*slope*math.sin(theta*(math.pi)/180)/5+slope*math.cos(theta*(math.pi)/180)/5])
+line([2*slope*cos(theta*pi/180)/5,2*slope*sin(theta*pi/180)/5],[2*slope*cos(theta*pi/180)/5-slope*sin(theta*pi/180)/5,2*slope*sin(theta*pi/180)/5+slope*cos(theta*pi/180)/5])
 # across
-line([2*slope*math.cos(theta*(math.pi)/180)/5-slope*math.sin(theta*(math.pi)/180)/5,2*slope*math.sin(theta*(math.pi)/180)/5+slope*math.cos(theta*(math.pi)/180)/5],[3*slope*math.cos(theta*(math.pi)/180)/5-slope*math.sin(theta*(math.pi)/180)/5,3*slope*math.sin(theta*(math.pi)/180)/5+slope*math.cos(theta*(math.pi)/180)/5])
+line([2*slope*cos(theta*pi/180)/5-slope*sin(theta*pi/180)/5,2*slope*sin(theta*pi/180)/5+slope*cos(theta*pi/180)/5],[3*slope*cos(theta*pi/180)/5-slope*sin(theta*pi/180)/5,3*slope*sin(theta*pi/180)/5+slope*cos(theta*pi/180)/5])
 # down
-line([3*slope*math.cos(theta*(math.pi)/180)/5,3*slope*math.sin(theta*(math.pi)/180)/5],[3*slope*math.cos(theta*(math.pi)/180)/5-slope*math.sin(theta*(math.pi)/180)/5,3*slope*math.sin(theta*(math.pi)/180)/5+slope*math.cos(theta*(math.pi)/180)/5])
+line([3*slope*cos(theta*pi/180)/5,3*slope*sin(theta*pi/180)/5],[3*slope*cos(theta*pi/180)/5-slope*sin(theta*pi/180)/5,3*slope*sin(theta*pi/180)/5+slope*cos(theta*pi/180)/5])
+
 # Force arrows
 # gravity
+
 marker = "arrow"
-line([slope*math.cos(theta*(math.pi)/180)/2-boxside*math.sin(theta*(math.pi)/180)/2,slope*math.sin(theta*(math.pi)/180)/2+boxside*math.cos(theta*(math.pi)/180)/2],[slope*math.cos(theta*(math.pi)/180)/2-boxside*math.sin(theta*(math.pi)/180)/2,slope*math.sin(theta*(math.pi)/180)/2+boxside*math.cos(theta*(math.pi)/180)/2-G])
-text([slope*math.cos(theta*(math.pi)/180)/2-boxside*math.sin(theta*(math.pi)/180)/2,slope*math.sin(theta*(math.pi)/180)/2+boxside*math.cos(theta*(math.pi)/180)/2-G],"Fg",below)
+line([slope*cos(theta*pi/180)/2-boxside*sin(theta*pi/180)/2,slope*sin(theta*pi/180)/2+boxside*cos(theta*pi/180)/2],[slope*cos(theta*pi/180)/2-boxside*sin(theta*pi/180)/2,slope*sin(theta*pi/180)/2+boxside*cos(theta*pi/180)/2-G])
+text([slope*cos(theta*pi/180)/2-boxside*sin(theta*pi/180)/2,slope*sin(theta*pi/180)/2+boxside*cos(theta*pi/180)/2-G],"Fg",below)
 # components
 strokedasharray = "10,5"
-# g ||
-line([slope*math.cos(theta*(math.pi)/180)/2-boxside*math.sin(theta*(math.pi)/180)/2,slope*math.sin(theta*(math.pi)/180)/2+boxside*math.cos(theta*(math.pi)/180)/2],[slope*math.cos(theta*(math.pi)/180)/2-boxside*math.sin(theta*(math.pi)/180)/2-Gpar*math.cos(theta*(math.pi)/180),slope*math.sin(theta*(math.pi)/180)/2+boxside*math.cos(theta*(math.pi)/180)/2-Gpar*math.sin(theta*(math.pi)/180)])
-text([slope*math.cos(theta*(math.pi)/180)/2-boxside*math.sin(theta*(math.pi)/180)/2-Gpar*math.cos(theta*(math.pi)/180),slope*math.sin(theta*(math.pi)/180)/2+boxside*math.cos(theta*(math.pi)/180)/2-Gpar*math.sin(theta*(math.pi)/180)],"Fg||",left)
+# g  or 
+line([slope*cos(theta*pi/180)/2-boxside*sin(theta*pi/180)/2,slope*sin(theta*pi/180)/2+boxside*cos(theta*pi/180)/2],[slope*cos(theta*pi/180)/2-boxside*sin(theta*pi/180)/2-Gpar*cos(theta*pi/180),slope*sin(theta*pi/180)/2+boxside*cos(theta*pi/180)/2-Gpar*sin(theta*pi/180)])
+text([slope*cos(theta*pi/180)/2-boxside*sin(theta*pi/180)/2-Gpar*cos(theta*pi/180),slope*sin(theta*pi/180)/2+boxside*cos(theta*pi/180)/2-Gpar*sin(theta*pi/180)],"Fg or ",left)
 # g _|_
-line([slope*math.cos(theta*(math.pi)/180)/2-boxside*math.sin(theta*(math.pi)/180)/2,slope*math.sin(theta*(math.pi)/180)/2+boxside*math.cos(theta*(math.pi)/180)/2],[slope*math.cos(theta*(math.pi)/180)/2-boxside*math.sin(theta*(math.pi)/180)/2+Gper*math.sin(theta*(math.pi)/180),slope*math.sin(theta*(math.pi)/180)/2+boxside*math.cos(theta*(math.pi)/180)/2-Gper*math.cos(theta*(math.pi)/180)])
+line([slope*cos(theta*pi/180)/2-boxside*sin(theta*pi/180)/2,slope*sin(theta*pi/180)/2+boxside*cos(theta*pi/180)/2],[slope*cos(theta*pi/180)/2-boxside*sin(theta*pi/180)/2+Gper*sin(theta*pi/180),slope*sin(theta*pi/180)/2+boxside*cos(theta*pi/180)/2-Gper*cos(theta*pi/180)])
 # required force
 strokewidth = 2
 strokedasharray = None
-line([slope*math.cos(theta*(math.pi)/180)/2-boxside*math.sin(theta*(math.pi)/180)/2,slope*math.sin(theta*(math.pi)/180)/2+boxside*math.cos(theta*(math.pi)/180)/2],[slope*math.cos(theta*(math.pi)/180)/2-boxside*math.sin(theta*(math.pi)/180)/2+Gpar*math.cos(theta*(math.pi)/180),slope*math.sin(theta*(math.pi)/180)/2+boxside*math.cos(theta*(math.pi)/180)/2+Gpar*math.sin(theta*(math.pi)/180)])
-text([slope*math.cos(theta*(math.pi)/180)/2-boxside*math.sin(theta*(math.pi)/180)/2+Gpar*math.cos(theta*(math.pi)/180),slope*math.sin(theta*(math.pi)/180)/2+boxside*math.cos(theta*(math.pi)/180)/2+Gpar*math.sin(theta*(math.pi)/180)],"F",right)
+line([slope*cos(theta*pi/180)/2-boxside*sin(theta*pi/180)/2,slope*sin(theta*pi/180)/2+boxside*cos(theta*pi/180)/2],[slope*cos(theta*pi/180)/2-boxside*sin(theta*pi/180)/2+Gpar*cos(theta*pi/180),slope*sin(theta*pi/180)/2+boxside*cos(theta*pi/180)/2+Gpar*sin(theta*pi/180)])
+text([slope*cos(theta*pi/180)/2-boxside*sin(theta*pi/180)/2+Gpar*cos(theta*pi/180),slope*sin(theta*pi/180)/2+boxside*cos(theta*pi/180)/2+Gpar*sin(theta*pi/180)],"F",right)
 
 
 -->
@@ -3151,15 +3475,17 @@ Code Processed:
 
 setBorder(0)
 initPicture(-2,15,-2,2)
+
 marker="arrow"
 line([0,0],[14,0])
 line([0,-1.5],[0,1.5])
+
 stroke = "blue"
 #DC
-plot("math.sin(x)",0,3.14)
-plot("-math.sin(x)",3.14,6.28)
-plot("math.sin(x)",6.28,9.42)
-plot("-math.sin(x)",9.42,12.57)
+plot("sin(x)",0,3.14)
+plot("-sin(x)",3.14,6.28)
+plot("sin(x)",6.28,9.42)
+plot("-sin(x)",9.42,12.57)
 
 
 -->
@@ -3190,15 +3516,17 @@ Code Processed:
 
 setBorder(0)
 initPicture(-2,15,-2,2)
+
 marker="arrow"
 line([0,0],[14,0])
 line([0,-1.5],[0,1.5])
+
 stroke = "blue"
 #DC
-plot("math.sin(x)",0,3.14)
-plot("-math.sin(x)",3.14,6.28)
-plot("math.sin(x)",6.28,9.42)
-plot("-math.sin(x)",9.42,12.57)
+plot("sin(x)",0,3.14)
+plot("-sin(x)",3.14,6.28)
+plot("sin(x)",6.28,9.42)
+plot("-sin(x)",9.42,12.57)
 
 
 -->
@@ -3272,39 +3600,52 @@ Code Processed:
 # File Author: Leen Remmelzwaal
 # Date: 2 August 2012
 # ===================================================================================
+
 # =======================================
 # Image Settings
 # =======================================
+
 setBorder(0)
 initPicture(-8.5, 8.5, -8.5, 8.5)
 axes(1, 1, "labels", 1)
+
 # =======================================
 # Acis of Symmetry
 # =======================================
+
 stroke = "gray"
 strokewidth = 2
 strokedasharray = [5, 5]
+
 plot(["t","t"], -10, 10)
+
 # =======================================
 # Original Graph
 # =======================================
+
 stroke = "blue"
 strokewidth = 2
 strokedasharray = [1,0]
 plot(["t","-1*t**2  + 4"], -10, 10)
+
 # =======================================
 # Inverse Graph
 # =======================================
+
 stroke = "darkgreen"
 strokewidth = 2
 plot(["-1*t**2  + 4","t"], -10, 10)
+
 # =======================================
 # Inverse Graph
 # =======================================
+
 text([-8,8], "blue = f(x)", right)
 text([-8,7], "green = inverse function", right)
 text([7,8], "line of reflection (y = x)", left)
+
 # =======================================
+
 
 
 -->
@@ -3378,39 +3719,52 @@ Code Processed:
 # File Author: Leen Remmelzwaal
 # Date: 2 August 2012
 # ===================================================================================
+
 # =======================================
 # Image Settings
 # =======================================
+
 setBorder(0)
 initPicture(-8.5, 8.5, -8.5, 8.5)
 axes(1, 1, "labels", 1)
+
 # =======================================
 # Acis of Symmetry
 # =======================================
+
 stroke = "gray"
 strokewidth = 2
 strokedasharray = [5, 5]
+
 plot(["t","t"], -10, 10)
+
 # =======================================
 # Original Graph
 # =======================================
+
 stroke = "blue"
 strokewidth = 2
 strokedasharray = [1,0]
 plot(["t","-1*t**2  + 4"], -10, 10)
+
 # =======================================
 # Inverse Graph
 # =======================================
+
 stroke = "darkgreen"
 strokewidth = 2
 plot(["-1*t**2  + 4","t"], -10, 10)
+
 # =======================================
 # Inverse Graph
 # =======================================
+
 text([-8,8], "blue = f(x)", right)
 text([-8,7], "green = inverse function", right)
 text([7,8], "line of reflection (y = x)", left)
+
 # =======================================
+
 
 
 -->
@@ -3457,18 +3811,24 @@ Code Processed:
 # File Author: Leen Remmelzwaal
 # Date: 23 July 2012
 # ===================================================================================
+
 # =======================================
 # Image Settings
 # =======================================
+
 setBorder(0)
 initPicture(-8.5, 8.5, -8.5, 8.5)
 axes(1, 1, "labels", 1)
+
 # =======================================
 # Line Drawing (question)
 # =======================================
+
 stroke = "blue"
 strokewidth = 2
+
 plot(["2**t-3","t"], -10, 10)
+
 # =======================================
 
 
@@ -3516,18 +3876,24 @@ Code Processed:
 # File Author: Leen Remmelzwaal
 # Date: 23 July 2012
 # ===================================================================================
+
 # =======================================
 # Image Settings
 # =======================================
+
 setBorder(0)
 initPicture(-8.5, 8.5, -8.5, 8.5)
 axes(1, 1, "labels", 1)
+
 # =======================================
 # Line Drawing (question)
 # =======================================
+
 stroke = "blue"
 strokewidth = 2
+
 plot(["2**t-3","t"], -10, 10)
+
 # =======================================
 
 
@@ -3615,49 +3981,65 @@ Code Processed:
 # File Author: Leen Remmelzwaal
 # Date: 7th May 2012
 # ===================================================================================
+
 # =======================================
 # Variables
 # =======================================
+
 float_x_int = 0.0
 float_y_int = 0.0
+
 float_x_A = 60
 float_y_A = 0.532692070451
+
 float_x_B = -60
 float_y_B = -1.19935873712
+
 int_ymin = -2.5
 int_ymax = 1.5
+
 # =======================================
 # Image Settings
 # =======================================
+
 width="600"
 height="300"
 initPicture(-200,200, int_ymin + 0.4, int_ymax + 0.4)	# xmin,xmax,ymin,ymax
+
 axes(45, 1, "labels", 22.5, 0.25)	# (dx, dy, "labels", grid_size_x, grid_size_y)
+
 # =======================================
 # Line Drawing
 # =======================================
+
 stroke = "red"
 strokewidth = "2"
 marker = "none" # "dot", "arrow", "arrowdot", "none"
-plot("1 * math.sin((math.pi)*t/180) -0.33",-200,200)	#(["f(t)", "g(t)"],tmin,tmax)	
+plot("1 * sin(pi*t/180) -0.33",-200,200)	#(["f(t)", "g(t)"],tmin,tmax)	
+
 # =======================================
 # Dot
 # =======================================
+
 stroke = "black"
 strokewidth = "4"
 dot([float_x_A,float_y_A], "open")
 stroke = "yellow"
 strokewidth = "1"
 dot([float_x_A,float_y_A], "closed", "Point A", aboveright)
+
 # =======================================
 # Dot
 # =======================================
+
 stroke = "black"
 strokewidth = "4"
 dot([float_x_B,float_y_B], "open")
 stroke = "yellow"
 strokewidth = "1"
 dot([float_x_B,float_y_B], "closed", "Point B",  aboveleft)
+
+
 
 
 -->
@@ -3744,49 +4126,65 @@ Code Processed:
 # File Author: Leen Remmelzwaal
 # Date: 7th May 2012
 # ===================================================================================
+
 # =======================================
 # Variables
 # =======================================
+
 float_x_int = 0.0
 float_y_int = 0.0
+
 float_x_A = 60
 float_y_A = 0.532692070451
+
 float_x_B = -60
 float_y_B = -1.19935873712
+
 int_ymin = -2.5
 int_ymax = 1.5
+
 # =======================================
 # Image Settings
 # =======================================
+
 width="600"
 height="300"
 initPicture(-200,200, int_ymin + 0.4, int_ymax + 0.4)	# xmin,xmax,ymin,ymax
+
 axes(45, 1, "labels", 22.5, 0.25)	# (dx, dy, "labels", grid_size_x, grid_size_y)
+
 # =======================================
 # Line Drawing
 # =======================================
+
 stroke = "red"
 strokewidth = "2"
 marker = "none" # "dot", "arrow", "arrowdot", "none"
-plot("1 * math.sin((math.pi)*t/180) -0.33",-200,200)	#(["f(t)", "g(t)"],tmin,tmax)	
+plot("1 * sin(pi*t/180) -0.33",-200,200)	#(["f(t)", "g(t)"],tmin,tmax)	
+
 # =======================================
 # Dot
 # =======================================
+
 stroke = "black"
 strokewidth = "4"
 dot([float_x_A,float_y_A], "open")
 stroke = "yellow"
 strokewidth = "1"
 dot([float_x_A,float_y_A], "closed", "Point A", aboveright)
+
 # =======================================
 # Dot
 # =======================================
+
 stroke = "black"
 strokewidth = "4"
 dot([float_x_B,float_y_B], "open")
 stroke = "yellow"
 strokewidth = "1"
 dot([float_x_B,float_y_B], "closed", "Point B",  aboveleft)
+
+
 
 
 -->
@@ -3866,38 +4264,52 @@ Code Processed:
 # Editors Log: 
 # 
 # ===================================================================================
+
 # This file creates a picture of "play money" to be used in a calculus template (OptimizationMedium)
 # =======================================
 # Variables
 # =======================================
+
+
+
 initPicture(-6,6)
+
+
+
 # create some labels around the shape
 marker = 'arrow'
 line([0,-2.1], [4,-2.1])
 line([0,-2.1], [-4,-2.1])
 text([0, -2.1],"width = 9 cm", below)
+
 line([-4.3, 0],[-4.3, 1.8])
 line([-4.3, 0],[-4.3, -1.8])
 text([-4.3, 0], "height = 5 x", left)
-#create the main part of the shape, a large recmath.tangle
+
+#create the main part of the shape, a large rectangle
 marker = "none"
 fill = 'burlywood'
 rect([-4,-1.8],[4,1.8])
-#create the circle  and small recmath.tanglges in the centre of the money
+
+#create the circle  and small rectanglges in the centre of the money
 fill = 'white'
 rect([-3.7,0.5],[-2.5,1.6])
 rect([2.5,-1.6],[3.7,-0.5])
 circle([0,0], 1.8)
+
 #label some more stuff
 marker = 'arrow'
 line([0,0], [0,1.8])
 text([0.2,0.9],"r")
 text([-3.1, 0.7], "x")
 text([-2.65, 1.1], "x")
+
 #label the picture at the top!
 fontfamily = 'serif'
 fontstyle = "normal"
 text([-2.2,2.3], "Langalibalele's fake money")
+
+
 
 
 -->
@@ -3977,38 +4389,52 @@ Code Processed:
 # Editors Log: 
 # 
 # ===================================================================================
+
 # This file creates a picture of "play money" to be used in a calculus template (OptimizationMedium)
 # =======================================
 # Variables
 # =======================================
+
+
+
 initPicture(-6,6)
+
+
+
 # create some labels around the shape
 marker = 'arrow'
 line([0,-2.1], [4,-2.1])
 line([0,-2.1], [-4,-2.1])
 text([0, -2.1],"width = 9 cm", below)
+
 line([-4.3, 0],[-4.3, 1.8])
 line([-4.3, 0],[-4.3, -1.8])
 text([-4.3, 0], "height = 5 x", left)
-#create the main part of the shape, a large recmath.tangle
+
+#create the main part of the shape, a large rectangle
 marker = "none"
 fill = 'burlywood'
 rect([-4,-1.8],[4,1.8])
-#create the circle  and small recmath.tanglges in the centre of the money
+
+#create the circle  and small rectanglges in the centre of the money
 fill = 'white'
 rect([-3.7,0.5],[-2.5,1.6])
 rect([2.5,-1.6],[3.7,-0.5])
 circle([0,0], 1.8)
+
 #label some more stuff
 marker = 'arrow'
 line([0,0], [0,1.8])
 text([0.2,0.9],"r")
 text([-3.1, 0.7], "x")
 text([-2.65, 1.1], "x")
+
 #label the picture at the top!
 fontfamily = 'serif'
 fontstyle = "normal"
 text([-2.2,2.3], "Langalibalele's fake money")
+
+
 
 
 -->
@@ -4090,46 +4516,59 @@ Code Processed:
 # File Author: Leen Remmelzwaal
 # Date: 4th June 2012	
 # ===================================================================================
+
 # =======================================
 # Variables
 # =======================================
+
 float_x_A = -1
 float_y_A = 1.9375
+
 float_x_B = 1
 float_y_B = 1.75
+
 # =======================================
 # Image Settings
 # =======================================
+
 width="400"
 height="400"
 initPicture(-8, 8, -8, 8)	# xmin,xmax,ymin,ymax
+
 setBorder(0)
 axes(1, 1, "labels", 1)	# (dx, dy, "labels", grid size)
+
 # =======================================
 # Line Drawing
 # =======================================
+
 stroke = "red"
 strokewidth = "2"
 marker = "arrow" # "dot", "arrow", "arrowdot", "none"
 plot("-0.25 * 2 ** (t + -1) + 2",-10,10)	#(["f(t)", "g(t)"],tmin,tmax)	
+
 # =======================================
 # Dot
 # =======================================
+
 stroke = "black"
 strokewidth = "4"
 dot([float_x_B,float_y_B], "open")
 stroke = "yellow"
 strokewidth = "1"
 dot([float_x_B,float_y_B], "closed", "Point B", aboveright)
+
 # =======================================
 # Dot
 # =======================================
+
 stroke = "black"
 strokewidth = "4"
 dot([float_x_A,float_y_A], "open")
 stroke = "yellow"
 strokewidth = "1"
 dot([float_x_A,float_y_A], "closed", "Point A", aboveright)
+
 # =======================================
 
 
@@ -4212,46 +4651,59 @@ Code Processed:
 # File Author: Leen Remmelzwaal
 # Date: 4th June 2012	
 # ===================================================================================
+
 # =======================================
 # Variables
 # =======================================
+
 float_x_A = -1
 float_y_A = 1.9375
+
 float_x_B = 1
 float_y_B = 1.75
+
 # =======================================
 # Image Settings
 # =======================================
+
 width="400"
 height="400"
 initPicture(-8, 8, -8, 8)	# xmin,xmax,ymin,ymax
+
 setBorder(0)
 axes(1, 1, "labels", 1)	# (dx, dy, "labels", grid size)
+
 # =======================================
 # Line Drawing
 # =======================================
+
 stroke = "red"
 strokewidth = "2"
 marker = "arrow" # "dot", "arrow", "arrowdot", "none"
 plot("-0.25 * 2 ** (t + -1) + 2",-10,10)	#(["f(t)", "g(t)"],tmin,tmax)	
+
 # =======================================
 # Dot
 # =======================================
+
 stroke = "black"
 strokewidth = "4"
 dot([float_x_B,float_y_B], "open")
 stroke = "yellow"
 strokewidth = "1"
 dot([float_x_B,float_y_B], "closed", "Point B", aboveright)
+
 # =======================================
 # Dot
 # =======================================
+
 stroke = "black"
 strokewidth = "4"
 dot([float_x_A,float_y_A], "open")
 stroke = "yellow"
 strokewidth = "1"
 dot([float_x_A,float_y_A], "closed", "Point A", aboveright)
+
 # =======================================
 
 
@@ -4260,7 +4712,7 @@ dot([float_x_A,float_y_A], "closed", "Point A", aboveright)
 
 <!-- 
 
-ASCII -> SVG conversion ERROR: invalid syntax (<string>, line 22)
+ASCII -> SVG conversion ERROR: invalid syntax (<string>, line 29)
 
 Original Code:
 
@@ -4286,8 +4738,8 @@ initPicture(-4,w+4,-1,h+1)
 // energy levels
 line([0,0],[w,0])      // ground state
 line([0,h],[w,h]) // excited state
-text([0,0],"E",left)
-text([0,h],"E",left)
+text([0,0],"E₁",left)
+text([0,h],"E₂",left)
 
 // electrons in ground state
 fill = "black" 
@@ -4376,21 +4828,28 @@ Code Processed:
 setBorder(0)
 #initPicture(-10,10,-10,10)
 #initPicture(-15,15,-15,15)
+
+
 # number electrons max 5
 n=1 # number of electrons in ground state
 m=0 # number of electrons in excited state
+
 # absorption and emission photons
 a =0 # absorption
 e =1 # emission
+
 # energy levels
 h = 5
 w = 8
+
 initPicture(-4,w+4,-1,h+1)
+
 # energy levels
 line([0,0],[w,0])      # ground state
 line([0,h],[w,h]) # excited state
-text([0,0],"E",left)
-text([0,h],"E",left)
+text([0,0],"E₁",left)
+text([0,h],"E₂",left)
+
 # electrons in ground state
 fill = "black" 
 # ground state
@@ -4402,6 +4861,7 @@ for (var x = 1; x < n+1; x += 1 ):
   if (x==5)  circle([w/2+1,0],0.2)
   if (x==3)  circle([w/2+2,0],0.2)
   if (x==7)  circle([w/2+3,0],0.2)
+
 #excited state
 for (var x = 1; x < m+1; x += 1 ):
   if (x==6)  circle([w/2-3,h],0.2)
@@ -4411,41 +4871,55 @@ for (var x = 1; x < m+1; x += 1 ):
   if (x==5)  circle([w/2+1,h],0.2)
   if (x==3)  circle([w/2+2,h],0.2)
   if (x==7)  circle([w/2+3,h],0.2)
+
 fill = "none" 
+
 # photons
 p = 6
+
 # absorption photon 1
 if (a>0):
   for (var x = 0; x < p; x += 2 ):
       arc([-4+x/2,h-3],[-3.5+x/2,h-3],0.25)
       arc([-3.5+x/2+0.5,h-3],[-4+x/2+0.5,h-3],0.25)
+
   marker = "arrow" 
   line([-3.5+5/2,h-3],[-3.5+5/2+1,h-3])
   marker = "none"
+
+
 # absorption photon 2
 if (a>1):
   for (var x = 0; x < p; x += 2 ):
       arc([-4+x/2,h-2],[-3.5+x/2,h-2],0.25)
       arc([-3.5+x/2+0.5,h-2],[-4+x/2+0.5,h-2],0.25)
+
   marker = "arrow" 
   line([-3.5+5/2,h-2],[-3.5+5/2+1,h-2])
   marker = "none"
+
+
 # emission photon 1
 if (e>0):
   for (var x = 0; x < p; x += 2 ):
       arc([w+x/2,h-3],[w+0.5+x/2,h-3],0.25)
       arc([w+0.5+x/2+0.5,h-3],[w+x/2+0.5,h-3],0.25)
+
   marker = "arrow" 
   line([w+0.5+5/2,h-3],[w+0.5+5/2+1,h-3])
   marker = "none"
+
+
 # emission photon 2
 if (e>1):
   for (var x = 0; x < p; x += 2 ):
       arc([w+x/2,h-2],[w+0.5+x/2,h-2],0.25)
       arc([w+0.5+x/2+0.5,h-2],[w+x/2+0.5,h-2],0.25)
+
   marker = "arrow" 
   line([w+0.5+5/2,h-2],[w+0.5+5/2+1,h-2])
   marker = "none"
+
 
 
 -->
@@ -4453,7 +4927,7 @@ if (e>1):
 
 <!-- 
 
-ASCII -> SVG conversion ERROR: invalid syntax (<string>, line 22)
+ASCII -> SVG conversion ERROR: invalid syntax (<string>, line 29)
 
 Original Code:
 
@@ -4479,8 +4953,8 @@ initPicture(-4,w+4,-1,h+1)
 // energy levels
 line([0,0],[w,0])      // ground state
 line([0,h],[w,h]) // excited state
-text([0,0],"E",left)
-text([0,h],"E",left)
+text([0,0],"E₁",left)
+text([0,h],"E₂",left)
 
 // electrons in ground state
 fill = "black" 
@@ -4569,21 +5043,28 @@ Code Processed:
 setBorder(0)
 #initPicture(-10,10,-10,10)
 #initPicture(-15,15,-15,15)
+
+
 # number electrons max 5
 n=1 # number of electrons in ground state
 m=0 # number of electrons in excited state
+
 # absorption and emission photons
 a =0 # absorption
 e =1 # emission
+
 # energy levels
 h = 5
 w = 8
+
 initPicture(-4,w+4,-1,h+1)
+
 # energy levels
 line([0,0],[w,0])      # ground state
 line([0,h],[w,h]) # excited state
-text([0,0],"E",left)
-text([0,h],"E",left)
+text([0,0],"E₁",left)
+text([0,h],"E₂",left)
+
 # electrons in ground state
 fill = "black" 
 # ground state
@@ -4595,6 +5076,7 @@ for (var x = 1; x < n+1; x += 1 ):
   if (x==5)  circle([w/2+1,0],0.2)
   if (x==3)  circle([w/2+2,0],0.2)
   if (x==7)  circle([w/2+3,0],0.2)
+
 #excited state
 for (var x = 1; x < m+1; x += 1 ):
   if (x==6)  circle([w/2-3,h],0.2)
@@ -4604,41 +5086,55 @@ for (var x = 1; x < m+1; x += 1 ):
   if (x==5)  circle([w/2+1,h],0.2)
   if (x==3)  circle([w/2+2,h],0.2)
   if (x==7)  circle([w/2+3,h],0.2)
+
 fill = "none" 
+
 # photons
 p = 6
+
 # absorption photon 1
 if (a>0):
   for (var x = 0; x < p; x += 2 ):
       arc([-4+x/2,h-3],[-3.5+x/2,h-3],0.25)
       arc([-3.5+x/2+0.5,h-3],[-4+x/2+0.5,h-3],0.25)
+
   marker = "arrow" 
   line([-3.5+5/2,h-3],[-3.5+5/2+1,h-3])
   marker = "none"
+
+
 # absorption photon 2
 if (a>1):
   for (var x = 0; x < p; x += 2 ):
       arc([-4+x/2,h-2],[-3.5+x/2,h-2],0.25)
       arc([-3.5+x/2+0.5,h-2],[-4+x/2+0.5,h-2],0.25)
+
   marker = "arrow" 
   line([-3.5+5/2,h-2],[-3.5+5/2+1,h-2])
   marker = "none"
+
+
 # emission photon 1
 if (e>0):
   for (var x = 0; x < p; x += 2 ):
       arc([w+x/2,h-3],[w+0.5+x/2,h-3],0.25)
       arc([w+0.5+x/2+0.5,h-3],[w+x/2+0.5,h-3],0.25)
+
   marker = "arrow" 
   line([w+0.5+5/2,h-3],[w+0.5+5/2+1,h-3])
   marker = "none"
+
+
 # emission photon 2
 if (e>1):
   for (var x = 0; x < p; x += 2 ):
       arc([w+x/2,h-2],[w+0.5+x/2,h-2],0.25)
       arc([w+0.5+x/2+0.5,h-2],[w+x/2+0.5,h-2],0.25)
+
   marker = "arrow" 
   line([w+0.5+5/2,h-2],[w+0.5+5/2+1,h-2])
   marker = "none"
+
 
 
 -->
