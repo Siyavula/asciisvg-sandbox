@@ -54,7 +54,7 @@ for dirpath, dirnames, filenames in os.walk(path):
 			# Increment file name counter
 			print i
 			i = i + 1			
-			if i >= 50: break
+			#if i >= 50: break
 
 # ============================================================
 
