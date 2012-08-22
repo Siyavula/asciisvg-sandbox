@@ -38,7 +38,8 @@ for dirpath, dirnames, filenames in os.walk(path):
 			pythonsvg.create_png("png_images/" + filename.split(".")[0], int(float(svg_object.attrib['width'])), int(float(svg_object.attrib['height'])), xml) 
 
 			# Append contents to the HTML page
-			contents += "<tr><td bgcolor='#DDDDDD'>"
+			if (dirpath.split("/")[-1] == "Problem"): contents += "<tr><td bgcolor='#cd7879'>" 
+			else: contents += "<tr><td bgcolor='#DDDDDD'>"
 			contents += "Folder: /" + dirpath.split("/")[-1] + "/<br><br>"
 			contents += "File: " + filename.split(".")[0] + ".png<br><br>"
 			contents += "<textarea rows=20 cols=40>" + xml + "</textarea>"

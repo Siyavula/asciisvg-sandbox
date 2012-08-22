@@ -140,7 +140,7 @@ class mySvgCanvas:
 		self.loc_var["frange"] = self.frange
 
 		# Math Functions
-		for key in ['sin','cos','tan','asin','acos','atan','sinh','cosh','tanh','asinh','acosh','atanh','log','pi','e']:
+		for key in [	'sin','cos','tan','asin','acos','atan','sinh','cosh', 									'tanh','asinh','acosh','atanh','log','pi','e','sqrt']:
 			self.loc_var[key] = math.__getattribute__(key)
 
 # ===================================================================================	
