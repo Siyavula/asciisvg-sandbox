@@ -103,7 +103,7 @@ dot([0,b], "closed", "Point B", right)
 // =======================================
 
 text([c-c/4*cos(0.5*theta*pi/180),c/4*sin(0.5*theta*pi/180)],"30")
-text([c-a/2cos(theta*pi/180),a/2sin(theta*pi/180)],"x",aboveright)
+text([c-a/2*cos(theta*pi/180),a/2*sin(theta*pi/180)],"x",aboveright)
 text([0,2*b/3],"10",right)
 //text([c/2,0],"17,32",above)
 

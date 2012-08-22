@@ -62,7 +62,7 @@ arc([c - arc_radius*cos(theta*pi/180), arc_radius*sin(theta*pi/180)], [c-arc_rad
 // =======================================
 
 text([c-c/4*cos(0.5*theta*pi/180),c/4*sin(0.5*theta*pi/180)],"x")
-text([c-a/2cos(theta*pi/180),a/2sin(theta*pi/180)],"9",aboveright)
+text([c-a/2*cos(theta*pi/180),a/2*sin(theta*pi/180)],"9",aboveright)
 text([0,b/2],"8,16",left)
 // text([c/2,0],"3,8",below)
 
