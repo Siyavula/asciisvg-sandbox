@@ -67,8 +67,8 @@ class mySvgCanvas:
 	loc_var["g_func"] = None
 
 	# Formula Variables
-	loc_var["cpi"] 		= u"\u03C0"
-	loc_var["ctheta"] = u"\u03B8"
+	loc_var["cpi"] 		= "&#960;"
+	loc_var["ctheta"] = "&#952;"
 
 	# SVG Labels
 	loc_var["above"] = "above"
@@ -466,7 +466,7 @@ class mySvgCanvas:
 			textanchor = "start"
 		
 		# Text Rotation
-		node = etree.fromstring("<text>" + str(st) + "</text>")
+		node = etree.fromstring("<text>" + st + "</text>")
 		self.xml_parent.append(node)
 		node.attrib['x'] = str(round(p[0] * self.loc_var["xunitlength"] + self.loc_var["origin"][0] + dx,2))		
 		node.attrib['y'] = str(round(float(self.loc_var["height"]) - p[1] * self.loc_var["yunitlength"] - self.loc_var["origin"][1]+dy,2))
