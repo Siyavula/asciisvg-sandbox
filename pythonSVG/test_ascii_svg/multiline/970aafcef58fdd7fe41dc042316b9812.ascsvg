@@ -1,4 +1,4 @@
-//brittle
+// brittle
 
 setBorder(0)
 
@@ -23,9 +23,10 @@ endy = m*0.2*s
 // plastic region
 p = []
 maxi = 0.05*s+0.5
-with (Math) 
- for (var d = 0; d < maxi + 0.01 ; d += 0.01)
-   p[p.length] = [endx+d,endy+sin(d*a)]
+for (var d = 0; d < maxi + 0.01 ; d += 0.01)
+{
+	p.append([endx+d,endy+sin(d*a)])
+}
 path(p)
 endpx = endx+(d-0.01)
 endpy = endy+sin((d-0.01)*a)
@@ -48,3 +49,4 @@ fontsize = "12"
 text([(s-2)/2,-0.5],"extension") // x-axis
 text([-1,(s-2)/2],"force") // y-axis
 text([endpx+0.2,endpy],"fracture", belowright) // fracture
+

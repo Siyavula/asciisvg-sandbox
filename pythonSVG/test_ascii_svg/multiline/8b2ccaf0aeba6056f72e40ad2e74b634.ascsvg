@@ -9,7 +9,7 @@
 // Image Settings
 // =======================================
 
-setBorder(40)
+setBorder(40, "white")
 initPicture(0,188.245551,0,7)
 axes(50,20, "labels", 50,1)
 
