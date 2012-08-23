@@ -96,6 +96,8 @@ class mySvgCanvas:
 	> generate_string
 	> reset_variables
 	> frange
+	> jrange
+	> removeComments
 	> initPicture
 	> setBorder
 	============================== 
@@ -137,38 +139,83 @@ class mySvgCanvas:
 		self.loc_var["slopefield"] = self.slopefield
 
 		# Special Functions
-		self.loc_var["frange"] = self.frange
+		self.loc_var["frange"] = self.frange										# Decimal-compatible "range"
+		self.loc_var["jrange"] = self.jrange										# Javascript in Python
 
 		# Math Functions
-		for key in [	'sin','cos','tan','asin','acos','atan','sinh','cosh', 									'tanh','asinh','acosh','atanh','log','pi','e','sqrt']:
+		for key in [	'sin','cos','tan','asin','acos','atan','sinh','cosh', 									'tanh','asinh','acosh','atanh','log','pi','e','sqrt', 'floor', 'ceil']:
 			self.loc_var[key] = math.__getattribute__(key)
 
 # ===================================================================================	
 
-	def convert_ascii_to_python(self,ascii_str):
-		
-		a = ascii_str							# Storing string as a new variable
-		nl_char = str(chr(10))		# Define: New Line character
-		tab_char = str(chr(9))		# Define: TAB character
+	def preprocess_block(self,ascii_str):
 
-		# Clean spacing before opening/closing braces
-		while(a != a.replace(" {", "{")): a = a.replace(" {", "{")	
+		a = ascii_str																						# Storing string as a new variable
+		# Remove Comments
+		a = re.sub(re.compile("/\*.*?\*/",re.DOTALL ),"",a) 		# Javascript: /* COMMENT */
+		a = re.sub(re.compile("//.*?\n"),"\n",a) 								# Javascript: // COMMENT \n
+		a = re.sub(re.compile("#.*?\n"),"\n",a) 								# Python: # COMMENT \n
+		# Clean spacing before opening/closing braces		
+		nl_char = str(chr(10))																	# Define: New Line character
+		tab_char = str(chr(9))																	# Define: TAB character
+		# Remove spaces before bracket
+		while(a != a.replace(" {", "{")): a = a.replace(" {", "{")
 		while(a != a.replace(tab_char+"{", "{")): a = a.replace(tab_char+"{", "{")
+		# Clean blank lines to ONLY \n
+		while(a != a.replace(" \n", "\n")): a = a.replace(" \n", "\n")
+		while(a != a.replace(tab_char+"\n", "\n")): a = a.replace(tab_char+"\n", "\n")
+		while(a != a.replace(nl_char+"\n", "\n")): a = a.replace(nl_char+"\n", "\n")
+		# Remove blank lines before bracket
 		while(a != a.replace(nl_char+"{", "{")): a = a.replace(nl_char+"{", "{")
-		while(a != a.replace(" }", "}")): a = a.replace(" }", "}")
+		# Remove spaces between STATEMENT() and bracket
+		while(a != a.replace(" {", "{")): a = a.replace(" {", "{")
+		while(a != a.replace(tab_char+"{", "{")): a = a.replace(tab_char+"{", "{")
+		# Remove spaces between : and bracket
+		a = a.replace('{', ':') 																	# Opening Braces
+		a = a.replace('}', '') 																		# Closing Braces
 
-		# Formatting Line
+		return a
+
+# ===================================================================================	
+
+	def preprocess_line(self,ascii_str):
+		
+		# Pre-processing of code (no EXEC command running yet)
+		a = ascii_str																						# Storing string as a new variable
 		a = a.replace("^", "**")																# Exponent
 		a = a.replace("||", " or ")												  		# OR
 		a = a.replace("&&", " and ")														# AND
 		a = a.replace("else if", "elif")												# IF / ELSE IF / ELSE statements
 		a = a.replace("null", "None")														# "None" elements
-		a = a.replace("//", "#")																# Single-line Comments
-		a = a.replace("/*", "'''")															# Multi-line Comments
-		a = a.replace("*/", "'''")															# Multi-line Comments
 		a = a.replace('"green"', '"darkgreen"') 								# Colours
-		a = a.replace('{', ':') 																# Opening Braces
-		a = a.replace('}', '') 																	# Closing Braces
+		a = a.replace("'green'", "'darkgreen'") 								# Colours
+
+		# Replace FOR LOOP
+		if (len(re.findall("(^|[^a-zA-Z])for[^a-zA-Z]", a)) == 1):
+			original_a = a
+			level = 0
+			start_i = 0
+			end_i = len(a)
+
+			# Isolate contents of for-loop bracket
+			start_i = a.index("for") + len("for")
+			for i in range(start_i, end_i):
+				if (a[i] == "("): level += 1			# Determine level/depth
+				if (a[i] == ")"): level -= 1			# Determine level/depth
+				if (a[i] == "(" and level == 1): start_i = i + 1			# Capture start index
+				if (a[i] == ")" and level == 0): end_i = i; break;		# Capture end index
+			a_list = a[start_i:end_i].split(";")	# Capture insides
+			
+			# If it is a legitimate FOR LOOP, proceed
+			if len(a_list) == 3:
+				start_cond 	= (a_list[0].replace("var ", "")).strip()		# Clean start_cond term
+				end_cond 		= a_list[1].strip()													# Clean end_cond term
+				leap_cond 	= a_list[2].strip()													# Clean leap_cond term
+				i_character = re.findall(r'\w', a_list[1])[0]		# Find most common character (usually i)
+
+				# Replace java -> python FOR LOOP
+				a = a.replace(	a[start_i-1: end_i+1], " "+str(i_character) + " in " + \
+												"jrange('" + str(start_cond) +"','"+str(end_cond)+"','"+str(leap_cond)+"')")
 
 		return a
 
@@ -194,46 +241,47 @@ class mySvgCanvas:
 
 # ===================================================================================	
 
-	def process_ascii_multi_line(self, ascii_str):
-
-		a = ascii_str													# Storing string as a new variable
-		a = self.convert_ascii_to_python(a)		# Convert Ascii to Python (except FOR loops)
-		a = self.mathjs(a)										# Math Formulas
+	def process_ascii_multi_line(self, ascii_string):
+		
+		b = self.preprocess_block(ascii_string)			# Convert Ascii to Python (except FOR loops)
+	
+		final_string = ""
+		ascii_list = b.split('\n')		
+		for ascii_line in ascii_list:
+			if len(ascii_line) > 0:
+				a = self.preprocess_line(ascii_line)		# Convert Ascii to Python (except FOR loops)
+				a = self.mathjs(a)											# Math Formulas
+				final_string += a + '\n'
 
 		# Try Except
 		try:
-			exec(a, None, self.loc_var)
-			self.complete_string += "\nASCII -> SVG conversion complete. \n\nOriginal Code:\n\n" + str(ascii_str) + "\n\nCode Processed:\n\n" + str(a) 
+			exec(final_string, None, self.loc_var)
+			self.complete_string += "\nASCII -> SVG conversion complete. \n\nOriginal Code:\n\n" + str(ascii_string) + "\n\nCode Processed:\n\n" + str(final_string) 
 		except Exception, err:				
-			self.error_string += "\nASCII -> SVG conversion ERROR: " + str(err) + "\n\nOriginal Code:\n\n" + str(ascii_str) + "\n\nCode Processed:\n\n" + str(a) 
+			self.error_string += "\nASCII -> SVG conversion ERROR: " + str(err) + "\n\nOriginal Code:\n\n" + str(ascii_string) + "\n\nCode Processed:\n\n" + str(final_string) 
 
 # ===================================================================================	
 
 	def process_ascii_single_line(self, ascii_string):
-		
-		ascii_list = ascii_string.split('\n')
-		
+
+		b = self.preprocess_block(ascii_string)			# Convert Ascii to Python (except FOR loops)
+
+		ascii_list = b.split('\n')		
 		for ascii_line in ascii_list:
 			if len(ascii_line) > 0:
-
-				# Formatting Line
-				formatted_ascii_line = ascii_line.replace("null", "None")											# None elements
-				formatted_ascii_line = self.mathjs(formatted_ascii_line)											# Math Formulas		
-				formatted_ascii_line = formatted_ascii_line.replace("//", "#")								# Comments		
-				formatted_ascii_line = formatted_ascii_line.replace('"green"', '"darkgreen"') # Colours
-				
-				# Try Except	
+				a = self.preprocess_line(ascii_line)		# Convert Ascii to Python (except FOR loops)
+				a = self.mathjs(a)											# Math Formulas
 				try:
-					exec(formatted_ascii_line, None, self.loc_var)
-					self.complete_string += "\nComplete: " + str(formatted_ascii_line)
+					exec(a, None, self.loc_var)
+					self.complete_string += "\nComplete: " + str(a)
 				except Exception, err:				
-					self.error_string += "\nERROR: " + str(formatted_ascii_line) + "\nMessage: " + str(err)
+					self.error_string += "\nERROR: " + str(a) + "\nMessage: " + str(err)
 					break
 
 		return ascii_string
 
 # ===================================================================================
-	
+
 	def generate_string(self):
 
 		self.str_parent = etree.tostring(self.xml_parent)	
@@ -309,8 +357,30 @@ class mySvgCanvas:
 			return result
 		else:
 			return [0]
-		
+
 # ========================================================================================
+
+	def jrange(self, start_cond=None, end_cond=None, leap_cond=None):
+
+		# ONLY run during EXEC (not pre-processing)
+
+		# Variables
+		i_character = re.findall(r'\w', start_cond)[0]		# Find most common character (usually i)
+		self.loc_var['jrange_counter'] = 0
+		self.loc_var['jrange_result'] = []
+
+		# Formatting
+		leap_cond = leap_cond.replace("++", "+=1")		# Replace ++ notation
+		leap_cond = leap_cond.replace("--", "-=1")		# Replace -- notation
+
+		# Loop
+		exec(start_cond, None, self.loc_var)
+		exec("while(" + end_cond + " and jrange_counter < 1000): jrange_result.append(round("+i_character+",3)); jrange_counter+=1; "+leap_cond, None, self.loc_var)
+
+		return self.loc_var['jrange_result']
+
+# ========================================================================================
+
 
 	def initPicture(self,a=None,b=None,c=None,d=None):
 
@@ -410,7 +480,7 @@ class mySvgCanvas:
 		w = [q[0]*self.loc_var["xunitlength"]+self.loc_var["origin"][0],float(self.loc_var["height"])-q[1]*self.loc_var["yunitlength"]-self.loc_var["origin"][1]]		# adjusted end point
 		u = [w[0]-v[0],w[1]-v[1]] # unit vector * length
 		d = math.sqrt(u[0]*u[0]+u[1]*u[1]) #length of unit vector
-		if (d > 0.00000001):
+		if (d > 0.000001):
 			u = [u[0]/d, u[1]/d]	# unit vector
 			up = [-u[1],u[0]] 		# inverse unit vector
 			node = etree.fromstring("<path></path>")
@@ -538,8 +608,6 @@ class mySvgCanvas:
 # ========================================================================================
 
 	def ellipse(self, center=[0,0], rx=1, ry=None):
-
-
 		node = etree.fromstring("<ellipse></ellipse>")
 		self.xml_parent.append(node)
 		node.attrib['cx'] = str(round(center[0] * self.loc_var["xunitlength"] + self.loc_var["origin"][0],2))
@@ -556,7 +624,6 @@ class mySvgCanvas:
 		self.ellipse(center,radius,radius)
 
 # ========================================================================================
-
 
 	def arc(self,start=[0,0],end=[1,1],radius=None):
 		node = etree.fromstring("<path></path>")
@@ -585,11 +652,11 @@ class mySvgCanvas:
 		sign_rad = ((end[1]-start[1]) >= 0 and -1 or 1)
 		len_m = math.sqrt((end[0]-start[0])*(end[0]-start[0]) + (end[1]-start[1])*(end[1]-start[1]))/2
 		radius = max(radius,len_m)
-		if ((end[0]-start[0]) != 0):
-			grad = (end[1]-start[1])/(end[0]-start[0])
-		else:
-			grad = (end[1]-start[1])/0.000000001
-		inv_grad = -1/grad
+
+		if ((end[0]-start[0]) == 0): grad = 100000; inv_grad = 0
+		elif ((end[1]-start[1]) == 0): grad = 0; inv_grad = 100000
+		else: grad = (end[1]-start[1])/(end[0]-start[0]); inv_grad = -1/grad
+
 		xm = start[0] + (end[0]-start[0])/2
 		ym = start[1] + (end[1]-start[1])/2
 		distance = sign_rad * math.sqrt(radius*radius - len_m*len_m)
@@ -810,14 +877,14 @@ class mySvgCanvas:
 			# Precautionary string formatting
 			func = func.replace("x", "t")
 			#Exec
-			exec ("def f_func(t): return (t)", self.loc_var)								# Note: Global Scope used here!
-			exec ("def g_func(t): return (" + func + ")", self.loc_var)		# Note: Global Scope used here!
+			exec ("def f_func(t): return (t)", self.loc_var, self.loc_var)							# Note: Global Scope used here!
+			exec ("def g_func(t): return (" + func + ")", self.loc_var, self.loc_var)		# Note: Global Scope used here!
 
 		# plot (["t", "sin(t)"])
 		elif (isinstance(func, list)):
 			#Exec
-			exec("def f_func(t): return (" + func[0] + ")", self.loc_var)	# Note: Global Scope used here!
-			exec("def g_func(t): return (" + func[1] + ")", self.loc_var)	# Note: Global Scope used here!
+			exec("def f_func(t): return (" + func[0] + ")", self.loc_var, self.loc_var)	# Note: Global Scope used here!
+			exec("def g_func(t): return (" + func[1] + ")", self.loc_var, self.loc_var)	# Note: Global Scope used here!
 
 		# Number of points
 		inc = (points == None and (x_max-x_min)/points or (x_max-x_min+0.0000001)/points)
@@ -829,13 +896,13 @@ class mySvgCanvas:
 
 			# f(x)
 			try:
-				exec("fout = min(max(self.loc_var['f_func'](" + str(i) + "), -10000), 10000)")
+				exec("fout = min(max(self.loc_var['f_func'](" + str(i) + "), -10000), 10000)")	# Note: Global Scope used here!)
 			except:
 				error_count += 1
 			
 			# g(x)
 			try:
-				exec("gout = min(max(self.loc_var['g_func'](" + str(i) + "), -10000), 10000)")
+				exec("gout = min(max(self.loc_var['g_func'](" + str(i) + "), -10000), 10000)")	# Note: Global Scope used here!)
 			except:
 				error_count += 1
 
@@ -916,7 +983,6 @@ class mySvgCanvas:
 	> create_png
 	============================== 
 	'''
-
 # ========================================================================================
 
 def create_png(filename, width, height, svg_string):
@@ -931,5 +997,4 @@ def create_png(filename, width, height, svg_string):
 	img.write_to_png(filename+".png")
 
 # ========================================================================================
-
 

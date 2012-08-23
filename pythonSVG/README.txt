@@ -21,17 +21,17 @@ Options:
 
 	> There exist 2 functions for executing ASCII -> SVG
 
-			1) process_ascii_single(ascii_string)
+			1) process_ascii_single_line(ascii_string)
 
 					> Pros: For executing & error handling one line at a time.
-					> Cons: This can not deal with multi-line statements.
+					> Cons: This can not deal with multi-line statements (IF, FOR, WHILE)
 
-			2) process_ascii_multi(ascii_string)
+			2) process_ascii_multi_line(ascii_string)
 
 					> Pros: Executes the entire code as a BLOCK.
 									Deals with multi-line function successfully. 
-					> Cons: Does not have line-by-line feedback. Only error reporting.
-									Currently requires input asciisvg to be writted in Python (not Javascript).
+					> Cons: Does not have "line-numbered" feedback. Only generic error reporting at point of crash.
+									ASCII can be written in either Javascript (with Python-style indents), or Python.
 
 ==========================================================
 SVG -> PNG PIPELINE
