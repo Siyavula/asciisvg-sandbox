@@ -44,7 +44,9 @@ for dirpath, dirnames, filenames in os.walk(path):
 			# Append contents to the HTML page
 			if ("ERROR" in xml): contents += "<tr bgcolor='#cd7879'><td>"; count_error += 1
 			else: contents += "<tr bgcolor='#86cd78'><td>";  count_success += 1
-			contents += "Folder: /" + dirpath.split("/")[-1] + "/<br><br>"
+			contents += "Folder: /" + dirpath.split("/")[-1] + "/<br>"
+			if ("ERROR" in xml): contents += "Error: #" + str(count_error) + "<br>"
+			else: contents += "Correct: #" + str(count_success) + "<br>"
 			contents += "File: " + filename.split(".")[0] + ".png<br><br>"
 			contents += "<textarea rows=20 cols=40>" + xml + "</textarea>"
 			contents += "</td><td>"
