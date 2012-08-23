@@ -391,10 +391,10 @@ class mySvgCanvas:
 	def initPicture(self,a=None,b=None,c=None,d=None):
 
 		# Set Variables
-		self.loc_var["xmin"] = a or self.loc_var["xmin"]
-		self.loc_var["xmax"] = b or self.loc_var["xmax"]
-		self.loc_var["ymin"] = c or self.loc_var["ymin"]
-		self.loc_var["ymax"] = d or self.loc_var["ymax"]
+		self.loc_var["xmin"] = (a == None and self.loc_var["xmin"] or a)
+		self.loc_var["xmax"] = (b == None and self.loc_var["xmax"] or b)
+		self.loc_var["ymin"] = (c == None and self.loc_var["ymin"] or c)
+		self.loc_var["ymax"] = (d == None and self.loc_var["ymax"] or d)
 
 		# Re-calculate variables
 		self.loc_var["xunitlength"] = float(float(self.loc_var["width"])-2*self.loc_var["border"])/(self.loc_var["xmax"]-self.loc_var["xmin"])
