@@ -28,24 +28,24 @@ fill = "black"
 // ground state
 for (var x = 1; x < n+1; x += 1 )
  {
-  if (x==6)  circle([w/2-3,0],0.2)
-  if (x==2)  circle([w/2-2,0],0.2)
-  if (x==4)  circle([w/2-1,0],0.2)
-  if (x==1)  circle([w/2  ,0],0.2)
-  if (x==5)  circle([w/2+1,0],0.2)
-  if (x==3)  circle([w/2+2,0],0.2)
-  if (x==7)  circle([w/2+3,0],0.2)
+  if (x==6){  circle([w/2-3,0],0.2)}
+  if (x==2){  circle([w/2-2,0],0.2)}
+  if (x==4){  circle([w/2-1,0],0.2)}
+  if (x==1){  circle([w/2  ,0],0.2)}
+  if (x==5){  circle([w/2+1,0],0.2)}
+  if (x==3){  circle([w/2+2,0],0.2)}
+  if (x==7){  circle([w/2+3,0],0.2)}
  }
 //excited state
 for (var x = 1; x < m+1; x += 1 )
  {
-  if (x==6)  circle([w/2-3,h],0.2)
-  if (x==2)  circle([w/2-2,h],0.2)
-  if (x==4)  circle([w/2-1,h],0.2)
-  if (x==1)  circle([w/2  ,h],0.2)
-  if (x==5)  circle([w/2+1,h],0.2)
-  if (x==3)  circle([w/2+2,h],0.2)
-  if (x==7)  circle([w/2+3,h],0.2)
+  if (x==6){  circle([w/2-3,h],0.2)}
+  if (x==2){  circle([w/2-2,h],0.2)}
+  if (x==4){  circle([w/2-1,h],0.2)}
+  if (x==1){  circle([w/2  ,h],0.2)}
+  if (x==5){  circle([w/2+1,h],0.2)}
+  if (x==3){  circle([w/2+2,h],0.2)}
+  if (x==7){  circle([w/2+3,h],0.2)}
  }
 fill = "none" 
 
@@ -56,10 +56,10 @@ p = 6
 if (a>0)
 {
   for (var x = 0; x < p; x += 2 )
-    {
-      arc([-4+x/2,h-3],[-3.5+x/2,h-3],0.25)
-      arc([-3.5+x/2+0.5,h-3],[-4+x/2+0.5,h-3],0.25)
-    }
+  {
+    arc([-4+x/2,h-3],[-3.5+x/2,h-3],0.25)
+    arc([-3.5+x/2+0.5,h-3],[-4+x/2+0.5,h-3],0.25)
+  }
   marker = "arrow" 
   line([-3.5+5/2,h-3],[-3.5+5/2+1,h-3])
   marker = "none"
@@ -69,10 +69,10 @@ if (a>0)
 if (a>1)
 {
   for (var x = 0; x < p; x += 2 )
-    {
-      arc([-4+x/2,h-2],[-3.5+x/2,h-2],0.25)
-      arc([-3.5+x/2+0.5,h-2],[-4+x/2+0.5,h-2],0.25)
-    }
+  {
+    arc([-4+x/2,h-2],[-3.5+x/2,h-2],0.25)
+    arc([-3.5+x/2+0.5,h-2],[-4+x/2+0.5,h-2],0.25)
+  }
   marker = "arrow" 
   line([-3.5+5/2,h-2],[-3.5+5/2+1,h-2])
   marker = "none"
@@ -82,10 +82,10 @@ if (a>1)
 if (e>0)
 {
   for (var x = 0; x < p; x += 2 )
-    {
-      arc([w+x/2,h-3],[w+0.5+x/2,h-3],0.25)
-      arc([w+0.5+x/2+0.5,h-3],[w+x/2+0.5,h-3],0.25)
-    }
+  {
+    arc([w+x/2,h-3],[w+0.5+x/2,h-3],0.25)
+    arc([w+0.5+x/2+0.5,h-3],[w+x/2+0.5,h-3],0.25)
+  }
   marker = "arrow" 
   line([w+0.5+5/2,h-3],[w+0.5+5/2+1,h-3])
   marker = "none"
@@ -95,10 +95,10 @@ if (e>0)
 if (e>1)
 {
   for (var x = 0; x < p; x += 2 )
-    {
-      arc([w+x/2,h-2],[w+0.5+x/2,h-2],0.25)
-      arc([w+0.5+x/2+0.5,h-2],[w+x/2+0.5,h-2],0.25)
-    }
+  {
+    arc([w+x/2,h-2],[w+0.5+x/2,h-2],0.25)
+    arc([w+0.5+x/2+0.5,h-2],[w+x/2+0.5,h-2],0.25)
+  }
   marker = "arrow" 
   line([w+0.5+5/2,h-2],[w+0.5+5/2+1,h-2])
   marker = "none"
