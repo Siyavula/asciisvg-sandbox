@@ -162,6 +162,8 @@ class mySvgCanvas:
 		# Remove spaces before bracket
 		while(a != a.replace(" {", "{")): a = a.replace(" {", "{")
 		while(a != a.replace(tab_char+"{", "{")): a = a.replace(tab_char+"{", "{")
+		while(a != a.replace(" }", "}")): a = a.replace(" }", "}")
+		while(a != a.replace(tab_char+" }", "}")): a = a.replace(tab_char+" }", "}")
 		# Clean blank lines to ONLY \n
 		while(a != a.replace(" \n", "\n")): a = a.replace(" \n", "\n")
 		while(a != a.replace(tab_char+"\n", "\n")): a = a.replace(tab_char+"\n", "\n")
