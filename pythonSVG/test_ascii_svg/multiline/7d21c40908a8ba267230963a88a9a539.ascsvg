@@ -19,50 +19,42 @@ line([0.7,-0.2],[1.2,-0.7])
 //makes the terminal bits
 if (x == 0)
 //monomer is ethene
-	{
+{
 	text([-1.4,0.9],"H")
 	text([1.4,0.9],"H")
 	text([-1.4,-0.9],"H")
 	text([1.4,-0.9],"H")
-	}
+}
+else if (x == 1)
+//monomer is chloroethene
+{
+	text([-1.4,0.9],"Cl")
+	text([1.4,0.9],"H")
+	text([-1.4,-0.9],"H")
+	text([1.4,-0.9],"H")
+}
+else if (x == 2)
+//monomer is tetrafluoroethene
+{
+	text([-1.4,0.9],"F")
+	text([1.4,0.9],"F")
+	text([-1.4,-0.9],"F")
+	text([1.4,-0.9],"F")
+}
+else if (x == 3)
+//monomer is polypropene
+{
+	text([-1.4,0.9],"CH₃")
+	text([1.4,0.9],"H")
+	text([-1.4,-0.9],"H")
+	text([1.4,-0.9],"H")
+}
 else
-	{if (x == 1)
-	//monomer is chloroethene
-		{
-		text([-1.4,0.9],"Cl")
-		text([1.4,0.9],"H")
-		text([-1.4,-0.9],"H")
-		text([1.4,-0.9],"H")
-		}
-		else
-		{
-			if (x == 2)
-			//monomer is tetrafluoroethene
-			{
-			text([-1.4,0.9],"F")
-			text([1.4,0.9],"F")
-			text([-1.4,-0.9],"F")
-			text([1.4,-0.9],"F")
-			}
-			else
-			{
-				if (x == 3)
-				//monomer is polypropene
-				{
-				text([-1.4,0.9],"CH₃")
-				text([1.4,0.9],"H")
-				text([-1.4,-0.9],"H")
-				text([1.4,-0.9],"H")
-				}
-			
-			else
-				//monomer is polystyrene
-				{
-				text([-1.4,0.9],"C₆H₅")
-				text([1.4,0.9],"H")
-				text([-1.4,-0.9],"H")
-				text([1.4,-0.9],"H")
-				}
-				}
-			}
-		}
+//monomer is polystyrene
+{
+	text([-1.4,0.9],"C₆H₅")
+	text([1.4,0.9],"H")
+	text([-1.4,-0.9],"H")
+	text([1.4,-0.9],"H")
+}
+

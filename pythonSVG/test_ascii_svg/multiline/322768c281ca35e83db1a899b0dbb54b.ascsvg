@@ -24,18 +24,26 @@ text([-s/1,s/6],"Vtotal = 17,0 V",above)
 // first one
 line([2*s,1.5*s],[2*s,1.0*s])
 line([2*s,-1.5*s],[2*s,-1.0*s])
-with (Math)
-  for (var i = 0; i < n; i++)
-    path([[(2+i)*s,1.0*s],[(2+i)*s,0.5*s],[(2+i)*s+s/4,0.5*s],[(2+i)*s+s/4,-0.5*s],[(2+i)*s-s/4,-0.5*s],[(2+i)*s-s/4,0.5*s],[(2+i)*s,0.5*s]])
-with (Math)
-  for (var i = 0; i < n; i++)
-    line([(2+i)*s,-0.5*s],[(2+i)*s,-1.0*s])
-with (Math)
-  for (var i = 0; i < n; i++)
-    if (i > 0) line([(1+i)*s,1.0*s],[(2+i)*s,1.0*s])
-with (Math)
-  for (var i = 0; i < n; i++)
-    if (i > 0) line([(1+i)*s,-1.0*s],[(2+i)*s,-1.0*s])
+
+for (var i = 0; i < n; i++)
+{
+	path([[(2+i)*s,1.0*s],[(2+i)*s,0.5*s],[(2+i)*s+s/4,0.5*s],[(2+i)*s+s/4,-0.5*s],[(2+i)*s-s/4,-0.5*s],[(2+i)*s-s/4,0.5*s],[(2+i)*s,0.5*s]])
+}
+
+for (var i = 0; i < n; i++)
+{
+	line([(2+i)*s,-0.5*s],[(2+i)*s,-1.0*s])
+}
+
+for (var i = 0; i < n; i++)
+{
+	if (i > 0) {line([(1+i)*s,1.0*s],[(2+i)*s,1.0*s])}
+}
+
+for (var i = 0; i < n; i++)
+{
+	if (i > 0) {line([(1+i)*s,-1.0*s],[(2+i)*s,-1.0*s])}
+}
 
 // text on resistors
 fontsize = "16"
@@ -44,26 +52,26 @@ fontstyle = "normal"
   //for (var i = 0; i < n; i++)
     //text( [(2+i)*s,0], i+" Ω" )          // resistance label
     //text( [(2+i)*s,0], label[i]+" Ω" )   // resistance label
-if (n > 1) text( [(2)*s,s], "Vₗₗ = "+label[0], aboveright ) // voltage label if parallel
-if (n == 1) text( [(2.25)*s,0], label[0], right ) // voltage label only series
+if (n > 1) {text( [(2)*s,s], "Vₗₗ = "+label[0], aboveright )} // voltage label if parallel
+if (n == 1) {text( [(2.25)*s,0], label[0], right )} // voltage label only series
 
 //////////////////////////////////////////// series
 // side wires or series resistors
-if (m == 1) line([0,1.5*s],[2*s,1.5*s])   //top
-if (m == 1) line([0,-1.5*s],[2*s,-1.5*s]) //bottom
+if (m == 1) {line([0,1.5*s],[2*s,1.5*s])}   //top
+if (m == 1) {line([0,-1.5*s],[2*s,-1.5*s])} //bottom
 
-if (m == 2) line([0,1.5*s],[2*s,1.5*s])   //top
+if (m == 2) {line([0,1.5*s],[2*s,1.5*s])}   //top
                                           // bottom
-if (m == 2) path([[0,-1.5*s],[0.5*s,-1.5*s],[0.5*s,-1.25*s],[1.5*s,-1.25*s],[1.5*s,-1.5*s],[1.5*s,-1.75*s],[0.5*s,-1.75*s],[0.5*s,-1.5*s],[0.5*s,-1.25*s],[1.5*s,-1.25*s],[1.5*s,-1.5*s],[2*s,-1.5*s]])
-//if (m == 2) text( [1*s,-1.5*s], "s2" )    // resistance label
-if (m == 2) text( [1*s,-1.75*s], label[1], below )  // voltage label
+if (m == 2) {path([[0,-1.5*s],[0.5*s,-1.5*s],[0.5*s,-1.25*s],[1.5*s,-1.25*s],[1.5*s,-1.5*s],[1.5*s,-1.75*s],[0.5*s,-1.75*s],[0.5*s,-1.5*s],[0.5*s,-1.25*s],[1.5*s,-1.25*s],[1.5*s,-1.5*s],[2*s,-1.5*s]])}
+//if (m == 2) {text( [1*s,-1.5*s], "s2" )}    // resistance label
+if (m == 2) {text( [1*s,-1.75*s], label[1], below )}  // voltage label
 
                                          //top
-if (m == 3) path([[0,1.5*s],[0.5*s,1.5*s],[0.5*s,1.25*s],[1.5*s,1.25*s],[1.5*s,1.5*s],[1.5*s,1.75*s],[0.5*s,1.75*s],[0.5*s,1.5*s],[0.5*s,1.25*s],[1.5*s,1.25*s],[1.5*s,1.5*s],[2*s,1.5*s]])
-//if (m == 3) text( [1*s,1.5*s], "s3" )  // resistance label
-if (m == 3) text( [1*s,1.75*s], label[1] ,above)
+if (m == 3) {path([[0,1.5*s],[0.5*s,1.5*s],[0.5*s,1.25*s],[1.5*s,1.25*s],[1.5*s,1.5*s],[1.5*s,1.75*s],[0.5*s,1.75*s],[0.5*s,1.5*s],[0.5*s,1.25*s],[1.5*s,1.25*s],[1.5*s,1.5*s],[2*s,1.5*s]])}
+//if (m == 3) {text( [1*s,1.5*s], "s3" )}  // resistance label
+if (m == 3) {text( [1*s,1.75*s], label[1] ,above)}
                                          // bottom
-if (m == 3) path([[0,-1.5*s],[0.5*s,-1.5*s],[0.5*s,-1.25*s],[1.5*s,-1.25*s],[1.5*s,-1.5*s],[1.5*s,-1.75*s],[0.5*s,-1.75*s],[0.5*s,-1.5*s],[0.5*s,-1.25*s],[1.5*s,-1.25*s],[1.5*s,-1.5*s],[2*s,-1.5*s]])
-//if (m == 3) text( [1*s,-1.5*s], "s2" )   // resistance label
-if (m == 3) text( [1*s,-1.75*s], label[2], below )  // voltage label
+if (m == 3) {path([[0,-1.5*s],[0.5*s,-1.5*s],[0.5*s,-1.25*s],[1.5*s,-1.25*s],[1.5*s,-1.5*s],[1.5*s,-1.75*s],[0.5*s,-1.75*s],[0.5*s,-1.5*s],[0.5*s,-1.25*s],[1.5*s,-1.25*s],[1.5*s,-1.5*s],[2*s,-1.5*s]])}
+//if (m == 3) {text( [1*s,-1.5*s], "s2" )}   // resistance label
+if (m == 3) {text( [1*s,-1.75*s], label[2], below )}  // voltage label
 

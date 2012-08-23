@@ -39,90 +39,81 @@ line([2.5,-0.2],[2.5,-0.5])
 //makes the terminal bits
 if (x == 0)
 //polymer is polyethene
-	{
+{
 	text([-2.5,0.6],"H")
 	text([-1.5,0.6],"H")
 	text([-0.5,0.6],"H")
 	text([0.5,0.6],"H")
-    text([1.5,0.6],"H")
+	text([1.5,0.6],"H")
 	text([2.5,0.6],"H")
 	text([-2.5,-0.6],"H")
 	text([-1.5,-0.6],"H")
-    text([-0.5,-0.6],"H")
+	text([-0.5,-0.6],"H")
 	text([0.5,-0.6],"H")
 	text([1.5,-0.6],"H")
 	text([2.5,-0.6],"H")
-	}
+}
+else if (x == 1)
+//monomer is chloroethene
+{
+	text([-2.5,0.6],"H")
+	text([-1.5,0.6],"Cl")
+	text([-0.5,0.6],"H")
+	text([0.5,0.6],"Cl")
+	text([1.5,0.6],"H")
+	text([2.5,0.6],"Cl")
+	text([-2.5,-0.6],"H")
+	text([-1.5,-0.6],"H")
+	text([-0.5,-0.6],"H")
+	text([0.5,-0.6],"H")
+	text([1.5,-0.6],"H")
+	text([2.5,-0.6],"H")
+}
+else if (x == 2)
+//monomer is tetrafluoroethene
+{
+	text([-2.5,0.6],"F")
+	text([-1.5,0.6],"F")
+	text([-0.5,0.6],"F")
+	text([0.5,0.6],"F")
+	text([1.5,0.6],"F")
+	text([2.5,0.6],"F")
+	text([-2.5,-0.6],"F")
+	text([-1.5,-0.6],"F")
+	text([-0.5,-0.6],"F")
+	text([0.5,-0.6],"F")
+	text([1.5,-0.6],"F")
+	text([2.5,-0.6],"F")
+}
+else if (x == 3)
+//monomer is polypropene
+{
+	text([-2.5,0.6],"H")
+	text([-1.5,0.6],"CH₃")
+	text([-0.5,0.6],"H")
+	text([0.5,0.6],"CH₃")
+	text([1.5,0.6],"H")
+	text([2.5,0.6],"CH₃")
+	text([-2.5,-0.6],"H")
+	text([-1.5,-0.6],"H")
+	text([-0.5,-0.6],"H")
+	text([0.5,-0.6],"H")
+	text([1.5,-0.6],"H")
+	text([2.5,-0.6],"H")
+}
 else
-	{if (x == 1)
-	//monomer is chloroethene
-		{
-		text([-2.5,0.6],"H")
-		text([-1.5,0.6],"Cl")
-		text([-0.5,0.6],"H")
-		text([0.5,0.6],"Cl")
-    	text([1.5,0.6],"H")
-		text([2.5,0.6],"Cl")
-		text([-2.5,-0.6],"H")
-		text([-1.5,-0.6],"H")
-    	text([-0.5,-0.6],"H")
-		text([0.5,-0.6],"H")
-		text([1.5,-0.6],"H")
-		text([2.5,-0.6],"H")
-		}
-		else
-		{
-			if (x == 2)
-			//monomer is tetrafluoroethene
-			{
-			text([-2.5,0.6],"F")
-			text([-1.5,0.6],"F")
-			text([-0.5,0.6],"F")
-			text([0.5,0.6],"F")
-    		text([1.5,0.6],"F")
-			text([2.5,0.6],"F")
-			text([-2.5,-0.6],"F")
-			text([-1.5,-0.6],"F")
-    		text([-0.5,-0.6],"F")
-			text([0.5,-0.6],"F")
-			text([1.5,-0.6],"F")
-			text([2.5,-0.6],"F")
-			}
-			else
-			{
-				if (x == 3)
-				//monomer is polypropene
-				{
-				text([-2.5,0.6],"H")
-				text([-1.5,0.6],"CH₃")
-				text([-0.5,0.6],"H")
-				text([0.5,0.6],"CH₃")
-    			text([1.5,0.6],"H")
-				text([2.5,0.6],"CH₃")
-				text([-2.5,-0.6],"H")
-				text([-1.5,-0.6],"H")
-    			text([-0.5,-0.6],"H")
-				text([0.5,-0.6],"H")
-				text([1.5,-0.6],"H")
-				text([2.5,-0.6],"H")
-				}
-			
-			else
-				//monomer is polystyrene
-				{
-				text([-2.5,0.6],"H")
-				text([-1.5,0.6],"C₆H₅")
-				text([-0.5,0.6],"H")
-				text([0.5,0.6],"C₆H₅")
-    			text([1.5,0.6],"H")
-				text([2.5,0.6],"C₆H₅")
-				text([-2.5,-0.6],"H")
-				text([-1.5,-0.6],"H")
-    			text([-0.5,-0.6],"H")
-				text([0.5,-0.6],"H")
-				text([1.5,-0.6],"H")
-				text([2.5,-0.6],"H")
-				}
-				}
-			}
-		}
+//monomer is polystyrene
+{
+	text([-2.5,0.6],"H")
+	text([-1.5,0.6],"C₆H₅")
+	text([-0.5,0.6],"H")
+	text([0.5,0.6],"C₆H₅")
+	text([1.5,0.6],"H")
+	text([2.5,0.6],"C₆H₅")
+	text([-2.5,-0.6],"H")
+	text([-1.5,-0.6],"H")
+	text([-0.5,-0.6],"H")
+	text([0.5,-0.6],"H")
+	text([1.5,-0.6],"H")
+	text([2.5,-0.6],"H")
+}
