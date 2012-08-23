@@ -4,6 +4,7 @@ from lxml import etree
 import cairo
 import rsvg
 import re
+import sys
 
 # ===================================================================================	
 
@@ -258,7 +259,7 @@ class mySvgCanvas:
 			exec(final_string, None, self.loc_var)
 			self.complete_string += "\nASCII -> SVG conversion complete. \n\nOriginal Code:\n\n" + str(ascii_string) + "\n\nCode Processed:\n\n" + str(final_string) 
 		except Exception, err:				
-			self.error_string += "\nASCII -> SVG conversion ERROR: " + str(err) + "\n\nOriginal Code:\n\n" + str(ascii_string) + "\n\nCode Processed:\n\n" + str(final_string) 
+			self.error_string += "\nASCII -> SVG conversion ERROR: " + str(err) + ", " + str(sys.exc_info()[0]) + "\n\nOriginal Code:\n\n" + str(ascii_string) + "\n\nCode Processed:\n\n" + str(final_string) 
 
 # ===================================================================================	
 
@@ -275,7 +276,7 @@ class mySvgCanvas:
 					exec(a, None, self.loc_var)
 					self.complete_string += "\nComplete: " + str(a)
 				except Exception, err:				
-					self.error_string += "\nERROR: " + str(a) + "\nMessage: " + str(err)
+					self.error_string += "\nERROR: " + str(a) + "\nMessage: " + str(err) + ", " + str(sys.exc_info()[0])
 					break
 
 		return ascii_string
@@ -376,6 +377,11 @@ class mySvgCanvas:
 		# Loop
 		exec(start_cond, None, self.loc_var)
 		exec("while(" + end_cond + " and jrange_counter < 1000): jrange_result.append(round("+i_character+",3)); jrange_counter+=1; "+leap_cond, None, self.loc_var)
+		
+		# Force integer values if possible
+		for i in range (0,len(self.loc_var['jrange_result'])):
+			if (int(self.loc_var['jrange_result'][i]) == self.loc_var['jrange_result'][i]):
+				self.loc_var['jrange_result'][i] = int(self.loc_var['jrange_result'][i])
 
 		return self.loc_var['jrange_result']
 
@@ -536,7 +542,7 @@ class mySvgCanvas:
 			textanchor = "start"
 		
 		# Text Rotation
-		node = etree.fromstring("<text>" + st + "</text>")
+		node = etree.fromstring("<text>" + str(st) + "</text>")
 		self.xml_parent.append(node)
 		node.attrib['x'] = str(round(p[0] * self.loc_var["xunitlength"] + self.loc_var["origin"][0] + dx,2))		
 		node.attrib['y'] = str(round(float(self.loc_var["height"]) - p[1] * self.loc_var["yunitlength"] - self.loc_var["origin"][1]+dy,2))
