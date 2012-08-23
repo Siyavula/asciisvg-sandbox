@@ -36,7 +36,6 @@ ymax= box1 + box2 + 5
 initPicture(xmin,xmax,ymin,ymax)
 fontstyle = "normal"
 
-
 // box2
 path([[T,0],[T,box2],[T+box2,box2],[T+box2,0],[T,0]])
 // T
@@ -47,16 +46,25 @@ text([T/2,box2/3],"T",above)
 strokewidth = "1"
 // a
 marker = "arrow"  
-with (Math)
-  if (box1 < box2)
-     line([box1,box2+0.5*box1],[box1+a,box2+0.5*box1])
-  else
-     line([box1,0.5*box2+box1],[box1+a,0.5*box2+box1])
-with (Math)
-  if (box1 < box2)
-     text([box1+0.5*a,box2+0.5*box1],"a",above)
-  else
-     text([box1+0.5*a,0.5*box2+box1],"a",above)
+
+if (box1 < box2) 
+{
+	line([box1,box2+0.5*box1],[box1+a,box2+0.5*box1])
+}
+else
+{
+	line([box1,0.5*box2+box1],[box1+a,0.5*box2+box1])
+}
+
+if (box1 < box2)
+{
+	text([box1+0.5*a,box2+0.5*box1],"a",above)
+}
+else
+{
+	text([box1+0.5*a,0.5*box2+box1],"a",above)
+}
+
 //line([T+box2/2-a/2,box2+0.5*box2],[T+box2/2+a/2,box2+0.5*box2])
 //text([T+box2/2,box2+0.5*box2],"a",above)
 // F1
@@ -65,5 +73,5 @@ text([T+box2+0.5*F1,box2/2],"F1",above)
 // masses
 text([T+box2/2,box2/2],"m2")
 // Friction of system
-line([T,2box2/3],[T+Ff2,2box2/3])
-text([T+Ff2/3,2box2/3],"Ff2",above)
+line([T,2*box2/3],[T+Ff2,2*box2/3])
+text([T+Ff2/3,2*box2/3],"Ff2",above)

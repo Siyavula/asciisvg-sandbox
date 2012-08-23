@@ -41,78 +41,67 @@ line([maxX-1,0],[maxX,0])
 //makes the extra ticks
 if (maxX == 7)
 {
-text([6,-0.1],"6",below)
-marker="none"
-line([6,-.05],[6,.05])}
-	else
-		{
-		if (maxX == 8)
-		{
-		text([6,-0.1],"6",below)
-		marker="none"
-		line([6,-.05],[6,.05])
-		text([7,-0.1],"7",below)
-		line([7,-.05],[7,.05])
-		}
-			else
-			{
-				if (maxX == 9)
-				{
-				text([6,-0.1],"6",below)
-				marker="none"
-				line([6,-.05],[6,.05])
-				text([7,-0.1],"7",below)
-				line([7,-.05],[7,.05])
-				text([8,-0.1],"8",below)
-				line([8,-.05],[8,.05])
-				}
-					else
-					{
-						if (maxX == 10)
-						{
-						text([6,-0.1],"6",below)
-						marker="none"
-						line([6,-.05],[6,.05])
-						text([7,-0.1],"7",below)
-						line([7,-.05],[7,.05])
-						text([8,-0.1],"8",below)
-						line([8,-.05],[8,.05])
-						text([9,-0.1],"9",below)
-						line([9,-.05],[9,.05])
-						}
-						else
-						{
-							if (maxX==11)
-							{
-							text([6,-0.1],"6",below)
-							marker="none"
-							line([6,-.05],[6,.05])
-							text([7,-0.1],"7",below)
-							line([7,-.05],[7,.05])
-							text([8,-0.1],"8",below)
-							line([8,-.05],[8,.05])
-							text([9,-0.1],"9",below)
-							line([9,-.05],[9,.05])
-							text([10,-0.1],"10",below)
-							line([10,-.05],[10,.05])
-							}
-							else
-							{
-							text([6,-0.1],"6",below)
-							marker="none"
-							line([6,-.05],[6,.05])
-							text([7,-0.1],"7",below)
-							line([7,-.05],[7,.05])
-							text([8,-0.1],"8",below)
-							line([8,-.05],[8,.05])
-							text([9,-0.1],"9",below)
-							line([9,-.05],[9,.05])
-							text([10,-0.1],"10",below)
-							line([10,-.05],[10,.05])
-							text([11,-0.1],"11",below)
-							line([11,-.05],[11,.05])
-							}
-						}
-					}
-			}
-		}
+	text([6,-0.1],"6",below)
+	marker="none"
+	line([6,-.05],[6,.05])
+}
+else if (maxX == 8)
+{
+	text([6,-0.1],"6",below)
+	marker="none"
+	line([6,-.05],[6,.05])
+	text([7,-0.1],"7",below)
+	line([7,-.05],[7,.05])
+}
+else if (maxX == 9)
+{
+	text([6,-0.1],"6",below)
+	marker="none"
+	line([6,-.05],[6,.05])
+	text([7,-0.1],"7",below)
+	line([7,-.05],[7,.05])
+	text([8,-0.1],"8",below)
+	line([8,-.05],[8,.05])
+}
+else if (maxX == 10)
+{
+	text([6,-0.1],"6",below)
+	marker="none"
+	line([6,-.05],[6,.05])
+	text([7,-0.1],"7",below)
+	line([7,-.05],[7,.05])
+	text([8,-0.1],"8",below)
+	line([8,-.05],[8,.05])
+	text([9,-0.1],"9",below)
+	line([9,-.05],[9,.05])
+}
+else if (maxX==11)
+{
+	text([6,-0.1],"6",below)
+	marker="none"
+	line([6,-.05],[6,.05])
+	text([7,-0.1],"7",below)
+	line([7,-.05],[7,.05])
+	text([8,-0.1],"8",below)
+	line([8,-.05],[8,.05])
+	text([9,-0.1],"9",below)
+	line([9,-.05],[9,.05])
+	text([10,-0.1],"10",below)
+	line([10,-.05],[10,.05])
+}
+else
+{
+	text([6,-0.1],"6",below)
+	marker="none"
+	line([6,-.05],[6,.05])
+	text([7,-0.1],"7",below)
+	line([7,-.05],[7,.05])
+	text([8,-0.1],"8",below)
+	line([8,-.05],[8,.05])
+	text([9,-0.1],"9",below)
+	line([9,-.05],[9,.05])
+	text([10,-0.1],"10",below)
+	line([10,-.05],[10,.05])
+	text([11,-0.1],"11",below)
+	line([11,-.05],[11,.05])
+}

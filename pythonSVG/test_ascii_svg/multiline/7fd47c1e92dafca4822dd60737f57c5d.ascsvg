@@ -36,7 +36,6 @@ ymax= box1 + box2 + 5
 initPicture(xmin,xmax,ymin,ymax)
 fontstyle = "normal"
 
-
 // ground
 strokewidth = "4"
 line([Ff,0],[T + box1 + box2 + F1 ,0])
@@ -47,29 +46,47 @@ path([[0,0],[0,box1],[box1,box1],[box1,0]])
 path([[box1+T,0],[box1+T,box2],[box1+T+box2,box2],[box1+T+box2,0]])
 // T
 strokewidth = "3"
-with (Math)
-  if (box1>box2)
-     line([box1,box2/2],[box1+T,box2/2])
-  else
-     line([box1,box1/2],[box1+T,box1/2])
-with (Math)
-  if (box1>box2)
-     text([box1+T/2,box2/2],"T",above)
-  else
-     text([box1+T/2,box1/2],"T",above)
+
+if (box1>box2)
+{
+	line([box1,box2/2],[box1+T,box2/2])
+}
+else
+{
+	line([box1,box1/2],[box1+T,box1/2])
+}
+
+if (box1>box2)
+{
+	text([box1+T/2,box2/2],"T",above)
+}
+else
+{
+	text([box1+T/2,box1/2],"T",above)
+}
+
 strokewidth = "1"
 // a
 marker = "arrow" 
-with (Math)
-  if (box1 < box2)
-     line([box1,box2+0.5*box1],[box1+a,box2+0.5*box1])
-  else
-     line([box1,0.5*box2+box1],[box1+a,0.5*box2+box1])
-with (Math)
-  if (box1 < box2)
-     text([box1+0.5*a,box2+0.5*box1],"a",above)
-  else
-     text([box1+0.5*a,0.5*box2+box1],"a",above)
+
+if (box1 < box2)
+{
+	line([box1,box2+0.5*box1],[box1+a,box2+0.5*box1])
+}
+else
+{
+	line([box1,0.5*box2+box1],[box1+a,0.5*box2+box1])
+}
+
+if (box1 < box2)
+{
+	text([box1+0.5*a,box2+0.5*box1],"a",above)
+}
+else
+{
+	text([box1+0.5*a,0.5*box2+box1],"a",above)
+}
+
 //line([box1,box2+box1],[box1+a,box2+box1])
 //text([box1+0.5*a,box2+box1],"a",above)
 // F1
@@ -81,12 +98,16 @@ text([box1+T+box2/2,box2/2],"m2")
 // box system
 strokewidth = "3"
 strokedasharray = "10,5"
-with (Math)
-  if (box1 > box2)
-     path([[-1,-1],[-1,box1+1],[box1+T+box2+1,box1+1],
-     [box1+T+box2+1,-1],[-1,-1]])
-  else
-     path([[-1,-1],[-1,box2+1],[box1+T+box2+1,box2+1],[box1+T+box2+1,-1],[-1,-1]])
+
+if (box1 > box2)
+{
+	path([[-1,-1],[-1,box1+1],[box1+T+box2+1,box1+1], [box1+T+box2+1,-1],[-1,-1]])
+}
+else
+{
+	path([[-1,-1],[-1,box2+1],[box1+T+box2+1,box2+1],[box1+T+box2+1,-1],[-1,-1]])
+}
+
 // Friction of system
 strokewidth = "1"
 strokedasharray = null

@@ -3,7 +3,8 @@ molecule = 2
 initPicture(-3,3,-3,3)
 
 if (molecule == 1)
-	{//water
+{
+	//water
 	line([-1.2,0.2],[0,1])
 	line([1.2,0.2],[0,1])
 	fill="red"
@@ -11,59 +12,57 @@ if (molecule == 1)
 	circle([1.2,0.2],0.2)
 	fill="blue"
 	circle([0,1],0.3)
-	}
-else 
-	{if (molecule==2)
-		{//carbon dioxide
-		line([-1.2,1],[0,1])
-		line([1.2,1],[0,1])
-		fill="red"
-		circle([-1.2,1],0.2)
-		fill="blue"
-		circle([0,1],0.3)
-		fill="red"
-		circle([1.2,1],0.2)}
-	else
-		{
-		if (molecule==3)
-			{//salt
-			line([-0.9,1],[0,1])
-			line([-0.9,1],[-0.9,0.1])
-			line([0,1],[0,0.1])
-			line([0,1],[0.9,1])
-			line([0.9,1],[0.9,0.1])
-			line([0.9,0.1],[0,0.1])
-			line([0.9,0.1],[0.9,-0.8])
-			line([0.9,-0.8],[0,-0.8])
-			line([0,-0.8],[0,0.1])
-			line([0,0.1],[-0.9,0.1])
-			line([0,-0.8],[-0.9,-0.8])
-			line([-0.9,-0.8],[-0.9,0.1])
-			fill="green"
-			circle([-0.9,1],0.2)
-			circle([0,0.1],0.2)
-			circle([-0.9,-0.8],0.2)
-			circle([0.9,1],0.2)
-			circle([0.9,-.8],0.2)
-			fill="gray"
-			circle([0,1],0.3)
-			circle([-0.9,0.1],0.3)
-			circle([0.9,0.1],0.3)
-			circle([0,-0.8],0.3)}
-		else
-		{
-		if (molecule==4)
-			{//ammonia
-			line([-1.1,1.2],[0,1])
-			line([0,0],[0,1])
-			line([1.1,1.2],[0,1])
-			fill="blue"
-			circle([-1.1,1.2],0.2)
-			circle([0,0],0.2)
-			circle([1.1,1.2],0.2)
-			fill="red"
-			circle([0,1],0.3)
-			}
-		}
-	}
-	}
+}
+else if (molecule==2)
+{
+	//carbon dioxide
+	line([-1.2,1],[0,1])
+	line([1.2,1],[0,1])
+	fill="red"
+	circle([-1.2,1],0.2)
+	fill="blue"
+	circle([0,1],0.3)
+	fill="red"
+	circle([1.2,1],0.2)
+}
+else if (molecule==3)
+{
+	//salt
+	line([-0.9,1],[0,1])
+	line([-0.9,1],[-0.9,0.1])
+	line([0,1],[0,0.1])
+	line([0,1],[0.9,1])
+	line([0.9,1],[0.9,0.1])
+	line([0.9,0.1],[0,0.1])
+	line([0.9,0.1],[0.9,-0.8])
+	line([0.9,-0.8],[0,-0.8])
+	line([0,-0.8],[0,0.1])
+	line([0,0.1],[-0.9,0.1])
+	line([0,-0.8],[-0.9,-0.8])
+	line([-0.9,-0.8],[-0.9,0.1])
+	fill="green"
+	circle([-0.9,1],0.2)
+	circle([0,0.1],0.2)
+	circle([-0.9,-0.8],0.2)
+	circle([0.9,1],0.2)
+	circle([0.9,-.8],0.2)
+	fill="gray"
+	circle([0,1],0.3)
+	circle([-0.9,0.1],0.3)
+	circle([0.9,0.1],0.3)
+	circle([0,-0.8],0.3)
+}
+else if (molecule==4)
+{
+	//ammonia
+	line([-1.1,1.2],[0,1])
+	line([0,0],[0,1])
+	line([1.1,1.2],[0,1])
+	fill="blue"
+	circle([-1.1,1.2],0.2)
+	circle([0,0],0.2)
+	circle([1.1,1.2],0.2)
+	fill="red"
+	circle([0,1],0.3)
+}
+

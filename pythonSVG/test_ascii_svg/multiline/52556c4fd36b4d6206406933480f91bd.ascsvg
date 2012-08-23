@@ -3,7 +3,8 @@ molecule = 2
 initPicture(-3,3,-3,3)
 
 if (molecule == 1)
-	{//water
+{
+	//water
 	strokewidth="2"
 	stroke="red"
 	line([-1.2,0.2],[-0.6,0.6])
@@ -11,55 +12,52 @@ if (molecule == 1)
 	stroke="blue"
 	line([-0.6,0.6],[0,1])
 	line([0.6,0.6],[0,1])
-	}
-else 
-	{if (molecule==2)
-		{//carbon dioxide
-		strokewidth="2"
-		stroke="red"
-		line([-1.2,1],[-0.5,1])
-		line([1.2,1],[0.5,1])
-		stroke="blue"
-		line([-0.5,1],[0.5,1])}
-	else
-		{
-		if (molecule==3)
-			{//salt
-			strokewidth="2"
-			stroke="gray"
-			line([-1,0],[-0.5,0])
-			line([-1,-0.5],[-1,0.5])
-			line([1,0.5],[1,-0.5])
-			line([1,0],[0.5,0])
-			line([0,-0.5],[0,-1])
-			line([0,0.5],[0,1])
-			line([-0.5,1],[0.5,1])
-			line([-0.5,-1],[0.5,-1])
-			stroke="green"
-			line([-0.5,0],[0.5,0])
-			line([0,0.5],[0,-0.5])
-			line([-1,1],[-0.5,1])
-			line([-1,1],[-1,0.5])
-			line([1,1],[0.5,1])
-			line([1,1],[1,0.5])
-			line([-1,-1],[-0.5,-1])
-			line([-1,-1],[-1,-0.5])
-			line([1,-1],[0.5,-1])
-			line([1,-1],[1,-0.5])}
-		else
-		{
-		if (molecule==4)
-			{//ammonia
-			stroke="red"
-			strokewidth="2"
-			line([-1.1,1.2],[-0.6,1.1])
-			line([0,0],[0,0.5])
-			line([1.1,1.2],[0.6,1.1])
-			stroke="blue"
-			line([-0.6,1.1],[0,1])
-			line([0,0.5],[0,1])
-			line([0.6,1.1],[0,1])
-			}
-		}
-	}
-	}
+}
+else if (molecule==2)
+{
+	//carbon dioxide
+	strokewidth="2"
+	stroke="red"
+	line([-1.2,1],[-0.5,1])
+	line([1.2,1],[0.5,1])
+	stroke="blue"
+	line([-0.5,1],[0.5,1])
+}
+else if (molecule==3)
+{
+	//salt
+	strokewidth="2"
+	stroke="gray"
+	line([-1,0],[-0.5,0])
+	line([-1,-0.5],[-1,0.5])
+	line([1,0.5],[1,-0.5])
+	line([1,0],[0.5,0])
+	line([0,-0.5],[0,-1])
+	line([0,0.5],[0,1])
+	line([-0.5,1],[0.5,1])
+	line([-0.5,-1],[0.5,-1])
+	stroke="green"
+	line([-0.5,0],[0.5,0])
+	line([0,0.5],[0,-0.5])
+	line([-1,1],[-0.5,1])
+	line([-1,1],[-1,0.5])
+	line([1,1],[0.5,1])
+	line([1,1],[1,0.5])
+	line([-1,-1],[-0.5,-1])
+	line([-1,-1],[-1,-0.5])
+	line([1,-1],[0.5,-1])
+	line([1,-1],[1,-0.5])
+}
+else if (molecule==4)
+{
+	//ammonia
+	stroke="red"
+	strokewidth="2"
+	line([-1.1,1.2],[-0.6,1.1])
+	line([0,0],[0,0.5])
+	line([1.1,1.2],[0.6,1.1])
+	stroke="blue"
+	line([-0.6,1.1],[0,1])
+	line([0,0.5],[0,1])
+	line([0.6,1.1],[0,1])
+}

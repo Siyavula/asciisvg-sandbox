@@ -45,10 +45,23 @@ strokewidth = "1"
 // a
 marker = "arrow" 
 
-if (box1 < box2) { line([box1,box2+0.5*box1],[box1+a,box2+0.5*box1])}
-else { line([box1,0.5*box2+box1],[box1+a,0.5*box2+box1])}
-if (box1 < box2) {text([box1+0.5*a,box2+0.5*box1],"a",above)}
-else {text([box1+0.5*a,0.5*box2+box1],"a",above)}
+if (box1 < box2) 
+{ 
+	line([box1,box2+0.5*box1],[box1+a,box2+0.5*box1])
+}
+else 
+{
+	line([box1,0.5*box2+box1],[box1+a,0.5*box2+box1])
+}
+
+if (box1 < box2) 
+{
+	text([box1+0.5*a,box2+0.5*box1],"a",above)
+}
+else 
+{
+	text([box1+0.5*a,0.5*box2+box1],"a",above)
+}
 
 // Fapplied
 line([box1+T+box2,box2/2],[box1+T+box2+F1,box2/2])
