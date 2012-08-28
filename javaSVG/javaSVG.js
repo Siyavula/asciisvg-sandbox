@@ -548,15 +548,24 @@ function axes(dx,dy,labels,gdx,gdy) {
   ticklength = fontsize/4;
   
 	/* === Grid === */
-	if (gdx!=null || gdy!=null) {
-    gdx = (gdx!=null?gdx*xunitlength:dx*xunitlength);
-    gdy = (gdy!=null?gdy*yunitlength:dy*yunitlength);
-		pnode = myCreateElementSVG("path");
-    string = "";
-		for (i = origin[0]; i<width; i = i+gdx) {string += " M"+i+",0"+" "+i+","+height;} // x-axis (positive)
-		for (i = origin[0]-gdx; i>0; i =i-gdx) {string += " M"+i+",0"+" "+i+","+height;} // x-axis (negative)
-		for (i = height-origin[1]; i<height; i = i+gdy) {string += " M0,"+i+" "+width+","+i;} // y-axis (positive)
-		for (i = height-origin[1]-gdy; i>0; i = i-gdy) {string += " M0,"+i+" "+width+","+i;} // y-axis (negative)
+	if (gdx != null || dx != null || gdy != null || dy != null)
+	{
+    pnode = myCreateElementSVG("path");
+		string = "";
+		
+		if (gdx != null || dx != null)
+		{
+			gdx = (gdx!=null?gdx*xunitlength:dx*xunitlength);
+	 		for (i = origin[0]; i<width; i = i+gdx) {string += " M"+i+",0"+" "+i+","+height;} // x-axis (positive)
+			for (i = origin[0]-gdx; i>0; i =i-gdx) {string += " M"+i+",0"+" "+i+","+height;} // x-axis (negative)
+		}
+		if (gdy != null || dy != null)
+		{
+			gdy = (gdy!=null?gdy*yunitlength:dy*yunitlength);
+			for (i = height-origin[1]; i<height; i = i+gdy) {string += " M0,"+i+" "+width+","+i;} // y-axis (positive)
+			for (i = height-origin[1]-gdy; i>0; i = i-gdy) {string += " M0,"+i+" "+width+","+i;} // y-axis (negative)
+		}
+
 		// Create SVG Element
     pnode.setAttribute("d",string);
     pnode.setAttribute("stroke-width", 0.5);
@@ -565,18 +574,35 @@ function axes(dx,dy,labels,gdx,gdy) {
     svg_picture.appendChild(pnode);
   }
 
-	/* === Axes ===	*/
-  pnode = myCreateElementSVG("path");
-	// Thicker Axes lines
-	string = "M0,"+(height-origin[1])+" "+width+","+(height-origin[1])+" M"+origin[0]+",0 "+origin[0]+","+height;
-	for (i = origin[0]+tdx; i<width; i+=tdx) 
-	{string += " M"+i+","+(height-origin[1]+ticklength)+" "+i+","+(height-origin[1]-ticklength);} // x-axis (positive)
-	for (i = origin[0]-tdx; i>0; i-=tdx) 
-	{string += " M"+i+","+(height-origin[1]+ticklength)+" "+i+","+(height-origin[1]-ticklength);} // x-axis (negative)
-	for (i = height-origin[1]+tdy; i<height; i+=tdy)	
-	{string += " M"+(origin[0]+ticklength)+","+i+" "+(origin[0]-ticklength)+","+i;} // y-axis (positive)
-	for (i = height-origin[1]-tdy; i>0; i-=tdy) 
-	{string += " M"+(origin[0]+ticklength)+","+i+" "+(origin[0]-ticklength)+","+i;} // y-axis (negative)
+	if (dx != null || dy != null)
+	{
+		/* === Axes ===	*/
+		pnode = myCreateElementSVG("path");
+		// Thicker Axes lines
+		string = "M0,"+(height-origin[1])+" "+width+","+(height-origin[1])+" M"+origin[0]+",0 "+origin[0]+","+height;
+		
+		if (dx != null)
+		{		
+			for (i = origin[0]+tdx; i<width; i+=tdx) 
+			{string += " M"+i+","+(height-origin[1]+ticklength)+" "+i+","+(height-origin[1]-ticklength);} // x-axis (positive)
+			for (i = origin[0]-tdx; i>0; i-=tdx) 
+			{string += " M"+i+","+(height-origin[1]+ticklength)+" "+i+","+(height-origin[1]-ticklength);} // x-axis (negative)
+		}
+
+		if (dy != null)
+		{
+			for (i = height-origin[1]+tdy; i<height; i+=tdy)	
+			{string += " M"+(origin[0]+ticklength)+","+i+" "+(origin[0]-ticklength)+","+i;} // y-axis (positive)
+			for (i = height-origin[1]-tdy; i>0; i-=tdy) 
+			{string += " M"+(origin[0]+ticklength)+","+i+" "+(origin[0]-ticklength)+","+i;} // y-axis (negative)
+		}
+
+		pnode.setAttribute("d",string);
+		pnode.setAttribute("stroke-width", 0.5);
+		pnode.setAttribute("stroke", axesstroke);
+		pnode.setAttribute("fill", fill);
+		svg_picture.appendChild(pnode);
+	}
 
 	/* === Labels === */
 	if (labels!=null) with (Math) {
@@ -592,16 +618,12 @@ function axes(dx,dy,labels,gdx,gdy) {
     for (y = -ldy; ymin<=y; y = y-ldy) {text([lx,y],y,lyp);} // y-axis (negative)
   }
 	/* Create SVG Element	*/
-  pnode.setAttribute("d",string);
-  pnode.setAttribute("stroke-width", 0.5);
-  pnode.setAttribute("stroke", axesstroke);
-  pnode.setAttribute("fill", fill);
-  svg_picture.appendChild(pnode);
+
 
 }
 
 function grid(dx,dy) { 
-	axes(dx,dy,null,dx,dy)
+	axes(null,null,null,dx,dy)
 }
 
 function rect(p,q,id,rx,ry) { 
