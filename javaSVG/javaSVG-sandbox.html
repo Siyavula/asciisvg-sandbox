@@ -4,18 +4,15 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 	<title>javaSVG Editor (1.0)</title>
 	<script type="text/javascript" src="javaSVG.js"></script>
-	<script src="color/jquery-1.4.1.min.js" type="text/javascript"></script>
-	<script src="color/raphael-2.1.0-min.js" type="text/javascript"></script>
-	<script src="color/colorwheel.js" type="text/javascript"></script>
 </head>
 
 <body bgcolor="#88CC88" onload="updatePicture();">
-
-<table border=1 cellpadding=5 cellspacing=0>
+<center>
+<table border=1 cellpadding=5 cellspacing=0 bgcolor="#CCCCCC">
 	<tbody>
 		<tr>
-			<td colspan=2 bgcolor="#CCCCCC"><b>Input (ASCIIsvg commands and JavaScript)</b></td>
-			<td colspan=1 bgcolor="#CCCCCC"><b>Output (SVG)</b></td>
+			<td colspan=2 bgcolor="#999999"><b>Input (ASCIIsvg commands and JavaScript)</b></td>
+			<td colspan=1 bgcolor="#999999"><b>Output (SVG)</b></td>
 		</tr>
 
 		<tr>			
@@ -61,7 +58,7 @@ bunnyhop([[5,4],[3,2],[1,4],[-1,2],[-3,4],[-5,2]])
 		
 				</textarea>
 			</td>
-			<td rowspan=5 style="width:500;">
+			<td rowspan=5 style="width:400;">
 
 				<!-- SVG Output -->			
 				<center>
@@ -93,22 +90,22 @@ bunnyhop([[5,4],[3,2],[1,4],[-1,2],[-3,4],[-5,2]])
 		<tr>
 				<!-- Error Message -->				
 				<td>Error Message:</td>
-				<td><textarea id="error_msg" rows="4" cols="45" disabled="disabled" style="color:#990000;"></textarea></td>
+				<td><textarea id="error_msg" rows="2" cols="45" disabled="disabled" style="color:#990000;"></textarea></td>
 		</tr>
 	</tbody>
 </table>
 
-<br><br>
+<br>
 
-<table border=1 cellpadding=5 cellspacing=0>
+<table border=1 cellpadding=5 cellspacing=0  bgcolor="#CCCCCC">
 	<tbody>
 
 		<!-- Canvas Commands -->	
 
 		<tr>
-			<td colspan=1 bgcolor="#CCCCCC">Canvas Commands</td>
-			<td colspan=1 bgcolor="#CCCCCC">Example</td>
-			<td colspan=1 bgcolor="#CCCCCC"><b>Colour Wheel</b></td>
+			<td colspan=1 bgcolor="#999999">Canvas Commands</td>
+			<td colspan=1 bgcolor="#999999">Example</td>
+			<td colspan=1 bgcolor="#999999"><b>Colour Wheel</b></td>
 		</tr>
 
 		<tr>
@@ -120,15 +117,6 @@ bunnyhop([[5,4],[3,2],[1,4],[-1,2],[-3,4],[-5,2]])
 				<b>initPicture</b>(0,2,0,10)</br>
 			</td>
 			<td colspan=1 rowspan=40 valign="top">
-				
-				<!-- Colour Wheel -->
-
-				<div id="input_example" align="center">
-					<div class="colorwheel" align="center"></div>
-					<div align="center">HEX: <input name="input_example" value="#FF9900" size="7"></div>
-				</div>	
-
-				<br>
 
 				<!-- Colour Table (http://www.spacetoday.org/BoilerRoom/Colors.html) -->
 
@@ -237,8 +225,8 @@ bunnyhop([[5,4],[3,2],[1,4],[-1,2],[-3,4],[-5,2]])
 		<!-- Attributes -->	
 
 		<tr>
-			<td colspan=1 bgcolor="#CCCCCC">Attributes</td>
-			<td colspan=1 bgcolor="#CCCCCC">Example</td>
+			<td colspan=1 bgcolor="#999999">Attributes</td>
+			<td colspan=1 bgcolor="#999999">Example</td>
 		</tr>
 
 		<tr>
@@ -259,7 +247,7 @@ bunnyhop([[5,4],[3,2],[1,4],[-1,2],[-3,4],[-5,2]])
 			</td>
 		</tr>
 
-		<tr bgcolor="#66CC66">
+		<tr>
 			<td colspan=1>
 				<b>dotradius</b> = size
 			</td>
@@ -325,7 +313,7 @@ bunnyhop([[5,4],[3,2],[1,4],[-1,2],[-3,4],[-5,2]])
 			</td>
 		</tr>
 
-		<tr bgcolor="#66CC66">
+		<tr>
 			<td colspan=1>
 				<b>fontfill</b> = color
 			</td>
@@ -334,7 +322,7 @@ bunnyhop([[5,4],[3,2],[1,4],[-1,2],[-3,4],[-5,2]])
 			</td>
 		</tr>
 
-		<tr bgcolor="#66CC66">
+		<tr>
 			<td colspan=1>
 				<b>fontstroke</b> = color
 			</td>
@@ -364,8 +352,8 @@ bunnyhop([[5,4],[3,2],[1,4],[-1,2],[-3,4],[-5,2]])
 		<!-- Basic Elements -->	
 
 		<tr>
-			<td colspan=1 bgcolor="#CCCCCC">Basic Elements</td>
-			<td colspan=1 bgcolor="#CCCCCC">Example</td>
+			<td colspan=1 bgcolor="#999999">Basic Elements</td>
+			<td colspan=1 bgcolor="#999999">Example</td>
 		</tr>
 
 		<tr>
@@ -379,7 +367,7 @@ bunnyhop([[5,4],[3,2],[1,4],[-1,2],[-3,4],[-5,2]])
 			</td>
 		</tr>
 
-		<tr bgcolor="#66CC66">
+		<tr>
 			<td colspan=1>
 				<b>arrowhead</b>([x1,y1],[x2,y2],size)
 			</td>
@@ -434,7 +422,7 @@ bunnyhop([[5,4],[3,2],[1,4],[-1,2],[-3,4],[-5,2]])
 			</td>
 		</tr>
 
-		<tr bgcolor="#66CC66">
+		<tr>
 			<td colspan=1>
 				<b>text</b>([x,y],label,position,clock_rotation_deg)
 			</td>
@@ -448,11 +436,11 @@ bunnyhop([[5,4],[3,2],[1,4],[-1,2],[-3,4],[-5,2]])
 		<!-- Complex Elements -->	
 
 		<tr>
-			<td colspan=1 bgcolor="#CCCCCC">Complex Elements</td>
-			<td colspan=1 bgcolor="#CCCCCC">Example</td>
+			<td colspan=1 bgcolor="#999999">Complex Elements</td>
+			<td colspan=1 bgcolor="#999999">Example</td>
 		</tr>
 
-		<tr bgcolor="#66CC66">
+		<tr>
 			<td colspan=1>
 				<b>path</b>([list],style,closed)
 			</td>
@@ -470,7 +458,7 @@ bunnyhop([[5,4],[3,2],[1,4],[-1,2],[-3,4],[-5,2]])
 			</td>
 		</tr>
 
-		<tr bgcolor="#66CC66">
+		<tr>
 			<td colspan=1>
 				<b>smoothcurve</b>([[x1,y1],[x2,y2], ..., [xn,yn]])
 			</td>
@@ -479,7 +467,7 @@ bunnyhop([[5,4],[3,2],[1,4],[-1,2],[-3,4],[-5,2]])
 			</td>
 		</tr>
 
-		<tr bgcolor="#66CC66">
+		<tr>
 			<td colspan=1>
 				<b>bunnyhop</b>([[x1,y1],[x2,y2], ..., [xn,yn]])
 			</td>
@@ -488,7 +476,7 @@ bunnyhop([[5,4],[3,2],[1,4],[-1,2],[-3,4],[-5,2]])
 			</td>
 		</tr>
 
-		<tr bgcolor="#66CC66">
+		<tr>
 			<td colspan=1>
 				<b>petal</b>(start, unit_vector)
 			</td>
@@ -498,7 +486,7 @@ bunnyhop([[5,4],[3,2],[1,4],[-1,2],[-3,4],[-5,2]])
 			</td>
 		</tr>
 
-		<tr bgcolor="#66CC66">
+		<tr>
 			<td colspan=1>
 				<b>heart</b>(p,size)
 			</td>
@@ -532,10 +520,12 @@ bunnyhop([[5,4],[3,2],[1,4],[-1,2],[-3,4],[-5,2]])
 
 	</tbody>
 </table>
+</center>
 
 </body></html>
 
 <script>
+
 function set_source(f, target){
 f();
 target.text(f.toString())
