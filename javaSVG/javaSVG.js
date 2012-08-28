@@ -141,26 +141,11 @@ function initPicture(a,b,c,d)
 		svg_new.setAttribute("ymax",ymax);
 		svg_new.setAttribute("ox", origin[0]);
 		svg_new.setAttribute("oy", origin[1]);
-	
-		// Initialize blank background
-		var node;
-		node = myCreateElementSVG("rect");
-		node.setAttribute("x","0");
-		node.setAttribute("y","0");
-		node.setAttribute("width",  width);
-		node.setAttribute("height", height);
-		node.setAttribute("stroke-width", border);
-		node.setAttribute("stroke", stroke);
-		node.setAttribute("fill", "white");
-	
-		// Append RECTANGLE to SVG
-		svg_new.appendChild(node);
 
-		// Append SVG to DIV (replace)
-		svg_picture.parentNode.replaceChild(svg_new,svg_picture);
+		svg_picture.parentNode.replaceChild(svg_new,svg_picture);		// Append SVG to DIV (replace)
+		svg_picture = svg_new; 	// Replace old SVG object with new object
 
-		// Replace old SVG object with new object
-		svg_picture = svg_new; 
+		noaxes();
 	}
 }
 
@@ -541,7 +526,20 @@ Functions (COMPLEX SVG ELEMENTS)
 */
 
 function noaxes() {
-	initPicture();
+		
+	// Initialize blank background
+	var node;
+	node = myCreateElementSVG("rect");
+	node.setAttribute("x","0");
+	node.setAttribute("y","0");
+	node.setAttribute("width",  width);
+	node.setAttribute("height", height);
+	node.setAttribute("stroke-width", border);
+	node.setAttribute("stroke", stroke);
+	node.setAttribute("fill", "white");
+
+	// Append RECTANGLE to SVG
+	svg_picture.appendChild(node);
 }
 
 function axes(dx,dy,labels,gdx,gdy) {
