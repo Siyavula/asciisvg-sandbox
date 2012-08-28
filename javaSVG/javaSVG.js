@@ -183,7 +183,7 @@ function updatePicture()
 Functions (BASIC SVG ELEMENTS)
 ==============================
 > myCreateElementSVG(t)
-> dot(center, typ, label, pos, id)
+> dot(center, typ, label, pos, angle)
 > arrowhead(p,q)
 > text(p,st,pos,angle)
 > mathjs(st)
@@ -194,14 +194,13 @@ function myCreateElementSVG(t) {
 	return document.createElementNS("http://www.w3.org/2000/svg",t);
 }
 
-function dot(center, typ, label, pos, id) {
+function dot(center, typ, label, pos, angle) {
   var cx = center[0]*xunitlength+origin[0];
   var cy = height-center[1]*yunitlength-origin[1];
   if (typ=="+" || typ=="-" || typ=="|") 
 	{
 		// Type Defined
     var node = myCreateElementSVG("path");
-    node.setAttribute("id", id);
     svg_picture.appendChild(node);
 
     if (typ=="+") {	
@@ -225,7 +224,6 @@ function dot(center, typ, label, pos, id) {
 	else {
 		// Type NOT Defined
     node = myCreateElementSVG("circle");
-    node.setAttribute("id", id);
     svg_picture.appendChild(node);
     node.setAttribute("cx",cx);
     node.setAttribute("cy",cy);
@@ -236,7 +234,7 @@ function dot(center, typ, label, pos, id) {
   }
 	// Label
   if (label!=null) {
-		text(center,label,(pos==null?"below":pos),(id==null?id:id+"label"));
+		text(center,label,(pos==null?"below":pos),angle);
 	}
 }
 
