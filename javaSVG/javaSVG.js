@@ -424,16 +424,15 @@ function mathjs(st) {
 ==============================
 Functions (COMPOUND SVG ELEMENTS)
 ==============================
-> line(p,q,id)
-> ellipse(center,rx,ry,id)
-> circle(center,radius,id)
-> arc(start,end,radius,id)
+> line(p,q)
+> ellipse(center,rx,ry)
+> circle(center,radius)
+> arc(start,end,radius)
 ============================== 
 */
 
-function line(p,q,id) {
+function line(p,q) {
 	var node = myCreateElementSVG("path");
-	node.setAttribute("id", id);
 	node.setAttribute("d","M"+(p[0]*xunitlength+origin[0])+","+
 														(height-p[1]*yunitlength-origin[1])+" "+
 														(q[0]*xunitlength+origin[0])+","+
@@ -450,9 +449,8 @@ function line(p,q,id) {
 	svg_picture.appendChild(node);
 }
 
-function ellipse(center,rx,ry,id) {
+function ellipse(center,rx,ry) {
   var node = myCreateElementSVG("ellipse");
-  node.setAttribute("id", id);
   node.setAttribute("cx",center[0]*xunitlength+origin[0]);
   node.setAttribute("cy",height-center[1]*yunitlength-origin[1]);
   node.setAttribute("rx",rx*xunitlength);
@@ -463,14 +461,13 @@ function ellipse(center,rx,ry,id) {
 	svg_picture.appendChild(node);
 }
 
-function circle(center,radius,id) {
-	ellipse(center,radius,null,id);
+function circle(center,radius) {
+	ellipse(center,radius,null);
 }
 
-function arc(start,end,radius,id) {
+function arc(start,end,radius) {
   var vector, ab, abn;
 	node = myCreateElementSVG("path");
-	node.setAttribute("id", id);
 	svg_picture.appendChild(node);
   // Radius
 	if (radius==null) {    
@@ -513,11 +510,13 @@ Functions (COMPLEX SVG ELEMENTS)
 > noaxes()
 > axes(dx,dy,labels,gdx,gdy)
 > grid(dx,dy)
-> rect(p,q,id,rx,ry)
-> path(plist,id,c)
-> plot(fun,x_min,x_max,points,id)
-> curve(plist,id)
-> petal(p,d,id)
+> rect(p,q,rx,ry)
+> path(plist,c)
+> plot(fun,x_min,x_max,points)
+> curve(plist)
+> bunnyhop(plist)
+> smoothcurve(plist)
+> petal(p,d)
 > heart(p,size)
 > slopefield(fun,dx,dy)
 ============================== 
@@ -626,9 +625,8 @@ function grid(dx,dy) {
 	axes(null,null,null,dx,dy)
 }
 
-function rect(p,q,id,rx,ry) { 
+function rect(p,q,rx,ry) { 
 	var node = myCreateElementSVG("rect");
-	node.setAttribute("id", id);
 	node.setAttribute("x",p[0]*xunitlength+origin[0]);
 	node.setAttribute("y",height-q[1]*yunitlength-origin[1]);
 	node.setAttribute("width",(q[0]-p[0])*xunitlength);
@@ -642,10 +640,9 @@ function rect(p,q,id,rx,ry) {
 	svg_picture.appendChild(node);
 }
 
-function path(plist,style,closed,id) {
+function path(plist,style,closed) {
 	var i;
 	var node = myCreateElementSVG("path");
-  node.setAttribute("id", id);
   svg_picture.appendChild(node);
   
 	// =================================================================================================
@@ -692,7 +689,7 @@ function path(plist,style,closed,id) {
 	}
 }
 
-function plot(func,x_min,x_max,points,id) {
+function plot(func,x_min,x_max,points) {
 	
   var f = function(x) {return x;}
 	x_min = (x_min==null?xmin:x_min);
@@ -728,19 +725,19 @@ function plot(func,x_min,x_max,points,id) {
   path(array_points);
 }
 
-function curve(plist,id) { 
+function curve(plist) { 
 	path(plist,"T");
 }
 
-function bunnyhop(plist,id) { 
+function bunnyhop(plist) { 
 	path(plist,"Q");
 }
 
-function smoothcurve(plist,id) { 
+function smoothcurve(plist) { 
 	path(plist,"S");
 }
 
-function petal(p,d,id) {
+function petal(p,d) {
   if (d==null) d=[1,1];
   path([p,[p[0]+d[0],p[1]+d[1]],[p[0]-d[1],p[1]+d[0]],p],"C")
 }
@@ -794,5 +791,37 @@ function fn_autocomplete() {
 	if (document.getElementById("autocomplete_checkbox").checked) { updatePicture(); }
 }
 
-
+function getSuggestion() {
+  var line_number = document.getElementById("picture1input").value.substr(0, document.getElementById("picture1input").selectionStart).split("\n").length - 1
+	var line = document.getElementById("picture1input").value.split('\n')[line_number];
+	document.getElementById("suggestionNode").value = ""	
+	var dict = {		'dot':'dot([center_x,center_y], type, label, position, angle)', 
+									'arrowhead':'arrowhead([x1,y1],[x2,y2])',
+									'text':'text([x,y],string,position,angle)',
+									'axes':'axes(dx,dy,labels,gdx,gdy)',
+									'grid':'grid(dx,dy)',
+									'rect':'rect([x1,y1],[x2,y2],radius_corner_x,radius_corner_y)',
+									'path':'path(list)',
+									'plot':'plot(func,xmin,xmax,points)',
+									'curve':'curve(list)',
+									'bunnyhop':'bunnyhop(list)',
+									'smoothcurve':'smoothcurve(list)',
+									'petal':'petal([x,y],[xdir,ydir])',
+									'heart':'heart([x,y],size)',
+									'slopefield':'slopefield(func,dx,dy)',
+									'line':'line([x1,y1],[x2,y2])',
+									'ellipse':'ellipse(center,xradius,yradius)',
+									'circle':'circle(center,radius)',
+									'arc':'arc(start,end,radius)',
+									'setBorder':'setBorder(size, color)',
+									'initPicture':'initPicture(xmin,xmax,ymin,ymax)'
+						};
+	for (term in dict)
+  {
+  	if (line.indexOf(term) > -1)
+		{
+			document.getElementById("suggestionNode").value = dict[term];
+		}
+  }
+}
 

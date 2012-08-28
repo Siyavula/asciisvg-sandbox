@@ -23,9 +23,7 @@
 	
 				<!-- Input Box -->
 	
-				<textarea id="picture1input" rows="18" onKeyUp="fn_autocomplete();" style="width:100%;">setBorder(0)
-setBorder(0)
-setBorder(0)
+				<textarea id="picture1input" rows="18" onKeyUp="fn_autocomplete(); getSuggestion();" onmouseup="this.onkeyup();" style="width:100%;">setBorder(0)
 initPicture(-6,6,-6,6)
 axes(2, 1, "labels", 1,1)
 
@@ -63,10 +61,12 @@ bunnyhop([[5,4],[3,2],[1,4],[-1,2],[-3,4],[-5,2]])
 		
 				</textarea>
 			</td>
-			<td rowspan=3 style="width:400;">
+			<td rowspan=5 style="width:500;">
 
 				<!-- SVG Output -->			
+				<center>
 				<div id="outputNode"></div>
+				</center>
 
 			</td>
 		</tr>	
@@ -85,11 +85,15 @@ bunnyhop([[5,4],[3,2],[1,4],[-1,2],[-3,4],[-5,2]])
 			</td>
 		</tr>
 		<tr>
-
+		<tr>
+				<!-- Error Message -->				
+				<td>Suggestion:</td>
+				<td><textarea id="suggestionNode" rows="2" cols="45" disabled="disabled"></textarea></td>
+		</tr>
+		<tr>
 				<!-- Error Message -->				
 				<td>Error Message:</td>
-				<td><textarea id="error_msg" rows="4" cols="45" disabled="disabled"></textarea></td>
-
+				<td><textarea id="error_msg" rows="4" cols="45" disabled="disabled" style="color:#990000;"></textarea></td>
 		</tr>
 	</tbody>
 </table>
