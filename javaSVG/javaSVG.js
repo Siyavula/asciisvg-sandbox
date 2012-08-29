@@ -156,22 +156,23 @@ function updatePicture()
 	initPicture();
 
 	// Fetch code line-by-line
-	var array_raw_code = document.getElementById("picture1input").value.split('\n');
-	var array_len = array_raw_code.length;
+	var array_raw = document.getElementById("picture1input").value;
 	var error_text = "";
-	
-	for (i = 0; i < array_len; i++) {
-		var line_raw_code = array_raw_code[i];
-		
-		// Formatting
-		line_raw_code = line_raw_code.replace(/plot\(\x20*([^\"f\[][^\n\r]+?)\,/g,"plot\(\"$1\",");
-		line_raw_code = line_raw_code.replace(/plot\(\x20*([^\"f\[][^\n\r]+)\)/g,"plot(\"$1\")");
-		line_raw_code = line_raw_code.replace(/([0-9])([a-zA-Z])/g,"$1*$2");
-		line_raw_code = line_raw_code.replace(/\)([\(0-9a-zA-Z])/g,"\)*$1");
-		
-		// Evaluate Functions
-		try { with (Math) eval(line_raw_code); error_text += "";} 
-		catch(err) { error_text += "<br>ERROR - " + line_raw_code + " (" + err + ")";	}
+
+	// Formatting
+	array_raw = array_raw.replace(/plot\(\x20*([^\"f\[][^\n\r]+?)\,/g,"plot\(\"$1\",");
+	array_raw = array_raw.replace(/plot\(\x20*([^\"f\[][^\n\r]+)\)/g,"plot(\"$1\")");
+	array_raw = array_raw.replace(/([0-9])([a-zA-Z])/g,"$1*$2");
+	array_raw = array_raw.replace(/\)([\(0-9a-zA-Z])/g,"\)*$1");
+
+	document.getElementById('error_msg').value = array_raw;
+
+	// Evaluate Functions
+	try { 
+		with (Math) eval(array_raw); error_text += "";
+	} 
+	catch(err){ 
+		error_text += "<br>ERROR - (" + err + ")";
 	}
 
 	document.getElementById('error_msg').value = error_text; // Error Reporting
@@ -789,6 +790,7 @@ function slopefield(func,dx,dy) {
 
 function fn_autocomplete() { 
 	if (document.getElementById("autocomplete_checkbox").checked) { updatePicture(); }
+	getSuggestion();
 }
 
 function getSuggestion() {
