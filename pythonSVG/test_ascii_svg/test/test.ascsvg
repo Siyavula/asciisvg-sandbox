@@ -1,0 +1,96 @@
+// ===================================================================================
+// Name: MONASSIS Templates - ASCII SVG Template
+// Source: http://www1.chapman.edu/~jipsen/svg/asciisvgeditor.html
+// File Author: Leen Remmelzwaal
+// Date: 30th August 2012	
+// ===================================================================================
+
+// =======================================
+// Image Variables
+// =======================================
+
+x_label = "hello"
+y_label = "hello"
+
+A = 1
+B = 1
+C = 6
+P = 1
+Q = 1
+
+// =======================================
+// Drawing Image
+// =======================================
+
+A = max(0.1, A)
+C = max(0.1, C)
+x_limit = C/A
+y_limit = C
+
+setBorder(0)
+initPicture(-((x_limit)/6),(x_limit)+((x_limit)/5),-((y_limit)/6),(y_limit)+((y_limit)/5))
+axes(ceil(x_limit/10), ceil(y_limit/10), [1,1,1,1], ceil(x_limit/10),ceil(y_limit/10))
+
+// Labels
+text ([-((x_limit)/8),y_limit/2],x_label,right,-90)
+text ([x_limit/2,-((y_limit)/9)],y_label)
+
+// Markers
+if (P > 0 && Q > 0)
+{
+  point_A = [Q,P]
+  point_B = [(P-C)/(-A),P]
+  point_C = [Q,C-A*Q]
+}
+else if (P > 0)
+{
+  point_A = [0,P]
+  point_B = [(P-C)/(-A),P]
+  point_C = [Q,y_limit]
+}
+else if (Q > 0)
+{
+  point_A = [Q,0]
+  point_B = [x_limit,P]
+  point_C = [Q,C-A*Q]
+}
+else
+{
+  point_A = [0,0]
+  point_B = [x_limit,0]
+  point_C = [0,y_limit]
+}
+
+// Fill
+fill = 'lightgreen'
+path([point_A,point_B,point_C,point_A])
+
+// Lines
+if (A > 0 && B > 0 && C > 0)
+{
+  // Line: A * x + y <= C
+  line([x_limit,0],[0,y_limit])
+}
+if (P > 0)
+{
+  // Line: x >= P
+  marker = "arrow"
+  line([0,P],[x_limit+(x_limit/10),P])
+}
+if (Q > 0)
+{
+  // Line: y >= Q
+  marker = "arrow"
+  line([Q,0],[Q,y_limit+(y_limit/10)])
+}
+
+// Critical Points
+dot(point_A, closed, "A", aboveright)
+dot(point_B, closed, "B", aboveright)
+dot(point_C, closed, "C", aboveright)
+
+// Formula Labels
+fontfill = 'black'
+text ([point_A[0]+(point_B[0]-point_A[0])/2,point_A[0]],"y ≥ " + String(Q), above)
+text ([point_A[1],point_A[1]+(point_C[1]-point_A[1])/2],"x ≥ " + String(P), right)
+text ([point_A[0]+(point_B[0]-point_A[0])/2,point_A[1]+(point_C[1]-point_A[1])/2],String(A) + "x + " + String(B) + "y ≤ " + String(C),aboveright)

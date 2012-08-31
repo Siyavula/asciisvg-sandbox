@@ -14,7 +14,7 @@ contents = "<html> \
 # ============================================================
 
 # Read directory
-path="/home/leen/SiyaVula/monassis/development/Tools/asciisvg-sandbox/pythonSVG/test_ascii_svg/"
+path="/home/leen/SiyaVula/monassis/development/Tools/asciisvg-sandbox/pythonSVG/test_ascii_svg/test/"
 
 i = 1
 count_error = 0

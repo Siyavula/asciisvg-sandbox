@@ -612,20 +612,36 @@ function axes(dx,dy,labels,gdx,gdy) {
 
 	/* === Labels === */
 	if (labels!=null) with (Math) {
+	
 		var ldx = tdx/xunitlength;
     var ldy = tdy/yunitlength;
     var lx = (xmin>0 || xmax<0?xmin:0);
     var ly = (ymin>0 || ymax<0?ymin:0);
     var lxp = (ly==0?"below":"above");
     var lyp = (lx==0?"left":"right");
-    for (x = ldx; x<=xmax; x = x+ldx) {text([x,ly],round(x,2),lxp);} // x-axis (positive)
-		for (x = -ldx; xmin<=x; x = x-ldx) {text([x,ly],round(x,2),lxp);} // x-axis (negative)
-    for (y = ldy; y<=ymax; y = y+ldy) {text([lx,y],round(y,2),lyp);} // y-axis (positive)
-    for (y = -ldy; ymin<=y; y = y-ldy) {text([lx,y],round(y,2),lyp);} // y-axis (negative)
+	
+		if (typeof labels=="object")
+		{
+			if (labels.length > 0){
+				if (labels[0] == 1){for (x = ldx; x<=xmax; x = x+ldx) {text([x,ly],round(x,2),lxp);}}} // x-axis (positive)}
+			if (labels.length > 1){
+				if (labels[1] == 1){for (x = -ldx; xmin<x; x = x-ldx) {text([x,ly],round(x,2),lxp);}}} // x-axis (negative)}
+			if (labels.length > 2){
+				if (labels[2] == 1){for (y = ldy; y<=ymax; y = y+ldy) {text([lx,y],round(y,2),lyp);}}} // y-axis (positive)}
+			if (labels.length > 3){
+				if (labels[3] == 1){for (y = -ldy; ymin<y; y = y-ldy) {text([lx,y],round(y,2),lyp);}}} // y-axis (negative)}
+			if (labels.length > 4){
+				if (labels[4] != null){text([0,0],0,labels[4]);}} // Origin}	
+		}
+		else
+		{
+		  for (x = ldx; x<=xmax; x = x+ldx) {text([x,ly],round(x,2),lxp);} // x-axis (positive)
+			for (x = -ldx; xmin<=x; x = x-ldx) {text([x,ly],round(x,2),lxp);} // x-axis (negative)
+		  for (y = ldy; y<=ymax; y = y+ldy) {text([lx,y],round(y,2),lyp);} // y-axis (positive)
+		  for (y = -ldy; ymin<=y; y = y-ldy) {text([lx,y],round(y,2),lyp);} // y-axis (negative)
+			text([0,0],0,"belowleft");
+		}
   }
-	/* Create SVG Element	*/
-
-
 }
 
 function grid(dx,dy) { 

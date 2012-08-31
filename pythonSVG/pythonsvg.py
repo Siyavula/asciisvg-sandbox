@@ -360,7 +360,7 @@ class mySvgCanvas:
 				current += leap
 			return result
 		else:
-			return [0]
+			return []
 
 # ========================================================================================
 
@@ -807,16 +807,39 @@ class mySvgCanvas:
 			pnode.attrib['fill'] = str(self.loc_var["fill"])
 
 		if (labels!=None):
+			if (isinstance(labels, list)):
+				# Labels
+				if(len(labels) > 0):
+					if(labels[0] == 1):
+						for i in self.frange(dx, self.loc_var["xmax"], dx):
+							self.text([i,0],str(int(i)),"below") # x-axis (positive)
+				if(len(labels) > 1):
+					if(labels[1] == 1):
+						for i in self.frange(-dx, self.loc_var["xmin"], -dx):
+							self.text([i,0],str(int(i)),"below") # x-axis (positive)
+				if(len(labels) > 2):
+					if(labels[2] == 1):
+						for i in self.frange(dy, self.loc_var["ymax"], dy):
+							self.text([0,i],str(int(i)),"left") # y-axis (positive)
+				if(len(labels) > 3):
+					if(labels[3] == 1):
+						for i in self.frange(-dy, self.loc_var["ymin"], -dy): 
+							self.text([0,i],str(int(i)),"left") # y-axis (negative)
+				if(len(labels) > 4):
+					if(labels[4] != None):
+						self.text([0,0],0,labels[4]) 			# origin
 
-			# Labels
-			for i in self.frange(dx, self.loc_var["xmax"], dx):
-				self.text([i,0],str(int(i)),"below") # x-axis (positive)
-			for i in self.frange(-dx, self.loc_var["xmin"], -dx):
-				self.text([i,0],str(int(i)),"below") # x-axis (positive)
-			for i in self.frange(dy, self.loc_var["ymax"], dy):
-				self.text([0,i],str(int(i)),"left") # y-axis (positive)
-			for i in self.frange(-dy, self.loc_var["ymin"], -dy): 
-				self.text([0,i],str(int(i)),"left") # y-axis (negative)
+			else:
+				# Labels
+				for i in self.frange(dx, self.loc_var["xmax"], dx):
+					self.text([i,0],str(int(i)),"below") # x-axis (positive)
+				for i in self.frange(-dx, self.loc_var["xmin"], -dx):
+					self.text([i,0],str(int(i)),"below") # x-axis (positive)
+				for i in self.frange(dy, self.loc_var["ymax"], dy):
+					self.text([0,i],str(int(i)),"left") # y-axis (positive)
+				for i in self.frange(-dy, self.loc_var["ymin"], -dy): 
+					self.text([0,i],str(int(i)),"left") # y-axis (negative)
+				self.text([0,0],0,"belowleft") # origin
 
 # ========================================================================================
 
