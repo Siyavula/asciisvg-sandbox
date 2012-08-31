@@ -192,6 +192,7 @@ class mySvgCanvas:
 		a = a.replace("null", "None")														# "None" elements
 		a = a.replace('"green"', '"darkgreen"') 								# Colours
 		a = a.replace("'green'", "'darkgreen'") 								# Colours
+		a = a.replace("String(", "str(") 												# String Handling
 
 		# Replace FOR LOOP
 		if (len(re.findall("(^|[^a-zA-Z])for[^a-zA-Z]", a)) == 1):
