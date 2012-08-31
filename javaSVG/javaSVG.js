@@ -822,7 +822,7 @@ function getSuggestion() {
 	var dict = {		'dot':'dot([center_x,center_y], type, label, position, angle)', 
 									'arrowhead':'arrowhead([x1,y1],[x2,y2])',
 									'text':'text([x,y],string,position,angle)',
-									'axes':'axes(dx,dy,labels,gdx,gdy)',
+									'axes':'axes(dx, dy,"labels" || [xpos,xneg,ypos,yneg,zeropos],gdx,gdy)',
 									'grid':'grid(dx,dy)',
 									'rect':'rect([x1,y1],[x2,y2],radius_corner_x,radius_corner_y)',
 									'path':'path(list)',
