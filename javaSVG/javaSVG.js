@@ -539,7 +539,7 @@ function noaxes() {
 	svg_picture.appendChild(node);
 }
 
-function axes(dx,dy,labels,gdx,gdy) {
+function axes(dx,dy,labels,gdx,gdy,units) {
 
 	if (dx != null && dx <= 0) {dx = 1;}
 	if (dy != null && dy <= 0) {dy = 1;}
@@ -611,6 +611,17 @@ function axes(dx,dy,labels,gdx,gdy) {
 	}
 
 	/* === Labels === */
+
+	// Units
+	xunits = ""
+	yunits = ""
+	if (typeof units=="object")
+	{
+		if (units.length > 0){ xunits = units[0];}
+		if (units.length > 1){ yunits = units[1];}
+	}
+	
+	// Labels
 	if (labels!=null) with (Math) {
 	
 		var ldx = tdx/xunitlength;
@@ -623,22 +634,22 @@ function axes(dx,dy,labels,gdx,gdy) {
 		if (typeof labels=="object")
 		{
 			if (labels.length > 0){
-				if (labels[0] == 1){for (x = ldx; x<=xmax; x = x+ldx) {text([x,ly],round(x,2),lxp);}}} // x-axis (positive)}
+				if (labels[0] == 1){for (x = ldx; x<=xmax; x = x+ldx) {text([x,ly],String(round(x,2))+String(xunits),lxp);}}} // x-axis (positive)}
 			if (labels.length > 1){
-				if (labels[1] == 1){for (x = -ldx; xmin<x; x = x-ldx) {text([x,ly],round(x,2),lxp);}}} // x-axis (negative)}
+				if (labels[1] == 1){for (x = -ldx; xmin<x; x = x-ldx) {text([x,ly],String(round(x,2))+String(xunits),lxp);}}} // x-axis (negative)}
 			if (labels.length > 2){
-				if (labels[2] == 1){for (y = ldy; y<=ymax; y = y+ldy) {text([lx,y],round(y,2),lyp);}}} // y-axis (positive)}
+				if (labels[2] == 1){for (y = ldy; y<=ymax; y = y+ldy) {text([lx,y],String(round(y,2))+String(yunits),lyp);}}} // y-axis (positive)}
 			if (labels.length > 3){
-				if (labels[3] == 1){for (y = -ldy; ymin<y; y = y-ldy) {text([lx,y],round(y,2),lyp);}}} // y-axis (negative)}
+				if (labels[3] == 1){for (y = -ldy; ymin<y; y = y-ldy) {text([lx,y],String(round(y,2))+String(yunits),lyp);}}} // y-axis (negative)}
 			if (labels.length > 4){
 				if (labels[4] != null){text([0,0],0,labels[4]);}} // Origin}	
 		}
 		else
 		{
-		  for (x = ldx; x<=xmax; x = x+ldx) {text([x,ly],round(x,2),lxp);} // x-axis (positive)
-			for (x = -ldx; xmin<=x; x = x-ldx) {text([x,ly],round(x,2),lxp);} // x-axis (negative)
-		  for (y = ldy; y<=ymax; y = y+ldy) {text([lx,y],round(y,2),lyp);} // y-axis (positive)
-		  for (y = -ldy; ymin<=y; y = y-ldy) {text([lx,y],round(y,2),lyp);} // y-axis (negative)
+		  for (x = ldx; x<=xmax; x = x+ldx) {text([x,ly],String(round(x,2))+String(xunits),lxp);} // x-axis (positive)
+			for (x = -ldx; xmin<=x; x = x-ldx) {text([x,ly],String(round(x,2))+String(xunits),lxp);} // x-axis (negative)
+		  for (y = ldy; y<=ymax; y = y+ldy) {text([lx,y],String(round(y,2))+String(yunits),lyp);} // y-axis (positive)
+		  for (y = -ldy; ymin<=y; y = y-ldy) {text([lx,y],String(round(y,2))+String(yunits),lyp);} // y-axis (negative)
 			text([0,0],0,"belowleft");
 		}
   }
@@ -822,7 +833,7 @@ function getSuggestion() {
 	var dict = {		'dot':'dot([center_x,center_y], type, label, position, angle)', 
 									'arrowhead':'arrowhead([x1,y1],[x2,y2])',
 									'text':'text([x,y],string,position,angle)',
-									'axes':'axes(dx, dy,"labels" || [xpos,xneg,ypos,yneg,zeropos],gdx,gdy)',
+									'axes':'axes(dx, dy,"labels" || [xpos,xneg,ypos,yneg,zeropos],gdx,gdy,[xunits,yunits])',
 									'grid':'grid(dx,dy)',
 									'rect':'rect([x1,y1],[x2,y2],radius_corner_x,radius_corner_y)',
 									'path':'path(list)',

@@ -29,7 +29,7 @@ y_limit = C
 
 setBorder(0)
 initPicture(-((x_limit)/6),(x_limit)+((x_limit)/5),-((y_limit)/6),(y_limit)+((y_limit)/5))
-axes(ceil(x_limit/10), ceil(y_limit/10), [1,1,1,1], ceil(x_limit/10),ceil(y_limit/10))
+axes(ceil(x_limit/10), ceil(y_limit/10), [1,1,1,1], ceil(x_limit/10),ceil(y_limit/10), ["m"])
 
 // Labels
 text ([-((x_limit)/8),y_limit/2],x_label,right,-90)
