@@ -723,10 +723,11 @@ class mySvgCanvas:
 
 	def axes(self,dx=None,dy=None,labels=None,gdx=None,gdy=None):
 
-		if (dx != None and dx <= 0) {dx = 1;}
-		if (dy != None and dy <= 0) {dy = 1;}
-		if (gdx != None and gdx <= 0) {gdx = 1;}
-		if (gdy != None and gdy <= 0) {gdy = 1;}
+		if (dx != None and dx <= 0): dx = 1
+		if (dy != None and dy <= 0): dy = 1
+		if (gdx != None and gdx <= 0): gdx = 1
+		if (gdy != None and gdy <= 0): gdy = 1
+		if (gdx != None and gdy == None): gdy = gdx
 
 		tdx = (dx != None and dx*self.loc_var["xunitlength"] or self.loc_var["xunitlength"])
 		tdy = (dy != None and dy*self.loc_var["yunitlength"] or self.loc_var["yunitlength"])

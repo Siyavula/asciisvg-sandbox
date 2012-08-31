@@ -545,6 +545,7 @@ function axes(dx,dy,labels,gdx,gdy) {
 	if (dy != null && dy <= 0) {dy = 1;}
 	if (gdx != null && gdx <= 0) {gdx = 1;}
 	if (gdy != null && gdy <= 0) {gdy = 1;}
+	if (gdx != null && gdy == null) {gdy = gdx;}
 
 	var pnode, string, i;
   var tdx = (dx==null?xunitlength:dx*xunitlength);
