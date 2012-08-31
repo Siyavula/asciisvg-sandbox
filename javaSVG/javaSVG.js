@@ -20,7 +20,6 @@ Infinite Loop Handling
 
 ========================================================================================== */
 
-// ==============================
 // Variables
 // ==============================
 
@@ -541,27 +540,33 @@ function noaxes() {
 }
 
 function axes(dx,dy,labels,gdx,gdy) {
+
+	if (dx != null && dx <= 0) {dx = 1;}
+	if (dy != null && dy <= 0) {dy = 1;}
+	if (gdx != null && gdx <= 0) {gdx = 1;}
+	if (gdy != null && gdy <= 0) {gdy = 1;}
+
 	var pnode, string, i;
   var tdx = (dx==null?xunitlength:dx*xunitlength);
   var tdy = (dy==null?yunitlength:dy*yunitlength);
   fontsize = Math.min(tdx/2,tdy/2,16);
   ticklength = fontsize/4;
-  
+
 	/* === Grid === */
-	if (gdx != null || dx != null || gdy != null || dy != null)
+	if (gdx != null || gdy != null)
 	{
     pnode = myCreateElementSVG("path");
 		string = "";
 		
-		if (gdx != null || dx != null)
+		if (gdx != null)
 		{
-			gdx = (gdx!=null?gdx*xunitlength:dx*xunitlength);
+			gdx = gdx*xunitlength;
 	 		for (i = origin[0]; i<width; i = i+gdx) {string += " M"+i+",0"+" "+i+","+height;} // x-axis (positive)
 			for (i = origin[0]-gdx; i>0; i =i-gdx) {string += " M"+i+",0"+" "+i+","+height;} // x-axis (negative)
 		}
-		if (gdy != null || dy != null)
+		if (gdy != null)
 		{
-			gdy = (gdy!=null?gdy*yunitlength:dy*yunitlength);
+			gdy = gdy*yunitlength;
 			for (i = height-origin[1]; i<height; i = i+gdy) {string += " M0,"+i+" "+width+","+i;} // y-axis (positive)
 			for (i = height-origin[1]-gdy; i>0; i = i-gdy) {string += " M0,"+i+" "+width+","+i;} // y-axis (negative)
 		}
@@ -612,10 +617,10 @@ function axes(dx,dy,labels,gdx,gdy) {
     var ly = (ymin>0 || ymax<0?ymin:0);
     var lxp = (ly==0?"below":"above");
     var lyp = (lx==0?"left":"right");
-    for (x = ldx; x<=xmax; x = x+ldx) {text([x,ly],x,lxp);} // x-axis (positive)
-		for (x = -ldx; xmin<=x; x = x-ldx) {text([x,ly],x,lxp);} // x-axis (negative)
-    for (y = ldy; y<=ymax; y = y+ldy) {text([lx,y],y,lyp);} // y-axis (positive)
-    for (y = -ldy; ymin<=y; y = y-ldy) {text([lx,y],y,lyp);} // y-axis (negative)
+    for (x = ldx; x<=xmax; x = x+ldx) {text([x,ly],round(x,2),lxp);} // x-axis (positive)
+		for (x = -ldx; xmin<=x; x = x-ldx) {text([x,ly],round(x,2),lxp);} // x-axis (negative)
+    for (y = ldy; y<=ymax; y = y+ldy) {text([lx,y],round(y,2),lyp);} // y-axis (positive)
+    for (y = -ldy; ymin<=y; y = y-ldy) {text([lx,y],round(y,2),lyp);} // y-axis (negative)
   }
 	/* Create SVG Element	*/
 
