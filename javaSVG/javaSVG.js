@@ -117,18 +117,51 @@ function initPicture(a,b,c,d)
   yunitlength = (height-2*border)/(ymax-ymin);
 	origin = [-xmin*xunitlength+border,-ymin*yunitlength+border];
 
+/*
+
 	if (svg_picture == null)
 	{
-		svg_picture = myCreateElementSVG("svg");
+		svg_frame = myCreateElementSVG("svg");
+		svg_frame.setAttribute("id","svg1");
+		document.getElementById('outputNode').appendChild(svg_frame);
+		
+		svg_picture = myCreateElementSVG("picture");
 		svg_picture.setAttribute("id","picture1");
-		document.getElementById('outputNode').appendChild(svg_picture);
+		svg_frame.appendChild(svg_picture);
+		
 		reset_variables(); // Reset Variables to original values for the next update	
 	}
 	else
 	{
 		// Initialize SVG Canvas
+		svg_frame = myCreateElementSVG("svg");
+		svg_frame.setAttribute("id","svg1");
+
+		svg_new = myCreateElementSVG("picture");
+		svg_frame.appendChild(svg_new);
+
+*/
+
+	if (svg_picture == null)
+	{
+		svg_canvas = myCreateElementSVG("svg");
+		svg_canvas.setAttribute("id","svg1");
+		document.getElementById('outputNode').appendChild(svg_canvas);
+
+		svg_picture = myCreateElementSVG("g");
+		svg_picture.setAttribute("id","picture1");
+		svg_canvas.appendChild(svg_picture);
+
+		reset_variables(); // Reset Variables to original values for the next update	
+
+		// Rotate on the screen: svg_picture.setAttribute("transform", "rotate(90,"+width/2+","+height/2+")")
+		
+	}
+	else
+	{
+		// Initialize SVG Canvas
 		svg_new = myCreateElementSVG("svg");
-		svg_new.setAttribute("id","picture1");
+		svg_new.setAttribute("id","svg1");
 		svg_new.setAttribute("style","display:inline");
 		svg_new.setAttribute("width",width);
 		svg_new.setAttribute("height",height);
@@ -141,8 +174,12 @@ function initPicture(a,b,c,d)
 		svg_new.setAttribute("ox", origin[0]);
 		svg_new.setAttribute("oy", origin[1]);
 
-		svg_picture.parentNode.replaceChild(svg_new,svg_picture);		// Append SVG to DIV (replace)
-		svg_picture = svg_new; 	// Replace old SVG object with new object
+		svg_picture = myCreateElementSVG("g");
+		svg_picture.setAttribute("id","picture1");
+		svg_new.appendChild(svg_picture);
+
+		svg_canvas.parentNode.replaceChild(svg_new,svg_canvas);		// Append SVG to DIV (replace)
+		svg_canvas = svg_new; 	// Replace old SVG object with new object
 
 		noaxes();
 	}
