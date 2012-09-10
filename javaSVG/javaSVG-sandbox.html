@@ -501,7 +501,8 @@ bunnyhop([[5,4],[3,2],[1,4],[-1,2],[-3,4],[-5,2]])
 
 		<tr>
 			<td colspan=1>
-				<b>plot</b>(f(x), xmin, xmax, npoints)
+				<b>plot</b>(f(x), xmin, xmax, npoints)<br><br>
+				<i>Note: f(x) needs to be a "string" for PNG processing</i>
 			</td>
 			<td colspan=1>
 				<b>plot</b>("sin(x)")<br>
@@ -512,7 +513,8 @@ bunnyhop([[5,4],[3,2],[1,4],[-1,2],[-3,4],[-5,2]])
 
 		<tr>
 			<td colspan=1>
-				<b>plot</b>(["t", "sin(t)"], xmin, xmax, npoints)
+				<b>plot</b>(["t", f(x)], xmin, xmax, npoints)<br><br>
+				<i>Note: f(x) needs to be a "string" for PNG processing</i>
 			</td>
 			<td colspan=1>
 				<b>plot</b>(["t", "sin(t)"])<br>
