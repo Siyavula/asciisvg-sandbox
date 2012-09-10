@@ -271,7 +271,7 @@ function dot(center, typ, label, pos, angle) {
   }
 	// Label
   if (label!=null) {
-		text(center,label,(pos==null?"below":pos),angle);
+		text(center,label,pos,angle);
 	}
 }
 
@@ -302,16 +302,16 @@ function text(p,st,pos,angle) {
 	var textanchor = "middle";
   var dx = 0; 
 	var dy = fontsize/3;
-	
+
 	// Text Positions
   if (pos == aboveleft)	{dx = -fontsize/2; 	dy = -fontsize/2;		textanchor = "end";}
 	if (pos == above)			{dx = 0; 						dy = -fontsize/2;		textanchor = "middle";}
 	if (pos == aboveright){dx = fontsize/2; 	dy = -fontsize/2;		textanchor = "start";}
 	if (pos == left)			{dx = -fontsize/2; 	dy = fontsize/3;		textanchor = "end";}
 	if (pos == right)			{dx = fontsize/2; 	dy = fontsize/3;		textanchor = "start";}
-	if (pos == belowleft)	{dx = -fontsize/2; 	dy = fontsize;			textanchor = "end";}
-	if (pos == below)			{dx = 0; 						dy = fontsize;			textanchor = "middle";}
-	if (pos == belowright){dx = fontsize/2; 	dy = fontsize;			textanchor = "start";}
+	if (pos == belowleft)	{dx = -fontsize/2; 	dy = fontsize/1;			textanchor = "end";}
+	if (pos == below)			{dx = 0; 						dy = fontsize/1;			textanchor = "middle";}
+	if (pos == belowright){dx = fontsize/2; 	dy = fontsize/1;			textanchor = "start";}
 
 	// Text Rotation
 	var node = myCreateElementSVG("text");
