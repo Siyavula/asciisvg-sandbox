@@ -765,8 +765,11 @@ function plot(func,x_min,x_max,points) {
   var f = function(x) {return x;}
 	x_min = (x_min==null?xmin:x_min);
   x_max = (x_max==null?xmax:x_max);
+	if (x_max <= x_min) {x_max = x_min + 5}
 	var name;
 	var array_points = [];
+
+	text([-3,3], typeof func)
 
   // plot ("sin(x)") 
 	if (typeof func=="string"){
