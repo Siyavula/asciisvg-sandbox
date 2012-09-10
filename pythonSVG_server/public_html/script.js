@@ -22,7 +22,7 @@ function xmlhttpPost(image_format) {
 	  else if (window.ActiveXObject) {
 	      self.xmlHttpReq = new ActiveXObject("Microsoft.XMLHTTP");
 	  }
-	  self.xmlHttpReq.open('POST', "./cgi-bin/pythonsvg.py", true);
+	  self.xmlHttpReq.open('POST', "./cgi-bin/processor.py", true);
 	  self.xmlHttpReq.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 	  self.xmlHttpReq.onreadystatechange = function() {
 	      if (self.xmlHttpReq.readyState == 4) {
