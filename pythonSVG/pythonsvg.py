@@ -925,6 +925,8 @@ class mySvgCanvas:
 
 		x_min = (x_min == None and self.loc_var["xmin"] or x_min)
 		x_max = (x_max == None and self.loc_var["xmax"] or x_max)
+		if (x_max <= x_min):
+			x_max = x_min + 5
 		array_points = []
 
 		# plot ("sin(x)") 

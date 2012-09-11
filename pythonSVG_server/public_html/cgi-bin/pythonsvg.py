@@ -1,5 +1,3 @@
-#!/usr/bin/python
-
 from __future__ import division
 import math
 from lxml import etree
@@ -7,6 +5,8 @@ import cairo
 import rsvg
 import re
 import sys
+
+# ===================================================================================	
 
 class mySvgCanvas:
 
@@ -925,6 +925,8 @@ class mySvgCanvas:
 
 		x_min = (x_min == None and self.loc_var["xmin"] or x_min)
 		x_max = (x_max == None and self.loc_var["xmax"] or x_max)
+		if (x_max <= x_min):
+			x_max = x_min + 5
 		array_points = []
 
 		# plot ("sin(x)") 
@@ -1028,6 +1030,28 @@ class mySvgCanvas:
 					u = dz/math.sqrt(1 + gout*gout)
 					v = gout * u
 					self.line([round(x-u,2),round(y-v,2)],[round(x+u,2),round(y+v,2)])
+
+# ========================================================================================
+
+	'''
+	==============================
+	Functions (SVG -> PNG)
+	==============================
+	> create_png
+	============================== 
+	'''
+# ========================================================================================
+
+def create_png(filename, width, height, svg_string):
+
+	# Source: http://cairographics.org/download/
+	# Example Code: http://stackoverflow.com/questions/6589358/convert-svg-to-png-in-python
+
+	img =  cairo.ImageSurface(cairo.FORMAT_ARGB32, width, height)
+	ctx = cairo.Context(img)
+	handler= rsvg.Handle(None, svg_string)
+	handler.render_cairo(ctx)
+	img.write_to_png(filename+".png")
 
 # ========================================================================================
 

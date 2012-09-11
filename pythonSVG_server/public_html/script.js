@@ -13,7 +13,7 @@ Date: 10th September 2012
 function xmlhttpPost(image_format) {
 	  var xmlHttpReq = false;
 	  var self = this;
-		var input_code = String(document.getElementById("picture1input").value);
+		var input_code = String(encodeURIComponent(document.getElementById("picture1input").value));
 	  // Mozilla/Safari
 	  if (window.XMLHttpRequest) {
 	      self.xmlHttpReq = new XMLHttpRequest();
