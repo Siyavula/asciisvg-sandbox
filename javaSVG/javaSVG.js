@@ -365,7 +365,7 @@ function mathjs(st) {
 	var i,j,k, ch, nested;
 	while ((i=st.indexOf("^"))!=-1) {
 		//find left argument
-		if (i==0) return "Error: missing argument";
+		if (i==0) throw new Error("missing argument for '^'");
 		j = i-1;
 		ch = st.charAt(j);
 		if (ch>="0" && ch<="9") {// look for (decimal) number
@@ -391,10 +391,10 @@ function mathjs(st) {
 			while (j>=0 && (ch=st.charAt(j))>="a" && ch<="z" || ch>="A" && ch<="Z")
 				j--;
 		} else { 
-			return "Error: incorrect syntax in "+st+" at position "+j;
+			throw new Error("incorrect syntax in "+st+" at position "+j);
 		}
 		//find right argument
-		if (i==st.length-1) return "Error: missing argument";
+		if (i==st.length-1) throw new Error("missing argument");
 		k = i+1;
 		ch = st.charAt(k);
 		if (ch>="0" && ch<="9" || ch=="-") {// look for signed (decimal) number
@@ -418,14 +418,14 @@ function mathjs(st) {
 			while (k<st.length && (ch=st.charAt(k))>="a" && ch<="z" ||
 							 ch>="A" && ch<="Z") k++;
 		} else { 
-			return "Error: incorrect syntax in "+st+" at position "+k;
+			throw new Error("incorrect syntax in "+st+" at position "+k);
 		}
 		st = st.slice(0,j+1)+"pow("+st.slice(j+1,i)+","+st.slice(i+1,k)+")"+
 					 st.slice(k);
 	}
 	while ((i=st.indexOf("!"))!=-1) {
 		//find left argument
-		if (i==0) return "Error: missing argument";
+		if (i==0) throw new Error("missing argument for '!'");
 		j = i-1;
 		ch = st.charAt(j);
 		if (ch>="0" && ch<="9") {// look for (decimal) number
@@ -451,7 +451,7 @@ function mathjs(st) {
 			while (j>=0 && (ch=st.charAt(j))>="a" && ch<="z" || ch>="A" && ch<="Z")
 				j--;
 		} else { 
-			return "Error: incorrect syntax in "+st+" at position "+j;
+			throw new Error("incorrect syntax in "+st+" at position "+j);
 		}
 		st = st.slice(0,j+1)+"factorial("+st.slice(j+1,i)+")"+st.slice(i+1);
 	}
@@ -751,7 +751,7 @@ function path(plist,style,closed) {
 			}
 		}
 	} else {
-		return "Error: unknown style "+style+".";
+		throw new Error("Unknown style "+style+".");
 	}
 
 	// Close the Path
