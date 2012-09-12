@@ -13,8 +13,10 @@ Date: 10th September 2012
 function xmlhttpPost(image_format) {
 	  var xmlHttpReq = false;
 	  var self = this;
-		var input_code = String(encodeURIComponent(document.getElementById("picture1input").value));
-	  // Mozilla/Safari
+		var ascii_input_code = String(encodeURIComponent(document.getElementById("asciiinput").value));
+		var python_input_code = String(encodeURIComponent(document.getElementById("pythoninput").value));
+
+		// Mozilla/Safari
 	  if (window.XMLHttpRequest) {
 	      self.xmlHttpReq = new XMLHttpRequest();
 	  }
@@ -31,11 +33,11 @@ function xmlhttpPost(image_format) {
 	  }
 		if (image_format == "PNG")
 		{
-	  	self.xmlHttpReq.send("png=" + input_code);
+			self.xmlHttpReq.send("png=" + ascii_input_code + "&python=" + python_input_code + " ");
 		}
 		else if (image_format == "SVG")
 		{
-			self.xmlHttpReq.send("svg=" + input_code);
+			self.xmlHttpReq.send("svg=" + ascii_input_code + "&python=" + python_input_code + " ");
 		}
 }
 

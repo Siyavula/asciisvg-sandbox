@@ -2,9 +2,8 @@
 
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-	<title>pythonSVG Editor (2.0)</title>
+	<title>pythonSVG Editor (2.1)</title>
 	<script type="text/javascript" src="script.js"></script>
-
 </head>
 
 <body bgcolor="#8888CC" onload="update_SVG();">
@@ -20,17 +19,34 @@
 			<td colspan=2>
 	
 				<!-- Input Box -->
+<table border=0  style="width:100%;">
+	<tr>
+		<td id="row_python" style="width:20%;">Python Code</td>
+		<td id="row_ascii" style="width:80%;">Ascii Code</td>
+	</tr>
 
-				<textarea id="picture1input" rows="18" onKeyUp="auto_update_SVG(); getSuggestion();" onmouseup="this.onkeyup();" style="width:100%;">setBorder(0)
+	<tr>
+
+		<td><textarea id="pythoninput" rows="18" onKeyUp="auto_update_SVG(); getSuggestion();" onmouseup="this.onkeyup();" style="width:100%; background:#DDDDFF;" onclick="document.getElementById('row_python').style.width='80%'; document.getElementById('row_ascii').style.width='20%';">a = 4
+b = 1
+c = "cos(t)"
+</textarea></td>
+
+		<td><textarea id="asciiinput" rows="18" onKeyUp="auto_update_SVG(); getSuggestion();" onmouseup="this.onkeyup();" style="width:100%; background:#DDFFDD;" onclick="document.getElementById('row_python').style.width='20%'; document.getElementById('row_ascii').style.width='80%'">setBorder(0)
 initPicture(-6,6,-6,6)
 axes(2, 1, "labels", 1,1)
 
-marker = "none"
-strokewidth="2"
-stroke = "blue"
-plot(["t", "sin(t)"])
+stroke = "green"
+strokewidth = 2
+plot ("a*sin(b*x)")
 
-				</textarea>
+stroke = "red"
+plot (c)
+</textarea></td>
+
+	</tr>
+</table>
+
 			</td>
 			<td rowspan=5 id="image_cell">
 
@@ -45,7 +61,7 @@ plot(["t", "sin(t)"])
 			<td>
 
 				<!-- Auto Update -->	
-				<input type="checkbox" id="autocomplete_checkbox" checked="checked"> auto-update &nbsp;
+				<input type="checkbox" id="autocomplete_checkbox" checked="checked"> auto-update <br>
 
 			</td>	
 			<td>
