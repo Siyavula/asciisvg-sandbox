@@ -681,7 +681,9 @@ function axes(dx,dy,labels,gdx,gdy,units) {
 			if (labels.length > 3){
 				if (labels[3] == 1){for (y = -ldy; ymin<y; y = y-ldy) {text([lx,y],String(round(y,2))+String(yunits),lyp);}}} // y-axis (negative)}
 			if (labels.length > 4){
-				if (labels[4] != null){text([0,0],0,labels[4]);}} // Origin}	
+				// Origin
+				if (labels[4] != null){text([0,0],0,labels[4]);}
+			}
 		}
 		else
 		{
@@ -689,7 +691,7 @@ function axes(dx,dy,labels,gdx,gdy,units) {
 			for (x = -ldx; xmin<=x; x = x-ldx) {text([x,ly],String(round(x,2))+String(xunits),lxp);} // x-axis (negative)
 			for (y = ldy; y<=ymax; y = y+ldy) {text([lx,y],String(round(y,2))+String(yunits),lyp);} // y-axis (positive)
 			for (y = -ldy; ymin<=y; y = y-ldy) {text([lx,y],String(round(y,2))+String(yunits),lyp);} // y-axis (negative)
-			text([0,0],0,"belowleft");
+			// text([0,0],0,"belowleft");
 		}
 	}
 }
