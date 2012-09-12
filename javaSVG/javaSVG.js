@@ -242,18 +242,18 @@ function dot(center, typ, label, pos, angle) {
 
 		if (typ=="+") {	
 			// "+" Sign
-			node.setAttribute("d", 	" M "+(cx-ticklength)+" "+cy+" L "+(cx+ticklength)+" "+cy+
-															" M "+cx+" "+(cy-ticklength)+" L "+cx+" "+(cy+ticklength));
+			node.setAttribute("d", 	"M"+(cx-ticklength)+","+cy+"L"+(cx+ticklength)+","+cy+
+															"M"+cx+","+(cy-ticklength)+"L"+cx+","+(cy+ticklength));
 			node.setAttribute("stroke-width", .5);
 			node.setAttribute("stroke", axesstroke);
 		}
 		if (typ=="-") {
 			// "-" Sign
-			node.setAttribute("d", " M "+(cx-ticklength)+" "+cy+" L "+(cx+ticklength)+" "+cy);
+			node.setAttribute("d", " M "+(cx-ticklength)+","+cy+"L"+(cx+ticklength)+","+cy);
 		}
 		if (typ=="|") { 
 			// "|" Sign
-			node.setAttribute("d", " M "+cx+" "+(cy-ticklength)+" L "+cx+" "+(cy+ticklength));
+			node.setAttribute("d", " M "+cx+","+(cy-ticklength)+"L"+cx+","+(cy+ticklength));
 			node.setAttribute("stroke-width", strokewidth);
 			node.setAttribute("stroke", stroke);
 		}
@@ -285,9 +285,9 @@ function arrowhead(p,q,size) {
 		u = [u[0]/d, u[1]/d];	// unit vector
 		up = [-u[1],u[0]]; 		// inverse unit vector
 		var node = myCreateElementSVG("path");
-		node.setAttribute("d","M "+(w[0]-15*u[0]-4*up[0])+" "+
-			(w[1]-15*u[1]-4*up[1])+" L "+(w[0]-3*u[0])+" "+(w[1]-3*u[1])+" L "+
-			(w[0]-15*u[0]+4*up[0])+" "+(w[1]-15*u[1]+4*up[1])+" z");
+		node.setAttribute("d","M "+(w[0]-15*u[0]-4*up[0])+","+
+			(w[1]-15*u[1]-4*up[1])+"L"+(w[0]-3*u[0])+","+(w[1]-3*u[1])+"L"+
+			(w[0]-15*u[0]+4*up[0])+","+(w[1]-15*u[1]+4*up[1])+" z");
 		node.setAttribute("stroke-width", (size!=null?size:markersize));
 		node.setAttribute("stroke", stroke); /*was markerstroke*/
 		node.setAttribute("fill", stroke); /*was arrowfill*/
@@ -316,7 +316,9 @@ function text(p,st,pos,angle) {
 	// Text Rotation
 	var node = myCreateElementSVG("text");
 	var node_text = document.createTextNode(st);
-	node.setAttribute("transform", "	rotate(" + angle + ", " + (p[0]*xunitlength+origin[0]+dx) + ", " + (height-p[1]*yunitlength-origin[1]+dy) + ")")
+	if (angle !== 0) {
+		node.setAttribute("transform", "	rotate(" + angle + ", " + (p[0]*xunitlength+origin[0]+dx) + ", " + (height-p[1]*yunitlength-origin[1]+dy) + ")")
+	}
 	node.appendChild(node_text);
 	
 	// Node Attributes
@@ -471,7 +473,7 @@ Functions (COMPOUND SVG ELEMENTS)
 function line(p,q) {
 	var node = myCreateElementSVG("path");
 	node.setAttribute("d","M"+(p[0]*xunitlength+origin[0])+","+
-														(height-p[1]*yunitlength-origin[1])+" "+
+														(height-p[1]*yunitlength-origin[1])+"L"+
 														(q[0]*xunitlength+origin[0])+","+
 														(height-q[1]*yunitlength-origin[1]));
 	node.setAttribute("stroke-width", strokewidth);
@@ -599,14 +601,14 @@ function axes(dx,dy,labels,gdx,gdy,units) {
 		if (gdx != null)
 		{
 			gdx = gdx*xunitlength;
-	 		for (i = origin[0]; i<width; i = i+gdx) {string += " M"+i+",0"+" "+i+","+height;} // x-axis (positive)
-			for (i = origin[0]-gdx; i>0; i =i-gdx) {string += " M"+i+",0"+" "+i+","+height;} // x-axis (negative)
+	 		for (i = origin[0]; i<width; i = i+gdx) {string += " M"+i+",0"+"L"+i+","+height;} // x-axis (positive)
+			for (i = origin[0]-gdx; i>0; i =i-gdx) {string += " M"+i+",0"+"L"+i+","+height;} // x-axis (negative)
 		}
 		if (gdy != null)
 		{
 			gdy = gdy*yunitlength;
-			for (i = height-origin[1]; i<height; i = i+gdy) {string += " M0,"+i+" "+width+","+i;} // y-axis (positive)
-			for (i = height-origin[1]-gdy; i>0; i = i-gdy) {string += " M0,"+i+" "+width+","+i;} // y-axis (negative)
+			for (i = height-origin[1]; i<height; i = i+gdy) {string += " M0,"+i+"L"+width+","+i;} // y-axis (positive)
+			for (i = height-origin[1]-gdy; i>0; i = i-gdy) {string += " M0,"+i+"L"+width+","+i;} // y-axis (negative)
 		}
 
 		// Create SVG Element
@@ -622,22 +624,22 @@ function axes(dx,dy,labels,gdx,gdy,units) {
 		/* === Axes ===	*/
 		pnode = myCreateElementSVG("path");
 		// Thicker Axes lines
-		string = "M0,"+(height-origin[1])+" "+width+","+(height-origin[1])+" M"+origin[0]+",0 "+origin[0]+","+height;
+		string = "M0,"+(height-origin[1])+"L"+width+","+(height-origin[1])+" M"+origin[0]+",0 "+origin[0]+","+height;
 		
 		if (dx != null)
 		{		
 			for (i = origin[0]+tdx; i<width; i+=tdx) 
-			{string += " M"+i+","+(height-origin[1]+ticklength)+" "+i+","+(height-origin[1]-ticklength);} // x-axis (positive)
+			{string += " M"+i+","+(height-origin[1]+ticklength)+"L"+i+","+(height-origin[1]-ticklength);} // x-axis (positive)
 			for (i = origin[0]-tdx; i>0; i-=tdx) 
-			{string += " M"+i+","+(height-origin[1]+ticklength)+" "+i+","+(height-origin[1]-ticklength);} // x-axis (negative)
+			{string += " M"+i+","+(height-origin[1]+ticklength)+"L"+i+","+(height-origin[1]-ticklength);} // x-axis (negative)
 		}
 
 		if (dy != null)
 		{
 			for (i = height-origin[1]+tdy; i<height; i+=tdy)	
-			{string += " M"+(origin[0]+ticklength)+","+i+" "+(origin[0]-ticklength)+","+i;} // y-axis (positive)
+			{string += " M"+(origin[0]+ticklength)+","+i+"L"+(origin[0]-ticklength)+","+i;} // y-axis (positive)
 			for (i = height-origin[1]-tdy; i>0; i-=tdy) 
-			{string += " M"+(origin[0]+ticklength)+","+i+" "+(origin[0]-ticklength)+","+i;} // y-axis (negative)
+			{string += " M"+(origin[0]+ticklength)+","+i+"L"+(origin[0]-ticklength)+","+i;} // y-axis (negative)
 		}
 
 		pnode.setAttribute("d",string);
@@ -728,17 +730,26 @@ function path(plist,style,closed) {
 	// =================================================================================================
 
 	// Style default = L
-	if (style == null) {style = "L";}	
+	if (style == null) {style = "L";}
+	// Get the number of coordinates required as arguments for the current curve style
+	var coordsRequired = {"L": 1, "C": 3, "S": 2, "Q": 2, "T": 1}[style];
 
 	// Move Command
 	string = "M" + (plist[0][0]*xunitlength+origin[0])+","+ (height-plist[0][1]*yunitlength-origin[1]);
 	
 	// Draw the line	
-	if (style == "L" || style == "C" || style == "S" || style == "Q" || style == "T") 
-	{
+	if (style == "L" || style == "C" || style == "S" || style == "Q" || style == "T") {
 		string += " " + style + " ";
-		for (i=1; i<plist.length; i++)
-			{string += (plist[i][0]*xunitlength+origin[0])+","+ (height-plist[i][1]*yunitlength-origin[1]) + " ";}
+		for (i=1; i<plist.length; i++){
+			string += (plist[i][0]*xunitlength+origin[0])+","+ (height-plist[i][1]*yunitlength-origin[1]);
+			if (i % coordsRequired === 0) {
+				string += style;
+			} else {
+				string += ",";
+			}
+		}
+	} else {
+		return "Error: unknown style "+style+".";
 	}
 
 	// Close the Path
