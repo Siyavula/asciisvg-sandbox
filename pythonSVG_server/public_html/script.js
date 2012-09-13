@@ -28,16 +28,19 @@ function xmlhttpPost(image_format) {
 	  self.xmlHttpReq.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 	  self.xmlHttpReq.onreadystatechange = function() {
 	      if (self.xmlHttpReq.readyState == 4) {
-	          document.getElementById("outputNode").innerHTML = self.xmlHttpReq.responseText;
+
+						var xmlHttp_data = decodeURIComponent(self.xmlHttpReq.responseText).split ("[BRK]");
+						document.getElementById("outputNode").innerHTML = xmlHttp_data[0];
+						document.getElementById("error_msg").innerHTML = xmlHttp_data[1];
 	      }
 	  }
 		if (image_format == "PNG")
 		{
-			self.xmlHttpReq.send("png=" + ascii_input_code + "&python=" + python_input_code + " ");
+			self.xmlHttpReq.send("type='png'&ascii=" + ascii_input_code + " &python=" + python_input_code + " &strip_tags=" + document.getElementById("strip_tags_checkbox").checked);
 		}
 		else if (image_format == "SVG")
 		{
-			self.xmlHttpReq.send("svg=" + ascii_input_code + "&python=" + python_input_code + " ");
+			self.xmlHttpReq.send("type='svg'&ascii=" + ascii_input_code + " &python=" + python_input_code + " &strip_tags=" + document.getElementById("strip_tags_checkbox").checked);
 		}
 }
 
@@ -47,7 +50,7 @@ function xmlhttpPost(image_format) {
 // Date: 14th June 2012
 // ================================================
 
-function auto_update_SVG() {
+function auto_update_image() {
 	if (document.getElementById("autocomplete_checkbox").checked) { update_SVG(); }
 }
 
@@ -66,8 +69,8 @@ function update_PNG() {
 }
 
 function getSuggestion() {
-  var line_number = document.getElementById("picture1input").value.substr(0, document.getElementById("picture1input").selectionStart).split("\n").length - 1
-	var line = document.getElementById("picture1input").value.split('\n')[line_number];
+  var line_number = document.getElementById("asciiinput").value.substr(0, document.getElementById("asciiinput").selectionStart).split("\n").length - 1
+	var line = document.getElementById("asciiinput").value.split('\n')[line_number];
 	document.getElementById("suggestionNode").value = ""	
 	var dict = {		'dot':'dot([center_x,center_y], type, label, position, angle)', 
 									'arrowhead':'arrowhead([x1,y1],[x2,y2])',
@@ -97,5 +100,34 @@ function getSuggestion() {
 			document.getElementById("suggestionNode").value = dict[term];
 		}
   }
+}
+
+function insertTab(o, e)
+{
+	var kC = e.keyCode ? e.keyCode : e.charCode ? e.charCode : e.which;
+	if (kC == 9 && !e.shiftKey && !e.ctrlKey && !e.altKey)
+	{
+		var oS = o.scrollTop;
+		if (o.setSelectionRange)
+		{
+			var sS = o.selectionStart;
+			var sE = o.selectionEnd;
+			o.value = o.value.substring(0, sS) + "\t" + o.value.substr(sE);
+			o.setSelectionRange(sS + 1, sS + 1);
+			o.focus();
+		}
+		else if (o.createTextRange)
+		{
+			document.selection.createRange().text = "\t";
+			e.returnValue = false;
+		}
+		o.scrollTop = oS;
+		if (e.preventDefault)
+		{
+			e.preventDefault();
+		}
+		return false;
+	}
+	return true;
 }
 

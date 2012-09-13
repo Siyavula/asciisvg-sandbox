@@ -11,78 +11,94 @@
 <table border=1 cellpadding=5 cellspacing=0 bgcolor="#CCCCCC">
 	<tbody>
 		<tr>
-			<td colspan=2 style="width:400;" bgcolor="#999999"><b>Input (ASCIIsvg commands and JavaScript)</b></td>
-			<td id="image_title" colspan=1 style="width:400;" bgcolor="#999999"><b>Output (SVG)</b></td>
+			<td colspan=2 style="width:100%;" bgcolor="#999999"><b>Input (ASCIIsvg commands and JavaScript)</b></td>
+			<td id="image_title" colspan=2 style="width:420;" bgcolor="#999999"><b>Output (SVG)</b></td>
 		</tr>
+
+		<!-- Input Boxes -->
 
 		<tr>			
 			<td colspan=2>
 	
-				<!-- Input Box -->
-<table border=0  style="width:100%;">
-	<tr>
-		<td id="row_python" style="width:20%;">Python Code</td>
-		<td id="row_ascii" style="width:80%;">Ascii Code</td>
-	</tr>
-
-	<tr>
-
-		<td><textarea id="pythoninput" rows="18" onKeyUp="auto_update_SVG(); getSuggestion();" onmouseup="this.onkeyup();" style="width:100%; background:#DDDDFF;" onclick="document.getElementById('row_python').style.width='80%'; document.getElementById('row_ascii').style.width='20%';">a = 4
+				<table border=0  style="width:100%;">
+					<tr>
+						<td id="row_python" style="width:50%;">Python Code</td>
+						<td id="row_ascii" style="width:50%;">Ascii Code</td>
+					</tr>
+					<tr>
+						<td><textarea id="pythoninput" rows="25" 
+													onKeyUp="auto_update_image(); getSuggestion();" 
+													onkeydown="insertTab(this, event);"
+													onmouseup="this.onkeyup();" style="width:100%; background:#DDDDFF;">a = 2
 b = 1
 c = "cos(t)"
-</textarea></td>
+var_text = "bye"</textarea>
+						</td>
+						<td><textarea id="asciiinput" rows="25"
+													onkeydown="insertTab(this, event);"
+													onKeyUp="auto_update_image(); getSuggestion();" 
+													onmouseup="this.onkeyup();" style="width:100%; background:#DDFFDD;">var_text = "hello"
 
-		<td><textarea id="asciiinput" rows="18" onKeyUp="auto_update_SVG(); getSuggestion();" onmouseup="this.onkeyup();" style="width:100%; background:#DDFFDD;" onclick="document.getElementById('row_python').style.width='20%'; document.getElementById('row_ascii').style.width='80%'">setBorder(0)
+setBorder(0)
 initPicture(-6,6,-6,6)
-axes(2, 1, "labels", 1,1)
+axes(<valueof>a</valueof>, 1, "labels", 1,1)
 
 stroke = "green"
-strokewidth = 2
-plot ("a*sin(b*x)")
+plot ("sin(<valueof>b</valueof>*x)")
 
 stroke = "red"
-plot (c)
-</textarea></td>
+plot ("<valueof>c</valueof>")
 
-	</tr>
-</table>
+fontfill = "blue"
+text([2,3], var_text)
+text([2,2], "<valueof>var_text</valueof>")</textarea>
+						</td>
+					</tr>
+				</table>
 
 			</td>
-			<td rowspan=5 id="image_cell">
+			<td rowspan=1 colspan=2 id="image_cell" style="width:420;">
 
 				<!-- SVG Output -->			
 				<center>
-				<div id="outputNode" style="padding: 20px;"></div>
-				</center>
+					<div id="outputNode" style="padding: 10px; width:420;"></div>
+				</center>	
 
 			</td>
 		</tr>	
+		
+		<!-- Options & Buttons -->
+
 		<tr>
+			
+			<td>SVG Image:</td>	
 			<td>
 
-				<!-- Auto Update -->	
-				<input type="checkbox" id="autocomplete_checkbox" checked="checked"> auto-update <br>
+				<!-- Option: Auto Update -->
+				<input type="checkbox" id="autocomplete_checkbox" checked="checked" onClick="auto_update_image();"> auto-update SVG
 
-			</td>	
-			<td>
+				<!-- Option: Siyavula Setting -->
+				<input type="checkbox" id="strip_tags_checkbox" checked="checked" onClick="auto_update_image();"> Siyavula templates
 
-				<!-- Update Button -->
-				<input type="button" value="Manual Update SVG" onClick="update_SVG();">
-				
-				<input type="button" value="Test PNG" onClick="update_PNG();" style="color:#933;">
+				<!-- Update: SVG Button -->
+				<input type="button" value="Manual SVG Update" onClick="update_SVG();"> 
+					
+				<!-- Update: PNG Button -->
+				<input type="button" value="Manual PNG Update" onClick="update_PNG();" style="color:#933;">
 
 			</td>
+
+			<!-- Error Message -->				
+			<td colspan=2 rowspan=2><textarea id="error_msg" rows="5" disabled="disabled" style="width:100%; color:#990000;"></textarea></td>
+
 		</tr>
+
+		<!-- Feedback boxes -->
+
 		<tr>
-		<tr>
-				<!-- Error Message -->				
+				<!-- Code Suggestion -->				
 				<td>Suggestion:</td>
-				<td><textarea id="suggestionNode" rows="2" cols="45" disabled="disabled"></textarea></td>
-		</tr>
-		<tr>
-				<!-- Error Message -->				
-				<td>Error Message:</td>
-				<td><textarea id="error_msg" rows="2" cols="45" disabled="disabled" style="color:#990000;"></textarea></td>
+				<td><textarea id="suggestionNode" rows="2" disabled="disabled" style="width:100%;"></textarea></td>
 		</tr>
 	</tbody>
 </table>

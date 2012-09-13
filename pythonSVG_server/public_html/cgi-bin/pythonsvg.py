@@ -300,6 +300,12 @@ class mySvgCanvas:
 			self.str_parent += "\n-->\n"
 		return self.str_parent
 
+# ===================================================================================
+
+	def generate_array(self):
+		self.str_parent = etree.tostring(self.xml_parent)
+		return self.str_parent, self.complete_string, self.error_string
+
 # ========================================================================================
 
 	def reset_variables(self):

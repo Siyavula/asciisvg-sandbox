@@ -4,49 +4,122 @@ from pythonsvg import *
 import cgi, os
 import cgitb; cgitb.enable()
 import urllib
-import re
+import random
 
 # ========================================================================================
-# http://love-python.blogspot.com/2008/07/strip-html-tags-using-python.html
+# Functions
 # ========================================================================================
 
-def fn_strip_tags(text):
-  return re.sub(r'<.*?>', '', text)
+def fn_strip_tags(text, templateLocals={}):
+
+	# =======================================
+	newText = ''
+	stop = 0
+	startSubstr = '<valueof>'
+	stopSubstr = '</valueof>'
+	while True:
+		start = text.find(startSubstr, stop)
+		if start == -1:
+			newText += text[stop:]
+			break
+		newText += text[stop:start]
+		start += len(startSubstr)
+		stop = text.find(stopSubstr, start)
+		eval_piece = text[start:stop].strip()
+		if (len(eval_piece) > 0):
+			try:
+				newText += str(eval(eval_piece, templateLocals, templateLocals))
+			except Exception, err:
+				error_flag = 1
+				error_string = "VALUEOF tags\n\n" + str(err)
+				return error_flag, error_string, text
+		else:
+			newText += ""
+		stop += len(stopSubstr)
+	# =======================================
+
+	return 0, "", newText
+
+# ========================================================================================
+
+def AJAX_return(output, error_flag, error_string):
+	print "Content-Type: text/html"
+	print
+	if (error_flag == 1 or len(error_string) > 0):
+		print urllib.quote("[BRK]Error: " + str(error_string))
+	else:
+		print urllib.quote(output + "[BRK]")
 
 # ========================================================================================
 # INPUT
 # ========================================================================================
 
 form = cgi.FieldStorage()
+error_flag = 0
+error_string = ""
+output = ""
+templateLocals = {}
+iRandomSeed=None
 
-# Get data from fields
-if ('svg' in form):
-	ascii_text = urllib.unquote(form.getvalue('python') + "\n" + form.getvalue('svg'))
-	my_svg = mySvgCanvas("test", 400, 400) # default size of SVG
-	my_svg.process_ascii_multi_line(ascii_text)
-	output = my_svg.generate_string()
+# Process <valueof> tags
+if (form.getvalue('strip_tags') == 'true'):
 
-elif ('png' in form):
-	ascii_text = urllib.unquote(form.getvalue('python') + "\n" + form.getvalue('png'))
-	my_svg = mySvgCanvas("test", 400, 400) # default size of SVG
-	my_svg.process_ascii_multi_line(ascii_text)
-	svg_string = my_svg.generate_string()
-	img =  cairo.ImageSurface(cairo.FORMAT_ARGB32, 400, 400)
-	ctx = cairo.Context(img)
-	handler= rsvg.Handle(None, svg_string)
-	handler.render_cairo(ctx)
-	img.write_to_png("buffer.png")
-	output = "<img src='cgi-bin/buffer.png'>"
+	# =======================================
+	# Import template environment header
+	if iRandomSeed is None:
+		randomSeed = random.randint(1, 1000000)
+	else:
+		randomSeed = iRandomSeed
+	# =======================================
+	import template_environment
+	for key in dir(template_environment):
+	    if (key[:2] != '__') or (key[-2:] != '__'):
+	        templateLocals[key] = template_environment.__getattribute__(key)
+	templateLocals['random'] = templateLocals['randomModule'].Random(randomSeed)
+	templateLocals['ENVIRONMENT'].random = templateLocals['random']
+	# =======================================
 
+	# Process Python first (in templateLocals)
+	python_text = urllib.unquote(form.getvalue('python'))	
+	try:
+		exec("# encoding: utf-8\nfrom __future__ import division\n" + python_text + '\n', templateLocals, templateLocals)
+	except Exception, err:
+		error_flag = 1
+		error_string = "Python Code\n\n" + str(err) 
+
+	# Process Python first (in loc_val)
+	if (error_flag == 0):
+		ascii_text = urllib.unquote(form.getvalue('ascii'))
+		error_flag, error_string, ascii_text = fn_strip_tags(ascii_text, templateLocals)
+
+# Process Python + ASCII tags (for standard mode)
 else:
-   output = "Not entered"
+	ascii_text = urllib.unquote(form.getvalue('python') + "\n" + form.getvalue('ascii'))
+
+# Only make changes to output if NO errors
+if (error_flag == 0):
+
+	# SVG handling (for both cases)
+	my_svg = mySvgCanvas("test", 400, 400) # default size of SVG
+	my_svg.process_ascii_multi_line(ascii_text)
+	svg_string, complete_string, error_string = my_svg.generate_array()
+	if (len(error_string.strip()) > 0): error_string = "ASCII code\n" + error_string
+
+	# PNG Generator
+	if (form.getvalue('type') == 'png'):
+		img =  cairo.ImageSurface(cairo.FORMAT_ARGB32, 400, 400)
+		ctx = cairo.Context(img)
+		handler= rsvg.Handle(None, svg_string)
+		handler.render_cairo(ctx)
+		img.write_to_png("buffer.png")
+		output = "<img src='cgi-bin/buffer.png'>"
+	else:
+		output = svg_string
 
 # ========================================================================================
 # OUTPUT
 # ========================================================================================
 
-print "Content-Type: text/html"
-print
-print output
+AJAX_return(output, error_flag, error_string)
 
 
