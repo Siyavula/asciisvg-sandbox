@@ -20,6 +20,9 @@ Infinite Loop Handling
 
 ========================================================================================== */
 
+
+// Encapsulate everything in a closure
+var javaSVG = (function(){
 // Variables
 // ==============================
 
@@ -76,15 +79,12 @@ var cpi = "\u03C0", ctheta = "\u03B8"; var pi = Math.PI, ln = Math.log, e = Math
 // Functions (SVG VARIABLES)
 // ==============================
 
-function reset_variables()
-{
+function reset_variables() {
+	// SVG Layout
+	xmin = defaultxmin;	xmax = defaultxmax;	ymin = defaultymin;	ymax = defaultymax;	xscl = defaultxscl;	yscl = defaultyscl; xgrid = defaultyscl; ygrid = defaultygrid; xtick = defaultxtick; ytick = defaultytick;	border = defaultborder;	height = defaultwidth;	height = defaultheight;	xunitlength = defaultxunitlength; yunitlength = defaultyunitlength;	origin = defaultorigin;
 
-// SVG Layout
-xmin = defaultxmin;	xmax = defaultxmax;	ymin = defaultymin;	ymax = defaultymax;	xscl = defaultxscl;	yscl = defaultyscl; xgrid = defaultyscl; ygrid = defaultygrid; xtick = defaultxtick; ytick = defaultytick;	border = defaultborder;	height = defaultwidth;	height = defaultheight;	xunitlength = defaultxunitlength; yunitlength = defaultyunitlength;	origin = defaultorigin;
-
-// SVG Constant Variables
-axesstroke = defaultaxesstroke;	gridstroke = defaultgridstroke;	strokewidth = defaultstrokewidth; strokedasharray = defaultstrokedasharray;	stroke = defaultstroke;	fill = defaultfill;	fontstyle = defaultfontstyle;	fontfamily = defaultfontfamily;	fontsize = defaultfontsize; fontweight = defaultfontweight;	fontstroke = defaultfontstroke;	fontfill = defaultfontfill; markerfill = defaultmarkerfill;	markerstroke = defaultmarkerstroke;	markerfill = defaultmarkerfill;	markersize = defaultmarkersize;	marker = defaultmarker;	arrowfill = defaultarrowfill; dotradius = defaultdotradius;	ticklength = defaultticklength;
-
+	// SVG Constant Variables
+	axesstroke = defaultaxesstroke;	gridstroke = defaultgridstroke;	strokewidth = defaultstrokewidth; strokedasharray = defaultstrokedasharray;	stroke = defaultstroke;	fill = defaultfill;	fontstyle = defaultfontstyle;	fontfamily = defaultfontfamily;	fontsize = defaultfontsize; fontweight = defaultfontweight;	fontstroke = defaultfontstroke;	fontfill = defaultfontfill; markerfill = defaultmarkerfill;	markerstroke = defaultmarkerstroke;	markerfill = defaultmarkerfill;	markersize = defaultmarkersize;	marker = defaultmarker;	arrowfill = defaultarrowfill; dotradius = defaultdotradius;	ticklength = defaultticklength;
 }
 
 /* 
@@ -104,95 +104,60 @@ function setBorder(x, color)
 	if (color != null) 	{stroke = color;}
 }
 
-function initPicture(a,b,c,d)
+function initPicture(x_min, x_max, y_min, y_max)
 {
 	// Set Variables
-	if (a != null) 	{xmin = a;}
-	if (b != null) 	{xmax = b;}
-	if (c != null) 	{ymin = c;}
-	if (d != null) 	{ymax = d;}
+	if (x_min != null) { xmin = x_min; }
+	if (x_max != null) { xmax = x_max; }
+	if (y_min != null) { ymin = y_min; }
+	if (y_max != null) { ymax = y_max; }
 
 	// Re-calculate variables
 	xunitlength = (width-2*border)/(xmax-xmin);
 	yunitlength = (height-2*border)/(ymax-ymin);
 	origin = [-xmin*xunitlength+border,-ymin*yunitlength+border];
 
-/*
+	svg_canvas.setAttribute("width",width);
+	svg_canvas.setAttribute("height",height);
+	svg_canvas.setAttribute("xunitlength",xunitlength);
+	svg_canvas.setAttribute("yunitlength",yunitlength);
+	svg_canvas.setAttribute("xmin",xmin);
+	svg_canvas.setAttribute("xmax",xmax);
+	svg_canvas.setAttribute("ymin",ymin);
+	svg_canvas.setAttribute("ymax",ymax);
+	svg_canvas.setAttribute("ox", origin[0]);
+	svg_canvas.setAttribute("oy", origin[1]);
 
-	if (svg_picture == null)
-	{
-		svg_frame = myCreateElementSVG("svg");
-		svg_frame.setAttribute("id","svg1");
-		document.getElementById('outputNode').appendChild(svg_frame);
-		
-		svg_picture = myCreateElementSVG("picture");
-		svg_picture.setAttribute("id","picture1");
-		svg_frame.appendChild(svg_picture);
-		
-		reset_variables(); // Reset Variables to original values for the next update	
-	}
-	else
-	{
-		// Initialize SVG Canvas
-		svg_frame = myCreateElementSVG("svg");
-		svg_frame.setAttribute("id","svg1");
+	noaxes();
+}
 
-		svg_new = myCreateElementSVG("picture");
-		svg_frame.appendChild(svg_new);
-
-*/
-
-	if (svg_picture == null)
-	{
+function updatePicture(src, target) {
+	var svg_canvas_orig;
+	if (target == null) {
 		svg_canvas = myCreateElementSVG("svg");
 		svg_canvas.setAttribute("id","svg1");
 		document.getElementById('outputNode').appendChild(svg_canvas);
-
-		svg_picture = myCreateElementSVG("g");
-		svg_picture.setAttribute("id","picture1");
-		svg_canvas.appendChild(svg_picture);
-
-		reset_variables(); // Reset Variables to original values for the next update	
-
-		// Rotate on the screen: svg_picture.setAttribute("transform", "rotate(90,"+width/2+","+height/2+")")
-		
+	} else {
+		// If we're given a target, replace it with the new svg we are creating
+		if (typeof target === 'string') {
+			svg_canvas_orig = document.getElementById(target);
+		} else {
+			svg_canvas_orig = target;
+		}
+		svg_canvas = myCreateElementSVG("svg");
+		svg_canvas.setAttribute("id", svg_canvas_orig.getAttribute("id"));
+		svg_canvas_orig.parentNode.replaceChild(svg_canvas, svg_canvas_orig);
 	}
-	else
-	{
-		// Initialize SVG Canvas
-		svg_new = myCreateElementSVG("svg");
-		svg_new.setAttribute("id","svg1");
-		svg_new.setAttribute("style","display:inline");
-		svg_new.setAttribute("width",width);
-		svg_new.setAttribute("height",height);
-		svg_new.setAttribute("xunitlength",xunitlength);
-		svg_new.setAttribute("yunitlength",yunitlength);
-		svg_new.setAttribute("xmin",xmin);
-		svg_new.setAttribute("xmax",xmax);
-		svg_new.setAttribute("ymin",ymin);
-		svg_new.setAttribute("ymax",ymax);
-		svg_new.setAttribute("ox", origin[0]);
-		svg_new.setAttribute("oy", origin[1]);
+	svg_picture = myCreateElementSVG("g");
+	svg_canvas.appendChild(svg_picture);
 
-		svg_picture = myCreateElementSVG("g");
-		svg_picture.setAttribute("id","picture1");
-		svg_new.appendChild(svg_picture);
-
-		svg_canvas.parentNode.replaceChild(svg_new,svg_canvas);		// Append SVG to DIV (replace)
-		svg_canvas = svg_new; 	// Replace old SVG object with new object
-
-		noaxes();
-	}
-}
-
-function updatePicture()
-{
+	reset_variables(); // Reset Variables to original values for the next update	
 	
 	// Initialize Picture before user does
 	initPicture();
 
 	// Fetch code line-by-line
-	var array_raw = document.getElementById("picture1input").value;
+	var array_raw = src;
 	var error_text = "";
 
 	// Formatting
@@ -201,17 +166,10 @@ function updatePicture()
 	array_raw = array_raw.replace(/([0-9])([a-zA-Z])/g,"$1*$2");
 	array_raw = array_raw.replace(/\)([\(0-9a-zA-Z])/g,"\)*$1");
 
-	document.getElementById('error_msg').value = array_raw;
-
 	// Evaluate Functions
-	try { 
-		with (Math) eval(array_raw); error_text += "";
-	} 
-	catch(err){ 
-		error_text += "<br>ERROR - (" + err + ")";
-	}
+	// Errors should be caught by the caller
+	with (Math) eval(array_raw);
 
-	document.getElementById('error_msg').value = error_text; // Error Reporting
 	reset_variables(); // Reset Variables to original values for the next update
 }
 
@@ -782,8 +740,6 @@ function plot(func,x_min,x_max,points) {
 	var name;
 	var array_points = [];
 
-	text([-3,3], typeof func)
-
 	// plot ("sin(x)") 
 	if (typeof func=="string"){
 		eval("g = function(x){ with(Math) return "+mathjs(func)+" }");
@@ -874,8 +830,8 @@ function slopefield(func,dx,dy) {
 // Date: 14th June 2012
 // ================================================
 
-function fn_autocomplete() { 
-	if (document.getElementById("autocomplete_checkbox").checked) { updatePicture(); }
+function fn_autocomplete(textarea, target) { 
+	if (document.getElementById("autocomplete_checkbox").checked) { updatePicture(textarea.value, target); }
 	getSuggestion();
 }
 
@@ -913,3 +869,7 @@ function getSuggestion() {
 	}
 }
 
+// Return the public API
+return {updatePicture: updatePicture, fn_autocomplete: fn_autocomplete};
+
+})()

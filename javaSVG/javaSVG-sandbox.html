@@ -4,9 +4,20 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 	<title>javaSVG Editor (1.0)</title>
 	<script type="text/javascript" src="javaSVG.js"></script>
+	<script type="text/javascript">
+// update the graphic and catch any error that occur
+function update() {
+	try {
+		javaSVG.updatePicture(document.getElementById('picture1input').value, 'targetsvg');
+		document.getElementById('error_msg').value = '';
+	} catch (err) {
+		document.getElementById('error_msg').value = err + '';
+	}
+}
+	</script>
 </head>
 
-<body bgcolor="#88CC88" onload="updatePicture();">
+<body bgcolor="#88CC88" onload="update()">
 <center>
 <table border=1 cellpadding=5 cellspacing=0 bgcolor="#CCCCCC">
 	<tbody>
@@ -20,7 +31,7 @@
 	
 				<!-- Input Box -->
 	
-				<textarea id="picture1input" rows="18" onKeyUp="fn_autocomplete();" onmouseup="this.onkeyup();" style="width:100%;">setBorder(0)
+				<textarea id="picture1input" rows="18" onKeyUp="update()" onmouseup="this.onkeyup();" style="width:100%;">setBorder(0)
 initPicture(-6,6,-6,6)
 axes(2, 1, "labels", 1,1)
 
@@ -62,7 +73,7 @@ bunnyhop([[5,4],[3,2],[1,4],[-1,2],[-3,4],[-5,2]])
 
 				<!-- SVG Output -->			
 				<center>
-				<div id="outputNode"></div>
+				<div id="outputNode"><svg id='targetsvg'/></div>
 				</center>
 
 			</td>
@@ -77,7 +88,7 @@ bunnyhop([[5,4],[3,2],[1,4],[-1,2],[-3,4],[-5,2]])
 			<td>
 
 				<!-- Update Button -->
-				<input type="button" value="Manual Update" onClick="updatePicture();">
+				<input type="button" value="Manual Update" onClick="update()">
 
 			</td>
 		</tr>
