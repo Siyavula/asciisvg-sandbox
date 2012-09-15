@@ -72,7 +72,7 @@ var axesstroke = defaultaxesstroke;
 var defaultgridstroke = "grey";
 var gridstroke = defaultgridstroke;
 var defaultstrokewidth = 1;
-var strokewidth = defaultstrokewidth; 					
+var strokewidth = defaultstrokewidth;
 var defaultstrokedasharray = [1, 0];
 var strokedasharray = defaultstrokedasharray;
 var defaultstroke = "black";
@@ -84,14 +84,14 @@ var fill = defaultfill;
 var defaultfontstyle = "normal";
 var fontstyle = defaultfontstyle;
 var defaultfontfamily = "sans";
-var fontfamily = defaultfontfamily;		
+var fontfamily = defaultfontfamily;
 var fontsize = null, defaultfontsize 									= 16;
 var defaultfontweight = "normal";
 var fontweight = defaultfontweight;
 var defaultfontstroke = "none";
 var fontstroke = defaultfontstroke;
 var defaultfontfill = "none";
-var fontfill = defaultfontfill;		
+var fontfill = defaultfontfill;
 var defaultmarkerstrokewidth = 1;
 var markerstrokewidth = defaultmarkerstrokewidth;
 var defaultmarkerstroke = "black";
@@ -125,18 +125,18 @@ function reset_variables() {
 	axesstroke = defaultaxesstroke;	gridstroke = defaultgridstroke;	strokewidth = defaultstrokewidth; strokedasharray = defaultstrokedasharray;	stroke = defaultstroke;	fill = defaultfill;	fontstyle = defaultfontstyle;	fontfamily = defaultfontfamily;	fontsize = defaultfontsize; fontweight = defaultfontweight;	fontstroke = defaultfontstroke;	fontfill = defaultfontfill; markerfill = defaultmarkerfill;	markerstroke = defaultmarkerstroke;	markerfill = defaultmarkerfill;	markersize = defaultmarkersize;	marker = defaultmarker;	arrowfill = defaultarrowfill; dotradius = defaultdotradius;	ticklength = defaultticklength;
 }
 
-/* 
+/*
 ==============================
 Functions (SVG CANVAS)
 ==============================
 > setBorder(x, color)
 > initPicture(a,b,c,d)
 > updatePicture()
-============================== 
+==============================
 */
 
-function setBorder(x, color) 
-{ 
+function setBorder(x, color)
+{
 	// Set Variables
 	if (x != null) 			{border = x;}
 	if (color != null) 	{stroke = color;}
@@ -192,8 +192,8 @@ function updatePicture(src, target) {
 	svg_picture = myCreateElementSVG("g");
 	svg_canvas.appendChild(svg_picture);
 
-//	reset_variables(); // Reset Variables to original values for the next update	
-	
+//	reset_variables(); // Reset Variables to original values for the next update
+
 	// Initialize Picture before user does
 	initPicture();
 
@@ -212,12 +212,12 @@ function updatePicture(src, target) {
 	eval(array_raw);
 
 	reset_variables(); // Reset Variables to original values for the next update
-	
+
 	// After we've finished making the array, reparent
 	svg_canvas_orig.parentNode.replaceChild(svg_canvas, svg_canvas_orig);
 }
 
-/* 
+/*
 ==============================
 Functions (BASIC SVG ELEMENTS)
 ==============================
@@ -226,7 +226,7 @@ Functions (BASIC SVG ELEMENTS)
 > arrowhead(p,q)
 > text(p,st,pos,angle)
 > mathjs(st)
-============================== 
+==============================
 */
 
 function myCreateElementSVG(t) {
@@ -236,13 +236,13 @@ function myCreateElementSVG(t) {
 function dot(center, typ, label, pos, angle) {
 	var cx = center[0]*xunitlength+origin[0];
 	var cy = height-center[1]*yunitlength-origin[1];
-	if (typ=="+" || typ=="-" || typ=="|") 
+	if (typ=="+" || typ=="-" || typ=="|")
 	{
 		// Type Defined
 		var node = myCreateElementSVG("path");
 		svg_picture.appendChild(node);
 
-		if (typ=="+") {	
+		if (typ=="+") {
 			// "+" Sign
 			node.setAttribute("d", 	"M"+(cx-ticklength)+","+cy+"L"+(cx+ticklength)+","+cy+
 															"M"+cx+","+(cy-ticklength)+"L"+cx+","+(cy+ticklength));
@@ -253,13 +253,13 @@ function dot(center, typ, label, pos, angle) {
 			// "-" Sign
 			node.setAttribute("d", " M "+(cx-ticklength)+","+cy+"L"+(cx+ticklength)+","+cy);
 		}
-		if (typ=="|") { 
+		if (typ=="|") {
 			// "|" Sign
 			node.setAttribute("d", " M "+cx+","+(cy-ticklength)+"L"+cx+","+(cy+ticklength));
 			node.setAttribute("stroke-width", strokewidth);
 			node.setAttribute("stroke", stroke);
 		}
-	} 
+	}
 	else {
 		// Type NOT Defined
 		node = myCreateElementSVG("circle");
@@ -293,7 +293,7 @@ function arrowhead(p,q,size) {
 		node.setAttribute("stroke-width", (size!=null?size:markersize));
 		node.setAttribute("stroke", stroke); /*was markerstroke*/
 		node.setAttribute("fill", stroke); /*was arrowfill*/
-		svg_picture.appendChild(node);	 
+		svg_picture.appendChild(node);
 	}
 }
 
@@ -302,7 +302,7 @@ function text(p,st,pos,angle) {
 	// Default text positions
 	if (angle == null) {angle = 0;}
 	var textanchor = "middle";
-	var dx = 0; 
+	var dx = 0;
 	var dy = computed_fontsize/3;
 
 	// Text Positions
@@ -322,7 +322,7 @@ function text(p,st,pos,angle) {
 		node.setAttribute("transform", "	rotate(" + angle + ", " + (p[0]*xunitlength+origin[0]+dx) + ", " + (height-p[1]*yunitlength-origin[1]+dy) + ")")
 	}
 	node.appendChild(node_text);
-	
+
 	// Node Attributes
 	node.lastChild.nodeValue = st;
 	node.setAttribute("x",p[0]*xunitlength+origin[0]+dx);
@@ -334,7 +334,7 @@ function text(p,st,pos,angle) {
 	node.setAttribute("text-anchor",textanchor);
 	if (fontstroke!="none") node.setAttribute("stroke",fontstroke);
 	if (fontfill!="none") node.setAttribute("fill",fontfill);
-	
+
 	// Attach Nodes
 	svg_picture.appendChild(node);
 
@@ -342,7 +342,7 @@ function text(p,st,pos,angle) {
 
 function mathjs(st) {
 
-	// Working (from ASCIISVG) - remains uncleaned for javaSVG. 
+	// Working (from ASCIISVG) - remains uncleaned for javaSVG.
 
 	st = st.replace(/\s/g,"");
 	if (st.indexOf("^-1")!=-1) {
@@ -392,7 +392,7 @@ function mathjs(st) {
 			j--;
 			while (j>=0 && (ch=st.charAt(j))>="a" && ch<="z" || ch>="A" && ch<="Z")
 				j--;
-		} else { 
+		} else {
 			throw new Error("incorrect syntax in "+st+" at position "+j);
 		}
 		//find right argument
@@ -419,7 +419,7 @@ function mathjs(st) {
 			k++;
 			while (k<st.length && (ch=st.charAt(k))>="a" && ch<="z" ||
 							 ch>="A" && ch<="Z") k++;
-		} else { 
+		} else {
 			throw new Error("incorrect syntax in "+st+" at position "+k);
 		}
 		st = st.slice(0,j+1)+"pow("+st.slice(j+1,i)+","+st.slice(i+1,k)+")"+
@@ -452,7 +452,7 @@ function mathjs(st) {
 			j--;
 			while (j>=0 && (ch=st.charAt(j))>="a" && ch<="z" || ch>="A" && ch<="Z")
 				j--;
-		} else { 
+		} else {
 			throw new Error("incorrect syntax in "+st+" at position "+j);
 		}
 		st = st.slice(0,j+1)+"factorial("+st.slice(j+1,i)+")"+st.slice(i+1);
@@ -461,7 +461,7 @@ function mathjs(st) {
 
 }
 
-/* 
+/*
 ==============================
 Functions (COMPOUND SVG ELEMENTS)
 ==============================
@@ -469,7 +469,7 @@ Functions (COMPOUND SVG ELEMENTS)
 > ellipse(center,rx,ry)
 > circle(center,radius)
 > arc(start,end,radius)
-============================== 
+==============================
 */
 
 function line(p,q) {
@@ -484,7 +484,7 @@ function line(p,q) {
 	node.setAttribute("stroke-dasharray", strokedasharray);
 	/* starting point (p) */
 	if (marker=="dot" || marker=="arrowdot") {dot(p);}
-	/* ending point (q) */ 
+	/* ending point (q) */
 	if (marker=="arrowdot" || marker=="arrow") {arrowhead(p,q);}
 	if (marker=="dot") {dot(q);}
 	svg_picture.appendChild(node);
@@ -511,7 +511,7 @@ function arc(start,end,radius) {
 	node = myCreateElementSVG("path");
 	svg_picture.appendChild(node);
 	// Radius
-	if (radius==null) {		
+	if (radius==null) {
 		vector=[end[0]-start[0],end[1]-start[1]];
 		radius = Math.sqrt(vector[0]*vector[0]+vector[1]*vector[1]);
 	}
@@ -523,7 +523,7 @@ function arc(start,end,radius) {
 	node.setAttribute("stroke-width", strokewidth);
 	node.setAttribute("stroke", stroke);
 	node.setAttribute("fill", fill);
-	
+
 	// Markers
 
 	var sign_rad = -sign(end[1]-start[1])
@@ -560,11 +560,11 @@ Functions (COMPLEX SVG ELEMENTS)
 > petal(p,d)
 > heart(p,size)
 > slopefield(fun,dx,dy)
-============================== 
+==============================
 */
 
 function noaxes() {
-		
+
 	// Initialize blank background
 	var node;
 	node = myCreateElementSVG("rect");
@@ -601,7 +601,7 @@ function axes(dx,dy,labels,gdx,gdy,units) {
 	{
 		pnode = myCreateElementSVG("path");
 		string = "";
-		
+
 		if (gdx != null)
 		{
 			gdx = gdx*xunitlength;
@@ -629,20 +629,20 @@ function axes(dx,dy,labels,gdx,gdy,units) {
 		pnode = myCreateElementSVG("path");
 		// Thicker Axes lines
 		string = "M0,"+(height-origin[1])+"L"+width+","+(height-origin[1])+" M"+origin[0]+",0 "+origin[0]+","+height;
-		
+
 		if (dx != null)
-		{		
-			for (i = origin[0]+tdx; i<width; i+=tdx) 
+		{
+			for (i = origin[0]+tdx; i<width; i+=tdx)
 			{string += " M"+i+","+(height-origin[1]+ticklength)+"L"+i+","+(height-origin[1]-ticklength);} // x-axis (positive)
-			for (i = origin[0]-tdx; i>0; i-=tdx) 
+			for (i = origin[0]-tdx; i>0; i-=tdx)
 			{string += " M"+i+","+(height-origin[1]+ticklength)+"L"+i+","+(height-origin[1]-ticklength);} // x-axis (negative)
 		}
 
 		if (dy != null)
 		{
-			for (i = height-origin[1]+tdy; i<height; i+=tdy)	
+			for (i = height-origin[1]+tdy; i<height; i+=tdy)
 			{string += " M"+(origin[0]+ticklength)+","+i+"L"+(origin[0]-ticklength)+","+i;} // y-axis (positive)
-			for (i = height-origin[1]-tdy; i>0; i-=tdy) 
+			for (i = height-origin[1]-tdy; i>0; i-=tdy)
 			{string += " M"+(origin[0]+ticklength)+","+i+"L"+(origin[0]-ticklength)+","+i;} // y-axis (negative)
 		}
 
@@ -663,17 +663,17 @@ function axes(dx,dy,labels,gdx,gdy,units) {
 		if (units.length > 0){ xunits = units[0];}
 		if (units.length > 1){ yunits = units[1];}
 	}
-	
+
 	// Labels
 	if (labels!=null) {
-	
+
 		var ldx = tdx/xunitlength;
 		var ldy = tdy/yunitlength;
 		var lx = (xmin>0 || xmax<0?xmin:0);
 		var ly = (ymin>0 || ymax<0?ymin:0);
 		var lxp = (ly==0?"below":"above");
 		var lyp = (lx==0?"left":"right");
-	
+
 		if (typeof labels=="object")
 		{
 			if (labels.length > 0){
@@ -700,11 +700,11 @@ function axes(dx,dy,labels,gdx,gdy,units) {
 	}
 }
 
-function grid(dx,dy) { 
+function grid(dx,dy) {
 	axes(null,null,null,dx,dy)
 }
 
-function rect(p,q,rx,ry) { 
+function rect(p,q,rx,ry) {
 	var node = myCreateElementSVG("rect");
 	node.setAttribute("x",p[0]*xunitlength+origin[0]);
 	node.setAttribute("y",height-q[1]*yunitlength-origin[1]);
@@ -712,7 +712,7 @@ function rect(p,q,rx,ry) {
 	node.setAttribute("height",(q[1]-p[1])*yunitlength);
 	if (rx!=null) {node.setAttribute("rx",rx*xunitlength);}
 	if (ry!=null) {node.setAttribute("ry",ry*yunitlength);}
-	// Create SVG Element	
+	// Create SVG Element
 	node.setAttribute("stroke-width", strokewidth);
 	node.setAttribute("stroke", stroke);
 	node.setAttribute("fill", fill);
@@ -723,18 +723,18 @@ function path(plist,style,closed) {
 	var i, string;
 	var node = myCreateElementSVG("path");
 	svg_picture.appendChild(node);
-	
+
 	// =================================================================================================
 	// Source:												http://www.w3schools.com/svg/svg_path.asp
-	// Line:													M 0 0 L 100 100 200 0 ... 														(any number)	
+	// Line:													M 0 0 L 100 100 200 0 ... 														(any number)
 	// Curve:													M 0 0 C {100 100 200 0 300 100} 											(only 3)
 	// Smooth Curve: 									M 0 0 S {50 50 100 0} {150 50 200 0} {250 50 300 0}" 	(in pairs)
 	// Quadratic Bézier curve: 				M 0 0 Q {50 50 100 0} {150 50 200 0} {250 50 300 0}" 	(in pairs)
 	// Smooth quadratic Bézier curve:	M 0 0 T 50 50 100 0 150 50 200 0 250 50 300 0" 				(any number)
-	// Close Loop:										M 0 0 ............... Z	
+	// Close Loop:										M 0 0 ............... Z
 	// Eliptical Curve:								Complex!
 	// =================================================================================================
-	
+
 	// If we sent in a string, we assume it is already a nicely formatted svg path
 	if (typeof plist === 'string') {
 		string = plist;
@@ -746,8 +746,8 @@ function path(plist,style,closed) {
 
 		// Move Command
 		string = "M" + (plist[0][0]*xunitlength+origin[0])+","+ (height-plist[0][1]*yunitlength-origin[1]);
-		
-		// Draw the line	
+
+		// Draw the line
 		if (style == "L" || style == "C" || style == "S" || style == "Q" || style == "T") {
 			string += " " + style + " ";
 			for (i=1; i<plist.length; i++){
@@ -765,14 +765,14 @@ function path(plist,style,closed) {
 		}
 
 		// Close the Path
-		if (closed != null) {string += " Z";}	
+		if (closed != null) {string += " Z";}
 	}
 	node.setAttribute("d", string);
 	node.setAttribute("stroke-width", strokewidth);
 	node.setAttribute("stroke-dasharray", strokedasharray);
 	node.setAttribute("stroke", stroke);
 	node.setAttribute("fill", fill);
-	
+
 	// Dots
 	if (marker=="dot" || marker=="arrowdot")
 	{
@@ -794,7 +794,7 @@ function plot(func,x_min,x_max,points) {
 
 	switch (typeof func) {
 		case 'string':
-			// plot ("sin(x)") 
+			// plot ("sin(x)")
 			eval("g = function(x){ return "+mathjs(func)+" }");
 			break;
 		case 'object':
@@ -805,7 +805,7 @@ function plot(func,x_min,x_max,points) {
 		case 'function':
 			g = func;
 	}
-	
+
 	// Number of points
 	var inc = (points==null?(x_max-x_min)/200:(x_max-x_min+0.0000001)/points);
 
@@ -823,15 +823,15 @@ function plot(func,x_min,x_max,points) {
 	path(array_points);
 }
 
-function curve(plist) { 
+function curve(plist) {
 	path(plist,"T");
 }
 
-function bunnyhop(plist) { 
+function bunnyhop(plist) {
 	path(plist,"Q");
 }
 
-function smoothcurve(plist) { 
+function smoothcurve(plist) {
 	path(plist,"S");
 }
 
@@ -890,7 +890,7 @@ function slopefield(fun,dx,dy) {
 // Date: 14th June 2012
 // ================================================
 
-function fn_autocomplete(textarea, target) { 
+function fn_autocomplete(textarea, target) {
 	if (document.getElementById("autocomplete_checkbox").checked) { updatePicture(textarea.value, target); }
 	getSuggestion();
 }
@@ -898,8 +898,8 @@ function fn_autocomplete(textarea, target) {
 function getSuggestion() {
 	var line_number = document.getElementById("picture1input").value.substr(0, document.getElementById("picture1input").selectionStart).split("\n").length - 1
 	var line = document.getElementById("picture1input").value.split('\n')[line_number];
-	document.getElementById("suggestionNode").value = ""	
-	var dict = {		'dot':'dot([center_x,center_y], type, label, position, angle)', 
+	document.getElementById("suggestionNode").value = ""
+	var dict = {		'dot':'dot([center_x,center_y], type, label, position, angle)',
 									'arrowhead':'arrowhead([x1,y1],[x2,y2])',
 									'text':'text([x,y],string,position,angle)',
 									'axes':'axes(dx, dy,"labels" || [xpos,xneg,ypos,yneg,zeropos],gdx,gdy,[xunits,yunits])',
