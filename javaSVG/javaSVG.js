@@ -20,54 +20,92 @@ Infinite Loop Handling
 
 ========================================================================================== */
 
-
 // Encapsulate everything in a closure
 var javaSVG = (function(){
+"use strict";
 // Variables
 // ==============================
+
+// Define all the Math.* objects as local variables so we don't need to use the with keyword
+var random = Math.random, tan = Math.tan, min = Math.min, PI = Math.PI, sqrt = Math.sqrt, E = Math.E, SQRT1_2 = Math.SQRT1_2, ceil = Math.ceil, atan2 = Math.atan2, cos = Math.cos, LN2 = Math.LN2, LOG10E = Math.LOG10E, exp = Math.exp, round = Math.round, atan = Math.atan, max = Math.max, pow = Math.pow, LOG2E = Math.LOG2E, log = Math.log, LN10 = Math.LN10, floor = Math.floor, SQRT2 = Math.SQRT2, asin = Math.asin, acos = Math.acos, sin = Math.sin, abs = Math.abs;
 
 // Object Variables
 var svg_picture, svg_new;
 
 // Canvas Variables
-var xmin = defaultxmin 								= -5;
-var xmax = defaultxmax 								= 5;
-var ymin = defaultymin 								= -5;
-var ymax = defaultymax 								= 5;
-var xscl = defaultxscl 								= 1;
-var yscl = defaultyscl 								= 1;
-var xgrid = defaultxgrid 							= 1;
-var ygrid = defaultygrid 							= 1;
-var xtick = defaultxtick 							= 4;
-var ytick = defaultytick 							= 4;
-var border = defaultborder 						= 0;
-var height = defaultheight						= 400;
-var width = defaultwidth							= 400;
-var xunitlength = defaultxunitlength 	= 1;
-var yunitlength = defaultyunitlength 	= 1;
-var origin = defaultorigin 						= [0,0];
+var svg_canvas = null;
+var f, g;
+var defaultxmin = -5;
+var xmin = defaultxmin;
+var defaultxmax = 5;
+var xmax = defaultxmax;
+var defaultymin = -5;
+var ymin = defaultymin;
+var defaultymax = 5;
+var ymax = defaultymax;
+var defaultxscl = 1;
+var xscl = defaultxscl;
+var defaultyscl = 1;
+var yscl = defaultyscl;
+var defaultxgrid = 1;
+var xgrid = defaultxgrid;
+var defaultygrid = 1;
+var ygrid = defaultygrid;
+var defaultxtick = 4;
+var xtick = defaultxtick;
+var defaultytick = 4;
+var ytick = defaultytick;
+var defaultborder = 0;
+var border = defaultborder;
+var defaultheight = 400, defaultwidth = 400;
+var height = null, width = null;
+var defaultxunitlength = 1;
+var xunitlength = defaultxunitlength;
+var defaultyunitlength = 1;
+var yunitlength = defaultyunitlength;
+var defaultorigin = [0,0];
+var origin = defaultorigin;
 
 // Element Variables
-var axesstroke = defaultaxesstroke 							= "black";
-var gridstroke = defaultgridstroke 							= "grey";
-var strokewidth = defaultstrokewidth 						= 1; 					
-var strokedasharray = defaultstrokedasharray 		= [1, 0];
-var stroke = defaultstroke 											= "black";
-var arrowfill = defaultarrowfill 								= stroke;
-var fill = defaultfill 													= "none";
-var fontstyle = defaultfontstyle 								= "italic";
-var fontfamily = defaultfontfamily 							= "times";		
-var fontsize = defaultfontsize 									= 16;
-var fontweight = defaultfontweight 							= "normal";
-var fontstroke = defaultfontstroke 							= "none";
-var fontfill = defaultfontfill 									= "none";		
-var markerstrokewidth = defaultmarkerstrokewidth= 1;
-var markerstroke = defaultmarkerstroke 					= "black";
-var markerfill = defaultmarkerfill 							= "yellow";
-var markersize = defaultmarkersize 							= 4;
-var marker = defaultmarker 											= "none";
-var dotradius = defaultdotradius 								= 4;
-var ticklength = defaultticklength 							= 4;
+var defaultaxesstroke = "black";
+var axesstroke = defaultaxesstroke;
+var defaultgridstroke = "grey";
+var gridstroke = defaultgridstroke;
+var defaultstrokewidth = 1;
+var strokewidth = defaultstrokewidth; 					
+var defaultstrokedasharray = [1, 0];
+var strokedasharray = defaultstrokedasharray;
+var defaultstroke = "black";
+var stroke = defaultstroke;
+var defaultarrowfill = stroke;
+var arrowfill = defaultarrowfill;
+var defaultfill = "none";
+var fill = defaultfill;
+var defaultfontstyle = "normal";
+var fontstyle = defaultfontstyle;
+var defaultfontfamily = "sans";
+var fontfamily = defaultfontfamily;		
+var fontsize = null, defaultfontsize 									= 16;
+var defaultfontweight = "normal";
+var fontweight = defaultfontweight;
+var defaultfontstroke = "none";
+var fontstroke = defaultfontstroke;
+var defaultfontfill = "none";
+var fontfill = defaultfontfill;		
+var defaultmarkerstrokewidth = 1;
+var markerstrokewidth = defaultmarkerstrokewidth;
+var defaultmarkerstroke = "black";
+var markerstroke = defaultmarkerstroke;
+var defaultmarkerfill = "yellow";
+var markerfill = defaultmarkerfill;
+var defaultmarkersize = 4;
+var markersize = defaultmarkersize;
+var defaultmarker = "none";
+var marker = defaultmarker;
+var defaultdotradius = 4;
+var dotradius = defaultdotradius;
+var defaultticklength = 4;
+var ticklength = defaultticklength;
 
 // SVG Labels
 var above = "above"; var below = "below"; var left = "left"; var right = "right"; var aboveleft = "aboveleft"; var aboveright = "aboveright"; var belowleft = "belowleft"; var belowright = "belowright"; var open = "open"; var closed = "closed";
@@ -112,6 +150,8 @@ function initPicture(x_min, x_max, y_min, y_max)
 	if (y_min != null) { ymin = y_min; }
 	if (y_max != null) { ymax = y_max; }
 
+	if (width == null) { width = defaultwidth; }
+	if (height == null) { height = defaultheight; }
 	// Re-calculate variables
 	xunitlength = (width-2*border)/(xmax-xmin);
 	yunitlength = (height-2*border)/(ymax-ymin);
@@ -138,7 +178,7 @@ function updatePicture(src, target) {
 		svg_canvas.setAttribute("id","svg1");
 		document.getElementById('outputNode').appendChild(svg_canvas);
 	} else {
-		// If we're given a target, replace it with the new svg we are creating
+		// If we're given a target, grab it for later
 		if (typeof target === 'string') {
 			svg_canvas_orig = document.getElementById(target);
 		} else {
@@ -146,12 +186,13 @@ function updatePicture(src, target) {
 		}
 		svg_canvas = myCreateElementSVG("svg");
 		svg_canvas.setAttribute("id", svg_canvas_orig.getAttribute("id"));
-		svg_canvas_orig.parentNode.replaceChild(svg_canvas, svg_canvas_orig);
+		width = svg_canvas_orig.getAttribute("width");
+		height = svg_canvas_orig.getAttribute("height");
 	}
 	svg_picture = myCreateElementSVG("g");
 	svg_canvas.appendChild(svg_picture);
 
-	reset_variables(); // Reset Variables to original values for the next update	
+//	reset_variables(); // Reset Variables to original values for the next update	
 	
 	// Initialize Picture before user does
 	initPicture();
@@ -168,9 +209,12 @@ function updatePicture(src, target) {
 
 	// Evaluate Functions
 	// Errors should be caught by the caller
-	with (Math) eval(array_raw);
+	eval(array_raw);
 
 	reset_variables(); // Reset Variables to original values for the next update
+	
+	// After we've finished making the array, reparent
+	svg_canvas_orig.parentNode.replaceChild(svg_canvas, svg_canvas_orig);
 }
 
 /* 
@@ -254,22 +298,22 @@ function arrowhead(p,q,size) {
 }
 
 function text(p,st,pos,angle) {
-
+	var computed_fontsize = fontsize || defaultfontsize;
 	// Default text positions
 	if (angle == null) {angle = 0;}
 	var textanchor = "middle";
 	var dx = 0; 
-	var dy = fontsize/3;
+	var dy = computed_fontsize/3;
 
 	// Text Positions
-	if (pos == aboveleft)	{dx = -fontsize/2; 	dy = -fontsize/2;		textanchor = "end";}
-	if (pos == above)			{dx = 0; 						dy = -fontsize/2;		textanchor = "middle";}
-	if (pos == aboveright){dx = fontsize/2; 	dy = -fontsize/2;		textanchor = "start";}
-	if (pos == left)			{dx = -fontsize/2; 	dy = fontsize/3;		textanchor = "end";}
-	if (pos == right)			{dx = fontsize/2; 	dy = fontsize/3;		textanchor = "start";}
-	if (pos == belowleft)	{dx = -fontsize/2; 	dy = fontsize/1;			textanchor = "end";}
-	if (pos == below)			{dx = 0; 						dy = fontsize/1;			textanchor = "middle";}
-	if (pos == belowright){dx = fontsize/2; 	dy = fontsize/1;			textanchor = "start";}
+	if (pos == aboveleft)	{dx = -computed_fontsize/2; 	dy = -computed_fontsize/2;		textanchor = "end";}
+	if (pos == above)			{dx = 0; 						dy = -computed_fontsize/2;		textanchor = "middle";}
+	if (pos == aboveright){dx = computed_fontsize/2; 	dy = -computed_fontsize/2;		textanchor = "start";}
+	if (pos == left)			{dx = -computed_fontsize/2; 	dy = computed_fontsize/3;		textanchor = "end";}
+	if (pos == right)			{dx = computed_fontsize/2; 	dy = computed_fontsize/3;		textanchor = "start";}
+	if (pos == belowleft)	{dx = -computed_fontsize/2; 	dy = computed_fontsize/1;			textanchor = "end";}
+	if (pos == below)			{dx = 0; 						dy = computed_fontsize/1;			textanchor = "middle";}
+	if (pos == belowright){dx = computed_fontsize/2; 	dy = computed_fontsize/1;			textanchor = "start";}
 
 	// Text Rotation
 	var node = myCreateElementSVG("text");
@@ -285,7 +329,7 @@ function text(p,st,pos,angle) {
 	node.setAttribute("y",height-p[1]*yunitlength-origin[1]+dy);
 	node.setAttribute("font-style",fontstyle);
 	node.setAttribute("font-family",fontfamily);
-	node.setAttribute("font-size",fontsize);
+	node.setAttribute("font-size",computed_fontsize);
 	node.setAttribute("font-weight",fontweight);
 	node.setAttribute("text-anchor",textanchor);
 	if (fontstroke!="none") node.setAttribute("stroke",fontstroke);
@@ -537,6 +581,7 @@ function noaxes() {
 }
 
 function axes(dx,dy,labels,gdx,gdy,units) {
+	var xunits, yunits, x, y;
 
 	if (dx != null && dx <= 0) {dx = 1;}
 	if (dy != null && dy <= 0) {dy = 1;}
@@ -547,7 +592,8 @@ function axes(dx,dy,labels,gdx,gdy,units) {
 	var pnode, string, i;
 	var tdx = (dx==null?xunitlength:dx*xunitlength);
 	var tdy = (dy==null?yunitlength:dy*yunitlength);
-	fontsize = Math.min(tdx/2,tdy/2,16);
+	// If we set a fontsize explictly, use it, otherwise compute this nice comprimize
+	fontsize = fontsize || Math.min(tdx/2,tdy/2,16);
 	ticklength = fontsize/4;
 
 	/* === Grid === */
@@ -619,7 +665,7 @@ function axes(dx,dy,labels,gdx,gdy,units) {
 	}
 	
 	// Labels
-	if (labels!=null) with (Math) {
+	if (labels!=null) {
 	
 		var ldx = tdx/xunitlength;
 		var ldy = tdy/yunitlength;
@@ -674,7 +720,7 @@ function rect(p,q,rx,ry) {
 }
 
 function path(plist,style,closed) {
-	var i;
+	var i, string;
 	var node = myCreateElementSVG("path");
 	svg_picture.appendChild(node);
 	
@@ -688,33 +734,39 @@ function path(plist,style,closed) {
 	// Close Loop:										M 0 0 ............... Z	
 	// Eliptical Curve:								Complex!
 	// =================================================================================================
-
-	// Style default = L
-	if (style == null) {style = "L";}
-	// Get the number of coordinates required as arguments for the current curve style
-	var coordsRequired = {"L": 1, "C": 3, "S": 2, "Q": 2, "T": 1}[style];
-
-	// Move Command
-	string = "M" + (plist[0][0]*xunitlength+origin[0])+","+ (height-plist[0][1]*yunitlength-origin[1]);
 	
-	// Draw the line	
-	if (style == "L" || style == "C" || style == "S" || style == "Q" || style == "T") {
-		string += " " + style + " ";
-		for (i=1; i<plist.length; i++){
-			string += (plist[i][0]*xunitlength+origin[0])+","+ (height-plist[i][1]*yunitlength-origin[1]);
-			if (i % coordsRequired === 0) {
-				string += style;
-			} else {
-				string += ",";
-			}
-		}
+	// If we sent in a string, we assume it is already a nicely formatted svg path
+	if (typeof plist === 'string') {
+		string = plist;
 	} else {
-		throw new Error("Unknown style "+style+".");
+		// Style default = L
+		if (style == null) {style = "L";}
+		// Get the number of coordinates required as arguments for the current curve style
+		var coordsRequired = {"L": 1, "C": 3, "S": 2, "Q": 2, "T": 1}[style];
+
+		// Move Command
+		string = "M" + (plist[0][0]*xunitlength+origin[0])+","+ (height-plist[0][1]*yunitlength-origin[1]);
+		
+		// Draw the line	
+		if (style == "L" || style == "C" || style == "S" || style == "Q" || style == "T") {
+			string += " " + style + " ";
+			for (i=1; i<plist.length; i++){
+				string += (plist[i][0]*xunitlength+origin[0])+","+ (height-plist[i][1]*yunitlength-origin[1]);
+				if ( i !== plist.length - 1 ) {
+					if (i % coordsRequired === 0) {
+						string += style;
+					} else {
+						string += ",";
+					}
+				}
+			}
+		} else {
+			throw new Error("Unknown style "+style+".");
+		}
+
+		// Close the Path
+		if (closed != null) {string += " Z";}	
 	}
-
-	// Close the Path
-	if (closed != null) {string += " Z";}	
-
 	node.setAttribute("d", string);
 	node.setAttribute("stroke-width", strokewidth);
 	node.setAttribute("stroke-dasharray", strokedasharray);
@@ -732,7 +784,7 @@ function path(plist,style,closed) {
 }
 
 function plot(func,x_min,x_max,points) {
-	
+	var data;
 	var f = function(x) {return x;}
 	x_min = (x_min==null?xmin:x_min);
 	x_max = (x_max==null?xmax:x_max);
@@ -740,14 +792,18 @@ function plot(func,x_min,x_max,points) {
 	var name;
 	var array_points = [];
 
-	// plot ("sin(x)") 
-	if (typeof func=="string"){
-		eval("g = function(x){ with(Math) return "+mathjs(func)+" }");
-	}
-	// plot (["t", "sin(t)"])
-	else if (typeof func=="object") {
-		eval("f = function(t){ with(Math) return "+mathjs(func[0])+" }");
-		eval("g = function(t){ with(Math) return "+mathjs(func[1])+" }");
+	switch (typeof func) {
+		case 'string':
+			// plot ("sin(x)") 
+			eval("g = function(x){ return "+mathjs(func)+" }");
+			break;
+		case 'object':
+			// plot (["t", "sin(t)"])
+			eval("f = function(t){ return "+mathjs(func[0])+" }");
+			eval("g = function(t){ return "+mathjs(func[1])+" }");
+			break;
+		case 'function':
+			g = func;
 	}
 	
 	// Number of points
@@ -760,8 +816,7 @@ function plot(func,x_min,x_max,points) {
 		gout = g(t);
 		// Try
 		if (!(isNaN(fout)||isNaN(gout)||Math.abs(fout)=="Infinity"||Math.abs(gout)=="Infinity")){
-			try{data = [fout, gout];}
-			catch(err) { continue; }
+			data = [fout, gout];
 		}
 		array_points[array_points.length] = data;
 	}
@@ -791,37 +846,42 @@ function heart(p,size){
 	path([[p[0],p[1]+size*0.75],[p[0],p[1]+size*1.25], [p[0]-size,p[1]+size], [p[0],p[1]]], "C");
 }
 
-function slopefield(func,dx,dy) {
-
-	if (dx==null||dx<=0) dx=1;
-	if (dy==null||dy<=0) dy=1;
-
-	// Function 
-	var g, gout;		
-	if (typeof func=="string")
-		eval("g = function(x,y){ with(Math) return "+mathjs(func)+" }");
-	
-	// Length of Line
-	var dz = Math.sqrt(dx*dx+dy*dy)/6;
-	
-	// Loop	
-	var x,y,u,v;
-	for (x = xmin; x <= xmax; x += dx)
-	{
-		for (y = ymin; y <= ymax; y += dy) 
-		{
-			// Calculate the Instantaneous Gradient
-			ddx = 0.0001;
-			gout = (g(x+ddx,y)-g(x-ddx,y))/(2*ddx);
-			// Plot Line
-			if (!isNaN(gout))
-			{
-				if (Math.abs(gout)=="Infinity") {u = 0; v = dz;}
-				else {u = dz/Math.sqrt(1+gout*gout); v = gout*u;}
-				line([x-u,y-v],[x+u,y+v]);
-			}
-		}
-	}
+function slopefield(fun,dx,dy) {
+    var g = fun;
+    if (typeof fun == "string") eval("g = function(x,y){ return " + mathjs(fun) + " }");
+    var gxy, x, y, u, v, dz;
+    if (dx == null) dx = 1;
+    if (dy == null) dy = 1;
+    dz = Math.sqrt(dx * dx + dy * dy) / 6;
+    var x_min = Math.ceil(xmin / dx);
+    var y_min = Math.ceil(ymin / dy);
+    var pointList = []
+    // generate all the line segments for our slopefeild
+    for (x = x_min; x <= xmax; x += dx) {
+        for (y = y_min; y <= ymax; y += dy) {
+            gxy = g(x, y);
+            if (!isNaN(gxy)) {
+                if (Math.abs(gxy) == "Infinity") {
+                    u = 0;
+                    v = dz;
+                } else {
+                    u = dz / Math.sqrt(1 + gxy * gxy);
+                    v = gxy * u;
+                }
+                pointList.push([x - u, y - v]);
+                pointList.push([x + u, y + v]);
+            }
+        }
+    }
+    // Convert them directly into a path for efficiency.
+    var pathStr = ''
+    for (var i = 0; i < pointList.length; i += 2) {
+        pathStr += 'M' + (pointList[i][0] * xunitlength + origin[0]) + ','
+                       + (height - pointList[i][1] * yunitlength - origin[1]) + 'L'
+                       + (pointList[i+1][0] * xunitlength + origin[0]) + ','
+                       + (height - pointList[i+1][1] * yunitlength - origin[1]) + '';
+    }
+    path(pathStr);
 }
 
 // ================================================
