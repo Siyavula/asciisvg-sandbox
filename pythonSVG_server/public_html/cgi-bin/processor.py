@@ -42,13 +42,13 @@ def fn_strip_tags(text, templateLocals={}):
 
 # ========================================================================================
 
-def AJAX_return(output, error_flag, error_string):
+def AJAX_return(output, error_flag, error_string, randomSeed):
 	print "Content-Type: text/html"
 	print
 	if (error_flag == 1 or len(error_string) > 0):
-		print urllib.quote("[BRK]Error: " + str(error_string))
+		print urllib.quote("[BRK]Error: " + str(error_string) + "[BRK]" + str(randomSeed))
 	else:
-		print urllib.quote(output + "[BRK]")
+		print urllib.quote(output + "[BRK][BRK]" + str(randomSeed))
 
 # ========================================================================================
 # INPUT
@@ -66,10 +66,14 @@ if (form.getvalue('strip_tags') == 'true'):
 
 	# =======================================
 	# Import template environment header
-	if iRandomSeed is None:
-		randomSeed = random.randint(1, 1000000)
-	else:
+
+	if not (iRandomSeed == None):
 		randomSeed = iRandomSeed
+	elif (form.getvalue('randomize_lock') == 'true'):
+		randomSeed = form.getvalue('random_seed')
+	else:
+		randomSeed = random.randint(1, 1000000)		
+
 	# =======================================
 	import template_environment
 	for key in dir(template_environment):
@@ -120,6 +124,6 @@ if (error_flag == 0):
 # OUTPUT
 # ========================================================================================
 
-AJAX_return(output, error_flag, error_string)
+AJAX_return(output, error_flag, error_string,randomSeed)
 
 

@@ -15,6 +15,7 @@ function xmlhttpPost(image_format) {
 	  var self = this;
 		var ascii_input_code = String(encodeURIComponent(document.getElementById("asciiinput").value));
 		var python_input_code = String(encodeURIComponent(document.getElementById("pythoninput").value));
+		var random_seed = String(encodeURIComponent(document.getElementById("random_seed").value));
 
 		// Mozilla/Safari
 	  if (window.XMLHttpRequest) {
@@ -32,15 +33,16 @@ function xmlhttpPost(image_format) {
 						var xmlHttp_data = decodeURIComponent(self.xmlHttpReq.responseText).split ("[BRK]");
 						document.getElementById("outputNode").innerHTML = xmlHttp_data[0];
 						document.getElementById("error_msg").innerHTML = xmlHttp_data[1];
+						document.getElementById("random_seed").value = xmlHttp_data[2];
 	      }
 	  }
 		if (image_format == "PNG")
 		{
-			self.xmlHttpReq.send("type='png'&ascii=" + ascii_input_code + " &python=" + python_input_code + " &strip_tags=" + document.getElementById("strip_tags_checkbox").checked);
+			self.xmlHttpReq.send("type='png'&ascii=" + ascii_input_code + " &python=" + python_input_code + " &strip_tags=" + document.getElementById("strip_tags_checkbox").checked + "&randomize_lock=" + document.getElementById("randomize_lock").checked + "&random_seed=" + random_seed);
 		}
 		else if (image_format == "SVG")
 		{
-			self.xmlHttpReq.send("type='svg'&ascii=" + ascii_input_code + " &python=" + python_input_code + " &strip_tags=" + document.getElementById("strip_tags_checkbox").checked);
+			self.xmlHttpReq.send("type='svg'&ascii=" + ascii_input_code + " &python=" + python_input_code + " &strip_tags=" + document.getElementById("strip_tags_checkbox").checked + "&randomize_lock=" + document.getElementById("randomize_lock").checked + "&random_seed=" + random_seed);
 		}
 }
 
