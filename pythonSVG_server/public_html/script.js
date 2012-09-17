@@ -133,3 +133,24 @@ function insertTab(o, e)
 	return true;
 }
 
+function mouse_coords()
+{
+	var posx = 0;
+	var posy = 0;
+	if (!e) var e = window.event;
+	if (e.pageX || e.pageY) 	{
+		posx = e.pageX;
+		posy = e.pageY;
+	}
+	else if (e.clientX || e.clientY) 	{
+		posx = e.clientX + document.body.scrollLeft
+			+ document.documentElement.scrollLeft;
+		posy = e.clientY + document.body.scrollTop
+			+ document.documentElement.scrollTop;
+	}
+	// posx and posy contain the mouse position relative to the document
+	// Do something with this information
+
+	document.getElementById("error_msg").innerHTML = posx + ", " + posy;
+}
+
