@@ -471,7 +471,7 @@ class mySvgCanvas:
 		node.attrib['self'] = str(self.xml_get_pointer())
 
 		# Group attributes
-		node.attrib['angle'] = str(rotate_angle)
+		node.attrib['angle'] = str(-rotate_angle)
 		cx = round(center[0] * self.loc_var["xunitlength"] + self.loc_var["origin"][0],2)
 		cy = round(float(self.loc_var["height"]) - center[1] * self.loc_var["yunitlength"] - self.loc_var["origin"][1],2)
 		tx = round(translate[0] * self.loc_var["xunitlength"],2)
