@@ -19,6 +19,7 @@ class mySvgCanvas:
 	error_string = ""	
 	xml_parent = None
 	xml_pointer = -1 # !!! Important !!! xml_parent[0] is a blank rectangle
+	xml_parent_pointer = [] # !!! Important !!! array will be initialized after __init__
 
 	# Error Handling
 	loc_var["complete_log"] = 1			# Screen-dump Flag: Completed lines of code
@@ -114,7 +115,7 @@ class mySvgCanvas:
 		self.xml_parent.attrib['id'] = str(name)
 		if (width != None): self.loc_var["width"] = int(float(width))
 		if (height != None): self.loc_var["height"] = int(float(height)) 
-		self.group()	# Create a blank rotation group
+		self.start_group()	# Create a blank rotation group
 		self.initPicture(-5,5,-5,5)
 
 		# Declare Functions as Variables
@@ -140,7 +141,9 @@ class mySvgCanvas:
 		self.loc_var["petal"] = self.petal
 		self.loc_var["heart"] = self.heart
 		self.loc_var["slopefield"] = self.slopefield
-		self.loc_var["group"] = self.group
+		self.loc_var["xml_get_pointer"] = self.xml_get_pointer
+		self.loc_var["start_group"] = self.start_group
+		self.loc_var["stop_group"] = self.stop_group
 
 		# Special Functions
 		self.loc_var["frange"] = self.frange										# Decimal-compatible "range"
@@ -438,6 +441,66 @@ class mySvgCanvas:
 
 	'''
 	==============================
+	Functions (GROUPING)
+	==============================
+	> xml_get_pointer()
+	> start_group(center=[0,0], angle=0, scale=[1,1], translate=[0,0])
+	> stop_group()
+	============================== 
+	'''
+
+# ========================================================================================
+
+	def xml_get_pointer(self):
+		if (len(self.xml_parent_pointer) > 0):
+			var_parent = "][".join([str(i) for i in self.xml_parent_pointer])
+			return "self.xml_parent[" + var_parent + "]" # + var_current
+		else:
+			return "self.xml_parent"  # + var_current
+
+# ========================================================================================
+	
+	def start_group(self, center=[0,0], rotate_angle=0, scale=[1,1], translate=[0,0]):
+
+		# Create group based on pointer
+		exec("node = etree.SubElement(" + str(self.xml_get_pointer()) + ", 'g')")
+		node.attrib['parent'] = str(self.xml_get_pointer())
+
+		# Change pointer to new parent
+		exec("self.xml_parent_pointer.append(len(" + str(self.xml_get_pointer()) + ".getchildren())-1)")
+		node.attrib['self'] = str(self.xml_get_pointer())
+
+		# Group attributes
+		node.attrib['angle'] = str(rotate_angle)
+		cx = round(center[0] * self.loc_var["xunitlength"] + self.loc_var["origin"][0],2)
+		cy = round(float(self.loc_var["height"]) - center[1] * self.loc_var["yunitlength"] - self.loc_var["origin"][1],2)
+		tx = round(translate[0] * self.loc_var["xunitlength"],2)
+		ty = round(translate[1] * self.loc_var["yunitlength"],2)
+		sx = scale[0]
+		sy = scale[1] != None and scale[1] or sx
+		
+		# Rotate
+		transform_string = "rotate("+str(node.attrib['angle'])+", "+str(cx)+", "+str(cy)+") "
+		
+		# Scale (transform + scale + reverse transform)
+		transform_string += "translate("+str(cx)+", "+str(cy)+") "
+		transform_string += "scale("+str(sx)+", "+str(sy)+")"
+		transform_string += "translate("+str(-cx)+", "+str(-cy)+") "
+
+		# Translate
+		transform_string += "translate("+str(tx/sx)+", "+str(-1*ty/sy)+")"
+		node.attrib['transform'] = transform_string
+
+# ========================================================================================	
+
+	def stop_group(self):
+		if (len(self.xml_parent_pointer) > 0):
+			self.xml_parent_pointer.pop(-1)
+			
+# ========================================================================================
+
+	'''
+	==============================
 	Functions (BASIC SVG ELEMENTS)
 	==============================
 	> myCreateElementSVG(t)
@@ -449,16 +512,6 @@ class mySvgCanvas:
 
 # ========================================================================================
 
-	def group(self, center=[0,0], angle=0):
-		self.xml_pointer += 1
-		node = etree.SubElement(self.xml_parent, 'g')
-		node.attrib['angle'] = str(angle)
-		node.attrib['cx'] = str(center[0])
-		node.attrib['cy'] = str(center[1])
-		node.attrib['transform'] = "rotate("+str(node.attrib['angle'])+", "+str(node.attrib['cx'])+", "+str(node.attrib['cy'])+")"
-
-# ========================================================================================
-	
 	def dot(self, center=[0,0], typ=None, label=None, pos=None, angle=None):
 
 		cx = center[0] * self.loc_var["xunitlength"] + self.loc_var["origin"][0]
@@ -466,7 +519,7 @@ class mySvgCanvas:
 
 		# If the Type is Defined
 		if (typ == "+" or typ == "-" or typ == "|"):
-			node = etree.SubElement(self.xml_parent[self.xml_pointer], "path")
+			exec("node = etree.SubElement(" + str(self.xml_get_pointer()) + ", 'path')")
 			if (typ=="+"):					
 				node.attrib['d'] = 	" M " + str(cx - self.loc_var["ticklength"]) + " " + str(cy) + \
 														" L " + str(cx + self.loc_var["ticklength"]) + " " + str(cy) + \
@@ -485,7 +538,7 @@ class mySvgCanvas:
 
 		# Type NOT Defined
 		else:
-			node = etree.SubElement(self.xml_parent, 'circle')
+			exec("node = etree.SubElement(" + str(self.xml_get_pointer()) + ", 'circle')")
 			node.attrib['cx'] = str(cx)
 			node.attrib['cy'] = str(cy)
 			node.attrib['r'] = str(self.loc_var["dotradius"])
@@ -508,7 +561,7 @@ class mySvgCanvas:
 		if (d > 0.000001):
 			u = [u[0]/d, u[1]/d]	# unit vector
 			up = [-u[1],u[0]] 		# inverse unit vector
-			node = etree.SubElement(self.xml_parent, 'path')
+			exec("node = etree.SubElement(" + str(self.xml_get_pointer()) + ", 'path')")
 			node.attrib['d'] = str("M " + str(w[0]-15*u[0]-4*up[0]) + " " + str(w[1]-15*u[1]-4*up[1]) + " L " + str(w[0]-3*u[0]) + " " + str(w[1]-3*u[1]) + " L " + str(w[0]-15*u[0]+4*up[0]) + " " + str(w[1]-15*u[1]+4*up[1]) + " Z")
 			node.attrib['stroke-width'] = str(size != None and size or self.loc_var["markerstrokewidth"])
 			node.attrib['stroke'] = self.loc_var["stroke"]
@@ -560,8 +613,13 @@ class mySvgCanvas:
 			textanchor = "start"
 		
 		# Text Rotation
-		node = etree.SubElement(self.xml_parent[self.xml_pointer], "text")
-		adjusted_angle = int(angle) - int(self.xml_parent[self.xml_pointer].attrib['angle'])
+		exec("node = etree.SubElement(" + str(self.xml_get_pointer()) + ", 'text')")
+		# Remove angle for EACH parent
+		adjusted_angle = int(angle)
+		for k in range (0,len(self.xml_parent_pointer)):
+			var_parent = "[" + "][".join([str(i) for i in self.xml_parent_pointer[0:k+1]]) + "]"
+			adjusted_angle -= int(eval("self.xml_parent" + str(var_parent) + ".attrib['angle']"))
+		# Properties
 		node.text = str(st)
 		node.attrib['x'] = str(round(p[0] * self.loc_var["xunitlength"] + self.loc_var["origin"][0] + dx,2))		
 		node.attrib['y'] = str(round(float(self.loc_var["height"]) - p[1] * self.loc_var["yunitlength"] - self.loc_var["origin"][1]+dy,2))
@@ -593,7 +651,7 @@ class mySvgCanvas:
 	
 	def line(self,p,q):
 
-		node = etree.SubElement(self.xml_parent[self.xml_pointer], "path")
+		exec("node = etree.SubElement(" + str(self.xml_get_pointer()) + ", 'path')")
 
 		# Formatting
 		if (self.loc_var["strokedasharray"] == None):
@@ -632,7 +690,7 @@ class mySvgCanvas:
 
 	def ellipse(self, center=[0,0], rx=1, ry=None):
 
-		node = etree.SubElement(self.xml_parent[self.xml_pointer], "ellipse")
+		exec("node = etree.SubElement(" + str(self.xml_get_pointer()) + ", 'ellipse')")		
 		node.attrib['cx'] = str(round(center[0] * self.loc_var["xunitlength"] + self.loc_var["origin"][0],2))
 		node.attrib['cy'] = str(round(float(self.loc_var["height"]) - center[1] * self.loc_var["yunitlength"] - self.loc_var["origin"][1],2))
 		node.attrib['rx'] = str(round(rx * self.loc_var["xunitlength"],2))
@@ -650,7 +708,7 @@ class mySvgCanvas:
 
 	def arc(self,start=[0,0],end=[1,1],radius=None):
 		
-		node = etree.SubElement(self.xml_parent[self.xml_pointer], "path")
+		exec("node = etree.SubElement(" + str(self.xml_get_pointer()) + ", 'path')")
 		
 		# Radius
 		if (radius==None):  
@@ -724,7 +782,7 @@ class mySvgCanvas:
 	def noaxes(self):
 
 		# Initialize blank background
-		node = etree.SubElement(self.xml_parent[self.xml_pointer], "rect")
+		exec("node = etree.SubElement(" + str(self.xml_get_pointer()) + ", 'rect')")
 		node.attrib['x'] = "0"
 		node.attrib['y'] = "0"
 		node.attrib['width'] = str(float(self.loc_var["width"]))
@@ -769,7 +827,7 @@ class mySvgCanvas:
 					string += " M 0," + str(i) + " " + str(float(self.loc_var["width"])) + "," + str(i) # y-axis (negative)
 
 			# Create SVG Element
-			pnode = etree.SubElement(self.xml_parent[self.xml_pointer], "path")
+			exec("pnode = etree.SubElement(" + str(self.xml_get_pointer()) + ", 'path')")
 			pnode.attrib['d'] = str(string)
 			pnode.attrib['stroke-width'] = str(0.5)
 			pnode.attrib['stroke'] = str(self.loc_var["gridstroke"])
@@ -811,7 +869,7 @@ class mySvgCanvas:
 					str(self.loc_var["origin"][0] - self.loc_var["ticklength"]) + "," + str(i) # y-axis (negative)
 		
 			# Axes
-			pnode = etree.SubElement(self.xml_parent[self.xml_pointer], "path")
+			exec("pnode = etree.SubElement(" + str(self.xml_get_pointer()) + ", 'path')")
 			pnode.attrib['d'] = str(string)
 			pnode.attrib['stroke-width'] = str(0.5)
 			pnode.attrib['stroke'] = str(self.loc_var["axesstroke"])
@@ -869,7 +927,7 @@ class mySvgCanvas:
 # ========================================================================================
 
 	def rect(self,p=[0,0],q=[1,1],rx=0,ry=0):
-		node = etree.SubElement(self.xml_parent[self.xml_pointer], "rect")
+		exec("node = etree.SubElement(" + str(self.xml_get_pointer()) + ", 'rect')")
 		node.attrib['x'] = str(p[0]*self.loc_var["xunitlength"]+self.loc_var["origin"][0])
 		node.attrib['y'] = str(float(self.loc_var["height"])-q[1]*self.loc_var["yunitlength"]-self.loc_var["origin"][1])
 		node.attrib['width'] = str((q[0]-p[0])*self.loc_var["xunitlength"])
@@ -914,7 +972,7 @@ class mySvgCanvas:
 		# Close the Path
 		if (closed != None):
 			string += " Z"
-		node = etree.SubElement(self.xml_parent[self.xml_pointer], "path")
+		exec("node = etree.SubElement(" + str(self.xml_get_pointer()) + ", 'path')")
 		node.attrib['d'] = str(string)
 		node.attrib['stroke-width'] = str(self.loc_var["strokewidth"])
 		node.attrib['stroke-dasharray'] = 	str(self.loc_var["strokedasharray"][0]) + ", " + \

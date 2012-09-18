@@ -249,11 +249,33 @@ text([2,2], "<valueof>var_text</valueof>")</textarea>
 
 		<tr>
 			<td colspan=1>
-				<b>group</b>([cx, cy], angle)
+				<b>start_group</b>(self, center=[0,0], rotate_angle=0, scale=[1,1], translate=[0,0])
 			</td>
 			<td colspan=1>
-				<b>group()</b> = No rotation<br>
-				<b>group([200,200], 90)</b> = 90 degree rotation<br>
+				<b>start_group()</b><br>
+				<b>start_group([200,200], 90, [1,1], [5,5])</b><br>
+			</td>
+		</tr>
+
+		<tr>
+			<td colspan=1>
+				<b>stop_group</b>()
+			</td>
+			<td colspan=1>
+				# Closes the scope of the group
+			</td>
+		</tr>
+
+		<tr>
+			<td colspan=1>
+				<b>Nested Groups</b>
+			</td>
+			<td colspan=1>
+				<b>start_group([200,200], 90)</b><br>
+				<b>start_group([200,200], 0, [1,1], [5,5])</b><br>
+				// CODE<br>
+				<b>stop_group()</b><br>
+				<b>stop_group()</b><br>
 			</td>
 		</tr>
 
