@@ -13,6 +13,7 @@
   <style type="text/css">
     .CodeMirror {
       width: 100%;
+			height: 600px;
       border: 1px solid black;
 			background: #EEEEEE;
     }
@@ -26,7 +27,7 @@
 	<tbody>
 		<tr>
 			<td colspan=2 style="width:100%;" bgcolor="#999999"><b>Input (ASCIIsvg commands and JavaScript)</b></td>
-			<td id="image_title" colspan=2 style="width:420px;" bgcolor="#999999"><b>Output (SVG)</b></td>
+			<td id="image_title" colspan=2 bgcolor="#999999"><b>Output (SVG)</b></td>
 		</tr>
 
 		<!-- Input Boxes -->
@@ -34,7 +35,7 @@
 		<tr>			
 			<td colspan=2>
 	
-				<table border=0  style="width:100%;">
+				<table border=0 cellspacing=10 style="width:100%;">
 					<tr>
 						<td id="row_python" style="width:50%;">Python Code</td>
 						<td id="row_ascii" style="width:50%;">Ascii Code</td>
@@ -67,11 +68,11 @@ text([2,2], "<valueof>var_text</valueof>")</textarea>
 				</table>
 
 			</td>
-			<td rowspan=3 colspan=2 id="image_cell" style="width:420px;">
+			<td rowspan=3 colspan=2 id="image_cell" style="padding:10px; vertical-align:top;">
 
 				<!-- SVG Output -->			
 				<center>
-					<div id="outputNode" style="padding: 10px; width:420px; height:420px;"></div>
+					<div id="outputNode" style="padding: 10px; padding-top:20px; height:420px; width:420px;"></div>
 				</center>	
 
 			</td>
@@ -1807,8 +1808,7 @@ text([2,2], "<valueof>var_text</valueof>")</textarea>
 var pythoninput_editor = CodeMirror.fromTextArea(document.getElementById('pythoninput'), {
   mode: 'python',
 	lineNumbers: true,
-	lineWrapping: false,
-
+	lineWrapping: true,
   tabMode: 'indent',
   onChange: function() {
     updatePreview();
@@ -1825,7 +1825,7 @@ var pythoninput_editor = CodeMirror.fromTextArea(document.getElementById('python
 var asciiinput_editor = CodeMirror.fromTextArea(document.getElementById('asciiinput'), {
   mode: 'text/html',
 	lineNumbers: true,
-	lineWrapping: false,
+	lineWrapping: true,
   tabMode: 'indent',
   onChange: function() {
     updatePreview(asciiinput_editor);
