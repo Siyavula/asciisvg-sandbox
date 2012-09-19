@@ -2,17 +2,31 @@
 
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-	<title>pythonSVG Editor (2.1)</title>
+	<title>pythonSVG Editor (2.2)</title>
 	<script type="text/javascript" src="script.js"></script>
+	<script src="./codemirror/codemirror.js"></script>
+  <script src="./codemirror/xml.js"></script>
+  <script src="./codemirror/javascript.js"></script>
+  <script src="./codemirror/css.js"></script>
+  <script src="./codemirror/htmlmixed.js"></script>
+  <link rel="stylesheet" href="./codemirror/codemirror.css">
+  <style type="text/css">
+    .CodeMirror {
+      width: 100%;
+      border: 1px solid black;
+			background: #EEEEEE;
+    }
+  </style>
 </head>
 
 <body bgcolor="#8888CC" onload="update_SVG();">
+
 <center>
 <table border=1 cellpadding=5 cellspacing=0 bgcolor="#CCCCCC">
 	<tbody>
 		<tr>
 			<td colspan=2 style="width:100%;" bgcolor="#999999"><b>Input (ASCIIsvg commands and JavaScript)</b></td>
-			<td id="image_title" colspan=2 style="width:420;" bgcolor="#999999"><b>Output (SVG)</b></td>
+			<td id="image_title" colspan=2 style="width:420px;" bgcolor="#999999"><b>Output (SVG)</b></td>
 		</tr>
 
 		<!-- Input Boxes -->
@@ -26,18 +40,14 @@
 						<td id="row_ascii" style="width:50%;">Ascii Code</td>
 					</tr>
 					<tr>
-						<td><textarea id="pythoninput" rows="25" 
-													onKeyUp="auto_update_image(); getSuggestion();" 
-													onkeydown="insertTab(this, event);"
-													onmouseup="this.onkeyup();" style="width:100%; background:#DDDDFF;">a = 2
+						<td><textarea id="pythoninput" 
+													name="pythoninput">a = 2
 b = 1
 c = "cos(t)"
 var_text = "bye"</textarea>
 						</td>
-						<td><textarea id="asciiinput" rows="25"
-													onkeydown="insertTab(this, event);"
-													onKeyUp="auto_update_image(); getSuggestion();" 
-													onmouseup="this.onkeyup();" style="width:100%;">var_text = "hello"
+						<td><textarea id="asciiinput" 
+													name="asciiinput">var_text = "hello"
 
 setBorder(0)
 initPicture(-6,6,-6,6)
@@ -57,11 +67,11 @@ text([2,2], "<valueof>var_text</valueof>")</textarea>
 				</table>
 
 			</td>
-			<td rowspan=1 colspan=2 id="image_cell" style="width:420;">
+			<td rowspan=3 colspan=2 id="image_cell" style="width:420px;">
 
 				<!-- SVG Output -->			
 				<center>
-					<div id="outputNode" style="padding: 10px; width:420;"></div>
+					<div id="outputNode" style="padding: 10px; width:420px; height:420px;"></div>
 				</center>	
 
 			</td>
@@ -71,14 +81,11 @@ text([2,2], "<valueof>var_text</valueof>")</textarea>
 
 		<tr>
 			
-			<td>SVG Image:</td>	
+			<td>Image:</td>	
 			<td>
 
 				<!-- Option: Auto Update -->
 				<input type="checkbox" id="autocomplete_checkbox" checked="checked" onClick="auto_update_image();"> auto-update SVG
-
-				<!-- Option: Siyavula Setting -->
-				<input type="checkbox" id="strip_tags_checkbox" checked="checked" onClick="auto_update_image();"> Siyavula templates
 
 				<!-- Update: SVG Button -->
 				<input type="button" value="Manual SVG Update" onClick="update_SVG();"> 
@@ -88,10 +95,20 @@ text([2,2], "<valueof>var_text</valueof>")</textarea>
 
 			</td>
 
-			<!-- Error Message -->				
-			<td colspan=2 rowspan=2><textarea id="error_msg" rows="5" disabled="disabled" style="width:100%; color:#990000;"></textarea></td>
+		</tr>
+
+		<tr>
+			
+			<td>Note:</td>	
+			<td>
+
+				Use <b>&lt;valueof&gt;var&lt;/valueof&gt;</b> tags to access Python variables
+
+			</td>
 
 		</tr>
+
+		<!-- Option: Random Seed -->
 
 		<tr>
 			
@@ -102,6 +119,9 @@ text([2,2], "<valueof>var_text</valueof>")</textarea>
 				<input type="checkbox" id="randomize_lock" onClick="auto_update_image();"> hold randomization on random seed: 
 				
 				<input id="random_seed" style="width:200px;"></td>
+
+				<!-- Error Message -->				
+				<td colspan=2 rowspan=2><textarea id="error_msg" rows="5" disabled="disabled" style="width:100%; color:#990000;"></textarea></td>
 
 		</tr>
 
@@ -114,9 +134,11 @@ text([2,2], "<valueof>var_text</valueof>")</textarea>
 		</tr>
 	</tbody>
 </table>
+</center>
 
 <br>
 
+<center>
 <table border=1 cellpadding=5 cellspacing=0  bgcolor="#CCCCCC">
 	<tbody>
 
@@ -1780,6 +1802,50 @@ text([2,2], "<valueof>var_text</valueof>")</textarea>
 </body></html>
 
 <script>
+
+// Initialize CodeMirror editor with a nice html5 canvas demo.
+var pythoninput_editor = CodeMirror.fromTextArea(document.getElementById('pythoninput'), {
+  mode: 'python',
+	lineNumbers: true,
+	lineWrapping: false,
+
+  tabMode: 'indent',
+  onChange: function() {
+    updatePreview();
+  },
+	onGutterClick: function(cm, n) {
+    var info = cm.lineInfo(n);
+    if (info.markerText)
+      cm.clearMarker(n);
+    else
+      cm.setMarker(n, "<span style=\"color: #900\">&bull;</span> %N%");
+  }
+});
+
+var asciiinput_editor = CodeMirror.fromTextArea(document.getElementById('asciiinput'), {
+  mode: 'text/html',
+	lineNumbers: true,
+	lineWrapping: false,
+  tabMode: 'indent',
+  onChange: function() {
+    updatePreview(asciiinput_editor);
+  },
+	onGutterClick: function(cm, n) {
+    var info = cm.lineInfo(n);
+    if (info.markerText)
+      cm.clearMarker(n);
+    else
+      cm.setMarker(n, "<span style=\"color: #900\">&bull;</span> %N%");
+  }
+});
+
+function updatePreview(handle) {
+	auto_update_image();
+	getSuggestion(handle.getValue().split('\n')[handle.getCursor().line]); // asciisvg_editor.getValue());
+}
+
+// Once-off Load Images
+setTimeout(updatePreview, 300);
 
 function set_source(f, target){
 f();

@@ -13,8 +13,8 @@ Date: 10th September 2012
 function xmlhttpPost(image_format) {
 	  var xmlHttpReq = false;
 	  var self = this;
-		var ascii_input_code = String(encodeURIComponent(document.getElementById("asciiinput").value));
-		var python_input_code = String(encodeURIComponent(document.getElementById("pythoninput").value));
+		var ascii_input_code = String(encodeURIComponent(asciiinput_editor.getValue()));
+		var python_input_code = String(encodeURIComponent(pythoninput_editor.getValue()));
 		var random_seed = String(encodeURIComponent(document.getElementById("random_seed").value));
 
 		// Mozilla/Safari
@@ -34,31 +34,15 @@ function xmlhttpPost(image_format) {
 						document.getElementById("outputNode").innerHTML = xmlHttp_data[0];
 						document.getElementById("error_msg").innerHTML = xmlHttp_data[1];
 						document.getElementById("random_seed").value = xmlHttp_data[2];
-
-						if (xmlHttp_data[1].indexOf("Error: ASCII code") != -1)
-						{
-							document.getElementById("asciiinput").style.border = "3px solid #FF0000";
-							document.getElementById("pythoninput").style.border = "";
-						}
-						else if (xmlHttp_data[1].indexOf("Error: Python code") != -1)
-						{
-							document.getElementById("asciiinput").style.border = "";
-							document.getElementById("pythoninput").style.border = "3px solid #FF0000";
-						}
-						else
-						{
-							document.getElementById("pythoninput").style.border = "";
-							document.getElementById("asciiinput").style.border = "";
-						}
 	      }
 	  }
 		if (image_format == "PNG")
 		{
-			self.xmlHttpReq.send("type='png'&ascii=" + ascii_input_code + " &python=" + python_input_code + " &strip_tags=" + document.getElementById("strip_tags_checkbox").checked + "&randomize_lock=" + document.getElementById("randomize_lock").checked + "&random_seed=" + random_seed);
+			self.xmlHttpReq.send("type='png'&ascii=" + ascii_input_code + " &python=" + python_input_code + " &strip_tags=" + 'true' + "&randomize_lock=" + document.getElementById("randomize_lock").checked + "&random_seed=" + random_seed);
 		}
 		else if (image_format == "SVG")
 		{
-			self.xmlHttpReq.send("type='svg'&ascii=" + ascii_input_code + " &python=" + python_input_code + " &strip_tags=" + document.getElementById("strip_tags_checkbox").checked + "&randomize_lock=" + document.getElementById("randomize_lock").checked + "&random_seed=" + random_seed);
+			self.xmlHttpReq.send("type='svg'&ascii=" + ascii_input_code + " &python=" + python_input_code + " &strip_tags=" + 'true' + "&randomize_lock=" + document.getElementById("randomize_lock").checked + "&random_seed=" + random_seed);
 		}
 }
 
@@ -86,10 +70,7 @@ function update_PNG() {
 	document.getElementById("image_title").innerHTML = "<b>Output PNG!</b>";
 }
 
-function getSuggestion() {
-  var line_number = document.getElementById("asciiinput").value.substr(0, document.getElementById("asciiinput").selectionStart).split("\n").length - 1
-	var line = document.getElementById("asciiinput").value.split('\n')[line_number];
-	document.getElementById("suggestionNode").value = ""	
+function getSuggestion(line) {
 	var dict = {		'dot':'dot([center_x,center_y], type, label, position, angle)', 
 									'arrowhead':'arrowhead([x1,y1],[x2,y2])',
 									'text':'text([x,y],string,position,angle)',
@@ -120,35 +101,6 @@ function getSuggestion() {
 			document.getElementById("suggestionNode").value = dict[term];
 		}
   }
-}
-
-function insertTab(o, e)
-{
-	var kC = e.keyCode ? e.keyCode : e.charCode ? e.charCode : e.which;
-	if (kC == 9 && !e.shiftKey && !e.ctrlKey && !e.altKey)
-	{
-		var oS = o.scrollTop;
-		if (o.setSelectionRange)
-		{
-			var sS = o.selectionStart;
-			var sE = o.selectionEnd;
-			o.value = o.value.substring(0, sS) + "\t" + o.value.substr(sE);
-			o.setSelectionRange(sS + 1, sS + 1);
-			o.focus();
-		}
-		else if (o.createTextRange)
-		{
-			document.selection.createRange().text = "\t";
-			e.returnValue = false;
-		}
-		o.scrollTop = oS;
-		if (e.preventDefault)
-		{
-			e.preventDefault();
-		}
-		return false;
-	}
-	return true;
 }
 
 function mouse_coords()
