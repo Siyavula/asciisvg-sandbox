@@ -12,11 +12,15 @@
   <link rel="stylesheet" href="codemirror/codemirror.css">
   <style type="text/css">
     .CodeMirror {
-      width: 100%;
-			height: 600px;
+			height: 100%;
+			width: 100%;
       border: 1px solid black;
-			background: #EEEEEE;
+			background: #FFFFFF;
+			overflow-x: auto;
+			overflow-y: auto;
+			resize: auto;
     }
+		.activeline {background: #d8e2ef !important;}
   </style>
 </head>
 
@@ -33,7 +37,7 @@
 		<!-- Input Boxes -->
 
 		<tr>			
-			<td colspan=2>
+			<td colspan=2 style="height:300px;">
 	
 				<table border=0 cellspacing=10 style="width:100%;">
 					<tr>
@@ -1808,8 +1812,8 @@ text([2,2], "<valueof>var_text</valueof>")</textarea>
 var pythoninput_editor = CodeMirror.fromTextArea(document.getElementById('pythoninput'), {
   mode: 'python',
 	lineNumbers: true,
-	lineWrapping: true,
-  tabMode: 'indent',
+	lineWrapping: false,
+	tabMode: 'indent',
   onChange: function() {
     updatePreview();
   },
@@ -1819,13 +1823,19 @@ var pythoninput_editor = CodeMirror.fromTextArea(document.getElementById('python
       cm.clearMarker(n);
     else
       cm.setMarker(n, "<span style=\"color: #900\">&bull;</span> %N%");
+  },
+	onCursorActivity: function() {
+    updatePreview(asciiinput_editor);
+		pythoninput_editor.setLineClass(python_Line, null, null);
+    python_Line = pythoninput_editor.setLineClass(pythoninput_editor.getCursor().line, null, "activeline");
   }
 });
+var python_Line = pythoninput_editor.setLineClass(0, "activeline");
 
 var asciiinput_editor = CodeMirror.fromTextArea(document.getElementById('asciiinput'), {
   mode: 'text/html',
 	lineNumbers: true,
-	lineWrapping: true,
+	lineWrapping: false,
   tabMode: 'indent',
   onChange: function() {
     updatePreview(asciiinput_editor);
@@ -1836,8 +1846,14 @@ var asciiinput_editor = CodeMirror.fromTextArea(document.getElementById('asciiin
       cm.clearMarker(n);
     else
       cm.setMarker(n, "<span style=\"color: #900\">&bull;</span> %N%");
+  },
+	onCursorActivity: function() {
+    updatePreview(asciiinput_editor);
+		asciiinput_editor.setLineClass(ascii_Line, null, null);
+    ascii_Line = asciiinput_editor.setLineClass(asciiinput_editor.getCursor().line, null, "activeline");
   }
 });
+var ascii_Line = asciiinput_editor.setLineClass(0, "activeline");
 
 function updatePreview(handle) {
 	auto_update_image();

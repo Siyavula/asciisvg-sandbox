@@ -71,6 +71,7 @@ function update_PNG() {
 }
 
 function getSuggestion(line) {
+	document.getElementById("suggestionNode").value = "";
 	var dict = {		'dot':'dot([center_x,center_y], type, label, position, angle)', 
 									'arrowhead':'arrowhead([x1,y1],[x2,y2])',
 									'text':'text([x,y],string,position,angle)',
