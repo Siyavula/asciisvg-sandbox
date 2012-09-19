@@ -34,6 +34,22 @@ function xmlhttpPost(image_format) {
 						document.getElementById("outputNode").innerHTML = xmlHttp_data[0];
 						document.getElementById("error_msg").innerHTML = xmlHttp_data[1];
 						document.getElementById("random_seed").value = xmlHttp_data[2];
+
+						if (xmlHttp_data[1].indexOf("Error: ASCII code") != -1)
+						{
+							document.getElementById("asciiinput").style.border = "3px solid #FF0000";
+							document.getElementById("pythoninput").style.border = "";
+						}
+						else if (xmlHttp_data[1].indexOf("Error: Python code") != -1)
+						{
+							document.getElementById("asciiinput").style.border = "";
+							document.getElementById("pythoninput").style.border = "3px solid #FF0000";
+						}
+						else
+						{
+							document.getElementById("pythoninput").style.border = "";
+							document.getElementById("asciiinput").style.border = "";
+						}
 	      }
 	  }
 		if (image_format == "PNG")

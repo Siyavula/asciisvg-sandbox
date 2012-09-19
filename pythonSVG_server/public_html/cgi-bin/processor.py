@@ -89,7 +89,7 @@ if (form.getvalue('strip_tags') == 'true'):
 		exec("# encoding: utf-8\nfrom __future__ import division\n" + python_text + '\n', templateLocals, templateLocals)
 	except Exception, err:
 		error_flag = 1
-		error_string = "Python Code\n\n" + str(err) 
+		error_string = "Python code\n\n" + str(err) 
 
 	# Process Python first (in loc_val)
 	if (error_flag == 0):
