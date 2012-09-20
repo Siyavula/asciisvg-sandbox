@@ -1083,13 +1083,24 @@ class mySvgCanvas:
 		
 		# Drawing the arc
 		if (diff > 180):
-			self.arc([center[0] + radius*math.cos(angle_start),center[1] + radius*math.sin(angle_start)],[center[0] + radius*math.cos(angle_start + math.pi),center[1] + radius*math.sin(angle_start + math.pi)],radius)
-			self.arc([center[0] + radius*math.cos(angle_start + math.pi),center[1] + radius*math.sin(angle_start + math.pi)],[center[0] + radius*math.cos(angle_stop),center[1] + radius*math.sin(angle_stop)],radius)
+			self.arc(	[center[0] + radius*math.cos(angle_start),
+									center[1] + radius*math.sin(angle_start)],
+								[center[0] + radius*math.cos(angle_start + math.pi),
+									center[1] + radius*math.sin(angle_start + math.pi)],radius)
+			self.arc(	[center[0] + radius*math.cos(angle_start + math.pi),
+									center[1] + radius*math.sin(angle_start + math.pi)],
+								[center[0] + radius*math.cos(angle_stop),
+									center[1] + radius*math.sin(angle_stop)],radius)
 		else:
 			self.arc([center[0] + radius*math.cos(angle_start),center[1] + radius*math.sin(angle_start)],[center[0] + radius*math.cos(angle_stop),center[1] + radius*math.sin(angle_stop)],radius)
 
 		# Text
-		self.text([center[0] + 1.25*radius*math.cos(angle_start + (angle_stop-angle_start)/2),center[1] + 1.25*radius*math.sin(angle_start + (angle_stop-angle_start)/2)], str(text))
+		if (angle_start > angle_stop):
+			text_angle = angle_start + ((2*math.pi+angle_stop)-angle_start)/2
+		else:
+			text_angle = angle_start + (angle_stop-angle_start)/2			
+
+		self.text([center[0] + 1.25*radius*math.cos(text_angle),center[1] + 1.25*radius*math.sin(text_angle)], str(text))
 
 # ========================================================================================
 
