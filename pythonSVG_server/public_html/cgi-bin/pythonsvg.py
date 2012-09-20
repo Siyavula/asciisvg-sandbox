@@ -1072,7 +1072,7 @@ class mySvgCanvas:
 
 # ========================================================================================
 
-	def angle_arc(self, center=[0,0], radius=1, start_deg=0, stop_deg=45):
+	def angle_arc(self, center=[0,0], radius=1, start_deg=0, stop_deg=45, text="A"):
 
 		# Calculations
 		diff = (stop_deg - start_deg) % 360
@@ -1085,6 +1085,9 @@ class mySvgCanvas:
 			self.arc([center[0] + radius*math.cos(angle_start + math.pi),center[1] + radius*math.sin(angle_start + math.pi)],[center[0] + radius*math.cos(angle_stop),center[1] + radius*math.sin(angle_stop)],radius)
 		else:
 			self.arc([center[0] + radius*math.cos(angle_start),center[1] + radius*math.sin(angle_start)],[center[0] + radius*math.cos(angle_stop),center[1] + radius*math.sin(angle_stop)],radius)
+
+		# Text
+		self.text([center[0] + 1.25*radius*math.cos((angle_stop-angle_start)/2),center[1] + 1.25*radius*math.sin((angle_stop-angle_start)/2)], str(text))
 
 # ========================================================================================
 
