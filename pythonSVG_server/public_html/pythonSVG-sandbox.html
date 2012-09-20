@@ -16,9 +16,6 @@
 			width: 100%;
       border: 1px solid black;
 			background: #FFFFFF;
-			overflow-x: auto;
-			overflow-y: auto;
-			resize: auto;
     }
 		.activeline {background: #d8e2ef !important;}
   </style>
@@ -37,12 +34,12 @@
 		<!-- Input Boxes -->
 
 		<tr>			
-			<td colspan=2 style="height:300px;">
+			<td colspan=2 style="height:500px;">
 	
-				<table border=0 cellspacing=10 style="width:100%;">
+				<table border=1 cellspacing=10 style="width:100%; height:500px;">
 					<tr>
-						<td id="row_python" style="width:50%;">Python Code</td>
-						<td id="row_ascii" style="width:50%;">Ascii Code</td>
+						<td id="row_python" style="width:50%;height:20px;">Python Code</td>
+						<td id="row_ascii" style="width:50%;height:20px;">Ascii Code</td>
 					</tr>
 					<tr>
 						<td><textarea id="pythoninput" 
@@ -1813,7 +1810,7 @@ var pythoninput_editor = CodeMirror.fromTextArea(document.getElementById('python
   mode: 'python',
 	lineNumbers: true,
 	lineWrapping: false,
-	tabMode: 'indent',
+	fixedGutter: true,
   onChange: function() {
     updatePreview();
   },
@@ -1836,7 +1833,7 @@ var asciiinput_editor = CodeMirror.fromTextArea(document.getElementById('asciiin
   mode: 'text/html',
 	lineNumbers: true,
 	lineWrapping: false,
-  tabMode: 'indent',
+	fixedGutter: true,
   onChange: function() {
     updatePreview(asciiinput_editor);
   },
