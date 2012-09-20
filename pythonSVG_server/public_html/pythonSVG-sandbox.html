@@ -12,7 +12,7 @@
   <link rel="stylesheet" href="codemirror/codemirror.css">
 </head>
 
-<body bgcolor="#8888CC" onload="update_SVG();">
+<body bgcolor="#8888CC" onload="">
 
 <center>
 <table border=1 cellpadding=5 cellspacing=0 bgcolor="#CCCCCC">
@@ -35,7 +35,7 @@
 					<tr>
 						<td><textarea id="pythoninput" 
 													name="pythoninput">a = 2
-b = 1
+b = random.randint(1,100)
 c = "cos(t)"
 var_text = "bye"</textarea>
 						</td>
@@ -109,7 +109,7 @@ text([2,2], "<valueof>var_text</valueof>")</textarea>
 			<td>
 
 				<!-- Option: Randomize -->
-				<input type="checkbox" id="randomize_lock" onClick="auto_update_image();"> hold randomization on random seed: 
+				<input type="checkbox" id="randomize_lock"> hold randomization on random seed: 
 				
 				<input id="random_seed" style="width:200px;"></td>
 

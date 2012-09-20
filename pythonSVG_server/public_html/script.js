@@ -17,6 +17,8 @@ function xmlhttpPost(image_format) {
 		var python_input_code = String(encodeURIComponent(pythoninput_editor.getValue()));
 		var random_seed = String(encodeURIComponent(document.getElementById("random_seed").value));
 
+		//alert (document.getElementById("randomize_lock").checked + " -> " + random_seed);
+
 		// Mozilla/Safari
 	  if (window.XMLHttpRequest) {
 	      self.xmlHttpReq = new XMLHttpRequest();
@@ -29,7 +31,6 @@ function xmlhttpPost(image_format) {
 	  self.xmlHttpReq.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 	  self.xmlHttpReq.onreadystatechange = function() {
 	      if (self.xmlHttpReq.readyState == 4) {
-
 						var xmlHttp_data = decodeURIComponent(self.xmlHttpReq.responseText).split ("[BRK]");
 						document.getElementById("outputNode").innerHTML = xmlHttp_data[0];
 						document.getElementById("error_msg").innerHTML = xmlHttp_data[1];

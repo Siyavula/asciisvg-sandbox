@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from __future__ import division
 import math
 from lxml import etree
@@ -614,15 +615,16 @@ class mySvgCanvas:
 			dy = int(float(self.loc_var["fontsize"]))				
 			textanchor = "start"
 		
-		# Text Rotation
-		exec("node = etree.SubElement(" + str(self.xml_get_pointer()) + ", 'text')")
+		# Text Rotation (Using old append method -- UNICODE compatability)
+		node = etree.fromstring("<text>" + str(st) + "</text>")
+		exec(str(self.xml_get_pointer()) + ".append(node)")
+
 		# Remove angle for EACH parent
 		adjusted_angle = int(angle)
 		for k in range (0,len(self.xml_parent_pointer)):
 			var_parent = "[" + "][".join([str(i) for i in self.xml_parent_pointer[0:k+1]]) + "]"
 			adjusted_angle -= int(eval("self.xml_parent" + str(var_parent) + ".attrib['angle']"))
 		# Properties
-		node.text = str(st)
 		node.attrib['x'] = str(round(p[0] * self.loc_var["xunitlength"] + self.loc_var["origin"][0] + dx,2))		
 		node.attrib['y'] = str(round(float(self.loc_var["height"]) - p[1] * self.loc_var["yunitlength"] - self.loc_var["origin"][1]+dy,2))
 		node.attrib['transform'] = "rotate("+str(adjusted_angle)+", "+str(node.attrib['x'])+", "+str(node.attrib['y'])+")"
