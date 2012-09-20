@@ -10,15 +10,6 @@
   <script src="codemirror/css.js"></script>
   <script src="codemirror/htmlmixed.js"></script>
   <link rel="stylesheet" href="codemirror/codemirror.css">
-  <style type="text/css">
-    .CodeMirror {
-			height: 100%;
-			width: 100%;
-      border: 1px solid black;
-			background: #FFFFFF;
-    }
-		.activeline {background: #d8e2ef !important;}
-  </style>
 </head>
 
 <body bgcolor="#8888CC" onload="update_SVG();">
@@ -27,7 +18,7 @@
 <table border=1 cellpadding=5 cellspacing=0 bgcolor="#CCCCCC">
 	<tbody>
 		<tr>
-			<td colspan=2 style="width:100%;" bgcolor="#999999"><b>Input (ASCIIsvg commands and JavaScript)</b></td>
+			<td colspan=2 style="width:800px;" bgcolor="#999999"><b>Input (ASCIIsvg commands and JavaScript)</b></td>
 			<td id="image_title" colspan=2 bgcolor="#999999"><b>Output (SVG)</b></td>
 		</tr>
 
@@ -36,10 +27,10 @@
 		<tr>			
 			<td colspan=2 style="height:500px;">
 	
-				<table border=1 cellspacing=10 style="width:100%; height:500px;">
+				<table border=1 cellspacing=10 style="width:800px; height:500px;">
 					<tr>
-						<td id="row_python" style="width:50%;height:20px;">Python Code</td>
-						<td id="row_ascii" style="width:50%;height:20px;">Ascii Code</td>
+						<td id="row_python" style="width:400px;height:20px;">Python Code</td>
+						<td id="row_ascii" style="width:400px;height:20px;">Ascii Code</td>
 					</tr>
 					<tr>
 						<td><textarea id="pythoninput" 
@@ -1806,6 +1797,7 @@ text([2,2], "<valueof>var_text</valueof>")</textarea>
 <script>
 
 // Initialize CodeMirror editor with a nice html5 canvas demo.
+
 var pythoninput_editor = CodeMirror.fromTextArea(document.getElementById('pythoninput'), {
   mode: 'python',
 	lineNumbers: true,
