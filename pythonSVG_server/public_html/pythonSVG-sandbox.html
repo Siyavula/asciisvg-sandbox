@@ -264,7 +264,7 @@ text([2,2], "<valueof>var_text</valueof>")</textarea>
 
 		<tr>
 			<td colspan=1>
-				<b>start_group</b>(self, center=[0,0], rotate_angle=0, scale=[1,1], translate=[0,0])
+				<b>start_group</b>([center_x,center_y], rotate_angle, [scale_x,scale_y], [translate_x,translate_y])
 			</td>
 			<td colspan=1>
 				<b>start_group()</b><br>
@@ -482,6 +482,15 @@ text([2,2], "<valueof>var_text</valueof>")</textarea>
 			</td>
 			<td colspan=1>
 				<b>arc</b>([0,0],[1,1],5)
+			</td>
+		</tr>
+
+		<tr>
+			<td colspan=1>
+				<b>angle_arc</b>([center_x,center_y], radius, start_deg, stop_deg)
+			</td>
+			<td colspan=1>
+				<b>angle_arc</b>([0,0],1,45,270)
 			</td>
 		</tr>
 

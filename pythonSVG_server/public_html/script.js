@@ -92,7 +92,8 @@ function getSuggestion(line) {
 									'arc':'arc(start,end,radius)',
 									'setBorder':'setBorder(size, color)',
 									'initPicture':'initPicture(xmin,xmax,ymin,ymax)',
-									'start_group':'start_group(self, center=[0,0], rotate_angle=0, scale=[1,1], translate=[0,0])',
+									'start_group':'start_group([center_x,center_y], rotate_angle, [scale_x,scale_y], [translate_x,translate_y])',
+									'angle_arc':'angle_arc([center_x,center_y], radius, start_deg, stop_deg)',
 									'stop_group':'stop_group()'
 						};
 	for (term in dict)

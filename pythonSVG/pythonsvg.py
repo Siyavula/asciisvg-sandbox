@@ -144,6 +144,8 @@ class mySvgCanvas:
 		self.loc_var["xml_get_pointer"] = self.xml_get_pointer
 		self.loc_var["start_group"] = self.start_group
 		self.loc_var["stop_group"] = self.stop_group
+		self.loc_var["angle_arc"] = self.angle_arc
+		
 
 		# Special Functions
 		self.loc_var["frange"] = self.frange										# Decimal-compatible "range"
@@ -1065,6 +1067,22 @@ class mySvgCanvas:
 			size = 1
 		self.path([[p[0],p[1]], [p[0]+size,p[1]+size], [p[0],p[1]+size*1.25], [p[0],p[1]+size*0.75]], "C")
 		self.path([[p[0],p[1]+size*0.75],[p[0],p[1]+size*1.25], [p[0]-size,p[1]+size], [p[0],p[1]]], "C")
+
+# ========================================================================================
+
+	def angle_arc(self, center=[0,0], radius=1, start_deg=0, stop_deg=45):
+
+		# Calculations
+		diff = (stop_deg - start_deg) % 360
+		angle_start = (math.pi/180) * start_deg
+		angle_stop = (math.pi/180) * stop_deg
+		
+		# Drawing the arc
+		if (diff > 180):
+			self.arc([center[0] + radius*math.cos(angle_start),center[1] + radius*math.sin(angle_start)],[center[0] + radius*math.cos(angle_start + math.pi),center[1] + radius*math.sin(angle_start + math.pi)],radius)
+			self.arc([center[0] + radius*math.cos(angle_start + math.pi),center[1] + radius*math.sin(angle_start + math.pi)],[center[0] + radius*math.cos(angle_stop),center[1] + radius*math.sin(angle_stop)],radius)
+		else:
+			self.arc([center[0] + radius*math.cos(angle_start),center[1] + radius*math.sin(angle_start)],[center[0] + radius*math.cos(angle_stop),center[1] + radius*math.sin(angle_stop)],radius)
 
 # ========================================================================================
 
