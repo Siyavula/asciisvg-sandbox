@@ -11,7 +11,7 @@
   overflow: hidden;
 }
 
-.activeline {background: #d8e2ef !important;}
+.activeline {background: #F0F4F9 !important;}
 
 .CodeMirror-scroll {
   overflow: auto;
@@ -150,7 +150,7 @@ div.CodeMirror-selected { background: #d9d9d9; }
 .cm-s-default span.cm-error {color: #f00;}
 .cm-s-default span.cm-qualifier {color: #555;}
 .cm-s-default span.cm-builtin {color: #30a;}
-.cm-s-default span.cm-bracket {color: #997;}
+.cm-s-default span.cm-bracket {color: #f30;}
 .cm-s-default span.cm-tag {color: #170;}
 .cm-s-default span.cm-attribute {color: #00c;}
 .cm-s-default span.cm-header {color: blue;}
@@ -165,7 +165,7 @@ span.cm-link {text-decoration: underline;}
 
 span.cm-invalidchar {color: #f00;}
 
-div.CodeMirror span.CodeMirror-matchingbracket {color: #0f0;}
+div.CodeMirror span.CodeMirror-matchingbracket {color: #f30;}
 div.CodeMirror span.CodeMirror-nonmatchingbracket {color: #f22;}
 
 @media print {

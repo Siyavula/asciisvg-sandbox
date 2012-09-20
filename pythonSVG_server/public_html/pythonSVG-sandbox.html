@@ -5,10 +5,8 @@
 	<title>pythonSVG Editor (2.2)</title>
 	<script type="text/javascript" src="script.js"></script>
 	<script src="codemirror/codemirror.js"></script>
-  <script src="codemirror/xml.js"></script>
-  <script src="codemirror/javascript.js"></script>
+  <script src="codemirror/python.js"></script>
   <script src="codemirror/css.js"></script>
-  <script src="codemirror/htmlmixed.js"></script>
   <link rel="stylesheet" href="codemirror/codemirror.css">
 </head>
 
@@ -27,7 +25,7 @@
 		<tr>			
 			<td colspan=2 style="height:500px;">
 	
-				<table border=1 cellspacing=10 style="width:800px; height:500px;">
+				<table border=0 cellspacing=5 style="width:800px; height:500px;">
 					<tr>
 						<td id="row_python" style="width:400px;height:20px;">Python Code</td>
 						<td id="row_ascii" style="width:400px;height:20px;">Ascii Code</td>
@@ -1808,10 +1806,14 @@ text([2,2], "<valueof>var_text</valueof>")</textarea>
 // Initialize CodeMirror editor with a nice html5 canvas demo.
 
 var pythoninput_editor = CodeMirror.fromTextArea(document.getElementById('pythoninput'), {
-  mode: 'python',
 	lineNumbers: true,
 	lineWrapping: false,
 	fixedGutter: true,
+  mode: {name: "python",
+         version: 2,
+         singleLineStringErrors: false},
+  indentUnit: 2,
+  matchBrackets: true,
   onChange: function() {
     updatePreview();
   },
@@ -1831,10 +1833,14 @@ var pythoninput_editor = CodeMirror.fromTextArea(document.getElementById('python
 var python_Line = pythoninput_editor.setLineClass(0, "activeline");
 
 var asciiinput_editor = CodeMirror.fromTextArea(document.getElementById('asciiinput'), {
-  mode: 'text/html',
 	lineNumbers: true,
 	lineWrapping: false,
 	fixedGutter: true,
+  mode: {name: "python",
+         version: 2,
+         singleLineStringErrors: false},
+  indentUnit: 4,
+  matchBrackets: true,
   onChange: function() {
     updatePreview(asciiinput_editor);
   },
