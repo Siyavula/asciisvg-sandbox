@@ -1813,6 +1813,9 @@ var pythoninput_editor = CodeMirror.fromTextArea(document.getElementById('python
          version: 2,
          singleLineStringErrors: false},
   indentUnit: 2,
+	tabSize: 2,
+	indentWithTabs: true,
+  tabMode: "shift",
   matchBrackets: true,
   onChange: function() {
     updatePreview();
@@ -1839,7 +1842,10 @@ var asciiinput_editor = CodeMirror.fromTextArea(document.getElementById('asciiin
   mode: {name: "python",
          version: 2,
          singleLineStringErrors: false},
-  indentUnit: 4,
+  indentUnit: 2,
+	tabSize: 2,
+	indentWithTabs: true,
+  tabMode: "shift",
   matchBrackets: true,
   onChange: function() {
     updatePreview(asciiinput_editor);
