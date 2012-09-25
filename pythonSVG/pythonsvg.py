@@ -19,12 +19,12 @@ class mySvgCanvas:
 	complete_string = ""
 	error_string = ""	
 	xml_parent = None
-	xml_pointer = -1 # !!! Important !!! xml_parent[0] is a blank rectangle
-	xml_parent_pointer = [] # !!! Important !!! array will be initialized after __init__
+	xml_pointer = None
+	xml_parent_pointer = None
 
 	# Error Handling
-	loc_var["complete_log"] = 1			# Screen-dump Flag: Completed lines of code
-	loc_var["error_log"] 		= 1			# Screen-dump Flag: Errors that occur
+	loc_var["complete_log"] = 1			# SVG Flags: Completed lines of code
+	loc_var["error_log"] 		= 1			# SVG Flags: Errors that occur
 
 	# Canvas Variables
 	loc_var["xmin"] = loc_var["defaultxmin"] 								= -5
@@ -359,6 +359,10 @@ class mySvgCanvas:
 		self.loc_var["dotradius"] = self.loc_var["defaultdotradius"]
 		self.loc_var["ticklength"] = self.loc_var["defaultticklength"]
 
+		self.xml_parent = None
+		self.xml_pointer = -1 						# !!! Important !!!
+		self.xml_parent_pointer = list() 	# !!! Important !!!
+
 # ========================================================================================
 
 	def frange(self, start, end, leap):
@@ -462,7 +466,7 @@ class mySvgCanvas:
 			return "self.xml_parent"  # + var_current
 
 # ========================================================================================
-	
+
 	def start_group(self, center=[0,0], rotate_angle=0, scale=[1,1], translate=[0,0]):
 
 		# Initialize variables
@@ -473,9 +477,11 @@ class mySvgCanvas:
 
 		# Create group based on pointer
 		exec("node = etree.SubElement(" + str(self.xml_get_pointer()) + ", 'g')")
+		node.attrib['parent'] = str(self.xml_get_pointer())
 
 		# Change pointer to new parent
 		exec("self.xml_parent_pointer.append(len(" + str(self.xml_get_pointer()) + ".getchildren())-1)")
+		node.attrib['self'] = str(self.xml_get_pointer())
 
 		# Group attributes
 		node.attrib['angle'] = str(-rotate_angle)
