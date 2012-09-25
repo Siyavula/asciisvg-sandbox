@@ -465,13 +465,17 @@ class mySvgCanvas:
 	
 	def start_group(self, center=[0,0], rotate_angle=0, scale=[1,1], translate=[0,0]):
 
+		# Initialize variables
+		if (center == None): center=[0,0]
+		if (rotate_angle == None): rotate_angle=0
+		if (scale == None): scale=[1,1]
+		if (translate == None): translate=[0,0]
+
 		# Create group based on pointer
 		exec("node = etree.SubElement(" + str(self.xml_get_pointer()) + ", 'g')")
-		node.attrib['parent'] = str(self.xml_get_pointer())
 
 		# Change pointer to new parent
 		exec("self.xml_parent_pointer.append(len(" + str(self.xml_get_pointer()) + ".getchildren())-1)")
-		node.attrib['self'] = str(self.xml_get_pointer())
 
 		# Group attributes
 		node.attrib['angle'] = str(-rotate_angle)
