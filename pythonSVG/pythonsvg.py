@@ -485,6 +485,8 @@ class mySvgCanvas:
 
 		# Group attributes
 		node.attrib['angle'] = str(-rotate_angle)
+		node.attrib['scale_x'] = str(scale[0])
+		node.attrib['scale_y'] = str(scale[1])
 		cx = round(center[0] * self.loc_var["xunitlength"] + self.loc_var["origin"][0],2)
 		cy = round(float(self.loc_var["height"]) - center[1] * self.loc_var["yunitlength"] - self.loc_var["origin"][1],2)
 		tx = round(translate[0] * self.loc_var["xunitlength"],2)
@@ -631,13 +633,30 @@ class mySvgCanvas:
 
 		# Remove angle for EACH parent
 		adjusted_angle = int(angle)
-		for k in range (0,len(self.xml_parent_pointer)):
-			var_parent = "[" + "][".join([str(i) for i in self.xml_parent_pointer[0:k+1]]) + "]"
-			adjusted_angle -= int(eval("self.xml_parent" + str(var_parent) + ".attrib['angle']"))
+		adjusted_scale_x = 1;
+		adjusted_scale_y = 1;
+		str_transform = "";
+
 		# Properties
 		node.attrib['x'] = str(round(p[0] * self.loc_var["xunitlength"] + self.loc_var["origin"][0] + dx,2))		
 		node.attrib['y'] = str(round(float(self.loc_var["height"]) - p[1] * self.loc_var["yunitlength"] - self.loc_var["origin"][1]+dy,2))
-		node.attrib['transform'] = "rotate("+str(adjusted_angle)+", "+str(node.attrib['x'])+", "+str(node.attrib['y'])+")"
+
+		for k in range (0,len(self.xml_parent_pointer)):
+			var_parent = "[" + "][".join([str(i) for i in self.xml_parent_pointer[0:k+1]]) + "]"
+			
+			# Reverse Angle
+			adjusted_angle -= float(eval("self.xml_parent" + str(var_parent) + ".attrib['angle']"))
+			
+			# Reverse Scale
+			adjusted_scale_x = 1/float(eval("self.xml_parent" + str(var_parent) + ".attrib['scale_x']"))
+			adjusted_scale_y = 1/float(eval("self.xml_parent" + str(var_parent) + ".attrib['scale_y']"))
+			str_transform += "translate("+str(node.attrib['x'])+", "+str(node.attrib['y'])+") "
+			str_transform += "scale("+str(adjusted_scale_x)+", "+str(adjusted_scale_y)+") "
+			str_transform += "translate("+str(-1*float(node.attrib['x']))+", "+str(-1*float(node.attrib['y']))+") "
+
+		# Properties
+		str_transform += "rotate("+str(adjusted_angle)+", "+str(node.attrib['x'])+", "+str(node.attrib['y'])+") "
+		node.attrib['transform'] = str_transform
 		node.attrib['font-style'] = str(self.loc_var["fontstyle"])
 		node.attrib['font-family'] = str(self.loc_var["fontfamily"])
 		node.attrib['font-size'] = str(self.loc_var["fontsize"])
