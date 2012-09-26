@@ -179,7 +179,7 @@ window.CodeMirror = (function() {
       redo: operation(redo),
       indentLine: operation(function(n, dir) {
         if (typeof dir != "string") {
-          if (dir == null) dir = options.smartIndent ? "smart" : "prev";
+          if (dir == false) dir = options.smartIndent ? "smart" : "prev";
           else dir = dir ? "add" : "subtract";
         }
         if (isLine(n)) indentLine(n, dir);
@@ -1432,7 +1432,7 @@ window.CodeMirror = (function() {
     }
 
     function indentLine(n, how) {
-      if (!how) how = "add";
+			if (!how) how = "add";
       if (how == "smart") {
         if (!mode.indent) how = "prev";
         else var state = getStateBefore(n);
@@ -1988,18 +1988,18 @@ window.CodeMirror = (function() {
     theme: "default",
     indentUnit: 2,
     indentWithTabs: false,
-    smartIndent: true,
-    tabSize: 4,
+    smartIndent: false,
+    tabSize: 2,
     keyMap: "default",
     extraKeys: null,
-    electricChars: true,
+    electricChars: false,
     autoClearEmptyLines: false,
     onKeyEvent: null,
     onDragEvent: null,
     lineWrapping: false,
-    lineNumbers: false,
+    lineNumbers: true,
     gutter: false,
-    fixedGutter: false,
+    fixedGutter: true,
     firstLineNumber: 1,
     readOnly: false,
     dragDrop: true,
@@ -2009,7 +2009,7 @@ window.CodeMirror = (function() {
     onGutterClick: null,
     onUpdate: null,
     onFocus: null, onBlur: null, onScroll: null,
-    matchBrackets: false,
+    matchBrackets: true,
     cursorBlinkRate: 530,
     workTime: 100,
     workDelay: 200,

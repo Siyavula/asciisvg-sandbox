@@ -1806,17 +1806,9 @@ text([2,2], "<valueof>var_text</valueof>")</textarea>
 // Initialize CodeMirror editor with a nice html5 canvas demo.
 
 var pythoninput_editor = CodeMirror.fromTextArea(document.getElementById('pythoninput'), {
-	lineNumbers: true,
-	lineWrapping: false,
-	fixedGutter: true,
   mode: {name: "python",
          version: 2,
          singleLineStringErrors: false},
-  indentUnit: 2,
-	tabSize: 2,
-	indentWithTabs: true,
-  tabMode: "shift",
-  matchBrackets: true,
   onChange: function() {
     updatePreview();
   },
@@ -1836,17 +1828,9 @@ var pythoninput_editor = CodeMirror.fromTextArea(document.getElementById('python
 var python_Line = pythoninput_editor.setLineClass(0, "activeline");
 
 var asciiinput_editor = CodeMirror.fromTextArea(document.getElementById('asciiinput'), {
-	lineNumbers: true,
-	lineWrapping: false,
-	fixedGutter: true,
   mode: {name: "python",
          version: 2,
          singleLineStringErrors: false},
-  indentUnit: 2,
-	tabSize: 2,
-	indentWithTabs: true,
-  tabMode: "shift",
-  matchBrackets: true,
   onChange: function() {
     updatePreview(asciiinput_editor);
   },
