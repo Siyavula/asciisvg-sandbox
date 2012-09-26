@@ -650,12 +650,12 @@ class mySvgCanvas:
 			# Reverse Scale
 			adjusted_scale_x = 1/float(eval("self.xml_parent" + str(var_parent) + ".attrib['scale_x']"))
 			adjusted_scale_y = 1/float(eval("self.xml_parent" + str(var_parent) + ".attrib['scale_y']"))
-			str_transform += "translate("+str(node.attrib['x'])+", "+str(node.attrib['y'])+") "
+			str_transform += "translate("+str(node.attrib['x'])+", "+str(float(node.attrib['y'])-dy)+") "
 			str_transform += "scale("+str(adjusted_scale_x)+", "+str(adjusted_scale_y)+") "
-			str_transform += "translate("+str(-1*float(node.attrib['x']))+", "+str(-1*float(node.attrib['y']))+") "
+			str_transform += "translate("+str(-1*float(node.attrib['x']))+", "+str(-1*(float(node.attrib['y'])-dy))+") "
 
 		# Properties
-		str_transform += "rotate("+str(adjusted_angle)+", "+str(node.attrib['x'])+", "+str(node.attrib['y'])+") "
+		str_transform += "rotate("+str(adjusted_angle)+", "+str(float(node.attrib['x'])-dx)+", "+str(float(node.attrib['y'])-dy)+") "
 		node.attrib['transform'] = str_transform
 		node.attrib['font-style'] = str(self.loc_var["fontstyle"])
 		node.attrib['font-family'] = str(self.loc_var["fontfamily"])
@@ -723,7 +723,7 @@ class mySvgCanvas:
 
 	def ellipse(self, center=[0,0], rx=1, ry=None):
 
-		exec("node = etree.SubElement(" + str(self.xml_get_pointer()) + ", 'ellipse')")		
+		exec("node = etree.SubElement(" + str(self.xml_get_pointer()) + ", 'ellipse')")
 		node.attrib['cx'] = str(round(center[0] * self.loc_var["xunitlength"] + self.loc_var["origin"][0],2))
 		node.attrib['cy'] = str(round(float(self.loc_var["height"]) - center[1] * self.loc_var["yunitlength"] - self.loc_var["origin"][1],2))
 		node.attrib['rx'] = str(round(rx * self.loc_var["xunitlength"],2))
