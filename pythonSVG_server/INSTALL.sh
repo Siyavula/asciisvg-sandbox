@@ -29,7 +29,11 @@ sudo apt-get install python-rsvg
 # Testing APACHE CONFIG FILE
 echo; 
 read -p "Press any key to ADD text to & EDIT httpd.conf... "
+#sudo "DirectoryIndex index.html index.htm default.htm index.php index.pl" >> /etc/apache2/httpd.conf
+
 sudo gedit /etc/apache2/httpd.conf
+
+sudo "DirectoryIndex index.html index.htm default.htm index.php index.pl" >> /etc/apache2/httpd.conf
 
 # Give full user access to /var/www/
 echo; 
