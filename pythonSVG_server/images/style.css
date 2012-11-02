@@ -1,0 +1,161 @@
+body {
+	margin: 0;
+	padding: 0;
+	font-family: Century, Garamond, serif;
+	background-color: #8dc73f;
+	background-image: url('images/cloud-bg.gif');
+	background-repeat: repeat-x;
+}
+h1 {
+	font-family: Tahoma, sans-serif;
+	color: #414141;
+}
+#block {
+	background: #ccc;
+	width: 755px;
+	height: 383px;
+	position: relative;
+	top: 212px;
+	left: 4%;
+	background-image: url('images/cloud-block.gif');
+}
+#block a {
+	color: #2F2F2F;
+}
+#block a:hover {
+	color: black
+}
+#block-text {
+	padding-left: 35px;
+	padding-top: 12px;
+}
+p {
+	margin: 0;
+}
+.alt-heading {
+	font-size: 24px;
+	color: #666;
+	display: block;
+	position: absolute;
+	top: 80px;
+	margin-top: -10px
+}
+.text {
+	display: block;
+	width: 620px;
+	height: 50px;
+	color: #505050;
+	font-size: 14px;
+	padding-top: 10px;
+}
+.countdown {
+	display: block;
+	position: absolute;
+	left: 21%;
+	margin-top: 200px;
+}
+#cntdwn b {
+	font-size: 35px;
+}
+.days, .hours, .minutes, .seconds {
+	position: relative;
+	top: 20px;
+	left: -45px
+}
+.minutes {
+	left: -48px
+}
+.seconds {
+	left: -60px
+}
+.sec-number {
+	position: relative;
+	left: -13px
+}
+h2 {
+	font-family: calibri, sans-serif;
+	margin: 0;
+	padding: 0;
+	font-size: 28px;
+	text-align: center;
+	width: 650px;
+	position: absolute;
+	left: 5%;
+	color: #414141;
+	font-weight: bold;
+	margin-top: 157px;
+}
+h2, #ie8#fix {
+}
+#contact {
+	position: relative;
+	top: 136px;
+	margin-bottom: -6px;
+}
+.countdown, h2, #ie8#fix {
+	top: 5px
+}
+#contact-left, #contact-right {
+	font-size: 14px;
+	display: block;
+	width: 308px;
+	float: left;
+	color: #666
+}
+#contact-left a, #contact-right a {
+	color: #3f3f3f;
+}
+#contact-left a:hover, #contact-right a:hover {
+	color: black
+}
+#contact-right {
+	text-align: right
+}
+form {
+	left: 25%;
+	position: absolute;
+	margin-top: 200px;
+}
+.email {
+	width: 280px;
+	height: 25px;
+	font-size: 20px
+}
+.send {
+	height: 30px;
+	position: relative;
+	top: -2px
+}
+form, #ie8#fix {
+	top: 10px
+}
+#rocket {
+	width: 100%;
+	height: 700px;
+	display: block;
+	background-image: url('images/cloud2-rocket.gif');
+	background-repeat: no-repeat;
+	background-position: 98% 212px;
+}
+.countdown:first-child {
+	top: -5px
+}
+#footer {
+	font-size: 12px;
+	color: #FAFAFA;
+	text-align: right;
+	float: right;
+	padding-right: 25px
+}
+.twitter, .mail {
+	position: absolute
+}
+.twitter {
+	visibility: Hidden
+}
+.mail {
+	visibility: Hidden
+}
+span.text {
+	line-height: 21px;
+}

@@ -15,9 +15,7 @@ function xmlhttpPost(image_format) {
 	  var self = this;
 		var ascii_input_code = String(encodeURIComponent(asciiinput_editor.getValue()));
 		var python_input_code = String(encodeURIComponent(pythoninput_editor.getValue()));
-		var random_seed = String(encodeURIComponent(document.getElementById("random_seed").value));
-
-		//alert (document.getElementById("randomize_lock").checked + " -> " + random_seed);
+		var random_seed = document.getElementById("random_seed").value;
 
 		// Mozilla/Safari
 	  if (window.XMLHttpRequest) {
@@ -35,15 +33,19 @@ function xmlhttpPost(image_format) {
 						document.getElementById("outputNode").innerHTML = xmlHttp_data[0];
 						document.getElementById("error_msg").innerHTML = xmlHttp_data[1];
 						document.getElementById("random_seed").value = xmlHttp_data[2];
+						// Download PNG
+						if (image_format == "PNG"){populateIframe('download_frame','cgi-bin/buffer.png');}
 	      }
 	  }
 		if (image_format == "PNG")
 		{
-			self.xmlHttpReq.send("type='png'&ascii=" + ascii_input_code + " &python=" + python_input_code + " &strip_tags=" + 'true' + "&randomize_lock=" + document.getElementById("randomize_lock").checked + "&random_seed=" + random_seed);
+			self.xmlHttpReq.send("type=png&ascii=" + ascii_input_code + " &python=" + python_input_code + " &strip_tags=true&randomize_lock=" + document.getElementById("randomize_lock").checked + "&random_seed=" + random_seed);
 		}
 		else if (image_format == "SVG")
 		{
-			self.xmlHttpReq.send("type='svg'&ascii=" + ascii_input_code + " &python=" + python_input_code + " &strip_tags=" + 'true' + "&randomize_lock=" + document.getElementById("randomize_lock").checked + "&random_seed=" + random_seed);
+			var text;
+			text = "type=svg&ascii=" + ascii_input_code + " &python=" + python_input_code + " &strip_tags=true&randomize_lock=" + document.getElementById("randomize_lock").checked + "&random_seed=" + random_seed;
+			self.xmlHttpReq.send(text);
 		}
 }
 
@@ -59,16 +61,10 @@ function auto_update_image() {
 
 function update_SVG() { 
 	xmlhttpPost("SVG");
-	document.getElementById("image_title").style.backgroundColor = "999999";
-	document.getElementById("image_cell").style.backgroundColor = "CCCCCC";
-	document.getElementById("image_title").innerHTML = "<b>Output SVG</b>";
 }
 
 function update_PNG() { 
 	xmlhttpPost("PNG");
-	document.getElementById("image_title").style.backgroundColor = "FF6666";
-	document.getElementById("image_cell").style.backgroundColor = "FFBBBB";
-	document.getElementById("image_title").innerHTML = "<b>Output PNG!</b>";
 }
 
 function getSuggestion(line) {
@@ -106,24 +102,9 @@ function getSuggestion(line) {
   }
 }
 
-function mouse_coords()
+// Download PNG
+function populateIframe(id,path) 
 {
-	var posx = 0;
-	var posy = 0;
-	if (!e) var e = window.event;
-	if (e.pageX || e.pageY) 	{
-		posx = e.pageX;
-		posy = e.pageY;
-	}
-	else if (e.clientX || e.clientY) 	{
-		posx = e.clientX + document.body.scrollLeft
-			+ document.documentElement.scrollLeft;
-		posy = e.clientY + document.body.scrollTop
-			+ document.documentElement.scrollTop;
-	}
-	// posx and posy contain the mouse position relative to the document
-	// Do something with this information
-
-	document.getElementById("error_msg").innerHTML = posx + ", " + posy;
+    var ifrm = document.getElementById(id);
+    ifrm.src = "download.php?path="+path;
 }
-
