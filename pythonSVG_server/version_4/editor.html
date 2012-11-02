@@ -30,7 +30,7 @@
 	}
 	textarea {
 		border: 1px solid;
-		resize: vertical; 
+		resize: vertical;
 	}
 
 	/*
@@ -76,7 +76,7 @@
 	$(document).ready(function () {
 
 		myLayout = $('body').layout({
-			east__size:	Math.floor(screen.availWidth * .50) // 50% screen width
+			east__size:	Math.floor(screen.availWidth * .35) // 50% screen width
 		 ,	north__spacing_open:	0
 		 ,	south__spacing_open:	0
 		});
@@ -103,17 +103,14 @@
 
 		View: <select onchange="	
 			if (this.value == 0) {show_frame('text_A', 'block');}
-			if (this.value == 1) {show_frame('text_B', 'block');}
-			if (this.value == 2) {show_frame('text_C', 'none');}
-			if (this.value == 3) {show_frame('text_D', 'none');}
-			if (this.value == 4) {show_frame('text_E', 'none');}">
-			<optgroup label="Languages"></optgroup>
-			<option value=0>Python</option>
-			<option value=1>ASCII</option>
+			if (this.value == 1) {show_frame('text_C', 'none');}
+			if (this.value == 2) {show_frame('text_D', 'none');}
+			if (this.value == 3) {show_frame('text_E', 'none');}">
+			<option value=0>Code</option>
 			<optgroup label="Information"></optgroup>
-			<option value=2>ASCII Functions</option>
-			<option value=3>Colours</option>
-			<option value=4>HTML Sybmols</option>
+			<option value=1>ASCII Functions</option>
+			<option value=2>Colours</option>
+			<option value=3>HTML Sybmols</option>
 		</select> &nbsp;
 
 		<!-- Option: Randomize -->
@@ -130,9 +127,9 @@
 		<input type="button" value="Download PNG" onClick='xmlhttpPost('PNG');'> 
 
 		<select onchange="	
-			if (this.value == 0) {document.getElementById('outputNode').style.background = '#2574b0 url(images/bg-blueprint.png) right';}
-			if (this.value == 1) {document.getElementById('outputNode').style.background = '#666 url(images/bg-grid.png) right';}
-			if (this.value == 2) {document.getElementById('outputNode').style.background = '#e8d1a7 url(images/bg-desk.png) right';}">
+			if (this.value == 0) {document.getElementById('desktop').style.background = '#2574b0 url(images/bg-blueprint.png) right';}
+			if (this.value == 1) {document.getElementById('desktop').style.background = '#666 url(images/bg-grid.png) right';}
+			if (this.value == 2) {document.getElementById('desktop').style.background = '#e8d1a7 url(images/bg-desk.png) right';}">
 			<option value=0>Blueprint</option>
 			<option value=1>Grid</option>
 			<option value=2>Desk</option>
@@ -142,18 +139,40 @@
 
 <div class="ui-layout-center" style="height:100%;">
 
-	<div id="text_A" style="display:block;"><textarea id="pythoninput" name="pythoninput" rows="20" style="width:100%; height:100%;"># Python code here...
+<!-- DIV: TEXT A -->
+
+<div id="text_A" style="display:block;">
+
+<table border=0 cellpadding=0 cellspacing=0>
+	<tr>
+		<td style="padding:0px 0px 5px 0px;"><b>Python Code</b></td>
+		<td rowspan=2>&nbsp;</td>
+		<td style="padding:0px 0px 5px 0px;"><b>ASCII Code</b></td>
+	</tr>
+	
+	<tr>
+	<td style="width:50%;"><textarea id="pythoninput" name="pythoninput" rows="20"># Python code here...
 
 a = random.randint(50,300)
-</textarea></div>
-	<div id="text_B" style="display:block;"><textarea id="asciiinput" name="asciiinput" rows="20" style="width:100%; height:100%;"># ASCII code here...
+</textarea>
+	</td>
+
+<!-- DIV: TEXT B -->
+
+	<td style="width:50%;"><textarea id="asciiinput" name="asciiinput" rows="20"># ASCII code here...
 
 max = <valueof>a</valueof>
 for i in range (1,max): 
   start_group([0,0],i*10, [1 - i/max,1 - i/max])
   arrowhead([0,0],[0,3.8])
   stop_group()
-</textarea></div>
+</textarea>
+
+	</td>
+</tr>
+</table>
+
+</div>
 
 <!-- DIV: ASCII Functions -->
 
@@ -1784,14 +1803,14 @@ for i in range (1,max):
 
 		<!-- Option: Suggestion -->
 		Suggestion: 
-		<textarea id="suggestionNode" rows="2" disabled="disabled" style="width:100%; color:#000000; background:#FFF;"></textarea>
+		<textarea id="suggestionNode" rows="1" disabled="disabled" style="width:100%; color:#000000; background:#FFF;"></textarea>
 
 	</div>
 </div>
 
 
 <!-- SVG Output -->			
-<div class="ui-layout-east" style="padding-top:100px;">
+<div class="ui-layout-east" id="desktop" style="padding-top:100px;">
 	<center>
 	<span id="outputNode">
 	</span>
@@ -1809,7 +1828,6 @@ for i in range (1,max):
 function show_frame(id, error_style) 
 {
 	document.getElementById('text_A').style.display = 'none'; 
-	document.getElementById('text_B').style.display = 'none';
 	document.getElementById('text_C').style.display = 'none';
 	document.getElementById('text_D').style.display = 'none';
 	document.getElementById('text_E').style.display = 'none';	
