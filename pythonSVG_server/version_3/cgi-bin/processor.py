@@ -84,7 +84,7 @@ if (form.getvalue('strip_tags') == 'true'):
 	# =======================================
 
 	# Process Python first (in templateLocals)
-	python_text = urllib.unquote(form.getvalue('python'))	
+	python_text = urllib.unquote(form.getvalue('python'))
 	try:
 		exec("# encoding: utf-8\nfrom __future__ import division\n" + python_text + '\n', templateLocals, templateLocals)
 	except Exception, err:

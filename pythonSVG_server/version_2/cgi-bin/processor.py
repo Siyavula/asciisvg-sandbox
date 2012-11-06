@@ -84,7 +84,7 @@ if (form.getvalue('strip_tags') == 'true'):
 	# =======================================
 
 	# Process Python first (in templateLocals)
-	python_text = urllib.unquote(form.getvalue('python'))	
+	python_text = urllib.unquote(form.getvalue('python'))
 	try:
 		exec("# encoding: utf-8\nfrom __future__ import division\n" + python_text + '\n', templateLocals, templateLocals)
 	except Exception, err:
@@ -111,7 +111,7 @@ if (error_flag == 0):
 
 	# PNG Generator
 	if (form.getvalue('type') == 'png'):
-		img =  cairo.ImageSurface(cairo.FORMAT_ARGB32, 400, 400)
+		img = cairo.ImageSurface(cairo.FORMAT_ARGB32, 400, 400)
 		ctx = cairo.Context(img)
 		handler= rsvg.Handle(None, svg_string)
 		handler.render_cairo(ctx)

@@ -146,7 +146,9 @@ class mySvgCanvas:
 		self.loc_var["start_group"] = self.start_group
 		self.loc_var["stop_group"] = self.stop_group
 		self.loc_var["angle_arc"] = self.angle_arc
-		
+		self.loc_var["cloud"] = self.cloud
+		self.loc_var["star"] = self.star
+		self.loc_var["grass"] = self.grass
 
 		# Special Functions
 		self.loc_var["frange"] = self.frange										# Decimal-compatible "range"
@@ -567,7 +569,7 @@ class mySvgCanvas:
 
 # ========================================================================================
 	
-	def arrowhead(self,p=[0,0],q=[1,1],size=None):
+	def arrowhead(self,p=[0,0],q=[1,1],size=1):
 
 		v = [p[0]*self.loc_var["xunitlength"]+self.loc_var["origin"][0],float(self.loc_var["height"])-p[1]*self.loc_var["yunitlength"]-self.loc_var["origin"][1]]		# adjusted start point
 		w = [q[0]*self.loc_var["xunitlength"]+self.loc_var["origin"][0],float(self.loc_var["height"])-q[1]*self.loc_var["yunitlength"]-self.loc_var["origin"][1]]		# adjusted end point
@@ -577,7 +579,7 @@ class mySvgCanvas:
 			u = [u[0]/d, u[1]/d]	# unit vector
 			up = [-u[1],u[0]] 		# inverse unit vector
 			exec("node = etree.SubElement(" + str(self.xml_get_pointer()) + ", 'path')")
-			node.attrib['d'] = str("M " + str(w[0]-15*u[0]-4*up[0]) + " " + str(w[1]-15*u[1]-4*up[1]) + " L " + str(w[0]-3*u[0]) + " " + str(w[1]-3*u[1]) + " L " + str(w[0]-15*u[0]+4*up[0]) + " " + str(w[1]-15*u[1]+4*up[1]) + " Z")
+			node.attrib['d'] = str("M " + str(w[0]-(size+15)*u[0]-5*up[0]) + " " + str(w[1]-(size+15)*u[1]-5*up[1]) + " L " + str(w[0]-(size*1.25-1)*u[0]) + " " + str(w[1]-(size*1.25-1)*u[1]) + " L " + str(w[0]-(size+15)*u[0]+4*up[0]) + " " + str(w[1]-(size+15)*u[1]+4*up[1]) + " Z")
 			node.attrib['stroke-width'] = str(size != None and size or self.loc_var["markerstrokewidth"])
 			node.attrib['stroke'] = self.loc_var["stroke"]
 			node.attrib['fill'] = self.loc_var["stroke"]
@@ -715,7 +717,7 @@ class mySvgCanvas:
 
 		# ending point (q) 
 		if (self.loc_var["marker"] == "arrowdot" or self.loc_var["marker"] == "arrow"):	
-			self.arrowhead(p,q)
+			self.arrowhead(p,q,self.loc_var["markersize"])
 		if (self.loc_var["marker"] == "dot"):
 			self.dot(q)
 
@@ -1103,7 +1105,69 @@ class mySvgCanvas:
 
 # ========================================================================================
 
-	def angle_arc(self, center=[0,0], radius=1, start_deg=0, stop_deg=45, text=""):
+	def cloud(self,p=[0,0],size=2,humps=6):
+
+		# Backup of original colours
+		backup_fill = self.loc_var["fill"];	backup_stroke = self.loc_var["stroke"]; 
+
+		# Cloud fill
+		self.loc_var["stroke"] = backup_fill;	self.arc([p[0]+size,p[1]],[p[0]-size,p[1]],size)
+
+		# Bottom of cloud
+		self.loc_var["stroke"] = backup_stroke; self.line([p[0]-size,p[1]],[p[0]+size,p[1]])
+
+		# Humps
+		hump_array = []
+		for i in range(0,humps+1):
+			hump_array.append([p[0]+size*math.sin(i*math.pi/humps - math.pi/2),p[1]+size*math.cos(i*math.pi/humps - math.pi/2)])
+		for i in range(1,len(hump_array)):
+			self.arc(hump_array[i],hump_array[i-1],0.001)
+
+# ========================================================================================
+
+	def star(self,p=[0,0],size=2,points=6):
+
+		# Backup of original colours
+		backup_fill = self.loc_var["fill"];	backup_stroke = self.loc_var["stroke"]; 
+
+		# Star fill
+		self.loc_var["stroke"] = backup_fill; self.circle([p[0],p[1]], size/2); self.loc_var["stroke"] = backup_stroke;
+
+		# Points
+		point_array = []
+		for i in range(0,points+1):
+			point_array.append([p[0]+size*math.sin(2*i*math.pi/points - math.pi/2),p[1]+size*math.cos(2*i*math.pi/points - math.pi/2)])
+			point_array.append([p[0]+0.5*size*math.sin(2*(i+0.5)*math.pi/points - math.pi/2),p[1]+0.5*size*math.cos(2*(i+0.5)*math.pi/points - math.pi/2)])
+		for i in range(1,len(point_array)-2,2):
+			self.path([point_array[i],point_array[i+1],point_array[i+2]])
+
+# ========================================================================================
+
+	def grass(self,p=[0,0],size=2,leaves=3,droop = 0.6):
+
+		# Backup of original colours
+		backup_fill = self.loc_var["fill"];
+		
+		self.loc_var["fill"] = "none"
+	
+		if (leaves > 1 and leaves < 20):
+			# Left / Right
+			for i in [-1,1]:
+				for j in range(0,leaves):
+				  dot_a = [p[0],p[1]]
+				  dot_b = [p[0],p[1]+size]
+				  dot_c = [p[0]+size*(0.5*math.sin(j*2*math.pi/(2*(leaves-1)) - math.pi/2)),p[1]+size*((droop/2)*math.cos(j*2*math.pi/(2*(leaves-1)) - math.pi/2) + droop)]
+				  self.smoothcurve([dot_a,dot_b,dot_c])
+
+		self.loc_var["fill"] = backup_fill
+
+# ========================================================================================
+
+	def angle_arc(self, center=[0,0], radius=1, start_deg=0, stop_deg=45, text="", text_offset=0.25):
+
+		# Backup of original colours
+		backup_fill = self.loc_var["fill"];
+		self.loc_var["fill"] = "none"
 
 		# Calculations
 		start_deg %= 360
@@ -1131,7 +1195,13 @@ class mySvgCanvas:
 		else:
 			text_angle = angle_start + (angle_stop-angle_start)/2			
 
-		self.text([center[0] + 1.25*radius*math.cos(text_angle),center[1] + 1.25*radius*math.sin(text_angle)], str(text))
+		text_x = center[0] + radius*math.cos(text_angle) + text_offset*int(text_angle/abs(text_angle))
+		text_y = center[1] + radius*math.sin(text_angle) + text_offset*int(text_angle/abs(text_angle))
+		#unit_vector_sign = int(1/abs(1)))
+		self.text([text_x,text_y], str(text))
+
+		# Restore FILL variable
+		self.loc_var["fill"] = backup_fill
 
 # ========================================================================================
 

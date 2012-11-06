@@ -84,22 +84,31 @@ function getSuggestion(line) {
 									'heart':'heart([x,y],size)',
 									'slopefield':'slopefield(func,dx,dy)',
 									'line':'line([x1,y1],[x2,y2])',
-									'ellipse':'ellipse(center,xradius,yradius)',
-									'circle':'circle(center,radius)',
+									'ellipse':'ellipse([center_x,center_y],xradius,yradius)',
+									'circle':'circle([center_x,center_y],radius)',
 									'arc':'arc(start,end,radius)',
 									'setBorder':'setBorder(size, color)',
 									'initPicture':'initPicture(xmin,xmax,ymin,ymax)',
 									'start_group':'start_group([center_x,center_y], rotate_angle, [scale_x,scale_y], [translate_x,translate_y])',
-									'angle_arc':'angle_arc([center_x,center_y], radius, start_deg, stop_deg)',
-									'stop_group':'stop_group()'
+									'angle_arc':'angle_arc([center_x,center_y], radius, start_deg, stop_deg, text, text_offset)',
+									'stop_group':'stop_group()',
+									'cloud':'cloud([center_x,center_y],size,num_humps)',
+									'star':'star([center_x,center_y],size,num_points)',
+									'grass': 'grass([base_x,base_y],size,leaves,droop)'
 						};
+
+	max_term = "";
 	for (term in dict)
   {
   	if (line.indexOf(term) > -1)
 		{
-			document.getElementById("suggestionNode").value = dict[term];
+			if (term.length > max_term.length)
+			{
+				max_term = term;
+			}
 		}
   }
+	document.getElementById("suggestionNode").value = dict[max_term];
 }
 
 // Download PNG
