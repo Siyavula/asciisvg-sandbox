@@ -21,6 +21,11 @@ firefox http://localhost/ &
 echo; 
 read -p "Was the server test OK? Press any key to continue..."
 
+# Install php
+echo; 
+read -p "Press any key to download & install PHP... "
+sudo apt-get install php5 libapache2-mod-php5
+
 # Install python-rsvg
 echo; 
 read -p "Press any key to download & install python-rsvg... "

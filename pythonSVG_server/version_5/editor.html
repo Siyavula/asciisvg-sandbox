@@ -1,0 +1,1915 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+
+	<title>ASCIISVG Editor 5.0</title>
+
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+	<script type="text/javascript" src="script.js"></script>
+	<script src="codemirror/codemirror.js"></script>
+  <script src="codemirror/python.js"></script>
+  <script src="codemirror/css.js"></script>
+  <link rel="stylesheet" href="codemirror/codemirror.css">
+
+	<style type="text/css">
+	/*
+	 *	Cosmetic Styles
+	 */
+	body {
+		font-family:	Arial, sans-serif;
+		font-size: 13px;
+		background:#DDD;
+	}
+	p {
+		margin:			1em 0
+		font-size: 13px;
+	}
+	table {
+		background:#DDD;
+	}
+	button {
+		line-height:	normal;
+	}
+	textarea {
+		border: 1px solid;
+		resize: vertical;
+	}
+
+	</style>
+
+</head>
+<body onLoad="show_frame('text_A', 'block'); ">
+
+<div>
+
+<!-- TABLE -->
+
+<table border=0 style="height:100%; width:100%;">
+
+	<!-- Header -->
+
+	<tr>
+		<td style="padding: 0px 0px 10px 0px;" colspan=2>
+			<span style="float:left;"><img src="images/logo.png"/></span>
+			<span style="float:right;">
+	
+				<!-- Option: Code -->
+
+				View: <select onchange="	
+					if (this.value == 0) {show_frame('text_A', 'block');}
+					if (this.value == 1) {show_frame('text_C', 'none');}
+					if (this.value == 2) {show_frame('text_D', 'none');}
+					if (this.value == 3) {show_frame('text_E', 'none');}">
+					<option value=0>Code</option>
+					<optgroup label="Information"></optgroup>
+					<option value=1>ASCII Functions</option>
+					<option value=2>Colours</option>
+					<option value=3>HTML Sybmols</option>
+				</select> &nbsp;
+
+				<!-- Option: Randomize -->
+				<input type="checkbox" id="randomize_lock"> hold random seed: 
+				<input id="random_seed" style="width:50px;">
+
+				<!-- Option: Auto-update -->
+				Auto-update: <input type="checkbox" id="autocomplete_checkbox" checked="checked">
+
+				<!-- Update: SVG Button -->
+				<input type="button" value="Manual Update" onClick="xmlhttpPost('SVG');"> 
+
+			</span>
+		</td>
+	</tr>
+
+	<!-- Body -->
+
+	<tr>
+		<td>
+
+			<!-- DIV: TEXT A -->
+
+			<div id="text_A" style="display:block;">
+
+			<table border=0 cellpadding=0 cellspacing=0>
+				<tr>
+					<td style="padding:0px 0px 5px 0px;"><b>Python Code</b></td>
+					<td rowspan=2>&nbsp;</td>
+					<td style="padding:0px 0px 5px 0px;"><b>ASCII Code</b></td>
+				</tr>
+	
+				<tr>
+					<td style="width:50%;"><textarea id="pythoninput" name="pythoninput" rows="30"># Python code here...
+
+a = random.randint(50,300)</textarea>
+					</td>
+
+					<!-- DIV: TEXT B -->
+
+					<td style="width:50%;"><textarea id="asciiinput" name="asciiinput" rows="30"># ASCII code here...
+
+# Sky
+fill="lightblue"
+rect([-10,-10],[10,10])
+strokewidth=2
+
+# Ground
+fill = "forestgreen"; stroke = "darkgreen"
+rect([-10,-10],[10,-2.5])
+
+# Clouds
+fill = "white"; stroke = "grey"
+cloud([2,2],1.5,6)
+
+# Stars
+fill = "yellow"; stroke = "orangered"
+star([-2.5,3],1,20,0.8)
+
+# Stars
+strokewidth=1.5
+fill = "yellow"; stroke = "orangered"
+star([0,4],0.3,8,0.3)
+
+# Grass
+strokewidth=2
+fill = "yellow"; stroke = "darkgreen"
+grass([-2,-3],2,6)
+
+# Flower base
+strokewidth=2
+fill = "yellow"; stroke = "darkgreen"
+grass([2,-3],2,5)
+
+# Flower head
+strokewidth=1.5
+fill = "red"; stroke = "black"
+flower([2,-0.8],0.4,12, "yellow","black")</textarea>
+					</td>
+				</tr>
+			</table>
+
+			</div>
+
+			<!-- DIV: ASCII Functions -->
+
+			<div id="text_C" style="display:none;">
+
+		<table border=1 cellpadding=5 cellspacing=0  bgcolor="#CCCCCC">
+			<tbody>
+
+				<!-- Functions -->	
+
+				<tr>
+					<td colspan=1 bgcolor="#999999">Initialization Functions</td>
+					<td colspan=1 bgcolor="#999999">Example</td>
+				</tr>
+
+				<tr>
+					<td colspan=1>
+						<b>axes</b>(dx,dy,"labels" || <br>
+						[xpos,xneg,ypos,yneg,zeropos],<br>
+						gdx,gdy,[xunits, yunits])
+					</td>
+					<td colspan=1>
+						<b>axes</b>(1, 1)<br>
+						<b>axes</b>(1, 1,"labels")<br>
+						<b>axes</b>(1, 1,"labels",2,2)<br>
+						<b>axes</b>(1, 1,[1,0,0,0],2,2)<br>
+						<b>axes</b>(1, 1,[1,1,1,1,'below'],2,2)<br>
+						<b>axes</b>(1, 1,[1,1,1,1,'below'],2,2,["&#176;","&pi;"])<br>
+					</td>
+				</tr>
+
+				<tr>
+					<td colspan=1>
+						<b>grid</b>(dx, dy)
+					</td>
+					<td colspan=1>
+						<b>grid</b>(1, 1)<br>
+					</td>
+				</tr>
+
+				<tr>
+					<td colspan=1>
+						<b>start_group</b>([center_x,center_y], rotate_angle, [scale_x,scale_y], [translate_x,translate_y])
+					</td>
+					<td colspan=1>
+						<b>start_group()</b><br>
+						<b>start_group([200,200], 90, [1,1], [5,5])</b><br>
+					</td>
+				</tr>
+
+				<tr>
+					<td colspan=1>
+						<b>stop_group</b>()
+					</td>
+					<td colspan=1>
+						# Closes the scope of the group
+					</td>
+				</tr>
+
+				<tr>
+					<td colspan=1>
+						<b>Nested Groups</b>
+					</td>
+					<td colspan=1>
+						<b>start_group([200,200], 90)</b><br>
+						<b>start_group([200,200], 0, [1,1], [5,5])</b><br>
+						// CODE<br>
+						<b>stop_group()</b><br>
+						<b>stop_group()</b><br>
+					</td>
+				</tr>
+
+				<!-- Attributes -->	
+
+				<tr>
+					<td colspan=1 bgcolor="#999999">Attributes</td>
+					<td colspan=1 bgcolor="#999999">Example</td>
+				</tr>
+
+				<tr>
+					<td colspan=1>
+						<b>marker</b> = "dot" | "arrow" | "arrowdot" | "none"
+					</td>
+					<td colspan=1>
+						&nbsp;
+					</td>
+				</tr>
+
+				<tr>
+					<td colspan=1>
+						<b>markersize</b> = size
+					</td>
+					<td colspan=1>
+						<b>markersize</b> = 2
+					</td>
+				</tr>
+
+				<tr>
+					<td colspan=1>
+						<b>dotradius</b> = size
+					</td>
+					<td colspan=1>
+						<b>dotradius</b> = 2
+					</td>
+				</tr>
+
+				<tr>
+					<td colspan=1>
+						<b>stroke</b> = color
+					</td>
+					<td colspan=1>
+						<b>stroke</b> = "#AABBCC"<br>
+						<b>stroke</b> = "blue"
+					</td>
+				</tr>
+
+				<tr>
+					<td colspan=1>
+						<b>strokewidth</b> = "pixelvalue" (default 1)
+					</td>
+					<td colspan=1>
+						&nbsp;
+					</td>
+				</tr>
+
+				<tr>
+					<td colspan=1>
+						<b>strokedasharray</b> = [dashpixel, spacepixel]
+					</td>
+					<td colspan=1>
+						<b>strokedasharray</b> = [1,0]  <- Continuous <br>
+						<b>strokedasharray</b> = [5,5]  <- Dashed
+					</td>
+				</tr>
+
+				<tr>
+					<td colspan=1>
+						<b>fill</b> = color
+					</td>
+					<td colspan=1>
+						<b>fill</b> = "#AABBCC"<br>
+						<b>fill</b> = "red"
+					</td>
+				</tr>
+
+				<tr>
+					<td colspan=1>
+						<b>fontsize</b> = "pixel" (default 20)
+					</td>
+					<td colspan=1>
+						<b>fontsize</b> = 20
+					</td>
+				</tr>
+
+				<tr>
+					<td colspan=1>
+						<b>fontweight</b> = "bold" | "normal"
+					</td>
+					<td colspan=1>
+						&nbsp;
+					</td>
+				</tr>
+
+				<tr>
+					<td colspan=1>
+						<b>fontfill</b> = color
+					</td>
+					<td colspan=1>
+						<b>fontfill</b> = "red"
+					</td>
+				</tr>
+
+				<tr>
+					<td colspan=1>
+						<b>fontstroke</b> = color
+					</td>
+					<td colspan=1>
+						<b>fontstroke</b> = "black"
+					</td>
+				</tr>
+
+				<tr>
+					<td colspan=1>
+						<b>fontstyle</b> = "italic" | "normal"
+					</td>
+					<td colspan=1>
+						&nbsp;
+					</td>
+				</tr>
+
+				<tr>
+					<td colspan=1>
+						<b>fontfamily</b> = "serif"|"sansserif"|"fixed"|"monotype"
+					</td>
+					<td colspan=1>
+						&nbsp;
+					</td>
+				</tr>
+
+				<!-- Basic Elements -->	
+
+				<tr>
+					<td colspan=1 bgcolor="#999999">Basic Elements</td>
+					<td colspan=1 bgcolor="#999999">Example</td>
+				</tr>
+
+				<tr>
+					<td colspan=1>
+						<b>dot</b>([x,y],open | closed,"label",position)
+					</td>
+					<td colspan=1>
+						<b>dot</b>([x,y],open)<br>
+						<b>dot</b>([x,y],closed,"text")<br>
+						<b>dot</b>([x,y],closed,"text","aboveleft")
+					</td>
+				</tr>
+
+				<tr>
+					<td colspan=1>
+						<b>arrowhead</b>([x1,y1],[x2,y2],size)
+					</td>
+					<td colspan=1>
+						<b>arrowhead</b>([0,0],[1,1])<br>
+						<b>arrowhead</b>([0,0],[1,1],5)
+					</td>
+				</tr>
+
+				<tr>
+					<td colspan=1>
+						<b>line</b>([x1,y1],[x2,y2])
+					</td>
+					<td colspan=1>
+						<b>line</b>([0,0],[1,1])
+					</td>
+				</tr>
+
+				<tr>
+					<td colspan=1>
+						<b>circle</b>([x,y],r)
+					</td>
+					<td colspan=1>
+						<b>circle</b>([0,0],5)
+					</td>
+				</tr>
+
+				<tr>
+					<td colspan=1>
+						<b>ellipse</b>([x,y],rx,ry)
+					</td>
+					<td colspan=1>
+						<b>ellipse</b>([0,0],3,6)
+					</td>
+				</tr>
+
+				<tr>
+					<td colspan=1>
+						<b>arc</b>([x,y],[u,v],r)
+					</td>
+					<td colspan=1>
+						<b>arc</b>([0,0],[1,1],5)
+					</td>
+				</tr>
+
+				<tr>
+					<td colspan=1>
+						<b>angle_arc</b>([center_x,center_y], radius, start_deg, stop_deg, text, text_offset)
+					</td>
+					<td colspan=1>
+						<b>angle_arc</b>([0,0],1,45,270)<br>
+						<b>angle_arc</b>([0,0],1,45,270,"y")<br>
+						<b>angle_arc</b>([0,0],1,45,270,"y",1.25)
+					</td>
+				</tr>
+
+				<tr>
+					<td colspan=1>
+						<b>rect</b>([x,y],[u,v], corner_x, corner_y)
+					</td>
+					<td colspan=1>
+						<b>rect</b>([0,0],[2,2])<br>
+						<b>rect</b>([0,0],[2,2], 1, 2)
+					</td>
+				</tr>
+
+				<tr>
+					<td colspan=1>
+						<b>text</b>([x,y],label,position,clock_rotation_deg)
+					</td>
+					<td colspan=1>
+						<b>text</b>([2,2],"hello")<br>
+						<b>text</b>([2,2],"hello", "bottomright")<br>
+						<b>text</b>([2,2],"hello", "bottomright", 90)<br>
+					</td>
+				</tr>
+
+				<!-- Complex Elements -->	
+
+				<tr>
+					<td colspan=1 bgcolor="#999999">Complex Elements</td>
+					<td colspan=1 bgcolor="#999999">Example</td>
+				</tr>
+
+				<tr>
+					<td colspan=1>
+						<b>path</b>([list],style,closed)
+					</td>
+					<td colspan=1>
+						<b>path</b>([[1,-3],[1,-5],[3,-4]], null, "1")
+					</td>
+				</tr>
+
+				<tr>
+					<td colspan=1>
+						<b>curve</b>([[x1,y1],[x2,y2], ..., [xn,yn]])
+					</td>
+					<td colspan=1>
+						<b>curve</b>([[0,0],[1,1],[0,2]])
+					</td>
+				</tr>
+
+				<tr>
+					<td colspan=1>
+						<b>smoothcurve</b>([[x1,y1],[x2,y2], ..., [xn,yn]])
+					</td>
+					<td colspan=1>
+						<b>smoothcurve</b>([[0,0],[1,1],[0,2]])
+					</td>
+				</tr>
+
+				<tr>
+					<td colspan=1>
+						<b>bunnyhop</b>([[x1,y1],[x2,y2], ..., [xn,yn]])
+					</td>
+					<td colspan=1>
+						<b>bunnyhop</b>([[0,0],[1,1],[0,2]])
+					</td>
+				</tr>
+
+				<tr>
+					<td colspan=1>
+						<b>plot</b>(f(x), xmin, xmax, npoints)<br><br>
+						<i>Note: f(x) needs to be a "string" for PNG processing</i>
+					</td>
+					<td colspan=1>
+						<b>plot</b>("sin(x)")<br>
+						<b>plot</b>("sin(x)", 0, 2*pi)<br>
+						<b>plot</b>("sin(x)", 0, 2*pi, 100)
+					</td>
+				</tr>
+
+				<tr>
+					<td colspan=1>
+						<b>plot</b>(["t", f(x)], xmin, xmax, npoints)<br><br>
+						<i>Note: f(x) needs to be a "string" for PNG processing</i>
+					</td>
+					<td colspan=1>
+						<b>plot</b>(["t", "sin(t)"])<br>
+						<b>plot</b>(["t", "sin(t)"], 0, 2*pi)<br>
+						<b>plot</b>(["t", "sin(t)"], 0, 2*pi, 100)
+					</td>
+				</tr>
+
+				<!-- Shapes -->	
+
+				<tr>
+					<td colspan=1 bgcolor="#999999">Shapes</td>
+					<td colspan=1 bgcolor="#999999"></td>
+				</tr>
+
+				<tr>
+					<td colspan=1>
+						<b>petal</b>(start, unit_vector)
+					</td>
+					<td colspan=1>
+						<b>petal</b>([0,0])<br>
+						<b>petal</b>([0,0], [0,2])
+					</td>
+				</tr>
+
+				<tr>
+					<td colspan=1>
+						<b>heart</b>(p,size)
+					</td>
+					<td colspan=1>
+						<b>heart</b>([0,0])<br>
+						<b>heart</b>([0,0], 1)
+					</td>
+				</tr>
+
+				<tr>
+					<td colspan=1>
+						<b>cloud</b>([center_x,center_y],size,num_humps)
+					</td>
+					<td colspan=1>
+						<b>cloud</b>([0,0],2,10)
+					</td>
+				</tr>
+
+				<tr>
+					<td colspan=1>
+						<b>star</b>([center_x,center_y],size,num_points,inner_radius)
+					</td>
+					<td colspan=1>
+						<b>star</b>([0,0],1,20,0.8)<br>
+						<b>star</b>([0,0],0.3,8,0.3)
+					</td>
+				</tr>
+
+				<tr>
+					<td colspan=1>
+						<b>grass</b>([base_x,base_y],size,leaves,droop)
+					</td>
+					<td colspan=1>
+						<b>grass</b>([0,0],2,6)<br>
+						<b>grass</b>([0,0],2,6,0.6)
+					</td>
+				</tr>
+
+				<tr>
+					<td colspan=1>
+						<b>flower</b>([center_x,center_y],size,num_petals, center_fill,center_stroke,center_size)
+					</td>
+					<td colspan=1>
+						<b>flower</b>([0,1],0.4,12,"yellow","black")<br>
+						<b>flower</b>([0,1],0.4,12,"yellow","black", 0.8)
+					</td>
+				</tr>
+
+				<!-- Functions -->	
+
+				<tr>
+					<td colspan=1 bgcolor="#999999">Special Functions & Charaters</td>
+					<td colspan=1 bgcolor="#999999"></td>
+				</tr>
+
+				<tr>
+					<td colspan=1>
+						sin<br>
+						cos<br>
+						tan<br>
+					</td>
+					<td colspan=1>
+						sinh<br>
+						cosh<br>
+						tanh<br>
+					</td>
+				</tr>
+
+				<tr>
+					<td colspan=1>
+						asin<br>
+						acos<br>
+						atan<br>
+					</td>
+					<td colspan=1>
+						asinh<br>
+						acosh<br>
+						atanh<br>
+					</td>
+				</tr>
+
+				<tr>
+					<td colspan=1>
+						log<br>
+						pi<br>
+						e<br>
+					</td>
+					<td colspan=1>
+						&nbsp;
+					</td>
+				</tr>
+			</tbody>
+		</table>
+			</div>
+
+		<!-- DIV: COLOUR TABLE -->
+
+			<div id="text_D" style="display:none;">
+		<center>
+		<table border=1 cellpadding=2 cellspacing=0>
+		<tr><td width='100' bgcolor='black'>black</td><td width='100' bgcolor='seagreen'>seagreen</td><td width='100' bgcolor='darkviolet'>darkviolet</td><td width='100' bgcolor='crimson'>crimson</td><td width='100' bgcolor='deeppink'>deeppink</td></tr>
+		<tr><td width='100' bgcolor='navy'>navy</td><td width='100' bgcolor='darkslategray'>darkslategray</td><td width='100' bgcolor='palegreen'>palegreen</td><td width='100' bgcolor='gainsboro'>gainsboro</td><td width='100' bgcolor='orangered'>orangered</td></tr>
+		<tr><td width='100' bgcolor='darkgreen'>darkgreen</td><td width='100' bgcolor='limegreen'>limegreen</td><td width='100' bgcolor='darkorchid'>darkorchid</td><td width='100' bgcolor='plum'>plum</td><td width='100' bgcolor='tomato'>tomato</td></tr>
+		<tr><td width='100' bgcolor='green'>green</td><td width='100' bgcolor='mediumseagreen'>mediumseagreen</td><td width='100' bgcolor='yellowgreen'>yellowgreen</td><td width='100' bgcolor='burlywood'>burlywood</td><td width='100' bgcolor='hotpink'>hotpink</td></tr>
+		<tr><td width='100' bgcolor='teal'>teal</td><td width='100' bgcolor='turquoise'>turquoise</td><td width='100' bgcolor='sienna'>sienna</td><td width='100' bgcolor='lightcyan'>lightcyan</td><td width='100' bgcolor='coral'>coral</td></tr>
+		<tr><td width='100' bgcolor='royalblue'>royalblue</td><td width='100' bgcolor='steelblue'>steelblue</td><td width='100' bgcolor='brown'>brown</td><td width='100' bgcolor='lavender'>lavender</td><td width='100' bgcolor='darkorange'>darkorange</td></tr>
+		<tr><td width='100' bgcolor='midnightblue'>midnightblue</td><td width='100' bgcolor='darkslateblue'>darkslateblue</td><td width='100' bgcolor='darkgray'>darkgray</td><td width='100' bgcolor='darksalmon'>darksalmon</td><td width='100' bgcolor='lightsalmon'>lightsalmon</td></tr>
+		<tr><td width='100' bgcolor='dimgray'>dimgray</td><td width='100' bgcolor='mediumturquoise'>mediumturquoise</td><td width='100' bgcolor='lightblue'>lightblue</td><td width='100' bgcolor='violet'>violet</td><td width='100' bgcolor='orange'>orange</td></tr>
+		<tr><td width='100' bgcolor='slategray'>slategray</td><td width='100' bgcolor='indigo'>indigo</td><td width='100' bgcolor='greenyellow'>greenyellow</td><td width='100' bgcolor='palegoldenrod'>palegoldenrod</td><td width='100' bgcolor='lightpink'>lightpink</td></tr>
+		<tr><td width='100' bgcolor='lightslategray'>lightslategray</td><td width='100' bgcolor='darkolivegreen'>darkolivegreen</td><td width='100' bgcolor='paleturquoise'>paleturquoise</td><td width='100' bgcolor='lightcoral'>lightcoral</td><td width='100' bgcolor='pink'>pink</td></tr>
+		<tr><td width='100' bgcolor='maroon'>maroon</td><td width='100' bgcolor='cadetblue'>cadetblue</td><td width='100' bgcolor='lightsteelblue'>lightsteelblue</td><td width='100' bgcolor='khaki'>khaki</td><td width='100' bgcolor='gold'>gold</td></tr>
+		<tr><td width='100' bgcolor='purple'>purple</td><td width='100' bgcolor='cornflowerblue'>cornflowerblue</td><td width='100' bgcolor='powderblue'>powderblue</td><td width='100' bgcolor='aliceblue'>aliceblue</td><td width='100' bgcolor='peachpuff'>peachpuff</td></tr>
+		<tr><td width='100' bgcolor='olive'>olive</td><td width='100' bgcolor='mediumaquamarine'>mediumaquamarine</td><td width='100' bgcolor='firebrick'>firebrick</td><td width='100' bgcolor='honeydew'>honeydew</td><td width='100' bgcolor='navajowhite'>navajowhite</td></tr>
+		<tr><td width='100' bgcolor='gray'>gray</td><td width='100' bgcolor='slateblue'>slateblue</td><td width='100' bgcolor='darkgoldenrod'>darkgoldenrod</td><td width='100' bgcolor='azure'>azure</td><td width='100' bgcolor='moccasin'>moccasin</td></tr>
+		<tr><td width='100' bgcolor='darkblue'>darkblue</td><td width='100' bgcolor='olivedrab'>olivedrab</td><td width='100' bgcolor='mediumorchid'>mediumorchid</td><td width='100' bgcolor='sandybrown'>sandybrown</td><td width='100' bgcolor='bisque'>bisque</td></tr>
+		<tr><td width='100' bgcolor='mediumblue'>mediumblue</td><td width='100' bgcolor='mediumslateblue'>mediumslateblue</td><td width='100' bgcolor='rosybrown'>rosybrown</td><td width='100' bgcolor='wheat'>wheat</td><td width='100' bgcolor='mistyrose'>mistyrose</td></tr>
+		<tr><td width='100' bgcolor='blue'>blue</td><td width='100' bgcolor='lawngreen'>lawngreen</td><td width='100' bgcolor='darkkhaki'>darkkhaki</td><td width='100' bgcolor='beige'>beige</td><td width='100' bgcolor='blanchedalmond'>blanchedalmond</td></tr>
+		<tr><td width='100' bgcolor='darkcyan'>darkcyan</td><td width='100' bgcolor='chartreuse'>chartreuse</td><td width='100' bgcolor='silver'>silver</td><td width='100' bgcolor='whitesmoke'>whitesmoke</td><td width='100' bgcolor='papayawhip'>papayawhip</td></tr>
+		<tr><td width='100' bgcolor='deepskyblue'>deepskyblue</td><td width='100' bgcolor='aquamarine'>aquamarine</td><td width='100' bgcolor='mediumvioletred'>mediumvioletred</td><td width='100' bgcolor='mintcream'>mintcream</td><td width='100' bgcolor='lavenderblush'>lavenderblush</td></tr>
+		<tr><td width='100' bgcolor='darkturquoise'>darkturquoise</td><td width='100' bgcolor='skyblue'>skyblue</td><td width='100' bgcolor='indianred'>indianred</td><td width='100' bgcolor='ghostwhite'>ghostwhite</td><td width='100' bgcolor='seashell'>seashell</td></tr>
+		<tr><td width='100' bgcolor='mediumspringgreen'>mediumspringgreen</td><td width='100' bgcolor='lightskyblue'>lightskyblue</td><td width='100' bgcolor='peru'>peru</td><td width='100' bgcolor='salmon'>salmon</td><td width='100' bgcolor='cornsilk'>cornsilk</td></tr>
+		<tr><td width='100' bgcolor='lime'>lime</td><td width='100' bgcolor='blueviolet'>blueviolet</td><td width='100' bgcolor='chocolate'>chocolate</td><td width='100' bgcolor='antiquewhite'>antiquewhite</td><td width='100' bgcolor='lemonchiffon'>lemonchiffon</td></tr>
+		<tr><td width='100' bgcolor='springgreen'>springgreen</td><td width='100' bgcolor='darkred'>darkred</td><td width='100' bgcolor='tan'>tan</td><td width='100' bgcolor='linen'>linen</td><td width='100' bgcolor='floralwhite'>floralwhite</td></tr>
+		<tr><td width='100' bgcolor='aqua'>aqua</td><td width='100' bgcolor='darkmagenta'>darkmagenta</td><td width='100' bgcolor='lightgrey'>lightgrey</td><td width='100' bgcolor='lightgoldenrodyellow'>lightgoldenrodyellow</td><td width='100' bgcolor='snow'>snow</td></tr>
+		<tr><td width='100' bgcolor='cyan'>cyan</td><td width='100' bgcolor='saddlebrown'>saddlebrown</td><td width='100' bgcolor='thistle'>thistle</td><td width='100' bgcolor='oldlace'>oldlace</td><td width='100' bgcolor='yellow'>yellow</td></tr>
+		<tr><td width='100' bgcolor='dodgerblue'>dodgerblue</td><td width='100' bgcolor='darkseagreen'>darkseagreen</td><td width='100' bgcolor='orchid'>orchid</td><td width='100' bgcolor='red'>red</td><td width='100' bgcolor='lightyellow'>lightyellow</td></tr>
+		<tr><td width='100' bgcolor='lightseagreen'>lightseagreen</td><td width='100' bgcolor='lightgreen'>lightgreen</td><td width='100' bgcolor='goldenrod'>goldenrod</td><td width='100' bgcolor='fuchsia'>fuchsia</td><td width='100' bgcolor='ivory'>ivory</td></tr>
+		<tr><td width='100' bgcolor='forestgreen'>forestgreen</td><td width='100' bgcolor='mediumpurple'>mediumpurple</td><td width='100' bgcolor='palevioletred'>palevioletred</td><td width='100' bgcolor='magenta'>magenta</td><td width='100' bgcolor='white'>white</td></tr>
+
+		</table>
+		</center>
+
+			</div>
+
+		<!-- DIV: UNICODE TABLE -->
+
+			<div id="text_E" style="display:none;">
+
+
+		<table border=1 cellpadding=5 cellspacing=0  bgcolor="#CCCCCC">
+			<colgroup>
+			<colgroup class=entity span=3>
+			<colgroup class=entity span=3>
+			<thead>
+				<tr>
+				  <th scope=col rowspan=2 bgcolor="#999999">Character</th>
+				  <th scope=col rowspan=2 bgcolor="#999999">Entity</th>
+				  <th scope=col rowspan=2 bgcolor="#999999">Decimal</th>
+				  <th scope=col rowspan=2 bgcolor="#999999">Hex</th>
+				  <th scope=colgroup colspan=3 bgcolor="#999999">Rendering in Your Browser</th>
+				</tr>
+				<tr>
+				  <th scope=col>Entity</th>
+				  <th scope=col>Decimal</th>
+				  <th scope=col>Hex</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+				  <td scope=row>Latin small f with hook = function = florin</td>
+				  <td>&amp;fnof;</td>
+				  <td>&amp;#402;</td>
+				  <td>&amp;#x192;</td>
+				  <td>&fnof;</td>
+				  <td>&#402;</td>
+				  <td>&#x192;</td>
+				</tr>
+				<tr>
+				  <td scope=row>Greek capital letter alpha</td>
+				  <td>&amp;Alpha;</td>
+				  <td>&amp;#913;</td>
+				  <td>&amp;#x391;</td>
+				  <td>&Alpha;</td>
+				  <td>&#913;</td>
+				  <td>&#x391;</td>
+				</tr>
+				<tr>
+				  <td scope=row>Greek capital letter beta</td>
+				  <td>&amp;Beta;</td>
+				  <td>&amp;#914;</td>
+				  <td>&amp;#x392;</td>
+				  <td>&Beta;</td>
+				  <td>&#914;</td>
+				  <td>&#x392;</td>
+				</tr>
+				<tr>
+				  <td scope=row>Greek capital letter gamma</td>
+				  <td>&amp;Gamma;</td>
+				  <td>&amp;#915;</td>
+				  <td>&amp;#x393;</td>
+				  <td>&Gamma;</td>
+				  <td>&#915;</td>
+				  <td>&#x393;</td>
+				</tr>
+				<tr>
+				  <td scope=row>Greek capital letter delta</td>
+				  <td>&amp;Delta;</td>
+				  <td>&amp;#916;</td>
+				  <td>&amp;#x394;</td>
+				  <td>&Delta;</td>
+				  <td>&#916;</td>
+				  <td>&#x394;</td>
+				</tr>
+				<tr>
+				  <td scope=row>Greek capital letter epsilon</td>
+				  <td>&amp;Epsilon;</td>
+				  <td>&amp;#917;</td>
+				  <td>&amp;#x395;</td>
+				  <td>&Epsilon;</td>
+				  <td>&#917;</td>
+				  <td>&#x395;</td>
+				</tr>
+				<tr>
+				  <td scope=row>Greek capital letter zeta</td>
+				  <td>&amp;Zeta;</td>
+				  <td>&amp;#918;</td>
+				  <td>&amp;#x396;</td>
+				  <td>&Zeta;</td>
+				  <td>&#918;</td>
+				  <td>&#x396;</td>
+				</tr>
+				<tr>
+				  <td scope=row>Greek capital letter eta</td>
+				  <td>&amp;Eta;</td>
+				  <td>&amp;#919;</td>
+				  <td>&amp;#x397;</td>
+				  <td>&Eta;</td>
+				  <td>&#919;</td>
+				  <td>&#x397;</td>
+				</tr>
+				<tr>
+				  <td scope=row>Greek capital letter theta</td>
+				  <td>&amp;Theta;</td>
+				  <td>&amp;#920;</td>
+				  <td>&amp;#x398;</td>
+				  <td>&Theta;</td>
+				  <td>&#920;</td>
+				  <td>&#x398;</td>
+				</tr>
+				<tr>
+				  <td scope=row>Greek capital letter iota</td>
+				  <td>&amp;Iota;</td>
+				  <td>&amp;#921;</td>
+				  <td>&amp;#x399;</td>
+				  <td>&Iota;</td>
+				  <td>&#921;</td>
+				  <td>&#x399;</td>
+				</tr>
+				<tr>
+				  <td scope=row>Greek capital letter kappa</td>
+				  <td>&amp;Kappa;</td>
+				  <td>&amp;#922;</td>
+				  <td>&amp;#x39A;</td>
+				  <td>&Kappa;</td>
+				  <td>&#922;</td>
+				  <td>&#x39A;</td>
+				</tr>
+				<tr>
+				  <td scope=row>Greek capital letter lambda</td>
+				  <td>&amp;Lambda;</td>
+				  <td>&amp;#923;</td>
+				  <td>&amp;#x39B;</td>
+				  <td>&Lambda;</td>
+				  <td>&#923;</td>
+				  <td>&#x39B;</td>
+				</tr>
+				<tr>
+				  <td scope=row>Greek capital letter mu</td>
+				  <td>&amp;Mu;</td>
+				  <td>&amp;#924;</td>
+				  <td>&amp;#x39C;</td>
+				  <td>&Mu;</td>
+				  <td>&#924;</td>
+				  <td>&#x39C;</td>
+				</tr>
+				<tr>
+				  <td scope=row>Greek capital letter nu</td>
+				  <td>&amp;Nu;</td>
+				  <td>&amp;#925;</td>
+				  <td>&amp;#x39D;</td>
+				  <td>&Nu;</td>
+				  <td>&#925;</td>
+				  <td>&#x39D;</td>
+				</tr>
+				<tr>
+				  <td scope=row>Greek capital letter xi</td>
+				  <td>&amp;Xi;</td>
+				  <td>&amp;#926;</td>
+				  <td>&amp;#x39E;</td>
+				  <td>&Xi;</td>
+				  <td>&#926;</td>
+				  <td>&#x39E;</td>
+				</tr>
+				<tr>
+				  <td scope=row>Greek capital letter omicron</td>
+				  <td>&amp;Omicron;</td>
+				  <td>&amp;#927;</td>
+				  <td>&amp;#x39F;</td>
+				  <td>&Omicron;</td>
+				  <td>&#927;</td>
+				  <td>&#x39F;</td>
+				</tr>
+				<tr>
+				  <td scope=row>Greek capital letter pi</td>
+				  <td>&amp;Pi;</td>
+				  <td>&amp;#928;</td>
+				  <td>&amp;#x3A0;</td>
+				  <td>&Pi;</td>
+				  <td>&#928;</td>
+				  <td>&#x3A0;</td>
+				</tr>
+				<tr>
+				  <td scope=row>Greek capital letter rho</td>
+				  <td>&amp;Rho;</td>
+				  <td>&amp;#929;</td>
+				  <td>&amp;#x3A1;</td>
+				  <td>&Rho;</td>
+				  <td>&#929;</td>
+				  <td>&#x3A1;</td>
+				</tr>
+				<tr>
+				  <td scope=row>Greek capital letter sigma</td>
+				  <td>&amp;Sigma;</td>
+				  <td>&amp;#931;</td>
+				  <td>&amp;#x3A3;</td>
+				  <td>&Sigma;</td>
+				  <td>&#931;</td>
+				  <td>&#x3A3;</td>
+				</tr>
+				<tr>
+				  <td scope=row>Greek capital letter tau</td>
+				  <td>&amp;Tau;</td>
+				  <td>&amp;#932;</td>
+				  <td>&amp;#x3A4;</td>
+				  <td>&Tau;</td>
+				  <td>&#932;</td>
+				  <td>&#x3A4;</td>
+				</tr>
+				<tr>
+				  <td scope=row>Greek capital letter upsilon</td>
+				  <td>&amp;Upsilon;</td>
+				  <td>&amp;#933;</td>
+				  <td>&amp;#x3A5;</td>
+				  <td>&Upsilon;</td>
+				  <td>&#933;</td>
+				  <td>&#x3A5;</td>
+				</tr>
+				<tr>
+				  <td scope=row>Greek capital letter phi</td>
+				  <td>&amp;Phi;</td>
+				  <td>&amp;#934;</td>
+				  <td>&amp;#x3A6;</td>
+				  <td>&Phi;</td>
+				  <td>&#934;</td>
+				  <td>&#x3A6;</td>
+				</tr>
+				<tr>
+				  <td scope=row>Greek capital letter chi</td>
+				  <td>&amp;Chi;</td>
+				  <td>&amp;#935;</td>
+				  <td>&amp;#x3A7;</td>
+				  <td>&Chi;</td>
+				  <td>&#935;</td>
+				  <td>&#x3A7;</td>
+				</tr>
+				<tr>
+				  <td scope=row>Greek capital letter psi</td>
+				  <td>&amp;Psi;</td>
+				  <td>&amp;#936;</td>
+				  <td>&amp;#x3A8;</td>
+				  <td>&Psi;</td>
+				  <td>&#936;</td>
+				  <td>&#x3A8;</td>
+				</tr>
+				<tr>
+				  <td scope=row>Greek capital letter omega</td>
+				  <td>&amp;Omega;</td>
+				  <td>&amp;#937;</td>
+				  <td>&amp;#x3A9;</td>
+				  <td>&Omega;</td>
+				  <td>&#937;</td>
+				  <td>&#x3A9;</td>
+				</tr>
+				<tr>
+				  <td scope=row>Greek small letter alpha</td>
+				  <td>&amp;alpha;</td>
+				  <td>&amp;#945;</td>
+				  <td>&amp;#x3B1;</td>
+				  <td>&alpha;</td>
+				  <td>&#945;</td>
+				  <td>&#x3B1;</td>
+				</tr>
+				<tr>
+				  <td scope=row>Greek small letter beta</td>
+				  <td>&amp;beta;</td>
+				  <td>&amp;#946;</td>
+				  <td>&amp;#x3B2;</td>
+				  <td>&beta;</td>
+				  <td>&#946;</td>
+				  <td>&#x3B2;</td>
+				</tr>
+				<tr>
+				  <td scope=row>Greek small letter gamma</td>
+				  <td>&amp;gamma;</td>
+				  <td>&amp;#947;</td>
+				  <td>&amp;#x3B3;</td>
+				  <td>&gamma;</td>
+				  <td>&#947;</td>
+				  <td>&#x3B3;</td>
+				</tr>
+				<tr>
+				  <td scope=row>Greek small letter delta</td>
+				  <td>&amp;delta;</td>
+				  <td>&amp;#948;</td>
+				  <td>&amp;#x3B4;</td>
+				  <td>&delta;</td>
+				  <td>&#948;</td>
+				  <td>&#x3B4;</td>
+				</tr>
+				<tr>
+				  <td scope=row>Greek small letter epsilon</td>
+				  <td>&amp;epsilon;</td>
+				  <td>&amp;#949;</td>
+				  <td>&amp;#x3B5;</td>
+				  <td>&epsilon;</td>
+				  <td>&#949;</td>
+				  <td>&#x3B5;</td>
+				</tr>
+				<tr>
+				  <td scope=row>Greek small letter zeta</td>
+				  <td>&amp;zeta;</td>
+				  <td>&amp;#950;</td>
+				  <td>&amp;#x3B6;</td>
+				  <td>&zeta;</td>
+				  <td>&#950;</td>
+				  <td>&#x3B6;</td>
+				</tr>
+				<tr>
+				  <td scope=row>Greek small letter eta</td>
+				  <td>&amp;eta;</td>
+				  <td>&amp;#951;</td>
+				  <td>&amp;#x3B7;</td>
+				  <td>&eta;</td>
+				  <td>&#951;</td>
+				  <td>&#x3B7;</td>
+				</tr>
+				<tr>
+				  <td scope=row>Greek small letter theta</td>
+				  <td>&amp;theta;</td>
+				  <td>&amp;#952;</td>
+				  <td>&amp;#x3B8;</td>
+				  <td>&theta;</td>
+				  <td>&#952;</td>
+				  <td>&#x3B8;</td>
+				</tr>
+				<tr>
+				  <td scope=row>Greek small letter iota</td>
+				  <td>&amp;iota;</td>
+				  <td>&amp;#953;</td>
+				  <td>&amp;#x3B9;</td>
+				  <td>&iota;</td>
+				  <td>&#953;</td>
+				  <td>&#x3B9;</td>
+				</tr>
+				<tr>
+				  <td scope=row>Greek small letter kappa</td>
+				  <td>&amp;kappa;</td>
+				  <td>&amp;#954;</td>
+				  <td>&amp;#x3BA;</td>
+				  <td>&kappa;</td>
+				  <td>&#954;</td>
+				  <td>&#x3BA;</td>
+				</tr>
+				<tr>
+				  <td scope=row>Greek small letter lambda</td>
+				  <td>&amp;lambda;</td>
+				  <td>&amp;#955;</td>
+				  <td>&amp;#x3BB;</td>
+				  <td>&lambda;</td>
+				  <td>&#955;</td>
+				  <td>&#x3BB;</td>
+				</tr>
+				<tr>
+				  <td scope=row>Greek small letter mu</td>
+				  <td>&amp;mu;</td>
+				  <td>&amp;#956;</td>
+				  <td>&amp;#x3BC;</td>
+				  <td>&mu;</td>
+				  <td>&#956;</td>
+				  <td>&#x3BC;</td>
+				</tr>
+				<tr>
+				  <td scope=row>Greek small letter nu</td>
+				  <td>&amp;nu;</td>
+				  <td>&amp;#957;</td>
+				  <td>&amp;#x3BD;</td>
+				  <td>&nu;</td>
+				  <td>&#957;</td>
+				  <td>&#x3BD;</td>
+				</tr>
+				<tr>
+				  <td scope=row>Greek small letter xi</td>
+				  <td>&amp;xi;</td>
+				  <td>&amp;#958;</td>
+				  <td>&amp;#x3BE;</td>
+				  <td>&xi;</td>
+				  <td>&#958;</td>
+				  <td>&#x3BE;</td>
+				</tr>
+				<tr>
+				  <td scope=row>Greek small letter omicron</td>
+				  <td>&amp;omicron;</td>
+				  <td>&amp;#959;</td>
+				  <td>&amp;#x3BF;</td>
+				  <td>&omicron;</td>
+				  <td>&#959;</td>
+				  <td>&#x3BF;</td>
+				</tr>
+				<tr>
+				  <td scope=row>Greek small letter pi</td>
+				  <td>&amp;pi;</td>
+				  <td>&amp;#960;</td>
+				  <td>&amp;#x3C0;</td>
+				  <td>&pi;</td>
+				  <td>&#960;</td>
+				  <td>&#x3C0;</td>
+				</tr>
+				<tr>
+				  <td scope=row>Greek small letter rho</td>
+				  <td>&amp;rho;</td>
+				  <td>&amp;#961;</td>
+				  <td>&amp;#x3C1;</td>
+				  <td>&rho;</td>
+				  <td>&#961;</td>
+				  <td>&#x3C1;</td>
+				</tr>
+				<tr>
+				  <td scope=row>Greek small letter final sigma</td>
+				  <td>&amp;sigmaf;</td>
+				  <td>&amp;#962;</td>
+				  <td>&amp;#x3C2;</td>
+				  <td>&sigmaf;</td>
+				  <td>&#962;</td>
+				  <td>&#x3C2;</td>
+				</tr>
+				<tr>
+				  <td scope=row>Greek small letter sigma</td>
+				  <td>&amp;sigma;</td>
+				  <td>&amp;#963;</td>
+				  <td>&amp;#x3C3;</td>
+				  <td>&sigma;</td>
+				  <td>&#963;</td>
+				  <td>&#x3C3;</td>
+				</tr>
+				<tr>
+				  <td scope=row>Greek small letter tau</td>
+				  <td>&amp;tau;</td>
+				  <td>&amp;#964;</td>
+				  <td>&amp;#x3C4;</td>
+				  <td>&tau;</td>
+				  <td>&#964;</td>
+				  <td>&#x3C4;</td>
+				</tr>
+				<tr>
+				  <td scope=row>Greek small letter upsilon</td>
+				  <td>&amp;upsilon;</td>
+				  <td>&amp;#965;</td>
+				  <td>&amp;#x3C5;</td>
+				  <td>&upsilon;</td>
+				  <td>&#965;</td>
+				  <td>&#x3C5;</td>
+				</tr>
+				<tr>
+				  <td scope=row>Greek small letter phi</td>
+				  <td>&amp;phi;</td>
+				  <td>&amp;#966;</td>
+				  <td>&amp;#x3C6;</td>
+				  <td>&phi;</td>
+				  <td>&#966;</td>
+				  <td>&#x3C6;</td>
+				</tr>
+				<tr>
+				  <td scope=row>Greek small letter chi</td>
+				  <td>&amp;chi;</td>
+				  <td>&amp;#967;</td>
+				  <td>&amp;#x3C7;</td>
+				  <td>&chi;</td>
+				  <td>&#967;</td>
+				  <td>&#x3C7;</td>
+				</tr>
+				<tr>
+				  <td scope=row>Greek small letter psi</td>
+				  <td>&amp;psi;</td>
+				  <td>&amp;#968;</td>
+				  <td>&amp;#x3C8;</td>
+				  <td>&psi;</td>
+				  <td>&#968;</td>
+				  <td>&#x3C8;</td>
+				</tr>
+				<tr>
+				  <td scope=row>Greek small letter omega</td>
+				  <td>&amp;omega;</td>
+				  <td>&amp;#969;</td>
+				  <td>&amp;#x3C9;</td>
+				  <td>&omega;</td>
+				  <td>&#969;</td>
+				  <td>&#x3C9;</td>
+				</tr>
+				<tr>
+				  <td scope=row>Greek small letter theta symbol</td>
+				  <td>&amp;thetasym;</td>
+				  <td>&amp;#977;</td>
+				  <td>&amp;#x3D1;</td>
+				  <td>&thetasym;</td>
+				  <td>&#977;</td>
+				  <td>&#x3D1;</td>
+				</tr>
+				<tr>
+				  <td scope=row>Greek upsilon with hook symbol</td>
+				  <td>&amp;upsih;</td>
+				  <td>&amp;#978;</td>
+				  <td>&amp;#x3D2;</td>
+				  <td>&upsih;</td>
+				  <td>&#978;</td>
+				  <td>&#x3D2;</td>
+				</tr>
+				<tr>
+				  <td scope=row>Greek pi symbol</td>
+				  <td>&amp;piv;</td>
+				  <td>&amp;#982;</td>
+				  <td>&amp;#x3D6;</td>
+				  <td>&piv;</td>
+				  <td>&#982;</td>
+				  <td>&#x3D6;</td>
+				</tr>
+				<tr>
+				  <td scope=row>bullet = black small circle</td>
+				  <td>&amp;bull;</td>
+				  <td>&amp;#8226;</td>
+				  <td>&amp;#x2022;</td>
+				  <td>&bull;</td>
+				  <td>&#8226;</td>
+				  <td>&#x2022;</td>
+				</tr>
+				<tr>
+				  <td scope=row>horizontal ellipsis = three dot leader</td>
+				  <td>&amp;hellip;</td>
+				  <td>&amp;#8230;</td>
+				  <td>&amp;#x2026;</td>
+				  <td>&hellip;</td>
+				  <td>&#8230;</td>
+				  <td>&#x2026;</td>
+				</tr>
+				<tr>
+				  <td scope=row>prime = minutes = feet</td>
+				  <td>&amp;prime;</td>
+				  <td>&amp;#8242;</td>
+				  <td>&amp;#x2032;</td>
+				  <td>&prime;</td>
+				  <td>&#8242;</td>
+				  <td>&#x2032;</td>
+				</tr>
+				<tr>
+				  <td scope=row>double prime = seconds = inches</td>
+				  <td>&amp;Prime;</td>
+				  <td>&amp;#8243;</td>
+				  <td>&amp;#x2033;</td>
+				  <td>&Prime;</td>
+				  <td>&#8243;</td>
+				  <td>&#x2033;</td>
+				</tr>
+				<tr>
+				  <td scope=row>overline = spacing overscore</td>
+				  <td>&amp;oline;</td>
+				  <td>&amp;#8254;</td>
+				  <td>&amp;#x203E;</td>
+				  <td>&oline;</td>
+				  <td>&#8254;</td>
+				  <td>&#x203E;</td>
+				</tr>
+				<tr>
+				  <td scope=row>fraction slash</td>
+				  <td>&amp;frasl;</td>
+				  <td>&amp;#8260;</td>
+				  <td>&amp;#x2044;</td>
+				  <td>&frasl;</td>
+				  <td>&#8260;</td>
+				  <td>&#x2044;</td>
+				</tr>
+				<tr>
+				  <td scope=row>script capital P = power set = Weierstrass p</td>
+				  <td>&amp;weierp;</td>
+				  <td>&amp;#8472;</td>
+				  <td>&amp;#x2118;</td>
+				  <td>&weierp;</td>
+				  <td>&#8472;</td>
+				  <td>&#x2118;</td>
+				</tr>
+				<tr>
+				  <td scope=row>blackletter capital I = imaginary part</td>
+				  <td>&amp;image;</td>
+				  <td>&amp;#8465;</td>
+				  <td>&amp;#x2111;</td>
+				  <td>&image;</td>
+				  <td>&#8465;</td>
+				  <td>&#x2111;</td>
+				</tr>
+				<tr>
+				  <td scope=row>blackletter capital R = real part symbol</td>
+				  <td>&amp;real;</td>
+				  <td>&amp;#8476;</td>
+				  <td>&amp;#x211C;</td>
+				  <td>&real;</td>
+				  <td>&#8476;</td>
+				  <td>&#x211C;</td>
+				</tr>
+				<tr>
+				  <td scope=row>trade mark sign</td>
+				  <td>&amp;trade;</td>
+				  <td>&amp;#8482;</td>
+				  <td>&amp;#x2122;</td>
+				  <td>&trade;</td>
+				  <td>&#8482;</td>
+				  <td>&#x2122;</td>
+				</tr>
+				<tr>
+				  <td scope=row>alef symbol = first transfinite cardinal</td>
+				  <td>&amp;alefsym;</td>
+				  <td>&amp;#8501;</td>
+				  <td>&amp;#x2135;</td>
+				  <td>&alefsym;</td>
+				  <td>&#8501;</td>
+				  <td>&#x2135;</td>
+				</tr>
+				<tr>
+				  <td scope=row>leftwards arrow</td>
+				  <td>&amp;larr;</td>
+				  <td>&amp;#8592;</td>
+				  <td>&amp;#x2190;</td>
+				  <td>&larr;</td>
+				  <td>&#8592;</td>
+				  <td>&#x2190;</td>
+				</tr>
+				<tr>
+				  <td scope=row>upwards arrow</td>
+				  <td>&amp;uarr;</td>
+				  <td>&amp;#8593;</td>
+				  <td>&amp;#x2191;</td>
+				  <td>&uarr;</td>
+				  <td>&#8593;</td>
+				  <td>&#x2191;</td>
+				</tr>
+				<tr>
+				  <td scope=row>rightwards arrow</td>
+				  <td>&amp;rarr;</td>
+				  <td>&amp;#8594;</td>
+				  <td>&amp;#x2192;</td>
+				  <td>&rarr;</td>
+				  <td>&#8594;</td>
+				  <td>&#x2192;</td>
+				</tr>
+				<tr>
+				  <td scope=row>downwards arrow</td>
+				  <td>&amp;darr;</td>
+				  <td>&amp;#8595;</td>
+				  <td>&amp;#x2193;</td>
+				  <td>&darr;</td>
+				  <td>&#8595;</td>
+				  <td>&#x2193;</td>
+				</tr>
+				<tr>
+				  <td scope=row>left right arrow</td>
+				  <td>&amp;harr;</td>
+				  <td>&amp;#8596;</td>
+				  <td>&amp;#x2194;</td>
+				  <td>&harr;</td>
+				  <td>&#8596;</td>
+				  <td>&#x2194;</td>
+				</tr>
+				<tr>
+				  <td scope=row>downwards arrow with corner leftwards = carriage return</td>
+				  <td>&amp;crarr;</td>
+				  <td>&amp;#8629;</td>
+				  <td>&amp;#x21B5;</td>
+				  <td>&crarr;</td>
+				  <td>&#8629;</td>
+				  <td>&#x21B5;</td>
+				</tr>
+				<tr>
+				  <td scope=row>leftwards double arrow</td>
+				  <td>&amp;lArr;</td>
+				  <td>&amp;#8656;</td>
+				  <td>&amp;#x21D0;</td>
+				  <td>&lArr;</td>
+				  <td>&#8656;</td>
+				  <td>&#x21D0;</td>
+				</tr>
+				<tr>
+				  <td scope=row>upwards double arrow</td>
+				  <td>&amp;uArr;</td>
+				  <td>&amp;#8657;</td>
+				  <td>&amp;#x21D1;</td>
+				  <td>&uArr;</td>
+				  <td>&#8657;</td>
+				  <td>&#x21D1;</td>
+				</tr>
+				<tr>
+				  <td scope=row>rightwards double arrow</td>
+				  <td>&amp;rArr;</td>
+				  <td>&amp;#8658;</td>
+				  <td>&amp;#x21D2;</td>
+				  <td>&rArr;</td>
+				  <td>&#8658;</td>
+				  <td>&#x21D2;</td>
+				</tr>
+				<tr>
+				  <td scope=row>downwards double arrow</td>
+				  <td>&amp;dArr;</td>
+				  <td>&amp;#8659;</td>
+				  <td>&amp;#x21D3;</td>
+				  <td>&dArr;</td>
+				  <td>&#8659;</td>
+				  <td>&#x21D3;</td>
+				</tr>
+				<tr>
+				  <td scope=row>left right double arrow</td>
+				  <td>&amp;hArr;</td>
+				  <td>&amp;#8660;</td>
+				  <td>&amp;#x21D4;</td>
+				  <td>&hArr;</td>
+				  <td>&#8660;</td>
+				  <td>&#x21D4;</td>
+				</tr>
+				<tr>
+				  <td scope=row>for all</td>
+				  <td>&amp;forall;</td>
+				  <td>&amp;#8704;</td>
+				  <td>&amp;#x2200;</td>
+				  <td>&forall;</td>
+				  <td>&#8704;</td>
+				  <td>&#x2200;</td>
+				</tr>
+				<tr>
+				  <td scope=row>partial differential</td>
+				  <td>&amp;part;</td>
+				  <td>&amp;#8706;</td>
+				  <td>&amp;#x2202;</td>
+				  <td>&part;</td>
+				  <td>&#8706;</td>
+				  <td>&#x2202;</td>
+				</tr>
+				<tr>
+				  <td scope=row>there exists</td>
+				  <td>&amp;exist;</td>
+				  <td>&amp;#8707;</td>
+				  <td>&amp;#x2203;</td>
+				  <td>&exist;</td>
+				  <td>&#8707;</td>
+				  <td>&#x2203;</td>
+				</tr>
+				<tr>
+				  <td scope=row>empty set = null set = diameter</td>
+				  <td>&amp;empty;</td>
+				  <td>&amp;#8709;</td>
+				  <td>&amp;#x2205;</td>
+				  <td>&empty;</td>
+				  <td>&#8709;</td>
+				  <td>&#x2205;</td>
+				</tr>
+				<tr>
+				  <td scope=row>nabla = backward difference</td>
+				  <td>&amp;nabla;</td>
+				  <td>&amp;#8711;</td>
+				  <td>&amp;#x2207;</td>
+				  <td>&nabla;</td>
+				  <td>&#8711;</td>
+				  <td>&#x2207;</td>
+				</tr>
+				<tr>
+				  <td scope=row>element of</td>
+				  <td>&amp;isin;</td>
+				  <td>&amp;#8712;</td>
+				  <td>&amp;#x2208;</td>
+				  <td>&isin;</td>
+				  <td>&#8712;</td>
+				  <td>&#x2208;</td>
+				</tr>
+				<tr>
+				  <td scope=row>not an element of</td>
+				  <td>&amp;notin;</td>
+				  <td>&amp;#8713;</td>
+				  <td>&amp;#x2209;</td>
+				  <td>&notin;</td>
+				  <td>&#8713;</td>
+				  <td>&#x2209;</td>
+				</tr>
+				<tr>
+				  <td scope=row>contains as member</td>
+				  <td>&amp;ni;</td>
+				  <td>&amp;#8715;</td>
+				  <td>&amp;#x220B;</td>
+				  <td>&ni;</td>
+				  <td>&#8715;</td>
+				  <td>&#x220B;</td>
+				</tr>
+				<tr>
+				  <td scope=row>n-ary product = product sign</td>
+				  <td>&amp;prod;</td>
+				  <td>&amp;#8719;</td>
+				  <td>&amp;#x220F;</td>
+				  <td>&prod;</td>
+				  <td>&#8719;</td>
+				  <td>&#x220F;</td>
+				</tr>
+				<tr>
+				  <td scope=row>n-ary sumation</td>
+				  <td>&amp;sum;</td>
+				  <td>&amp;#8721;</td>
+				  <td>&amp;#x2211;</td>
+				  <td>&sum;</td>
+				  <td>&#8721;</td>
+				  <td>&#x2211;</td>
+				</tr>
+				<tr>
+				  <td scope=row>minus sign</td>
+				  <td>&amp;minus;</td>
+				  <td>&amp;#8722;</td>
+				  <td>&amp;#x2212;</td>
+				  <td>&minus;</td>
+				  <td>&#8722;</td>
+				  <td>&#x2212;</td>
+				</tr>
+				<tr>
+				  <td scope=row>asterisk operator</td>
+				  <td>&amp;lowast;</td>
+				  <td>&amp;#8727;</td>
+				  <td>&amp;#x2217;</td>
+				  <td>&lowast;</td>
+				  <td>&#8727;</td>
+				  <td>&#x2217;</td>
+				</tr>
+				<tr>
+				  <td scope=row>square root = radical sign</td>
+				  <td>&amp;radic;</td>
+				  <td>&amp;#8730;</td>
+				  <td>&amp;#x221A;</td>
+				  <td>&radic;</td>
+				  <td>&#8730;</td>
+				  <td>&#x221A;</td>
+				</tr>
+				<tr>
+				  <td scope=row>proportional to</td>
+				  <td>&amp;prop;</td>
+				  <td>&amp;#8733;</td>
+				  <td>&amp;#x221D;</td>
+				  <td>&prop;</td>
+				  <td>&#8733;</td>
+				  <td>&#x221D;</td>
+				</tr>
+				<tr>
+				  <td scope=row>infinity</td>
+				  <td>&amp;infin;</td>
+				  <td>&amp;#8734;</td>
+				  <td>&amp;#x221E;</td>
+				  <td>&infin;</td>
+				  <td>&#8734;</td>
+				  <td>&#x221E;</td>
+				</tr>
+				<tr>
+				  <td scope=row>angle</td>
+				  <td>&amp;ang;</td>
+				  <td>&amp;#8736;</td>
+				  <td>&amp;#x2220;</td>
+				  <td>&ang;</td>
+				  <td>&#8736;</td>
+				  <td>&#x2220;</td>
+				</tr>
+				<tr>
+				  <td scope=row>logical and = wedge</td>
+				  <td>&amp;and;</td>
+				  <td>&amp;#8743;</td>
+				  <td>&amp;#x2227;</td>
+				  <td>&and;</td>
+				  <td>&#8743;</td>
+				  <td>&#x2227;</td>
+				</tr>
+				<tr>
+				  <td scope=row>logical or = vee</td>
+				  <td>&amp;or;</td>
+				  <td>&amp;#8744;</td>
+				  <td>&amp;#x2228;</td>
+				  <td>&or;</td>
+				  <td>&#8744;</td>
+				  <td>&#x2228;</td>
+				</tr>
+				<tr>
+				  <td scope=row>intersection = cap</td>
+				  <td>&amp;cap;</td>
+				  <td>&amp;#8745;</td>
+				  <td>&amp;#x2229;</td>
+				  <td>&cap;</td>
+				  <td>&#8745;</td>
+				  <td>&#x2229;</td>
+				</tr>
+				<tr>
+				  <td scope=row>union = cup</td>
+				  <td>&amp;cup;</td>
+				  <td>&amp;#8746;</td>
+				  <td>&amp;#x222A;</td>
+				  <td>&cup;</td>
+				  <td>&#8746;</td>
+				  <td>&#x222A;</td>
+				</tr>
+				<tr>
+				  <td scope=row>integral</td>
+				  <td>&amp;int;</td>
+				  <td>&amp;#8747;</td>
+				  <td>&amp;#x222B;</td>
+				  <td>&int;</td>
+				  <td>&#8747;</td>
+				  <td>&#x222B;</td>
+				</tr>
+				<tr>
+				  <td scope=row>therefore</td>
+				  <td>&amp;there4;</td>
+				  <td>&amp;#8756;</td>
+				  <td>&amp;#x2234;</td>
+				  <td>&there4;</td>
+				  <td>&#8756;</td>
+				  <td>&#x2234;</td>
+				</tr>
+				<tr>
+				  <td scope=row>tilde operator = varies with = similar to</td>
+				  <td>&amp;sim;</td>
+				  <td>&amp;#8764;</td>
+				  <td>&amp;#x223C;</td>
+				  <td>&sim;</td>
+				  <td>&#8764;</td>
+				  <td>&#x223C;</td>
+				</tr>
+				<tr>
+				  <td scope=row>approximately equal to</td>
+				  <td>&amp;cong;</td>
+				  <td>&amp;#8773;</td>
+				  <td>&amp;#x2245;</td>
+				  <td>&cong;</td>
+				  <td>&#8773;</td>
+				  <td>&#x2245;</td>
+				</tr>
+				<tr>
+				  <td scope=row>almost equal to = asymptotic to</td>
+				  <td>&amp;asymp;</td>
+				  <td>&amp;#8776;</td>
+				  <td>&amp;#x2248;</td>
+				  <td>&asymp;</td>
+				  <td>&#8776;</td>
+				  <td>&#x2248;</td>
+				</tr>
+				<tr>
+				  <td scope=row>not equal to</td>
+				  <td>&amp;ne;</td>
+				  <td>&amp;#8800;</td>
+				  <td>&amp;#x2260;</td>
+				  <td>&ne;</td>
+				  <td>&#8800;</td>
+				  <td>&#x2260;</td>
+				</tr>
+				<tr>
+				  <td scope=row>identical to</td>
+				  <td>&amp;equiv;</td>
+				  <td>&amp;#8801;</td>
+				  <td>&amp;#x2261;</td>
+				  <td>&equiv;</td>
+				  <td>&#8801;</td>
+				  <td>&#x2261;</td>
+				</tr>
+				<tr>
+				  <td scope=row>less-than or equal to</td>
+				  <td>&amp;le;</td>
+				  <td>&amp;#8804;</td>
+				  <td>&amp;#x2264;</td>
+				  <td>&le;</td>
+				  <td>&#8804;</td>
+				  <td>&#x2264;</td>
+				</tr>
+				<tr>
+				  <td scope=row>greater-than or equal to</td>
+				  <td>&amp;ge;</td>
+				  <td>&amp;#8805;</td>
+				  <td>&amp;#x2265;</td>
+				  <td>&ge;</td>
+				  <td>&#8805;</td>
+				  <td>&#x2265;</td>
+				</tr>
+				<tr>
+				  <td scope=row>subset of</td>
+				  <td>&amp;sub;</td>
+				  <td>&amp;#8834;</td>
+				  <td>&amp;#x2282;</td>
+				  <td>&sub;</td>
+				  <td>&#8834;</td>
+				  <td>&#x2282;</td>
+				</tr>
+				<tr>
+				  <td scope=row>superset of</td>
+				  <td>&amp;sup;</td>
+				  <td>&amp;#8835;</td>
+				  <td>&amp;#x2283;</td>
+				  <td>&sup;</td>
+				  <td>&#8835;</td>
+				  <td>&#x2283;</td>
+				</tr>
+				<tr>
+				  <td scope=row>not a subset of</td>
+				  <td>&amp;nsub;</td>
+				  <td>&amp;#8836;</td>
+				  <td>&amp;#x2284;</td>
+				  <td>&nsub;</td>
+				  <td>&#8836;</td>
+				  <td>&#x2284;</td>
+				</tr>
+				<tr>
+				  <td scope=row>subset of or equal to</td>
+				  <td>&amp;sube;</td>
+				  <td>&amp;#8838;</td>
+				  <td>&amp;#x2286;</td>
+				  <td>&sube;</td>
+				  <td>&#8838;</td>
+				  <td>&#x2286;</td>
+				</tr>
+				<tr>
+				  <td scope=row>superset of or equal to</td>
+				  <td>&amp;supe;</td>
+				  <td>&amp;#8839;</td>
+				  <td>&amp;#x2287;</td>
+				  <td>&supe;</td>
+				  <td>&#8839;</td>
+				  <td>&#x2287;</td>
+				</tr>
+				<tr>
+				  <td scope=row>circled plus = direct sum</td>
+				  <td>&amp;oplus;</td>
+				  <td>&amp;#8853;</td>
+				  <td>&amp;#x2295;</td>
+				  <td>&oplus;</td>
+				  <td>&#8853;</td>
+				  <td>&#x2295;</td>
+				</tr>
+				<tr>
+				  <td scope=row>circled times = vector product</td>
+				  <td>&amp;otimes;</td>
+				  <td>&amp;#8855;</td>
+				  <td>&amp;#x2297;</td>
+				  <td>&otimes;</td>
+				  <td>&#8855;</td>
+				  <td>&#x2297;</td>
+				</tr>
+				<tr>
+				  <td scope=row>up tack = orthogonal to = perpendicular</td>
+				  <td>&amp;perp;</td>
+				  <td>&amp;#8869;</td>
+				  <td>&amp;#x22A5;</td>
+				  <td>&perp;</td>
+				  <td>&#8869;</td>
+				  <td>&#x22A5;</td>
+				</tr>
+				<tr>
+				  <td scope=row>dot operator</td>
+				  <td>&amp;sdot;</td>
+				  <td>&amp;#8901;</td>
+				  <td>&amp;#x22C5;</td>
+				  <td>&sdot;</td>
+				  <td>&#8901;</td>
+				  <td>&#x22C5;</td>
+				</tr>
+				<tr>
+				  <td scope=row>left ceiling = APL upstile</td>
+				  <td>&amp;lceil;</td>
+				  <td>&amp;#8968;</td>
+				  <td>&amp;#x2308;</td>
+				  <td>&lceil;</td>
+				  <td>&#8968;</td>
+				  <td>&#x2308;</td>
+				</tr>
+				<tr>
+				  <td scope=row>right ceiling</td>
+				  <td>&amp;rceil;</td>
+				  <td>&amp;#8969;</td>
+				  <td>&amp;#x2309;</td>
+				  <td>&rceil;</td>
+				  <td>&#8969;</td>
+				  <td>&#x2309;</td>
+				</tr>
+				<tr>
+				  <td scope=row>left floor = APL downstile</td>
+				  <td>&amp;lfloor;</td>
+				  <td>&amp;#8970;</td>
+				  <td>&amp;#x230A;</td>
+				  <td>&lfloor;</td>
+				  <td>&#8970;</td>
+				  <td>&#x230A;</td>
+				</tr>
+				<tr>
+				  <td scope=row>right floor</td>
+				  <td>&amp;rfloor;</td>
+				  <td>&amp;#8971;</td>
+				  <td>&amp;#x230B;</td>
+				  <td>&rfloor;</td>
+				  <td>&#8971;</td>
+				  <td>&#x230B;</td>
+				</tr>
+				<tr>
+				  <td scope=row>left-pointing angle bracket = bra</td>
+				  <td>&amp;lang;</td>
+				  <td>&amp;#9001;</td>
+				  <td>&amp;#x2329;</td>
+				  <td>&lang;</td>
+				  <td>&#9001;</td>
+				  <td>&#x2329;</td>
+				</tr>
+				<tr>
+				  <td scope=row>right-pointing angle bracket = ket</td>
+				  <td>&amp;rang;</td>
+				  <td>&amp;#9002;</td>
+				  <td>&amp;#x232A;</td>
+				  <td>&rang;</td>
+				  <td>&#9002;</td>
+				  <td>&#x232A;</td>
+				</tr>
+				<tr>
+				  <td scope=row>lozenge</td>
+				  <td>&amp;loz;</td>
+				  <td>&amp;#9674;</td>
+				  <td>&amp;#x25CA;</td>
+				  <td>&loz;</td>
+				  <td>&#9674;</td>
+				  <td>&#x25CA;</td>
+				</tr>
+				<tr>
+				  <td scope=row>black spade suit</td>
+				  <td>&amp;spades;</td>
+				  <td>&amp;#9824;</td>
+				  <td>&amp;#x2660;</td>
+				  <td>&spades;</td>
+				  <td>&#9824;</td>
+				  <td>&#x2660;</td>
+				</tr>
+				<tr>
+				  <td scope=row>black club suit = shamrock</td>
+				  <td>&amp;clubs;</td>
+				  <td>&amp;#9827;</td>
+				  <td>&amp;#x2663;</td>
+				  <td>&clubs;</td>
+				  <td>&#9827;</td>
+				  <td>&#x2663;</td>
+				</tr>
+				<tr>
+				  <td scope=row>black heart suit = valentine</td>
+				  <td>&amp;hearts;</td>
+				  <td>&amp;#9829;</td>
+				  <td>&amp;#x2665;</td>
+				  <td>&hearts;</td>
+				  <td>&#9829;</td>
+				  <td>&#x2665;</td>
+				</tr>
+				<tr>
+				  <td scope=row>black diamond suit</td>
+				  <td>&amp;diams;</td>
+				  <td>&amp;#9830;</td>
+				  <td>&amp;#x2666;</td>
+				  <td>&diams;</td>
+				  <td>&#9830;</td>
+				  <td>&#x2666;</td>
+				</tr>
+				<tr>
+				  <td scope=row>degree sign</td>
+				  <td>&amp;deg;</td>
+				  <td>&amp;#176;</td>
+				  <td></td>
+				  <td>&deg;</td>
+				  <td>&#176;</td>
+				  <td></td>
+				</tr>
+			</tbody>
+		</table>
+
+			</div>
+
+		<!-- DIV: ERROR -->
+
+			<div id="text_error" style="width:98%;">
+
+				<!-- Option: Error Message -->
+				<br>Error Message: 
+				<textarea id="error_msg" rows="5" disabled="disabled" style="width:100%; color:#990000; background:#FEE;"></textarea>
+
+				<!-- Option: Suggestion -->
+				Suggestion: 
+				<textarea id="suggestionNode" rows="1" disabled="disabled" style="width:100%; color:#000000; background:#FFF;"></textarea>
+
+			</div>
+		</div>
+
+		</td>
+
+		<td style="border: 1px solid; background:#2574b0 url(images/bg-blueprint.png) right; width:450px; vertical-align:top; padding-top:50px;">
+
+			<!-- SVG Output -->			
+			<center>
+				<span id="outputNode"></span>
+			</center>
+
+		</td>
+	</tr>
+</table>
+
+</body>
+</html>
+
+<!-- Javascript -->
+<script type="text/javascript">
+function show_frame(id, error_style) 
+{
+	document.getElementById('text_A').style.display = 'none'; 
+	document.getElementById('text_C').style.display = 'none';
+	document.getElementById('text_D').style.display = 'none';
+	document.getElementById('text_E').style.display = 'none';	
+	document.getElementById('text_error').style.display = error_style;	
+	document.getElementById(id).style.display = 'block';	
+}
+
+// Initialize CodeMirror editor with a nice html5 canvas demo.
+var pythoninput_editor = CodeMirror.fromTextArea(document.getElementById('pythoninput'), {
+  mode: {name: "python",
+         version: 2,
+         singleLineStringErrors: false},
+  onChange: function() {
+    updatePreview();
+  },
+	onGutterClick: function(cm, n) {
+    var info = cm.lineInfo(n);
+    if (info.markerText)
+      cm.clearMarker(n);
+    else
+      cm.setMarker(n, "<span style=\"color: #900\">&bull;</span> %N%");
+  },
+	onCursorActivity: function() {
+    updatePreview(asciiinput_editor);
+		pythoninput_editor.setLineClass(python_Line, null, null);
+    python_Line = pythoninput_editor.setLineClass(pythoninput_editor.getCursor().line, null, "activeline");
+  }
+});
+var python_Line = pythoninput_editor.setLineClass(0, "activeline");
+
+var asciiinput_editor = CodeMirror.fromTextArea(document.getElementById('asciiinput'), {
+  mode: {name: "python",
+         version: 2,
+         singleLineStringErrors: false},
+  onChange: function() {
+    updatePreview(asciiinput_editor);
+  },
+	onGutterClick: function(cm, n) {
+    var info = cm.lineInfo(n);
+    if (info.markerText)
+      cm.clearMarker(n);
+    else
+      cm.setMarker(n, "<span style=\"color: #900\">&bull;</span> %N%");
+  },
+	onCursorActivity: function() {
+    updatePreview(asciiinput_editor);
+		asciiinput_editor.setLineClass(ascii_Line, null, null);
+    ascii_Line = asciiinput_editor.setLineClass(asciiinput_editor.getCursor().line, null, "activeline");
+  }
+});
+var ascii_Line = asciiinput_editor.setLineClass(0, "activeline");
+
+function updatePreview(handle) {
+	auto_update_image();
+	getSuggestion(handle.getValue().split('\n')[handle.getCursor().line]); // asciisvg_editor.getValue());
+}
+
+// Once-off Load Images
+setTimeout(updatePreview, 300);
+
+</script>
