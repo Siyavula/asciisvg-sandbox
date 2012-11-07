@@ -38,7 +38,7 @@
 	</style>
 
 </head>
-<body onLoad="show_frame('text_A', 'block'); ">
+<body onLoad="show_frame('text_A', 'block');">
 
 <div>
 
@@ -66,6 +66,8 @@
 					<option value=2>Colours</option>
 					<option value=3>HTML Sybmols</option>
 				</select> &nbsp;
+
+				<button onClick="load_demo();">Load DEMO</button>
 
 				<!-- Option: Randomize -->
 				<input type="checkbox" id="randomize_lock"> hold random seed: 
@@ -108,51 +110,12 @@
 				</tr>
 	
 				<tr>
-					<td style="width:50%;"><textarea id="pythoninput" name="pythoninput" rows="30"># Python code here...
-
-a = random.randint(50,300)</textarea>
+					<td style="width:50%;"><textarea id="pythoninput" name="pythoninput" rows="30"></textarea>
 					</td>
 
 					<!-- DIV: TEXT B -->
 
-					<td style="width:50%;"><textarea id="asciiinput" name="asciiinput" rows="30"># ASCII code here...
-
-# Sky
-fill="lightblue"
-rect([-10,-10],[10,10])
-strokewidth=2
-
-# Ground
-fill = "forestgreen"; stroke = "darkgreen"
-rect([-10,-10],[10,-2.5])
-
-# Clouds
-fill = "white"; stroke = "grey"
-cloud([2,2],1.5,6)
-
-# Stars
-fill = "yellow"; stroke = "orangered"
-star([-2.5,3],1,20,0.8)
-
-# Stars
-strokewidth=1.5
-fill = "yellow"; stroke = "orangered"
-star([0,4],0.3,8,0.3)
-
-# Grass
-strokewidth=2
-fill = "yellow"; stroke = "darkgreen"
-grass([-2,-3],2,6)
-
-# Flower base
-strokewidth=2
-fill = "yellow"; stroke = "darkgreen"
-grass([2,-3],2,5)
-
-# Flower head
-strokewidth=1.5
-fill = "red"; stroke = "black"
-flower([2,-0.8],0.4,12, "yellow","black")</textarea>
+					<td style="width:50%;"><textarea id="asciiinput" name="asciiinput" rows="30"></textarea>
 					</td>
 				</tr>
 			</table>
@@ -1828,7 +1791,7 @@ flower([2,-0.8],0.4,12, "yellow","black")</textarea>
 
 		<!-- DIV: ERROR -->
 
-			<div id="text_error" style="width:99%;">
+			<div id="text_error" style="width:98%;">
 
 				<!-- Option: Error Message -->
 				<br>Error Message: 
@@ -1859,6 +1822,9 @@ flower([2,-0.8],0.4,12, "yellow","black")</textarea>
 
 <!-- Javascript -->
 <script type="text/javascript">
+
+local_storage_recall();
+
 function show_frame(id, error_style) 
 {
 	document.getElementById('text_A').style.display = 'none'; 
@@ -1875,9 +1841,9 @@ var pythoninput_editor = CodeMirror.fromTextArea(document.getElementById('python
          version: 2,
          singleLineStringErrors: false},
   onChange: function() {
-    updatePreview(pythoninput_editor);
+    updatePreview();
   },
-  onGutterClick: function(cm, n) {
+	onGutterClick: function(cm, n) {
     var info = cm.lineInfo(n);
     if (info.markerText)
       cm.clearMarker(n);
@@ -1923,5 +1889,3 @@ function updatePreview(handle) {
 setTimeout(updatePreview, 300);
 
 </script>
-
-

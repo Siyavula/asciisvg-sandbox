@@ -59,11 +59,41 @@ function auto_update_image() {
 	if (document.getElementById("autocomplete_checkbox").checked) { update_SVG(); }
 }
 
+function local_storage_save()	{
+	var a = pythoninput_editor.getValue();
+	var b = asciiinput_editor.getValue();
+	window.localStorage["code"] = String(a) + "[BRK]" + String(b);
+}
+
+function local_storage_recall() {
+	if (window.localStorage["code"])
+	{
+		var code_data = window.localStorage["code"].split("[BRK]");
+		document.getElementById("pythoninput").innerHTML = String(code_data[0]);
+		document.getElementById("asciiinput").innerHTML = String(code_data[1]);
+	}
+	else
+	{
+		document.getElementById("asciiinput").innerHTML = '# ASCII code here...\n\n# Sky\nfill="lightblue"\nrect([-10,-10],[10,10])\nstrokewidth=2\n\n# Ground\nfill = "forestgreen"; stroke = "darkgreen"\nrect([-10,-10],[10,-2.5])\n\n# Clouds\nfill = "white";\nstroke = "grey"\ncloud([2,2],1.5,6)\n\n# Stars\nfill = "yellow"; stroke = "orangered"\nstar([-2.5,3],1,20,0.8)\n\n# Stars\nstrokewidth=1.5\nfill = "yellow"; stroke = "orangered"\nstar([0,4],0.3,8,0.3)\n\n#Grass\nstrokewidth=2\nfill = "yellow"; stroke = "darkgreen"\ngrass([-2,-3],2,6)\n\n# Flower base\nstrokewidth=2\nfill = "yellow"; stroke = "darkgreen"\ngrass([2,-3],2,5)\n\n# Flower head\nstrokewidth=1.5\nfill = "red"; stroke = "black"\nflower([2,-0.8],0.4,12, "yellow","black")';
+		document.getElementById("pythoninput").innerHTML = '# Python code here...\n\na = random.randint(50,300)';
+	}
+}
+
+function load_demo() {
+	if (confirm('This will replace your current code with DEMO code. Are you sure?')) 
+	{
+    asciiinput_editor.setValue('# ASCII code here...\n\n# Sky\nfill="lightblue"\nrect([-10,-10],[10,10])\nstrokewidth=2\n\n# Ground\nfill = "forestgreen"; stroke = "darkgreen"\nrect([-10,-10],[10,-2.5])\n\n# Clouds\nfill = "white";\nstroke = "grey"\ncloud([2,2],1.5,6)\n\n# Stars\nfill = "yellow"; stroke = "orangered"\nstar([-2.5,3],1,20,0.8)\n\n# Stars\nstrokewidth=1.5\nfill = "yellow"; stroke = "orangered"\nstar([0,4],0.3,8,0.3)\n\n#Grass\nstrokewidth=2\nfill = "yellow"; stroke = "darkgreen"\ngrass([-2,-3],2,6)\n\n# Flower base\nstrokewidth=2\nfill = "yellow"; stroke = "darkgreen"\ngrass([2,-3],2,5)\n\n# Flower head\nstrokewidth=1.5\nfill = "red"; stroke = "black"\nflower([2,-0.8],0.4,12, "yellow","black")');
+		pythoninput_editor.setValue('# Python code here...\n\na = random.randint(50,300)');
+	} 
+}
+
 function update_SVG() { 
+	local_storage_save();
 	xmlhttpPost("SVG");
 }
 
 function update_PNG() { 
+	local_storage_save();
 	xmlhttpPost("PNG");
 }
 
