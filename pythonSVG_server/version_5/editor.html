@@ -77,6 +77,16 @@
 				<!-- Update: SVG Button -->
 				<input type="button" value="Manual Update" onClick="xmlhttpPost('SVG');"> 
 
+				<!-- Update: Background -->
+				Background:
+	
+				<select onchange="	
+					if (this.value == 0) {document.getElementById('desktop').style.background = '#2574b0 url(images/bg-blueprint.png) right';}
+					if (this.value == 1) {document.getElementById('desktop').style.background = '#e8d1a7 url(images/bg-desk.png) right';}">
+					<option value=0>Blueprint</option>
+					<option value=1>Desk</option>
+				</select>
+
 			</span>
 		</td>
 	</tr>
@@ -1833,7 +1843,7 @@ flower([2,-0.8],0.4,12, "yellow","black")</textarea>
 
 		</td>
 
-		<td style="border: 1px solid; background:#2574b0 url(images/bg-blueprint.png) right; width:450px; vertical-align:top; padding-top:50px;">
+		<td style="border: 1px solid; background:#2574b0 url(images/bg-blueprint.png) right; width:450px; vertical-align:top; padding-top:50px;" id='desktop'>
 
 			<!-- SVG Output -->			
 			<center>
