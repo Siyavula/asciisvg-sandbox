@@ -1828,7 +1828,7 @@ flower([2,-0.8],0.4,12, "yellow","black")</textarea>
 
 		<!-- DIV: ERROR -->
 
-			<div id="text_error" style="width:98%;">
+			<div id="text_error" style="width:99%;">
 
 				<!-- Option: Error Message -->
 				<br>Error Message: 
@@ -1875,9 +1875,9 @@ var pythoninput_editor = CodeMirror.fromTextArea(document.getElementById('python
          version: 2,
          singleLineStringErrors: false},
   onChange: function() {
-    updatePreview();
+    updatePreview(pythoninput_editor);
   },
-	onGutterClick: function(cm, n) {
+  onGutterClick: function(cm, n) {
     var info = cm.lineInfo(n);
     if (info.markerText)
       cm.clearMarker(n);
@@ -1923,3 +1923,5 @@ function updatePreview(handle) {
 setTimeout(updatePreview, 300);
 
 </script>
+
+

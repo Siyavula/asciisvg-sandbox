@@ -84,8 +84,8 @@ function getRealIpAddr()
 
       <hr>
 
-			<a class="btn btn-large btn-danger" href="/version_2/index.html">Image Editor (2.2)</a>&nbsp;
-      <a class="btn btn-large btn-success" href="/version_5/editor.html">Image Editor (5.0)</a>&nbsp;
+			<a class="btn btn-large btn-danger" href="version_2/index.html">Image Editor (2.2)</a>&nbsp;
+      <a class="btn btn-large btn-success" href="version_5/editor.html">Image Editor (5.0)</a>&nbsp;
         
       <hr>
 
