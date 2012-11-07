@@ -166,18 +166,37 @@ fill="lightblue"
 rect([-10,-10],[10,10])
 strokewidth=2
 
+# Ground
+fill = "forestgreen"; stroke = "darkgreen"
+rect([-10,-10],[10,-2.5])
+
 # Clouds
 fill = "white"; stroke = "grey"
-cloud([0,1],2,4)
+cloud([2,2],1.5,6)
 
 # Stars
 fill = "yellow"; stroke = "orangered"
-star([-2,-2],1,8)
+star([-2.5,3],1,20,0.8)
+
+# Stars
+strokewidth=1.5
+fill = "yellow"; stroke = "orangered"
+star([0,4],0.3,8,0.3)
 
 # Grass
 strokewidth=2
-fill = "yellow"; stroke = "green"
+fill = "yellow"; stroke = "darkgreen"
+grass([-2,-3],2,6)
+
+# Flower base
+strokewidth=2
+fill = "yellow"; stroke = "darkgreen"
 grass([2,-3],2,5)
+
+# Flower head
+strokewidth=1.5
+fill = "red"; stroke = "black"
+flower([2,-0.8],0.4,12, "yellow","black")
 
 
 </textarea>
@@ -452,10 +471,12 @@ grass([2,-3],2,5)
 
 		<tr>
 			<td colspan=1>
-				<b>angle_arc</b>([center_x,center_y], radius, start_deg, stop_deg)
+				<b>angle_arc</b>([center_x,center_y], radius, start_deg, stop_deg, text, text_offset)
 			</td>
 			<td colspan=1>
-				<b>angle_arc</b>([0,0],1,45,270)
+				<b>angle_arc</b>([0,0],1,45,270)<br>
+				<b>angle_arc</b>([0,0],1,45,270,"y")<br>
+				<b>angle_arc</b>([0,0],1,45,270,"y",1.25)
 			</td>
 		</tr>
 
@@ -525,26 +546,6 @@ grass([2,-3],2,5)
 
 		<tr>
 			<td colspan=1>
-				<b>petal</b>(start, unit_vector)
-			</td>
-			<td colspan=1>
-				<b>petal</b>([0,0])<br>
-				<b>petal</b>([0,0], [0,2])
-			</td>
-		</tr>
-
-		<tr>
-			<td colspan=1>
-				<b>heart</b>(p,size)
-			</td>
-			<td colspan=1>
-				<b>heart</b>([0,0])<br>
-				<b>heart</b>([0,0], 1)
-			</td>
-		</tr>
-
-		<tr>
-			<td colspan=1>
 				<b>plot</b>(f(x), xmin, xmax, npoints)<br><br>
 				<i>Note: f(x) needs to be a "string" for PNG processing</i>
 			</td>
@@ -567,7 +568,73 @@ grass([2,-3],2,5)
 			</td>
 		</tr>
 
-		<!-- Function -->	
+		<!-- Shapes -->	
+
+		<tr>
+			<td colspan=1 bgcolor="#999999">Shapes</td>
+			<td colspan=1 bgcolor="#999999"></td>
+		</tr>
+
+		<tr>
+			<td colspan=1>
+				<b>petal</b>(start, unit_vector)
+			</td>
+			<td colspan=1>
+				<b>petal</b>([0,0])<br>
+				<b>petal</b>([0,0], [0,2])
+			</td>
+		</tr>
+
+		<tr>
+			<td colspan=1>
+				<b>heart</b>(p,size)
+			</td>
+			<td colspan=1>
+				<b>heart</b>([0,0])<br>
+				<b>heart</b>([0,0], 1)
+			</td>
+		</tr>
+
+		<tr>
+			<td colspan=1>
+				<b>cloud</b>([center_x,center_y],size,num_humps)
+			</td>
+			<td colspan=1>
+				<b>cloud</b>([0,0],2,10)
+			</td>
+		</tr>
+
+		<tr>
+			<td colspan=1>
+				<b>star</b>([center_x,center_y],size,num_points,inner_radius)
+			</td>
+			<td colspan=1>
+				<b>star</b>([0,0],1,20,0.8)<br>
+				<b>star</b>([0,0],0.3,8,0.3)
+			</td>
+		</tr>
+
+		<tr>
+			<td colspan=1>
+				<b>grass</b>([base_x,base_y],size,leaves,droop)
+			</td>
+			<td colspan=1>
+				<b>grass</b>([0,0],2,6)<br>
+				<b>grass</b>([0,0],2,6,0.6)
+			</td>
+		</tr>
+
+		<tr>
+			<td colspan=1>
+				<b>flower</b>([center_x,center_y],size,num_petals, center_fill,center_stroke,center_size)
+			</td>
+			<td colspan=1>
+				<b>flower</b>([0,1],0.4,12,"yellow","black")<br>
+				<b>flower</b>([0,1],0.4,12,"yellow","black", 0.8)
+			</td>
+		</tr>
+
+		<!-- Functions -->	
 
 		<tr>
 			<td colspan=1 bgcolor="#999999">Special Functions & Charaters</td>

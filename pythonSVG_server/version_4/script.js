@@ -93,8 +93,9 @@ function getSuggestion(line) {
 									'angle_arc':'angle_arc([center_x,center_y], radius, start_deg, stop_deg, text, text_offset)',
 									'stop_group':'stop_group()',
 									'cloud':'cloud([center_x,center_y],size,num_humps)',
-									'star':'star([center_x,center_y],size,num_points)',
-									'grass': 'grass([base_x,base_y],size,leaves,droop)'
+									'star':'star([center_x,center_y],size,num_points,inner_radius)',
+									'grass': 'grass([base_x,base_y],size,leaves,droop)',
+									'flower': 'flower([center_x,center_y],size,num_petals,center_fill,center_stroke,center_size)'
 						};
 
 	max_term = "";
@@ -108,7 +109,7 @@ function getSuggestion(line) {
 			}
 		}
   }
-	document.getElementById("suggestionNode").value = dict[max_term];
+	if (max_term != "") {document.getElementById("suggestionNode").value = dict[max_term];}
 }
 
 // Download PNG
