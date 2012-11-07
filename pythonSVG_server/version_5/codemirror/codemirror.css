@@ -1,6 +1,7 @@
 .CodeMirror {
 	height: 400px;
 	width:400px;
+	position:fixed;
   line-height: 1em;
   font-family: monospace;
   border: 1px solid black;
