@@ -1222,8 +1222,8 @@ class mySvgCanvas:
 		else:
 			text_angle = angle_start + (angle_stop-angle_start)/2			
 
-		text_x = center[0] + radius*math.cos(text_angle) + text_offset*int(text_angle/abs(text_angle))
-		text_y = center[1] + radius*math.sin(text_angle) + text_offset*int(text_angle/abs(text_angle))
+		text_x = center[0] + radius*math.cos(text_angle)*(1+text_offset)*int(text_angle/abs(text_angle))
+		text_y = center[1] + radius*math.sin(text_angle)*(1+text_offset)*int(text_angle/abs(text_angle))
 		#unit_vector_sign = int(1/abs(1)))
 		self.text([text_x,text_y], str(text))
 

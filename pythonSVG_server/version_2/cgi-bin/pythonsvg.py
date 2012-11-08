@@ -149,6 +149,7 @@ class mySvgCanvas:
 		self.loc_var["cloud"] = self.cloud
 		self.loc_var["star"] = self.star
 		self.loc_var["grass"] = self.grass
+		self.loc_var["flower"] = self.flower
 
 		# Special Functions
 		self.loc_var["frange"] = self.frange										# Decimal-compatible "range"
@@ -1125,21 +1126,19 @@ class mySvgCanvas:
 
 # ========================================================================================
 
-	def star(self,p=[0,0],size=2,points=6):
+	def star(self,p=[0,0],size=2,points=6, inner_radius=0.5):
 
 		# Backup of original colours
 		backup_fill = self.loc_var["fill"];	backup_stroke = self.loc_var["stroke"]; 
-
-		# Star fill
-		self.loc_var["stroke"] = backup_fill; self.circle([p[0],p[1]], size/2); self.loc_var["stroke"] = backup_stroke;
 
 		# Points
 		point_array = []
 		for i in range(0,points+1):
 			point_array.append([p[0]+size*math.sin(2*i*math.pi/points - math.pi/2),p[1]+size*math.cos(2*i*math.pi/points - math.pi/2)])
-			point_array.append([p[0]+0.5*size*math.sin(2*(i+0.5)*math.pi/points - math.pi/2),p[1]+0.5*size*math.cos(2*(i+0.5)*math.pi/points - math.pi/2)])
-		for i in range(1,len(point_array)-2,2):
-			self.path([point_array[i],point_array[i+1],point_array[i+2]])
+			point_array.append([p[0]+inner_radius*size*math.sin(2*(i+0.5)*math.pi/points - math.pi/2),p[1]+inner_radius*size*math.cos(2*(i+0.5)*math.pi/points - math.pi/2)])
+		
+		# Star Fill
+		self.path(point_array)
 
 # ========================================================================================
 
@@ -1160,6 +1159,34 @@ class mySvgCanvas:
 				  self.smoothcurve([dot_a,dot_b,dot_c])
 
 		self.loc_var["fill"] = backup_fill
+
+# ========================================================================================
+
+	def flower(self,p=[0,0],size=2,petals=12,center_fill="white",center_stroke="black",center_size =0.8):
+
+		# Backup of original colours
+		backup_fill = self.loc_var["fill"];	backup_stroke = self.loc_var["stroke"]; 
+
+		# Cloud fill
+		self.loc_var["stroke"] = backup_fill;	self.circle([p[0],p[1]],size)
+
+		self.loc_var["stroke"] = backup_stroke;
+
+		# Humps
+		petal_array = []
+		for i in range(0,petals+1):
+			petal_array.append([p[0]+size*math.sin(i*2*math.pi/petals),p[1]+size*math.cos(i*2*math.pi/petals)])
+		for i in range(1,len(petal_array)):
+			self.arc(petal_array[i],petal_array[i-1],0.001)
+
+		# Center
+		self.loc_var["fill"] = center_fill;
+		self.loc_var["stroke"] = center_stroke;
+		self.circle([p[0],p[1]],size*center_size)
+
+		# Restore Values
+		self.loc_var["stroke"] = backup_stroke;
+		self.loc_var["fill"] = backup_fill;
 
 # ========================================================================================
 
@@ -1195,8 +1222,8 @@ class mySvgCanvas:
 		else:
 			text_angle = angle_start + (angle_stop-angle_start)/2			
 
-		text_x = center[0] + radius*math.cos(text_angle) + text_offset*int(text_angle/abs(text_angle))
-		text_y = center[1] + radius*math.sin(text_angle) + text_offset*int(text_angle/abs(text_angle))
+		text_x = center[0] + radius*math.cos(text_angle)*(1+text_offset)*int(text_angle/abs(text_angle))
+		text_y = center[1] + radius*math.sin(text_angle)*(1+text_offset)*int(text_angle/abs(text_angle))
 		#unit_vector_sign = int(1/abs(1)))
 		self.text([text_x,text_y], str(text))
 

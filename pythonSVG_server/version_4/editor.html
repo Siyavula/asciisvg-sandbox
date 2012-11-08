@@ -151,55 +151,30 @@
 	</tr>
 	
 	<tr>
-	<td style="width:50%;"><textarea id="pythoninput" name="pythoninput" rows="30"># Python code here...
+	<td style="width:50%;"><textarea id="pythoninput" name="pythoninput" rows="30">a = 2
+b = random.randint(1,100)
+c = "cos(t)"
+var_text = "bye"
+			</textarea>
+				</td>
 
-a = random.randint(50,300)
-</textarea>
-	</td>
+			<!-- DIV: TEXT B -->
 
-<!-- DIV: TEXT B -->
+				<td style="width:50%;"><textarea id="asciiinput" name="asciiinput" rows="30">var_text = "hello"
 
-	<td style="width:50%;"><textarea id="asciiinput" name="asciiinput" rows="30"># ASCII code here...
+setBorder(0)
+initPicture(-6,6,-6,6)
+axes(<valueof>a</valueof>, 1, "labels", 1,1)
 
-# Sky
-fill="lightblue"
-rect([-10,-10],[10,10])
-strokewidth=2
+stroke = "green"
+plot ("sin(<valueof>b</valueof>*x)")
 
-# Ground
-fill = "forestgreen"; stroke = "darkgreen"
-rect([-10,-10],[10,-2.5])
+stroke = "red"
+plot ("<valueof>c</valueof>")
 
-# Clouds
-fill = "white"; stroke = "grey"
-cloud([2,2],1.5,6)
-
-# Stars
-fill = "yellow"; stroke = "orangered"
-star([-2.5,3],1,20,0.8)
-
-# Stars
-strokewidth=1.5
-fill = "yellow"; stroke = "orangered"
-star([0,4],0.3,8,0.3)
-
-# Grass
-strokewidth=2
-fill = "yellow"; stroke = "darkgreen"
-grass([-2,-3],2,6)
-
-# Flower base
-strokewidth=2
-fill = "yellow"; stroke = "darkgreen"
-grass([2,-3],2,5)
-
-# Flower head
-strokewidth=1.5
-fill = "red"; stroke = "black"
-flower([2,-0.8],0.4,12, "yellow","black")
-
-
-</textarea>
+fontfill = "blue"
+text([2,3], var_text)
+text([2,2], "<valueof>var_text</valueof>")</textarea>
 
 	</td>
 </tr>
