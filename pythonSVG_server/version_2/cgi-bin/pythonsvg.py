@@ -126,6 +126,7 @@ class mySvgCanvas:
 		self.loc_var["arrowhead"] = self.arrowhead
 		self.loc_var["dot"] = self.dot
 		self.loc_var["mathjs"] = self.mathjs
+		self.loc_var["process_text"] = self.process_text
 		self.loc_var["line"] = self.line
 		self.loc_var["ellipse"] = self.ellipse
 		self.loc_var["circle"] = self.circle
@@ -255,12 +256,28 @@ class mySvgCanvas:
 
 		return string
 
+# ========================================================================================
+
+	def process_text(self, text):
+	
+		text = text.replace("^{", "<tspan baseline-shift='super' font-size='\"+str(fontsize*0.7)+\"'>")
+		text = text.replace("_{", "<tspan baseline-shift='sub' font-size='\"+str(fontsize*0.7)+\"'>")
+		text = text.replace("{", "<tspan>") # Allowing blank braces 
+		text = text.replace("}", "</tspan>")
+
+		return text
+
 # ===================================================================================	
 
 	def process_ascii_multi_line(self, ascii_string):
+
+		# Format Text (superscript & subscript)
+		b = self.process_text(ascii_string)			# Convert Ascii to Python (except FOR loops)
 		
-		b = self.preprocess_block(ascii_string)			# Convert Ascii to Python (except FOR loops)
+		# Process Javascript -> Python (brackets)
+		b = self.preprocess_block(b)			# Convert Ascii to Python (except FOR loops)
 	
+		# Process Javascript -> Python (keywords)
 		final_string = ""
 		ascii_list = b.split('\n')		
 		for ascii_line in ascii_list:
