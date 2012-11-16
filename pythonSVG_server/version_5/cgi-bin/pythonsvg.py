@@ -260,12 +260,17 @@ class mySvgCanvas:
 
 	def process_text(self, text):
 	
-		text = text.replace("^{", "<tspan baseline-shift='super' font-size='\"+str(fontsize*0.7)+\"'>")
-		text = text.replace("_{", "<tspan baseline-shift='sub' font-size='\"+str(fontsize*0.7)+\"'>")
-		text = text.replace("{", "<tspan>") # Allowing blank braces 
-		text = text.replace("}", "</tspan>")
-
-		return text
+		final_string = ""
+		ascii_list = text.split('\n')		
+		for ascii_line in ascii_list:
+			# Only replace in lines with STRINGS (variables, dot, text, etc...)		
+			if ("'" in ascii_line or '"' in ascii_line):
+				ascii_line = ascii_line.replace("^{", "<tspan baseline-shift='super' font-size='\"+str(fontsize*0.7)+\"'>")
+				ascii_line = ascii_line.replace("_{", "<tspan baseline-shift='sub' font-size='\"+str(fontsize*0.7)+\"'>")
+				ascii_line = ascii_line.replace("{", "<tspan>") # Allowing blank braces 
+				ascii_line = ascii_line.replace("}", "</tspan>")
+			final_string += ascii_line + '\n'
+		return final_string
 
 # ===================================================================================	
 
