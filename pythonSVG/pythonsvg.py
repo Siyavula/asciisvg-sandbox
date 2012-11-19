@@ -23,7 +23,7 @@ class mySvgCanvas:
 	xml_parent_pointer = None
 
 	# Error Handling
-	loc_var["complete_log"] = 1			# SVG Flags: Completed lines of code
+	loc_var["complete_log"] = 0			# SVG Flags: Completed lines of code
 	loc_var["error_log"] 		= 1			# SVG Flags: Errors that occur
 
 	# Canvas Variables
@@ -602,7 +602,7 @@ class mySvgCanvas:
 			u = [u[0]/d, u[1]/d]	# unit vector
 			up = [-u[1],u[0]] 		# inverse unit vector
 			exec("node = etree.SubElement(" + str(self.xml_get_pointer()) + ", 'path')")
-			node.attrib['d'] = str("M " + str(w[0]-(size+15)*u[0]-5*up[0]) + " " + str(w[1]-(size+15)*u[1]-5*up[1]) + " L " + str(w[0]-(size*1.25-1)*u[0]) + " " + str(w[1]-(size*1.25-1)*u[1]) + " L " + str(w[0]-(size+15)*u[0]+4*up[0]) + " " + str(w[1]-(size+15)*u[1]+4*up[1]) + " Z")
+			node.attrib['d'] = str("M " + str(w[0]-(size+15)*u[0]-5*up[0]) + " " + str(w[1]-(size+15)*u[1]-5*up[1]) + " L " + str(w[0]-(size*1.25-1)*u[0]) + " " + str(w[1]-(size*1.25-1)*u[1]) + " L " + str(w[0]-(size+15)*u[0]+5*up[0]) + " " + str(w[1]-(size+15)*u[1]+5*up[1]) + " Z")
 			node.attrib['stroke-width'] = str(size != None and size or self.loc_var["markerstrokewidth"])
 			node.attrib['stroke'] = self.loc_var["stroke"]
 			node.attrib['fill'] = self.loc_var["stroke"]
