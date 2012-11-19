@@ -732,8 +732,7 @@ class mySvgCanvas:
 		node.attrib['stroke-width'] = str(self.loc_var["strokewidth"])
 		node.attrib['stroke'] = str(self.loc_var["stroke"])
 		node.attrib['fill'] = str(self.loc_var["fill"])
-		node.attrib['stroke-dasharray'] = str(self.loc_var["strokedasharray"][0]) + ", " + \
-																			str(self.loc_var["strokedasharray"][1])
+		node.attrib['stroke-dasharray'] = str(self.loc_var["strokedasharray"][0]) + ", " + str(self.loc_var["strokedasharray"][1])
 		# starting point (p)
 		if (self.loc_var["marker"] == "dot" or self.loc_var["marker"] == "arrowdot"):
 			self.dot(p)
@@ -754,8 +753,7 @@ class mySvgCanvas:
 		node.attrib['rx'] = str(round(rx * self.loc_var["xunitlength"],2))
 		node.attrib['ry'] = (ry != None and (str(round(ry * self.loc_var["yunitlength"],2))) or node.attrib['rx'])
 		node.attrib['stroke-width'] = str(self.loc_var["strokewidth"])
-		node.attrib['stroke-dasharray'] = str(self.loc_var["strokedasharray"][0]) + ", " + \
-																			str(self.loc_var["strokedasharray"][1])
+		node.attrib['stroke-dasharray'] = str(self.loc_var["strokedasharray"][0]) + ", " + str(self.loc_var["strokedasharray"][1])
 		node.attrib['stroke'] = str(self.loc_var["stroke"])
 		node.attrib['fill'] = str(self.loc_var["fill"])
 
