@@ -265,10 +265,10 @@ class mySvgCanvas:
 		for ascii_line in ascii_list:
 			# Only replace in lines with STRINGS (variables, dot, text, etc...)		
 			if ("'" in ascii_line or '"' in ascii_line):
-				ascii_line = ascii_line.replace("^{", "<tspan baseline-shift='super' font-size='\"+str(int(fontsize)*0.7)+\"'>")
-				ascii_line = ascii_line.replace("_{", "<tspan baseline-shift='sub' font-size='\"+str(int(fontsize)*0.7)+\"'>")
-				ascii_line = ascii_line.replace("{", "<tspan>") # Allowing blank braces 
-				ascii_line = ascii_line.replace("}", "</tspan>")
+				ascii_line = ascii_line.replace("^{", '<tspan baseline-shift="super" font-size="\'+str(int(fontsize)*0.7)+\'">')
+				ascii_line = ascii_line.replace("_{", '<tspan baseline-shift="sub" font-size="\'+str(int(fontsize)*0.7)+\'">')
+				ascii_line = ascii_line.replace("{", '<tspan>') # Allowing blank braces 
+				ascii_line = ascii_line.replace("}", '</tspan>')
 			final_string += ascii_line + '\n'
 		return final_string
 
