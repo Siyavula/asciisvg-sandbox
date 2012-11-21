@@ -127,6 +127,7 @@ class mySvgCanvas:
 		self.loc_var["dot"] = self.dot
 		self.loc_var["mathjs"] = self.mathjs
 		self.loc_var["process_text"] = self.process_text
+		self.loc_var["find_quote_pairs"] = self.find_quote_pairs
 		self.loc_var["line"] = self.line
 		self.loc_var["ellipse"] = self.ellipse
 		self.loc_var["circle"] = self.circle
@@ -258,19 +259,73 @@ class mySvgCanvas:
 
 # ========================================================================================
 
+	def find_quote_pairs(self, text):
+
+		a = text
+
+		#Search for strings in text
+		quote_single_pair = [None,None,"single"]
+		quote_double_pair = [None,None,"double"]
+		quote_map = []
+		slash_parity = False
+
+		i = 0
+		while i < len(a):
+
+			# Find legitimate characters (check repetitively for all \\ slashes)
+			parity = False
+			spaces = " "
+			while((spaces+a)[i] == "\\"):
+				parity = not (parity)
+				spaces += " "
+			quote_string = (parity and " " or a[i])
+
+			# Fill the pair arrays
+			if (quote_string == "'" and quote_double_pair[0] == None):
+				if (quote_single_pair[0] == None): quote_single_pair[0] = i
+				else: quote_single_pair[1] = i
+
+			if (quote_string == '"' and quote_single_pair[0] == None):
+				if (quote_double_pair[0] == None): quote_double_pair[0] = i
+				else: quote_double_pair[1] = i
+
+			# Append to list & reset
+			if (quote_single_pair[0] != None and quote_single_pair[1] != None):
+				quote_map.append(quote_single_pair)
+				quote_single_pair = [None,None,"single"]				
+			elif (quote_double_pair[0] != None and quote_double_pair[1] != None):
+				quote_map.append(quote_double_pair)
+				quote_double_pair = [None,None,"double"]
+
+			i += 1
+
+		return quote_map
+
+# ========================================================================================
+
 	def process_text(self, text):
 	
-		final_string = ""
-		ascii_list = text.split('\n')		
-		for ascii_line in ascii_list:
-			# Only replace in lines with STRINGS (variables, dot, text, etc...)		
-			if ("'" in ascii_line or '"' in ascii_line):
-				ascii_line = ascii_line.replace("^{", '<tspan baseline-shift="super" font-size="\'+str(int(fontsize)*0.7)+\'">')
-				ascii_line = ascii_line.replace("_{", '<tspan baseline-shift="sub" font-size="\'+str(int(fontsize)*0.7)+\'">')
-				ascii_line = ascii_line.replace("{", '<tspan>') # Allowing blank braces 
-				ascii_line = ascii_line.replace("}", '</tspan>')
-			final_string += ascii_line + '\n'
-		return final_string
+		quote_map =	self.find_quote_pairs(text); quote_map.sort(); quote_map.reverse()  # Reverse Sort
+		#text += '\ntext([0,-1], "' + str(quote_map) + '", right)'
+
+		for quote_map_piece in quote_map:
+			# Isolate Piece
+			piece = text[quote_map_piece[0]+1:quote_map_piece[1]]
+			# Edit Piece
+			if (quote_map_piece[2] == "double"):		
+				piece = piece.replace("^{", "<tspan baseline-shift='super' font-size='\"+str(int(fontsize)*0.7)+\"'>")
+				piece = piece.replace("_{", "<tspan baseline-shift='sub' font-size='\"+str(int(fontsize)*0.7)+\"'>")
+				piece = piece.replace("{", "<tspan>") # Allowing blank braces 
+				piece = piece.replace("}", "</tspan>")
+			elif (quote_map_piece[2] == "single"):		
+				piece = piece.replace("^{", '<tspan baseline-shift="super" font-size="\'+str(int(fontsize)*0.7)+\'">')
+				piece = piece.replace("_{", '<tspan baseline-shift="sub" font-size="\'+str(int(fontsize)*0.7)+\'">')
+				piece = piece.replace("{", '<tspan>') # Allowing blank braces 
+				piece = piece.replace("}", '</tspan>')
+			# Integrate Piece
+			text = text[:quote_map_piece[0]+1] + piece + text[quote_map_piece[1]:]
+				
+		return text
 
 # ===================================================================================	
 
@@ -278,7 +333,7 @@ class mySvgCanvas:
 
 		# Format Text (superscript & subscript)
 		b = self.process_text(ascii_string)			# Convert Ascii to Python (except FOR loops)
-		
+
 		# Process Javascript -> Python (brackets)
 		b = self.preprocess_block(b)			# Convert Ascii to Python (except FOR loops)
 	
