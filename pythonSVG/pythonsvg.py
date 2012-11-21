@@ -18,6 +18,7 @@ class mySvgCanvas:
 	loc_var = {}
 	complete_string = ""
 	error_string = ""	
+	debug_string = ""
 	xml_parent = None
 	xml_pointer = None
 	xml_parent_pointer = None
@@ -120,14 +121,16 @@ class mySvgCanvas:
 		self.initPicture(-5,5,-5,5)
 
 		# Declare Functions as Variables
+		self.loc_var["mathjs"] = self.mathjs
+		self.loc_var["dprint"] = self.dprint
+		self.loc_var["process_text"] = self.process_text
+		self.loc_var["find_quote_pairs"] = self.find_quote_pairs
+
 		self.loc_var["initPicture"] = self.initPicture
 		self.loc_var["setBorder"] = self.setBorder
 		self.loc_var["text"] = self.text
 		self.loc_var["arrowhead"] = self.arrowhead
 		self.loc_var["dot"] = self.dot
-		self.loc_var["mathjs"] = self.mathjs
-		self.loc_var["process_text"] = self.process_text
-		self.loc_var["find_quote_pairs"] = self.find_quote_pairs
 		self.loc_var["line"] = self.line
 		self.loc_var["ellipse"] = self.ellipse
 		self.loc_var["circle"] = self.circle
@@ -350,7 +353,7 @@ class mySvgCanvas:
 		try:
 			exec(final_string, None, self.loc_var)
 			self.complete_string += "\nASCII -> SVG conversion complete. \n\nOriginal Code:\n\n" + str(ascii_string) + "\n\nCode Processed:\n\n" + str(final_string) 
-		except Exception, err:				
+		except Exception, err:
 			self.error_string += "\nASCII -> SVG conversion ERROR: " + str(err) + ", " + str(sys.exc_info()[0]) + "\n\nOriginal Code:\n\n" + str(ascii_string) + "\n\nCode Processed:\n\n" + str(final_string) 
 
 # ===================================================================================	
@@ -393,7 +396,7 @@ class mySvgCanvas:
 
 	def generate_array(self):
 		self.str_parent = etree.tostring(self.xml_parent, pretty_print=True)
-		return self.str_parent, self.complete_string, self.error_string
+		return self.str_parent, self.complete_string, self.error_string, self.debug_string
 
 # ========================================================================================
 
@@ -535,6 +538,11 @@ class mySvgCanvas:
 	> stop_group()
 	============================== 
 	'''
+
+# ========================================================================================
+
+	def dprint(self, string):
+		self.debug_string += str(string) + "\n"
 
 # ========================================================================================
 

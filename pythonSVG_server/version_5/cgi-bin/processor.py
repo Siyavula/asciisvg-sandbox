@@ -42,13 +42,13 @@ def fn_strip_tags(text, templateLocals={}):
 
 # ========================================================================================
 
-def AJAX_return(output, error_flag, error_string, randomSeed):
+def AJAX_return(output, error_flag, error_string, randomSeed, debug_string):
 	print "Content-Type: text/html"
 	print
 	if (error_flag == 1 or len(error_string) > 0):
-		print urllib.quote("[BRK]Error: " + str(error_string) + "[BRK]" + str(randomSeed))
+		print urllib.quote("[BRK]Error: " + str(error_string) + "[BRK]" + str(randomSeed) + "[BRK]" + str(debug_string))
 	else:
-		print urllib.quote(output + "[BRK][BRK]" + str(randomSeed))
+		print urllib.quote(output + "[BRK][BRK]" + str(randomSeed) + "[BRK]" + str(debug_string))
 
 # ========================================================================================
 # INPUT
@@ -57,6 +57,7 @@ def AJAX_return(output, error_flag, error_string, randomSeed):
 form = cgi.FieldStorage()
 error_flag = 0
 error_string = ""
+debug_string = ""
 output = ""
 templateLocals = {}
 iRandomSeed=None
@@ -83,8 +84,11 @@ if (form.getvalue('strip_tags') == 'true'):
 	templateLocals['ENVIRONMENT'].random = templateLocals['random']
 	# =======================================
 
+	# dprint() code
+	lib_code = 'debug_string_py = "";\ndef dprint(string): global debug_string_py; debug_string_py += str(string) + "\\n" \n'
+
 	# Process Python first (in templateLocals)
-	python_text = urllib.unquote(form.getvalue('python'))
+	python_text = urllib.unquote(lib_code + form.getvalue('python'))
 	try:
 		exec("# encoding: utf-8\nfrom __future__ import division\n" + python_text + '\n', templateLocals, templateLocals)
 	except Exception, err:
@@ -106,7 +110,8 @@ if (error_flag == 0):
 	# SVG handling (for both cases)
 	my_svg = mySvgCanvas("test", 400, 400) # default size of SVG
 	my_svg.process_ascii_multi_line(ascii_text)
-	svg_string, complete_string, error_string = my_svg.generate_array()
+	svg_string, complete_string, error_string, debug_string = my_svg.generate_array()
+	debug_string = str(templateLocals['debug_string_py']) + "--------------------------\n" + str(debug_string)
 	if (len(error_string.strip()) > 0): error_string = "ASCII code\n" + error_string
 
 	# PNG Generator
@@ -124,6 +129,6 @@ if (error_flag == 0):
 # OUTPUT
 # ========================================================================================
 
-AJAX_return(output, error_flag, error_string,randomSeed)
+AJAX_return(output, error_flag, error_string, randomSeed, debug_string)
 
 
