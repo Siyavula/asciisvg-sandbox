@@ -314,20 +314,21 @@ class mySvgCanvas:
 	def process_text(self, text):
 	
 		quote_map =	self.find_quote_pairs(text); quote_map.sort(); quote_map.reverse()  # Reverse Sort
-		text += '\ntext([-4,-4], "' + str(quote_map) + '", right)'
+		#text += '\ntext([-4,-4], "' + str(quote_map) + '", right)'
 
 		for quote_map_piece in quote_map:
 			# Isolate Piece
 			piece = text[quote_map_piece[0]+1:quote_map_piece[1]]
 			# Edit Piece
-			if (quote_map_piece[2] == "double"):		
-				piece = piece.replace("^{", "<tspan baseline-shift='super' font-size='\"+str(int(fontsize)*0.7)+\"'>")
-				piece = piece.replace("_{", "<tspan baseline-shift='sub' font-size='\"+str(int(fontsize)*0.7)+\"'>")
+			if (quote_map_piece[2] == "double"):	
+				piece = piece.replace("^{", "<tspan dy='\"+str(int(fontsize)*0.7)+\"' font-size='\"+str(int(fontsize)*0.7)+\"'>")
+				piece = piece.replace("_{", "<tspan dy='\"+str(int(-fontsize)*0.7)+\"' font-size='\"+str(int(fontsize)*0.7)+\"'>")
 				piece = piece.replace("{", "<tspan>") # Allowing blank braces 
 				piece = piece.replace("}", "</tspan>")
+
 			elif (quote_map_piece[2] == "single"):		
-				piece = piece.replace("^{", '<tspan baseline-shift="super" font-size="\'+str(int(fontsize)*0.7)+\'">')
-				piece = piece.replace("_{", '<tspan baseline-shift="sub" font-size="\'+str(int(fontsize)*0.7)+\'">')
+				piece = piece.replace("^{", '<tspan dy="\'+str(int(fontsize)*0.7)+\'" font-size="\'+str(int(fontsize)*0.7)+\'">')
+				piece = piece.replace("_{", '<tspan dy="\'+str(int(-fontsize)*0.7)+\'" font-size="\'+str(int(fontsize)*0.7)+\'">')
 				piece = piece.replace("{", '<tspan>') # Allowing blank braces 
 				piece = piece.replace("}", '</tspan>')
 			# Integrate Piece
