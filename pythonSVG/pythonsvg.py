@@ -264,42 +264,47 @@ class mySvgCanvas:
 
 	def find_quote_pairs(self, text):
 
-		a = text
+		# Returns an array mapping all the strings in the text
 
-		#Search for strings in text
-		quote_single_pair = [None,None,"single"]
-		quote_double_pair = [None,None,"double"]
+		# Variabes
+		index_default = None
+		quote_pair = [index_default,index_default]
+		quote_types = ["'", '"']
+		quote_open = ""
 		quote_map = []
-		slash_parity = False
 
 		i = 0
-		while i < len(a):
+		while i < len(text):
 
-			# Find legitimate characters (check repetitively for all \\ slashes)
-			parity = False
-			spaces = " "
-			while((spaces+a)[i] == "\\"):
-				parity = not (parity)
-				spaces += " "
-			quote_string = (parity and " " or a[i])
+			parity = False # does text[i] have a preceeding slash? (default = false)
+			char_current = text[i]
 
-			# Fill the pair arrays
-			if (quote_string == "'" and quote_double_pair[0] == None):
-				if (quote_single_pair[0] == None): quote_single_pair[0] = i
-				else: quote_single_pair[1] = i
+			# Is the character a valid quote?
+			if (char_current in quote_types):
+	
+				# Count parity for quote_current (check repetitively for all \\ slashes)
+				j = 0
+				while (j <= i) and (text[i-j-1] == "\\"):
+					# Toggle parity
+					parity = not (parity)
+					j += 1
 
-			if (quote_string == '"' and quote_single_pair[0] == None):
-				if (quote_double_pair[0] == None): quote_double_pair[0] = i
-				else: quote_double_pair[1] = i
+				if (parity == False):
 
-			# Append to list & reset
-			if (quote_single_pair[0] != None and quote_single_pair[1] != None):
-				quote_map.append(quote_single_pair)
-				quote_single_pair = [None,None,"single"]				
-			elif (quote_double_pair[0] != None and quote_double_pair[1] != None):
-				quote_map.append(quote_double_pair)
-				quote_double_pair = [None,None,"double"]
-
+					if (quote_pair[0] == index_default): 
+						# Open the pair
+						quote_pair[0] = i
+						quote_open = char_current
+				
+					elif (quote_open == char_current):
+						# Close the pair
+						quote_pair[1] = i
+						# Append to list
+						quote_map.append(quote_pair + [(quote_open == quote_types[0] and "single" or "double")])
+						# Reset Variables		
+						quote_pair = [index_default,index_default]
+						quote_open = ""
+			
 			i += 1
 
 		return quote_map
@@ -309,7 +314,7 @@ class mySvgCanvas:
 	def process_text(self, text):
 	
 		quote_map =	self.find_quote_pairs(text); quote_map.sort(); quote_map.reverse()  # Reverse Sort
-		#text += '\ntext([0,-1], "' + str(quote_map) + '", right)'
+		text += '\ntext([-4,-4], "' + str(quote_map) + '", right)'
 
 		for quote_map_piece in quote_map:
 			# Isolate Piece
@@ -355,6 +360,10 @@ class mySvgCanvas:
 			self.complete_string += "\nASCII -> SVG conversion complete. \n\nOriginal Code:\n\n" + str(ascii_string) + "\n\nCode Processed:\n\n" + str(final_string) 
 		except Exception, err:
 			self.error_string += "\nASCII -> SVG conversion ERROR: " + str(err) + ", " + str(sys.exc_info()[0]) + "\n\nOriginal Code:\n\n" + str(ascii_string) + "\n\nCode Processed:\n\n" + str(final_string) 
+
+# ===================================================================================	
+
+	process_ascii = process_ascii_multi_line
 
 # ===================================================================================	
 
