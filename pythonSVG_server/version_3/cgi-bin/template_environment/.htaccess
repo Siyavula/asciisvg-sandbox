@@ -1,5 +1,0 @@
-AllowOverride None
-Options +ExecCGI -MultiViews +SymLinksIfOwnerMatch
-AddHandler cgi-script .py
-Order allow,deny
-Allow from all
