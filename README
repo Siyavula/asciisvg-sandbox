@@ -1,8 +1,19 @@
+Wecome to this ASCIISVG repo!
+
+Developers: Siyavula (www.siyavula.com)
+Date: November 2012
+
+
 ==========================================================
-ASCII -> SVG Developers Interface
+STANDALONE -> SVG Developers Interface
 ==========================================================
 
- > javaSVG/
+ > /version_1a/
+
+This is a modified version of the ASCIIsvg editor from: 
+http://www1.chapman.edu/~jipsen/svg/asciisvgeditor.html
+
+ > /version_1b/
 
 This is a modified version of the ASCIIsvg editor from: 
 http://www1.chapman.edu/~jipsen/svg/asciisvgeditor.html
@@ -16,12 +27,7 @@ NEW FEATURES:
    <textarea> element (so that we can type and auto-update without
    pop-ups).
 
- > fully alligned with the PNG pipeline
-
-HOW TO OPEN & RUN:
-
- > Open the javaSVG/javaSVG-sandbox.html file in your favorite 
-	 web browser to start using the editor.
+ > fully alligned with a CAIRO PNG pipeline
 
 ==========================================================
 ASCII -> SVG PIPELINE
