@@ -37,11 +37,11 @@ function xmlhttpPost(image_format) {
 	  }
 		if (image_format == "PNG")
 		{
-			self.xmlHttpReq.send("type='png'&ascii=" + ascii_input_code + " &python=" + python_input_code + " &strip_tags=" + 'true' + "&randomize_lock=" + document.getElementById("randomize_lock").checked + "&random_seed=" + random_seed);
+			self.xmlHttpReq.send("type=png&ascii=" + ascii_input_code + " &python=" + python_input_code + " &strip_tags=" + 'true' + "&randomize_lock=" + document.getElementById("randomize_lock").checked + "&random_seed=" + random_seed);
 		}
 		else if (image_format == "SVG")
 		{
-			self.xmlHttpReq.send("type='svg'&ascii=" + ascii_input_code + " &python=" + python_input_code + " &strip_tags=" + 'true' + "&randomize_lock=" + document.getElementById("randomize_lock").checked + "&random_seed=" + random_seed);
+			self.xmlHttpReq.send("type=svg&ascii=" + ascii_input_code + " &python=" + python_input_code + " &strip_tags=" + 'true' + "&randomize_lock=" + document.getElementById("randomize_lock").checked + "&random_seed=" + random_seed);
 		}
 }
 
