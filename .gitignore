@@ -1,2 +1,3 @@
 *.pyc
 *~
+/apache_server/siyavula.asciisvg/*
