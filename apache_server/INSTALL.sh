@@ -8,28 +8,17 @@
 
 echo; echo "Welcome to bash setup for ASCIISVG Server.";
 
-# Install APACHE2
+# Install software
 echo; 
-read -p "Press any key to download & install APACHE... "
+read -p "Press any key to download & install APACHE, PHP and python-rsvg... "
 sudo apt-get install apache2
-
-# Testing FIREFOX
-echo; 
-read -p "Press any key to display FIREFOX test... "
-firefox http://localhost/ &
-
-echo; 
-read -p "Was the server test OK? Press any key to continue..."
-
-# Install php
-echo; 
-read -p "Press any key to download & install PHP... "
 sudo apt-get install php5 libapache2-mod-php5
-
-# Install python-rsvg
-echo; 
-read -p "Press any key to download & install python-rsvg... "
 sudo apt-get install python-rsvg
+
+# Download siyavula.asciisvg repository
+echo; 
+read -p "Press any key to download siyavula.asciisvg repository... "
+git clone "https://github.com/leenremm/siyavula.asciisvg.git"
 
 # Testing APACHE CONFIG FILE
 echo; 
