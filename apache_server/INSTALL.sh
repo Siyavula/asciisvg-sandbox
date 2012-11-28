@@ -21,9 +21,38 @@ read -p "Press any key to download siyavula.asciisvg repository... "
 git clone "https://github.com/leenremm/siyavula.asciisvg.git"
 
 # Testing APACHE CONFIG FILE
-echo; 
-read -p "Press any key to ADD text to & EDIT httpd.conf... "
-sudo gedit /etc/apache2/httpd.conf
+echo;
+while true; do
+    read -p "Do you wish to WRITE to httpd.conf? [y/n]" yn
+    case $yn in
+        [Yy]* ) sudo chmod 777 /etc/apache2/; echo "<Directory /var/www/asciisvg-sandbox/apache_server/version_2/cgi-bin/>
+	Options +ExecCGI
+	AllowOverride None
+	AddHandler cgi-script .py
+</Directory>
+
+<Directory /var/www/asciisvg-sandbox/apache_server/version_3/cgi-bin/>
+	Options +ExecCGI
+	AllowOverride None
+	AddHandler cgi-script .py
+</Directory>
+
+<Directory /var/www/asciisvg-sandbox/apache_server/version_4/cgi-bin/>
+	Options +ExecCGI
+	AllowOverride None
+	AddHandler cgi-script .py
+</Directory>
+
+<Directory /var/www/asciisvg-sandbox/apache_server/version_5/cgi-bin/>
+	Options +ExecCGI
+	AllowOverride None
+	AddHandler cgi-script .py
+</Directory>
+" >> /etc/apache2/httpd.conf; gedit /etc/apache2/httpd.conf;  sudo chmod 644 /etc/apache2/; break;;
+        [Nn]* ) break;;
+        * ) echo "Please answer y or n.";;
+    esac
+done
 
 # Give full user access to /var/www/
 echo; 
