@@ -25,7 +25,7 @@ echo;
 while true; do
     read -p "Do you wish to WRITE to httpd.conf? [y/n]" yn
     case $yn in
-        [Yy]* ) sudo chmod 777 /etc/apache2/; echo "<Directory /var/www/asciisvg-sandbox/apache_server/version_2/cgi-bin/>
+        [Yy]* ) echo "Add the following lines to the httpd.conf file: \n\n<Directory /var/www/asciisvg-sandbox/apache_server/version_2/cgi-bin/>
 	Options +ExecCGI
 	AllowOverride None
 	AddHandler cgi-script .py
@@ -47,8 +47,7 @@ while true; do
 	Options +ExecCGI
 	AllowOverride None
 	AddHandler cgi-script .py
-</Directory>
-" >> /etc/apache2/httpd.conf; gedit /etc/apache2/httpd.conf;  sudo chmod 644 /etc/apache2/; break;;
+</Directory>"; sudo gedit /etc/apache2/httpd.conf; break;;
         [Nn]* ) break;;
         * ) echo "Please answer y or n.";;
     esac
