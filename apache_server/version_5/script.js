@@ -16,6 +16,7 @@ function xmlhttpPost(image_format) {
 		var ascii_input_code = String(encodeURIComponent(asciiinput_editor.getValue()));
 		var python_input_code = String(encodeURIComponent(pythoninput_editor.getValue()));
 		var random_seed = document.getElementById("random_seed").value;
+		var random_seed_lock = document.getElementById("randomize_lock").checked;
 
 		// Mozilla/Safari
 	  if (window.XMLHttpRequest) {
@@ -40,12 +41,12 @@ function xmlhttpPost(image_format) {
 	  }
 		if (image_format == "PNG")
 		{
-			self.xmlHttpReq.send("type=png&ascii=" + ascii_input_code + " &python=" + python_input_code + " &strip_tags=true&randomize_lock=" + document.getElementById("randomize_lock").checked + "&random_seed=" + random_seed);
+			self.xmlHttpReq.send("type=png&ascii=" + ascii_input_code + " &python=" + python_input_code + " &strip_tags=true&randomize_lock=" + random_seed_lock + "&random_seed=" + random_seed);
 		}
 		else if (image_format == "SVG")
 		{
 			var text;
-			text = "type=svg&ascii=" + ascii_input_code + " &python=" + python_input_code + " &strip_tags=true&randomize_lock=" + document.getElementById("randomize_lock").checked + "&random_seed=" + random_seed;
+			text = "type=svg&ascii=" + ascii_input_code + " &python=" + python_input_code + " &strip_tags=true&randomize_lock=" + random_seed_lock + "&random_seed=" + random_seed;
 			self.xmlHttpReq.send(text);
 		}
 }
@@ -75,16 +76,16 @@ function local_storage_recall() {
 	}
 	else
 	{
-		document.getElementById("asciiinput").innerHTML = '# ASCII code here...\n\n# Sky\nfill="lightblue"\nrect([-10,-10],[10,10])\nstrokewidth=2\n\n# Ground\nfill = "forestgreen"; stroke = "darkgreen"\nrect([-10,-10],[10,-2.5])\n\n# Clouds\nfill = "white";\nstroke = "grey"\ncloud([2,2],1.5,6)\n\n# Stars\nfill = "yellow"; stroke = "orangered"\nstar([-2.5,3],1,20,0.8)\n\n# Stars\nstrokewidth=1.5\nfill = "yellow"; stroke = "orangered"\nstar([0,4],0.3,8,0.3)\n\n#Grass\nstrokewidth=2\nfill = "yellow"; stroke = "darkgreen"\ngrass([-2,-3],2,6)\n\n# Flower base\nstrokewidth=2\nfill = "yellow"; stroke = "darkgreen"\ngrass([2,-3],2,5)\n\n# Flower head\nstrokewidth=1.5\nfill = "red"; stroke = "black"\nflower([2,-0.8],0.4,12, "yellow","black")';
-		document.getElementById("pythoninput").innerHTML = '# Python code here...\n\na = random.randint(50,300)';
+    asciiinput_editor.setValue('# ASCII code here...\n\n# Sky\nfill="lightblue"\nrect([-10,-10],[10,10])\nstrokewidth=2\n\n# Ground\nfill = "forestgreen"; stroke = "darkgreen"\nrect([-10,-10],[10,-2.5])\n\n# Clouds\nfill = "white";\nstroke = "grey"\ncloud([2,2],1.5,6)\n\n# Stars\nfill = "yellow"; stroke = "orangered"\nstar([-2.5,3],1,20,0.8)\n\n# Demo Text\ntext([2,2.5], "T_{i}^{<valueof>a</valueof>}")\n\n# dprint example\ndprint(\'<valueof>"ascii: " +str(a)</valueof>\')\n\n# Stars\nstrokewidth=1.5\nfill = "yellow"; stroke = "orangered"\nstar([0,4],0.3,8,0.3)\n\n#Grass\nstrokewidth=2\nfill = "yellow"; stroke = "darkgreen"\ngrass([-2,-3],2,6)\n\n# Flower base\nstrokewidth=2\nfill = "yellow"; stroke = "darkgreen"\ngrass([2,-3],2,5)\n\n# Flower head\nstrokewidth=1.5\nfill = "red"; stroke = "black"\nflower([2,-0.8],0.4,12, "yellow","black")');
+		pythoninput_editor.setValue('# Python code here...\n\na = random.randint(50,300)\n\n#dprint example\ndprint("python: " + str(a))');
 	}
 }
 
 function load_demo() {
 	if (confirm('This will replace your current code with DEMO code. Are you sure?')) 
 	{
-    asciiinput_editor.setValue('# ASCII code here...\n\n# Sky\nfill="lightblue"\nrect([-10,-10],[10,10])\nstrokewidth=2\n\n# Ground\nfill = "forestgreen"; stroke = "darkgreen"\nrect([-10,-10],[10,-2.5])\n\n# Clouds\nfill = "white";\nstroke = "grey"\ncloud([2,2],1.5,6)\n\n# Stars\nfill = "yellow"; stroke = "orangered"\nstar([-2.5,3],1,20,0.8)\n\n# Stars\nstrokewidth=1.5\nfill = "yellow"; stroke = "orangered"\nstar([0,4],0.3,8,0.3)\n\n#Grass\nstrokewidth=2\nfill = "yellow"; stroke = "darkgreen"\ngrass([-2,-3],2,6)\n\n# Flower base\nstrokewidth=2\nfill = "yellow"; stroke = "darkgreen"\ngrass([2,-3],2,5)\n\n# Flower head\nstrokewidth=1.5\nfill = "red"; stroke = "black"\nflower([2,-0.8],0.4,12, "yellow","black")');
-		pythoninput_editor.setValue('# Python code here...\n\na = random.randint(50,300)');
+    asciiinput_editor.setValue('# ASCII code here...\n\n# Sky\nfill="lightblue"\nrect([-10,-10],[10,10])\nstrokewidth=2\n\n# Ground\nfill = "forestgreen"; stroke = "darkgreen"\nrect([-10,-10],[10,-2.5])\n\n# Clouds\nfill = "white";\nstroke = "grey"\ncloud([2,2],1.5,6)\n\n# Stars\nfill = "yellow"; stroke = "orangered"\nstar([-2.5,3],1,20,0.8)\n\n# Demo Text\ntext([2,2.5], "T_{i}^{<valueof>a</valueof>}")\n\n# dprint example\ndprint(\'<valueof>"ascii: " +str(a)</valueof>\')\n\n# Stars\nstrokewidth=1.5\nfill = "yellow"; stroke = "orangered"\nstar([0,4],0.3,8,0.3)\n\n#Grass\nstrokewidth=2\nfill = "yellow"; stroke = "darkgreen"\ngrass([-2,-3],2,6)\n\n# Flower base\nstrokewidth=2\nfill = "yellow"; stroke = "darkgreen"\ngrass([2,-3],2,5)\n\n# Flower head\nstrokewidth=1.5\nfill = "red"; stroke = "black"\nflower([2,-0.8],0.4,12, "yellow","black")');
+		pythoninput_editor.setValue('# Python code here...\n\na = random.randint(50,300)\n\n#dprint example\ndprint("python: " + str(a))');
 	} 
 }
 
