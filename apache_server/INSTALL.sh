@@ -18,7 +18,7 @@ sudo apt-get install python-rsvg
 # Download siyavula.asciisvg repository
 echo; 
 read -p "Press any key to download siyavula.asciisvg repository... "
-git clone "https://github.com/leenremm/siyavula.asciisvg.git"
+git clone "https://github.com/Siyavula/siyavula.asciisvg.git"
 
 # Testing APACHE CONFIG FILE
 echo;
