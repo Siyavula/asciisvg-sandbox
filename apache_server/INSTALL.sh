@@ -11,9 +11,16 @@ echo; echo "Welcome to bash setup for ASCIISVG Server.";
 # Install software
 echo; 
 read -p "Press any key to download & install APACHE, PHP and python-rsvg... "
+
 sudo apt-get install apache2
-sudo apt-get install php5 libapache2-mod-php5
-sudo apt-get install python-rsvg
+
+sudo apt-get install php5 libapache2-mod-php5 perl-tk php-pear php5-curl php5-dev php5-gd php5-mcrypt php5-mysql
+
+sudo apt-get install libcairo-gobject2 libcairo-perl libcairo-script-interpreter2 libcairo2	libcairo2-dev	libcairomm-1.0-1 libmono-cairo4.0-cil 
+
+sudo apt-get install python-rsvg python-cairo python-gi-cairo python-evolution python-feedparser python-flask python-gnome2 python-gtksourceview2 python-jinja2 python-libxslt1 python-mlt3 python-nautilus python-poster python-pygoocanvas python-pyorbit python-pywapi python-uniconvertor python-utidylib python-virtualenv python-webkit python-werkzeug python-wnck python3 python3-minimal python3.2 python3.2-minimal
+
+sudo apt-get install librsvg2-2 librsvg2-bin librsvg2-common python-rsvg
 
 # Download siyavula.asciisvg repository
 echo; 
