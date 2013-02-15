@@ -27,7 +27,7 @@
   <div class="span6">
 
     <!-- SVG Output -->	
-    <div class="alert alert-info" style="height:300px;">
+    <div class="alert alert-info">
 		  <center>
 			  <span id="outputNode_<?php echo $key;?>"><img src="images/siyavula/siyavula.jpg"></span>
 		  </center>

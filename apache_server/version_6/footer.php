@@ -17,15 +17,3 @@
 
   </body>
 </html>
-
-<!-- Javascript -->
-<script type="text/javascript">
-
-local_storage_recall();
-
-function updatePreview(handle) {
-	auto_update_image();
-	getSuggestion(handle.getValue().split('\n')[handle.getCursor().line]); 
-}
-
-</script>
