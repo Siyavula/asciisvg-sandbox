@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
-	  <script type="text/javascript" src="script.js"></script>
 	  <script src="codemirror/codemirror.js"></script>
     <script src="codemirror/python.js"></script>
     <script src="codemirror/xml.js"></script>
