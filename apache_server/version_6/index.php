@@ -71,7 +71,10 @@
                   <?php endforeach; ?>                
                 <?php endif; ?>
 
-              </li>
+                <!-- Preview --> 
+
+                <li><a href="#sandbox-preview" data-toggle="tab"><?php echo "Sandbox Preview"; ?></a></li>
+
             </ul>
             <?php endif; ?>
 
@@ -97,6 +100,12 @@
                   <?php include ("tabs/ascsvg.php"); ?>
                 </div>
                 <?php endforeach; ?>                
+              <?php endif; ?>
+
+              <?php if (isset($tab_dict[0][0])): ?>
+              <div class="tab-pane fade" id="sandbox-preview">
+                <?php include ("tabs/preview.php"); ?>
+              </div>
               <?php endif; ?>
 
             </div>
