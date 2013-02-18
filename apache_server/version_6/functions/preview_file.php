@@ -28,27 +28,7 @@ curl_close($ch);
 
 // Write this to a file
 write_file("template.html",$data);
-
-/*
-if ($handle = @fopen("template.html", 'w'))
-{
-  chmod("template.html", 0777);
-  if (@fwrite($handle, $data))
-  {
-    fclose($handle);
-    echo "Success: (".date("Y-m-d H:i:s", time()).")";
-  }
-
-  else
-  {
-    echo "Could not write to file."; 
-  }
-}
-else
-{
-  echo "Could not access file (allow permission)";
-}
-*/
+@chmod("template.html", 0777);
 
 ?>
 
