@@ -3,7 +3,7 @@
 include('functions.php');
 
 // Get AJAX variables
-$dir = $_GET['dir'];
+$dir = $_POST['dir'];
 $parent_dir = substr($dir, 0, strrpos($dir, "/"));
 $directory_list = get_directory($dir);
 $file_list = get_files($dir);

@@ -1,4 +1,4 @@
-<?php $file_content = read_file($dir."/".$tab_dict[0][0]); ?>
+<?php $file_content = htmlspecialchars(read_file($dir."/".$tab_dict[0][0])); ?>
 
 <p><textarea id="xmlinput" name="xmlinput">
 <?php echo $file_content; ?>

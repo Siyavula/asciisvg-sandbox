@@ -6,7 +6,7 @@ $zip_name = $dir."/".str_replace($parent_dir."/", "", $dir).".zip";
 <div class="alert alert-info">
   Random Seed: <input id="random_seed_preview" style="width:30px;"/> 
   <button onClick="httpPost_zip('<?php echo $dir;?>');">Zip</button> 
-  <button onClick="httpPost_preview('<?php echo $zip_name;?>');">Preview</button> 
+  <button onClick="httpPost_preview();">Preview</button> 
   <i id="preview_status"></i>
 </div>
 
@@ -18,7 +18,7 @@ $zip_name = $dir."/".str_replace($parent_dir."/", "", $dir).".zip";
   Writing to File
   ========================================================================================== */
 
-  function httpPost_zip(dir="") {
+  function httpPost_zip(dir) {
 	    var xmlHttpReq = false;
 	    var self = this;
 
@@ -31,7 +31,7 @@ $zip_name = $dir."/".str_replace($parent_dir."/", "", $dir).".zip";
 	        self.xmlHttpReq = new ActiveXObject("Microsoft.XMLHTTP");
 	    }
 
-	    self.xmlHttpReq.open('GET', "functions/zip_file.php?dir="+dir, true);
+	    self.xmlHttpReq.open('POST', "functions/zip_file.php", true);
 	    self.xmlHttpReq.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 	    self.xmlHttpReq.onreadystatechange = function() {
 	        if (self.xmlHttpReq.readyState == 4) {
@@ -41,14 +41,14 @@ $zip_name = $dir."/".str_replace($parent_dir."/", "", $dir).".zip";
 	        }
 	    }
       // Command to write to file
-      self.xmlHttpReq.send();
+      self.xmlHttpReq.send("dir="+dir);
   }
 
   /* ==========================================================================================
   Previewing Template
   ========================================================================================== */
 
-  function httpPost_preview(zipfile="") {
+  function httpPost_preview() {
 	    var xmlHttpReq = false;
 	    var self = this;
 		  var random_seed = document.getElementById("random_seed_preview").value;
@@ -62,7 +62,7 @@ $zip_name = $dir."/".str_replace($parent_dir."/", "", $dir).".zip";
 	        self.xmlHttpReq = new ActiveXObject("Microsoft.XMLHTTP");
 	    }
 
-	    self.xmlHttpReq.open('GET', "functions/preview_file.php", true);
+	    self.xmlHttpReq.open('POST', "functions/preview_file.php", true);
 	    self.xmlHttpReq.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 	    self.xmlHttpReq.onreadystatechange = function() {
 	        if (self.xmlHttpReq.readyState == 4) {
@@ -76,6 +76,7 @@ $zip_name = $dir."/".str_replace($parent_dir."/", "", $dir).".zip";
       // Command to write to file
       self.xmlHttpReq.send("random_seed=" + random_seed);
   }
+
 
   
 
