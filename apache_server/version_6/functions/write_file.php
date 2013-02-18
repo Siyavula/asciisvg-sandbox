@@ -1,8 +1,8 @@
 <?php
 
 // Get AJAX variables
-$file_path = $_GET['file_path'];
-$file_contents = $_GET['file_content'];
+$file_path = $_POST['file_path'];
+$file_contents = $_POST['file_content'];
 
 // Write to file
 if ($handle = @fopen($file_path, 'w'))

@@ -189,7 +189,7 @@
 	        self.xmlHttpReq = new ActiveXObject("Microsoft.XMLHTTP");
 	    }
 
-	    self.xmlHttpReq.open('GET', "functions/write_file.php?file_path="+path+"&file_content="+content, true);
+	    self.xmlHttpReq.open('POST', "functions/write_file.php", true);
 	    self.xmlHttpReq.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 	    self.xmlHttpReq.onreadystatechange = function() {
 	        if (self.xmlHttpReq.readyState == 4) {
@@ -199,7 +199,7 @@
 	        }
 	    }
       // Command to write to file
-      self.xmlHttpReq.send();
+      self.xmlHttpReq.send("file_path="+path+"&file_content="+content);
   }
 
   /* ==========================================================================================
