@@ -76,7 +76,6 @@ $zip_name = $dir."/".str_replace($parent_dir."/", "", $dir).".zip";
               document.getElementById("preview_status").innerHTML = xmlHttp_data;
 						  var iframe = document.getElementById('preview_iframe');
               iframe.src = "functions/template.html";
-              iframe.contentWindow.location.reload();
               setTimeout('document.getElementById("preview_status").innerHTML = "";', 2000);
 	        }
 	    }
