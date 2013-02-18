@@ -5,8 +5,8 @@ $zip_name = $dir."/".str_replace($parent_dir."/", "", $dir).".zip";
 
 <div class="alert alert-info">
   Random Seed: <input id="random_seed_preview" style="width:30px;"/> 
-  <button onClick="httpPost_zip('<?php echo $dir;?>');">Zip</button> 
-  <button onClick="httpPost_preview();">Preview</button> 
+  <button class="btn btn-small" onClick="httpPost_zip('<?php echo $dir;?>');">Zip</button> 
+  <button class="btn btn-small" onClick="httpPost_preview();">Preview</button> 
   <i id="preview_status"></i>
 </div>
 

@@ -13,7 +13,7 @@ $file_content = htmlspecialchars($file_object[1]);
 <?php echo $file_content; ?>
     </textarea></p>
 
-    <p><button onClick="httpPost_writefile_<?php echo $key;?>('<?php echo $dir.'/'.$tab_dict[2][$key]; ?>', String(encodeURIComponent(asciiinput_editor_<?php echo $key;?>.getValue())));">Save</button> &nbsp; <i id="save_status_<?php echo $key;?>"></i></p>
+    <p><button class="btn btn-small" onClick="httpPost_writefile_<?php echo $key;?>('<?php echo $dir.'/'.$tab_dict[2][$key]; ?>', String(encodeURIComponent(asciiinput_editor_<?php echo $key;?>.getValue())));">Save</button> <i id="save_status_<?php echo $key;?>"></i></p>
 
     <!-- Suggestion -->
     <div class="alert alert-info">
@@ -32,19 +32,23 @@ $file_content = htmlspecialchars($file_object[1]);
   <div class="span6">
 
     <!-- Options -->
-    <div class="alert alert-info">
+    <div class="alert alert-info form-inline">
 
       <!-- Option: Randomize -->
-      <input type="checkbox" id="randomize_lock_<?php echo $key;?>"> hold random seed: <input id="random_seed_<?php echo $key;?>" style="width:50px;">
-
+      <label class="checkbox">
+        <input type="checkbox" id="randomize_lock_<?php echo $key;?>">  hold random seed: <input id="random_seed_<?php echo $key;?>" style="width:50px;">
+      </label>
+      
       <!-- Update: SVG Button -->
-      <button type="button" onClick="update_SVG_<?php echo $key;?>();">SVG</button>
+      <button type="button" class="btn btn-small" onClick="update_SVG_<?php echo $key;?>();">SVG</button>
 
       <!-- Update: PNG Button -->
-      <button type="button" onClick="update_PNG_<?php echo $key;?>();">PNG</button>
+      <button type="button" class="btn btn-small" onClick="update_PNG_<?php echo $key;?>();">PNG</button>
 
       <!-- Option: Auto-update -->
-      Auto-update: <input type="checkbox" id="autocomplete_checkbox_<?php echo $key;?>">
+      <label class="checkbox">
+        <input type="checkbox" id="autocomplete_checkbox_<?php echo $key;?>"> Auto-update
+      </label>
 
     </div>
 

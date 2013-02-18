@@ -5,7 +5,7 @@ $file_content = htmlspecialchars($file_object[1]);
 
 <?php if ($file_object[0] == 1) :?>
   <p><textarea id="xmlinput" name="xmlinput"><?php echo $file_content; ?></textarea></p>
-  <p><button onClick="httpPost_writefile_xml('<?php echo $dir.'/'.$tab_dict[0][0]; ?>', String(encodeURIComponent(xmlinput_editor.getValue())));">Save</button> &nbsp; <i id="save_status_xml"></i></p>
+  <p><button class="btn btn-small" onClick="httpPost_writefile_xml('<?php echo $dir.'/'.$tab_dict[0][0]; ?>', String(encodeURIComponent(xmlinput_editor.getValue())));">Save</button> &nbsp; <i id="save_status_xml"></i></p>
 
 <script>
 

@@ -80,7 +80,7 @@ function write_file($file_path, $file_contents)
     if (@fwrite($handle, $file_contents))
     {
       fclose($handle);
-      echo "File Saved (".date("Y-m-d H:i:s", time())."): ".strlen($file_contents)." characters";
+      echo "Success (".date("Y-m-d H:i:s", time()).") [Size: ".strlen($file_contents)." characters]";
     }
     else
     {
