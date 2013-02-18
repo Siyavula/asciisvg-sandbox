@@ -43,6 +43,7 @@
   </head>
 
   <?php include_once("functions/functions.php"); ?>
+  <?php include_once("functions/variables.php"); ?>
 
   <body>
 

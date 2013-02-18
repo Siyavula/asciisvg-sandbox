@@ -1,4 +1,9 @@
-<?php $file_content = read_file($dir."/".$tab_dict[2][$key]); ?>
+<?php 
+$file_object = read_file($dir."/".$tab_dict[2][$key]);
+$file_content = htmlspecialchars($file_object[1]);
+?>
+
+<?php if ($file_object[0] == 1) :?>
 
 <div class="row-fluid">
 
@@ -26,13 +31,6 @@
 
   <div class="span6">
 
-    <!-- SVG Output -->	
-    <div class="alert alert-info">
-		  <center>
-			  <span id="outputNode_<?php echo $key;?>"><img src="images/siyavula/siyavula.jpg"></span>
-		  </center>
-    </div>
-
     <!-- Options -->
     <div class="alert alert-info">
 
@@ -40,7 +38,7 @@
       <input type="checkbox" id="randomize_lock_<?php echo $key;?>"> hold random seed: <input id="random_seed_<?php echo $key;?>" style="width:50px;">
 
       <!-- Update: SVG Button -->
-      <button type="button" onClick="document.getElementById('outputNode_<?php echo $key;?>').innerHTML = 'loading...'; update_SVG_<?php echo $key;?>();">SVG</button>
+      <button type="button" onClick="update_SVG_<?php echo $key;?>();">SVG</button>
 
       <!-- Update: PNG Button -->
       <button type="button" onClick="update_PNG_<?php echo $key;?>();">PNG</button>
@@ -48,6 +46,13 @@
       <!-- Option: Auto-update -->
       Auto-update: <input type="checkbox" id="autocomplete_checkbox_<?php echo $key;?>">
 
+    </div>
+
+    <!-- SVG Output -->	
+    <div class="alert alert-info">
+		  <center>
+			  <span id="outputNode_<?php echo $key;?>"><img src="images/siyavula/siyavula.jpg"></span>
+		  </center>
     </div>
 
     <!-- Error -->
@@ -77,6 +82,10 @@
   function xmlhttpPost_<?php echo $key;?>(image_format) {
 	    var xmlHttpReq = false;
 	    var self = this;
+
+      // Loading
+      document.getElementById("outputNode_<?php echo $key;?>").innerHTML = "<img src='images/icon/loading.gif'>";
+
 		  var ascii_input_code = String(encodeURIComponent(asciiinput_editor_<?php echo $key;?>.getValue()));
 		  var python_input_code = String(encodeURIComponent(pythoninput_editor.getValue()));
 		  var random_seed = document.getElementById("random_seed_<?php echo $key;?>").value;
@@ -237,3 +246,8 @@
 
 
 </script>
+
+<?php else: ?>
+  <div class="alert alert-error"><?php echo $text_access_error;?></div>
+<?php endif;?>
+

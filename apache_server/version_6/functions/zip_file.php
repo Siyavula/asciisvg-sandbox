@@ -14,7 +14,7 @@ $zip_name = "template.zip";
 //$zip_name = $dir."/".str_replace($parent_dir."/", "", $dir).".zip";
 
 // Delete existing ZIP
-if (is_file($zip_name)) 
+if (is_file($zip_name))
 {
   unlink($zip_name);
 }
@@ -36,7 +36,8 @@ if ($zip->open($zip_name, ZIPARCHIVE::CREATE) == True)
 
 $zip->close();
 
-chmod($zip_name, 0777); 
+@chmod($zip_name, 0777);
+
 ?>
 
 

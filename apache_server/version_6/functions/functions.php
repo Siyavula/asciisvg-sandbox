@@ -56,15 +56,41 @@ function clean_dir ($dir="/")
 function read_file($file_path)
 {
 
-  $fp = fopen($file_path, "r");
+  if (!($fp = @fopen($file_path, "r"))){return array(0,"");};
   $file_content = "";
   while(!feof($fp))
   {
     $file_content .= fgets($fp, 1024);
   }
 
-  return $file_content;
+  return array(1,$file_content);
 
+}
+
+// Write to file
+function write_file($file_path, $file_contents)
+{
+  include("variables.php");
+  // Set file permissions
+  @chmod($file_path, 0777);
+
+  // Open File
+  if ($handle = @fopen($file_path, 'w'))
+  {
+    if (@fwrite($handle, $file_contents))
+    {
+      fclose($handle);
+      echo "File Saved (".date("Y-m-d H:i:s", time())."): ".strlen($file_contents)." characters";
+    }
+    else
+    {
+      echo $text_write_error;
+    }
+  }
+  else
+  {
+    echo $text_open_error;
+  }
 }
 
 ?>

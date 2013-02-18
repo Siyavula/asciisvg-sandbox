@@ -1,10 +1,11 @@
-<?php $file_content = read_file($dir."/".$tab_dict[1][0]); ?>
+<?php 
+$file_object = read_file($dir."/".$tab_dict[1][0]);
+$file_content = htmlspecialchars($file_object[1]);
+?>
 
-<p><textarea id="pythoninput" name="pythoninput">
-<?php echo $file_content; ?>
-</textarea></p>
-
-<p><button onClick="httpPost_writefile_python('<?php echo $dir.'/'.$tab_dict[1][0]; ?>', String(encodeURIComponent(pythoninput_editor.getValue())));">Save</button> &nbsp; <i id="save_status_python"></i></p>
+<?php if ($file_object[0] == 1) :?>
+  <p><textarea id="pythoninput" name="pythoninput"><?php echo $file_content; ?></textarea></p>
+  <p><button onClick="httpPost_writefile_python('<?php echo $dir.'/'.$tab_dict[1][0]; ?>', String(encodeURIComponent(pythoninput_editor.getValue())));">Save</button> &nbsp; <i id="save_status_python"></i></p>
 
 <script>
 
@@ -62,3 +63,7 @@
   }
 
 </script>
+
+<?php else: ?>
+  <div class="alert alert-error"><?php echo $text_access_error;?></div>
+<?php endif;?>

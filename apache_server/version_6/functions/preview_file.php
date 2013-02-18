@@ -27,6 +27,9 @@ $data = curl_exec($ch);
 curl_close($ch);
 
 // Write this to a file
+write_file("template.html",$data);
+
+/*
 if ($handle = @fopen("template.html", 'w'))
 {
   chmod("template.html", 0777);
@@ -45,6 +48,7 @@ else
 {
   echo "Could not access file (allow permission)";
 }
+*/
 
 ?>
 

@@ -22,6 +22,9 @@ $zip_name = $dir."/".str_replace($parent_dir."/", "", $dir).".zip";
 	    var xmlHttpReq = false;
 	    var self = this;
 
+      // Loading
+      document.getElementById("preview_status").innerHTML = "<img src='images/icon/loading.gif'>";
+
 		  // Mozilla/Safari
 	    if (window.XMLHttpRequest) {
 	        self.xmlHttpReq = new XMLHttpRequest();
@@ -53,6 +56,9 @@ $zip_name = $dir."/".str_replace($parent_dir."/", "", $dir).".zip";
 	    var self = this;
 		  var random_seed = document.getElementById("random_seed_preview").value;
 
+      // Loading
+      document.getElementById("preview_status").innerHTML = "<img src='images/icon/loading.gif'>";
+
 		  // Mozilla/Safari
 	    if (window.XMLHttpRequest) {
 	        self.xmlHttpReq = new XMLHttpRequest();
@@ -68,7 +74,7 @@ $zip_name = $dir."/".str_replace($parent_dir."/", "", $dir).".zip";
 	        if (self.xmlHttpReq.readyState == 4) {
 						  var xmlHttp_data = decodeURIComponent(self.xmlHttpReq.responseText);
               document.getElementById("preview_status").innerHTML = xmlHttp_data;
-
+              
 						  var iframe = document.getElementById('preview_iframe');
               iframe.src = "functions/template.html";
 	        }
