@@ -73,9 +73,8 @@ function getRealIpAddr()
       <hr>
 
 			<a class="btn btn-large btn-warning" href="apache_server/version_2/index.html">Image Editor (2.2)</a></br></br>
-			<a class="btn btn-large btn-danger" href="apache_server/version_3/index.html">Image Editor (3.0)</a></br></br>
-			<a class="btn btn-large btn-danger" href="apache_server/version_4/index.html">Image Editor (4.0)</a></br></br>
-      <a class="btn btn-large btn-success" href="apache_server/version_5/index.html">Image Editor (5.0)</a>
+      <a class="btn btn-large btn-warning" href="apache_server/version_5/index.html">Image Editor (5.0)</a></br></br>
+      <a class="btn btn-large btn-success" href="apache_server/version_6/">Image Editor (6.0)</a>
         
       <hr>
 
