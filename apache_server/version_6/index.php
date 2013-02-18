@@ -15,12 +15,10 @@
         ?>
 
         <div class="span3">
-
-          <!-- 
+ 
           <ul class="nav nav-tabs nav-stacked">
             <li><a href="?dir=<?php echo $dir;?>&settings=1"><i class="icon-wrench"></i> Settings</a></li>
           </ul>
-          -->
 
           <ul class="nav nav-tabs nav-stacked">
 
@@ -40,23 +38,8 @@
         <div class="span9">
   
           <?php if (@$_GET['settings'] == 1): ?> <!-- Start of settings -->
-    
-          <div class="thumbnail">
-            <div class="caption">
-              <h2>Settings</h2>
-              <hr>
-              <p>Get the latest monassis-buildout repository.</p>
-              <p><button type="button" class="btn btn-small" onClick=""><i class="icon-arrow-down"></i> GIT PULL</button> <i id="git_status"></i>0</p>
-              <hr>
-              <p>Activate the monassis-buildout server.</p>
-              <p>
-<button type="button" class="btn btn-small" onClick=""><i class="icon-play"></i> Start</button>
-<button type="button" class="btn btn-small" onClick=""><i class="icon-repeat"></i> Restart</button>
-<button type="button" class="btn btn-small" onClick=""><i class="icon-stop"></i> Stop</button>
-<i id="server_status">0</i>
-              </p>
-            </div>
-          </div>
+
+          <?php include ("tabs/server.php"); ?>
 
           <?php else: ?> <!-- End of Settings, Start of Content -->
 

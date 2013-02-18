@@ -40,7 +40,7 @@ $zip_name = $dir."/".str_replace($parent_dir."/", "", $dir).".zip";
 	        if (self.xmlHttpReq.readyState == 4) {
 						  var xmlHttp_data = decodeURIComponent(self.xmlHttpReq.responseText);
 						  document.getElementById("preview_status").innerHTML = xmlHttp_data;
-              setTimeout('document.getElementById("zip_status").innerHTML = "";', 2000);
+              setTimeout('document.getElementById("preview_status").innerHTML = "";', 2000);
 	        }
 	    }
       // Command to write to file
@@ -74,9 +74,10 @@ $zip_name = $dir."/".str_replace($parent_dir."/", "", $dir).".zip";
 	        if (self.xmlHttpReq.readyState == 4) {
 						  var xmlHttp_data = decodeURIComponent(self.xmlHttpReq.responseText);
               document.getElementById("preview_status").innerHTML = xmlHttp_data;
-              
 						  var iframe = document.getElementById('preview_iframe');
               iframe.src = "functions/template.html";
+              iframe.contentWindow.location.reload();
+              setTimeout('document.getElementById("preview_status").innerHTML = "";', 2000);
 	        }
 	    }
       // Command to write to file
