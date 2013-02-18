@@ -26,9 +26,15 @@ curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
 $data = curl_exec($ch);
 curl_close($ch);
 
-// Write this to a file
-write_file("template.html",$data);
-@chmod("template.html", 0777);
+if (strlen($data) > 0)
+{
+  // Write this to a file
+  write_file("template.html",$data);
+}
+else
+{
+  echo "Error: monassis-buildout server not reachable";
+}
 
 ?>
 

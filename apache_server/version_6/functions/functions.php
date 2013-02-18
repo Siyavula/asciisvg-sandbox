@@ -71,6 +71,7 @@ function read_file($file_path)
 function write_file($file_path, $file_contents)
 {
   include("variables.php");
+
   // Set file permissions
   @chmod($file_path, 0777);
 
