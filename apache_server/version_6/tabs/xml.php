@@ -13,9 +13,6 @@ $file_content = htmlspecialchars($file_object[1]);
     mode: {name: "xml",
     version: 2,
     singleLineStringErrors: false},
-    onChange: function() {
-      updatePreview(asciiinput_editor_<?php echo $key;?>);
-    },
 	  onGutterClick: function(cm, n) {
       var info = cm.lineInfo(n);
       if (info.markerText)

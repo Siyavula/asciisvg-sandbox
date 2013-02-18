@@ -120,7 +120,7 @@
                 <div class="tab-pane fade" id="python">
                   <?php include ("tabs/python.php"); ?>
                 </div>
-                <?php endif; ?>                
+                <?php endif; ?>              
 
                 <?php if (isset($tab_dict[2][0])): ?>
                   <?php foreach ($tab_dict[2] as $key=>$image_name): ?>

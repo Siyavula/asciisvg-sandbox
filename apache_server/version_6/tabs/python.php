@@ -14,9 +14,6 @@ $file_content = htmlspecialchars($file_object[1]);
     mode: {name: "python",
            version: 2,
            singleLineStringErrors: false},
-    onChange: function() {
-      updatePreview(asciiinput_editor_<?php echo $key;?>);
-    },
 	  onGutterClick: function(cm, n) {
       var info = cm.lineInfo(n);
       if (info.markerText)
@@ -25,7 +22,6 @@ $file_content = htmlspecialchars($file_object[1]);
         cm.setMarker(n, "<span style=\"color: #900\">&bull;</span> %N%");
     },
 	  onCursorActivity: function() {
-      updatePreview(asciiinput_editor_<?php echo $key;?>);
 		  pythoninput_editor.setLineClass(python_Line, null, null);
       python_Line = pythoninput_editor.setLineClass(pythoninput_editor.getCursor().line, null, "activeline");
     }
