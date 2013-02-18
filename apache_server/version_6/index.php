@@ -16,9 +16,11 @@
 
         <div class="span3">
 
+          <!-- 
           <ul class="nav nav-tabs nav-stacked">
             <li><a href="?dir=<?php echo $dir;?>&settings=1"><i class="icon-wrench"></i> Settings</a></li>
           </ul>
+          -->
 
           <ul class="nav nav-tabs nav-stacked">
 
