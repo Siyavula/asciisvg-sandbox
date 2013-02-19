@@ -13,7 +13,17 @@ $filecontents = $filecontents[1];
       <button type="button" id="btn_web" class="btn btn-medium <?php if ($filecontents == 'www.monassis.com'):?>btn-success<?php endif;?>" onClick="httpPost_config_server('www.monassis.com');"><i class="icon-globe"></i> www.monassis.com</button> 
       <i id="server_status"></i>
     </p>
+
     <hr>
+     <p>Setup apache server permission:</p>
+     <p><i>$> sudo chgrp -R www-data /var/www/</i> 
+    <hr>
+     <p>Setup monassis-template permission:</p>
+     <p><i>$> cd <b>[path to monassis-templates]</b></i> 
+     <p><i>$> sudo chgrp -R www-data mathematics/</i> 
+     <p><i>$> sudo chgrp -R www-data physical_sciences/</i> 
+    <hr>
+
   </div>
 </div>
 

@@ -7,7 +7,7 @@ $zip_name = $dir."/".str_replace($parent_dir."/", "", $dir).".zip";
   Random Seed: <input id="random_seed_preview" style="width:60px;"/> 
   <button class="btn btn-small" onClick="httpPost_zip('<?php echo $dir;?>');">Zip</button> 
   <button class="btn btn-small" onClick="httpPost_preview();">Preview</button> 
-  <i id="preview_status"></i>
+  <i id="zip_status"></i><i id="preview_status"></i>
 </div>
 
 <iframe class="span11" height="380" id="preview_iframe"></iframe>
@@ -23,7 +23,7 @@ $zip_name = $dir."/".str_replace($parent_dir."/", "", $dir).".zip";
 	    var self = this;
 
       // Loading
-      document.getElementById("preview_status").innerHTML = "<img src='images/icon/loading.gif'>";
+      document.getElementById("zip_status").innerHTML = "<img src='images/icon/loading.gif'>";
 
 		  // Mozilla/Safari
 	    if (window.XMLHttpRequest) {
@@ -39,8 +39,8 @@ $zip_name = $dir."/".str_replace($parent_dir."/", "", $dir).".zip";
 	    self.xmlHttpReq.onreadystatechange = function() {
 	        if (self.xmlHttpReq.readyState == 4) {
 						  var xmlHttp_data = decodeURIComponent(self.xmlHttpReq.responseText);
-						  document.getElementById("preview_status").innerHTML = xmlHttp_data;
-              setTimeout('document.getElementById("preview_status").innerHTML = "";', 4000);
+						  document.getElementById("zip_status").innerHTML = xmlHttp_data;
+              setTimeout('document.getElementById("zip_status").innerHTML = "";', 4000);
 	        }
 	    }
       // Command to write to file

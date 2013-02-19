@@ -11,6 +11,7 @@
         $parent_dir = substr($dir, 0, strrpos($dir, "/"));
         $directory_list = get_directory($dir);
         $file_list = get_files($dir);
+        $template_name = str_replace($parent_dir."/", "", $dir);
 
         ?>
 
@@ -26,10 +27,16 @@
           
             <?php foreach ($directory_list[1] as $directory): ?>
             <?php $link = str_replace("//", "/", $directory_list[0]."/".$directory); ?>
-            <li><a href="?dir=<?php echo $link; ?>"><i class="icon-folder-open"></i> <?php echo $directory?></a></li>
+            <li><a href="?dir=<?php echo $link; ?>"><i class="icon-folder-closed"></i> <?php echo $directory?></a></li>
             <?php endforeach ?>
 
           </ul>
+
+          <?php if (!empty($file_list[1])): ?> 
+          <div class="alert alert-info">
+            <i class="icon-folder-open"></i> OPEN: <?php echo $template_name; ?>
+          </div>
+          <?php endif; ?>
 
         </div>
 

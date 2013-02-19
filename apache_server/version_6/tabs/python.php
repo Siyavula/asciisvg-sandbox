@@ -5,7 +5,7 @@ $file_content = htmlspecialchars($file_object[1]);
 
 <?php if ($file_object[0] == 1) :?>
   <p><textarea id="pythoninput" name="pythoninput"><?php echo $file_content; ?></textarea></p>
-  <p><button class="btn btn-small" onClick="httpPost_writefile_python('<?php echo $dir.'/'.$tab_dict[1][0]; ?>', String(encodeURIComponent(pythoninput_editor.getValue())));">Save</button> &nbsp; <i id="save_status_python"></i></p>
+  <p><button id="python_save_btn" class="btn btn-small" onClick="httpPost_writefile_python('<?php echo $dir.'/'.$tab_dict[1][0]; ?>', String(encodeURIComponent(pythoninput_editor.getValue())));">Save</button> &nbsp; <i id="save_status_python"></i></p>
 
 <script>
 
@@ -14,7 +14,13 @@ $file_content = htmlspecialchars($file_object[1]);
     mode: {name: "python",
            version: 2,
            singleLineStringErrors: false},
-	  onGutterClick: function(cm, n) {
+	  extraKeys: {
+      "Ctrl-S": function() { httpPost_writefile_python('<?php echo $dir.'/'.$tab_dict[1][0]; ?>', String(encodeURIComponent(pythoninput_editor.getValue())));}
+    },
+    onChange: function() {
+      document.getElementById('python_save_btn').className = "btn btn-small btn-warning";
+    },
+    onGutterClick: function(cm, n) {
       var info = cm.lineInfo(n);
       if (info.markerText)
         cm.clearMarker(n);
@@ -51,6 +57,7 @@ $file_content = htmlspecialchars($file_object[1]);
 	        if (self.xmlHttpReq.readyState == 4) {
 						  var xmlHttp_data = decodeURIComponent(self.xmlHttpReq.responseText);
 						  document.getElementById("save_status_python").innerHTML = xmlHttp_data;
+              document.getElementById('python_save_btn').className = "btn btn-small";
               setTimeout('document.getElementById("save_status_python").innerHTML = "";', 2000);
 	        }
 	    }

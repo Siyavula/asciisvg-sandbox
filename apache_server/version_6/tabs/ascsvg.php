@@ -13,7 +13,7 @@ $file_content = htmlspecialchars($file_object[1]);
 <?php echo $file_content; ?>
     </textarea></p>
 
-    <p><button class="btn btn-small" onClick="httpPost_writefile_<?php echo $key;?>('<?php echo $dir.'/'.$tab_dict[2][$key]; ?>', String(encodeURIComponent(asciiinput_editor_<?php echo $key;?>.getValue())));">Save</button> <i id="save_status_<?php echo $key;?>"></i></p>
+    <p><button id="ascii_<?php echo $key;?>_save_btn" class="btn btn-small" onClick="httpPost_writefile_<?php echo $key;?>('<?php echo $dir.'/'.$tab_dict[2][$key]; ?>', String(encodeURIComponent(asciiinput_editor_<?php echo $key;?>.getValue())));">Save</button> <i id="save_status_<?php echo $key;?>"></i></p>
 
     <!-- Suggestion -->
     <div class="alert alert-info">
@@ -208,6 +208,7 @@ $file_content = htmlspecialchars($file_object[1]);
 	        if (self.xmlHttpReq.readyState == 4) {
 						  var xmlHttp_data = decodeURIComponent(self.xmlHttpReq.responseText);
 						  document.getElementById("save_status_<?php echo $key;?>").innerHTML = xmlHttp_data;
+              document.getElementById("ascii_<?php echo $key;?>_save_btn").className = "btn btn-small";
               setTimeout('document.getElementById("save_status_<?php echo $key;?>").innerHTML = "";', 2000);
 	        }
 	    }
@@ -229,8 +230,12 @@ $file_content = htmlspecialchars($file_object[1]);
     mode: {name: "python",
            version: 2,
            singleLineStringErrors: false},
+    extraKeys: {
+      "Ctrl-S": function() { httpPost_writefile_<?php echo $key;?>('<?php echo $dir.'/'.$tab_dict[2][$key]; ?>', String(encodeURIComponent(asciiinput_editor_<?php echo $key;?>.getValue())));}
+    }, 
     onChange: function() {
       updatePreview_<?php echo $key;?>(asciiinput_editor_<?php echo $key;?>);
+      document.getElementById("ascii_<?php echo $key;?>_save_btn").className = "btn btn-small btn-warning";
     },
 	  onGutterClick: function(cm, n) {
       var info = cm.lineInfo(n);

@@ -62,8 +62,8 @@ done
 
 # Give full user access to /var/www/
 echo; 
-read -p "Press any key to give user ACCESS to /var/www/... "
-sudo chmod 777 /var/www -R
+read -p "Press any key to apache GROUP ACCESS to /var/www/... "
+sudo chgrp -R www-data /var/www/
 
 # Testing APACHE CONFIG FILE
 echo; 
