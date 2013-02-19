@@ -31,12 +31,19 @@ if ($zip->open($zip_name, ZIPARCHIVE::CREATE) == True)
       $i += 1;
     }
   }
-  echo $i." files added to ZIP (".date("Y-m-d H:i:s", time()).")";
+  echo $i." files added to ZIP (".date("Y-m-d H:i:s", time())."). ";
+}
+else
+{
+  echo "ZIP file not accessible. ";
 }
 
 $zip->close();
 
-@chmod($zip_name, 0777);
+if (!(@chmod($zip_name, 0777)))
+{
+  echo "ZIP file permission not set. ";
+}
 
 ?>
 

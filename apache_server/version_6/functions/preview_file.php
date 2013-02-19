@@ -28,15 +28,37 @@ curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
 $data = curl_exec($ch);
 curl_close($ch);
 
+// HTML file
+
+$html_filename = "template.html";
+
 if (strlen($data) > 0)
 {
-  // Write this to a file
-  write_file("template.html",$data);
+  // Delete existing HTML
+  if (is_file($html_filename))
+  {
+    unlink($html_filename);
+  }
+
+  // Write this to a HTML file
+  if (write_file("template.html",$data))
+  {
+    echo "Error: HTML file not accessible. ";
+  }
+
+  // Set File Permission
+  if (!(@chmod($html_filename, 0777)))
+  {
+    echo "Error: HTML file permission not set. ";
+  }
 }
 else
 {
-  echo "Error: monassis-buildout server not reachable";
+  echo "Error: monassis-buildout server not accessible. ";
 }
+
+
+
 
 ?>
 

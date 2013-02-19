@@ -77,9 +77,21 @@
                   <?php endif; ?>                
 
                   <?php if (isset($tab_dict[2][0])): ?>
-                    <?php foreach ($tab_dict[2] as $key=>$image_name): ?>
-                    <li><a href="#ascsvg-<?php echo $key;?>" data-toggle="tab"><?php echo $image_name; ?></a></li>
-                    <?php endforeach; ?>                
+                  <li class="dropdown">
+                      <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                          Images
+                          <b class="caret"></b>
+                        </a>
+                      <ul class="dropdown-menu">
+                        <?php foreach ($tab_dict[2] as $key=>$image_name): ?>
+                            <li>
+                              <a href="#ascsvg-<?php echo $key;?>" data-toggle="tab">
+                                <?php echo $image_name; ?>
+                              </a>
+                            </li>
+                        <?php endforeach; ?>      
+                      </ul>
+                  </li>
                   <?php endif; ?>
 
                   <!-- Preview --> 
