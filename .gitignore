@@ -1,3 +1,5 @@
 *.pyc
 *~
 /apache_server/siyavula.asciisvg/
+/apache_server/version_6/functions/template.zip
+/apache_server/version_6/functions/template.html
