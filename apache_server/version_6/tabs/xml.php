@@ -14,6 +14,7 @@ $file_content = htmlspecialchars($file_object[1]);
       name: "xml",
       version: 2,
       singleLineStringErrors: false},
+    lineWrapping: true,
 	  extraKeys: {
       "Ctrl-S": function() { httpPost_writefile_xml('<?php echo $dir.'/'.$tab_dict[0][0]; ?>', String(encodeURIComponent(xmlinput_editor.getValue()))); }
     },

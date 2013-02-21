@@ -68,11 +68,13 @@
             <?php endforeach ?>
 
             <div class="row-fluid">
-
-              <?php if (isset($tab_dict[0][0])): ?>
+             
               <ul id="myTab" class="nav nav-tabs">
-                <li class="active"><a href="#xml" data-toggle="tab">XML</a></li>
-               
+
+                <?php if (isset($tab_dict[0][0])): ?>
+
+                  <li class="active"><a href="#xml" data-toggle="tab">XML</a></li>
+                 
                   <?php if (isset($tab_dict[1][0])): ?>
                   <li><a href="#python" data-toggle="tab">Python</a></li>
                   <?php endif; ?>                
@@ -95,33 +97,32 @@
                   </li>
                   <?php endif; ?>
 
-                  <!-- Preview --> 
+                <!-- Preview --> 
 
-                  <li><a href="#sandbox-preview" data-toggle="tab"><?php echo "Sandbox Preview"; ?></a></li>
+                <li><a href="#sandbox-preview" data-toggle="tab"><?php echo "Sandbox Preview"; ?></a></li>
 
-                  <!-- Settings -->
+                <?php endif; ?>
 
-                  
+                <!-- Options -->
 
-                  <!-- Resources -->
-
-                  <li class="dropdown pull-right">
-                      <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                          Options
-                          <b class="caret"></b>
-                        </a>
-                      <ul class="dropdown-menu">
-                        <li><a href="#resource_colours" data-toggle="tab"><i class="icon-info-sign"></i> Colours</a></li>
-                        <li><a href="#resource_functions" data-toggle="tab"><i class="icon-info-sign"></i> Functions</a></li>
-                        <li><a href="#resource_unicode" data-toggle="tab"><i class="icon-info-sign"></i> Unicode List</a></li>
-                        <li class="divider"></li>
-                        <li><a href="#settings" data-toggle="tab"><i class="icon-wrench"></i> Settings</a></li>
-                      </ul>
-                  </li>
+                <li class="dropdown pull-right">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    Options
+                    <b class="caret"></b>
+                  </a>
+                <ul class="dropdown-menu">
+                  <li><a href="#resource_colours" data-toggle="tab"><i class="icon-info-sign"></i> Colours</a></li>
+                  <li><a href="#resource_functions" data-toggle="tab"><i class="icon-info-sign"></i> Functions</a></li>
+                  <li><a href="#resource_unicode" data-toggle="tab"><i class="icon-info-sign"></i> Unicode List</a></li>
+                  <li class="divider"></li>
+                  <li><a href="#settings" data-toggle="tab"><i class="icon-wrench"></i> Settings</a></li>
+                  <li class="divider"></li>
+                  <li><a href="#terminal" data-toggle="tab"><i class="icon-eye-open"></i> Terminal</a></li>
+                </ul>
+                </li>
 
               </ul>
-              <?php endif; ?>
-
+  
               <!-- Show Files -->
 
               <div id="myTabContent" class="tab-content">
@@ -166,6 +167,10 @@
 
                 <div class="tab-pane fade" id="resource_unicode">
                   <?php include ("tabs/resource_unicode.php"); ?>
+                </div>
+
+                <div class="tab-pane fade" id="terminal">
+                  <?php include ("tabs/terminal.php"); ?>
                 </div>
 
               </div>

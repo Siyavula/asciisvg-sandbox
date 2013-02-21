@@ -230,6 +230,7 @@ $file_content = htmlspecialchars($file_object[1]);
     mode: {name: "python",
            version: 2,
            singleLineStringErrors: false},
+    lineWrapping: true,
     extraKeys: {
       "Ctrl-S": function() { httpPost_writefile_<?php echo $key;?>('<?php echo $dir.'/'.$tab_dict[2][$key]; ?>', String(encodeURIComponent(asciiinput_editor_<?php echo $key;?>.getValue())));}
     }, 

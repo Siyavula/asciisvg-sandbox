@@ -14,6 +14,7 @@ $file_content = htmlspecialchars($file_object[1]);
     mode: {name: "python",
            version: 2,
            singleLineStringErrors: false},
+    lineWrapping: true,
 	  extraKeys: {
       "Ctrl-S": function() { httpPost_writefile_python('<?php echo $dir.'/'.$tab_dict[1][0]; ?>', String(encodeURIComponent(pythoninput_editor.getValue())));}
     },
