@@ -5,21 +5,21 @@
 
         <!-- menu -->
 
-        <?php 
-
-        $dir = @clean_dir(@$_GET['dir']);
-        $parent_dir = substr($dir, 0, strrpos($dir, "/"));
-        $directory_list = get_directory($dir);
-        $file_list = get_files($dir);
-        $template_name = str_replace($parent_dir."/", "", $dir);
-
-        ?>
-
         <div class="span3">
- 
-          <ul class="nav nav-tabs nav-stacked">
-            <li><a href="?dir=<?php echo $dir;?>&settings=1"><i class="icon-wrench"></i> Settings</a></li>
-          </ul>
+
+          <?php if (!empty($file_list[1])): ?> 
+          <div class="alert alert-info">
+            <i class="icon-folder-open"></i> Template: <?php echo $template_name; ?>
+          </div>
+          <?php else: ?>
+          <div class="alert alert-info">
+            <i class="icon-search"></i> Select a template...
+          </div>
+          <?php endif; ?>
+
+          <div class="alert alert-warning" id="warning_save_changes" style="display:none;">
+            <i class="icon-warning-sign"></i> SAVE changes before navigating!
+          </div>
 
           <ul class="nav nav-tabs nav-stacked">
 
@@ -31,12 +31,6 @@
             <?php endforeach ?>
 
           </ul>
-
-          <?php if (!empty($file_list[1])): ?> 
-          <div class="alert alert-info">
-            <i class="icon-folder-open"></i> OPEN: <?php echo $template_name; ?>
-          </div>
-          <?php endif; ?>
 
         </div>
 
@@ -105,6 +99,26 @@
 
                   <li><a href="#sandbox-preview" data-toggle="tab"><?php echo "Sandbox Preview"; ?></a></li>
 
+                  <!-- Settings -->
+
+                  
+
+                  <!-- Resources -->
+
+                  <li class="dropdown pull-right">
+                      <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                          Options
+                          <b class="caret"></b>
+                        </a>
+                      <ul class="dropdown-menu">
+                        <li><a href="#resource_colours" data-toggle="tab"><i class="icon-info-sign"></i> Colours</a></li>
+                        <li><a href="#resource_functions" data-toggle="tab"><i class="icon-info-sign"></i> Functions</a></li>
+                        <li><a href="#resource_unicode" data-toggle="tab"><i class="icon-info-sign"></i> Unicode List</a></li>
+                        <li class="divider"></li>
+                        <li><a href="#settings" data-toggle="tab"><i class="icon-wrench"></i> Settings</a></li>
+                      </ul>
+                  </li>
+
               </ul>
               <?php endif; ?>
 
@@ -137,6 +151,22 @@
                   <?php include ("tabs/preview.php"); ?>
                 </div>
                 <?php endif; ?>
+
+                <div class="tab-pane fade" id="settings">
+                  <?php include ("tabs/settings.php"); ?>
+                </div>
+
+                <div class="tab-pane fade" id="resource_colours">
+                  <?php include ("tabs/resource_colours.php"); ?>
+                </div>
+
+                <div class="tab-pane fade" id="resource_functions">
+                  <?php include ("tabs/resource_functions.php"); ?>
+                </div>
+
+                <div class="tab-pane fade" id="resource_unicode">
+                  <?php include ("tabs/resource_unicode.php"); ?>
+                </div>
 
               </div>
 

@@ -19,6 +19,7 @@ $file_content = htmlspecialchars($file_object[1]);
     },
     onChange: function() {
       document.getElementById('python_save_btn').className = "btn btn-small btn-warning";
+      document.getElementById('warning_save_changes').style.display = "block";
     },
     onGutterClick: function(cm, n) {
       var info = cm.lineInfo(n);

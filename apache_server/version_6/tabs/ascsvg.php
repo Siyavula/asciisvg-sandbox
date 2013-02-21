@@ -236,6 +236,7 @@ $file_content = htmlspecialchars($file_object[1]);
     onChange: function() {
       updatePreview_<?php echo $key;?>(asciiinput_editor_<?php echo $key;?>);
       document.getElementById("ascii_<?php echo $key;?>_save_btn").className = "btn btn-small btn-warning";
+      document.getElementById('warning_save_changes').style.display = "block";
     },
 	  onGutterClick: function(cm, n) {
       var info = cm.lineInfo(n);

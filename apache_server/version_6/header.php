@@ -1,4 +1,18 @@
 <!DOCTYPE html>
+
+<?php include_once("functions/functions.php"); ?>
+<?php include_once("functions/variables.php"); ?>
+
+<?php 
+
+$dir = @clean_dir(@$_GET['dir']);
+$parent_dir = substr($dir, 0, strrpos($dir, "/"));
+$directory_list = get_directory($dir);
+$file_list = get_files($dir);
+$template_name = str_replace($parent_dir."/", "", $dir);
+
+?>
+
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -42,9 +56,6 @@
     <link rel="apple-touch-icon-precomposed" href="assets/ico/apple-touch-icon-57-precomposed.png">
   </head>
 
-  <?php include_once("functions/functions.php"); ?>
-  <?php include_once("functions/variables.php"); ?>
-
   <body>
 
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -55,7 +66,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
-          <a class="brand" href="index.php">Siyavula Template Editor</a>
+          <b class="brand">Siyavula Template Editor</b>
           <div class="nav-collapse collapse">
           </div><!--/.nav-collapse -->
         </div>
