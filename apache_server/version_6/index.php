@@ -27,7 +27,7 @@
           
             <?php foreach ($directory_list[1] as $directory): ?>
             <?php $link = str_replace("//", "/", $directory_list[0]."/".$directory); ?>
-            <li><a href="?dir=<?php echo $link; ?>"><i class="icon-folder-closed"></i> <?php echo $directory?></a></li>
+            <li><a href="?dir=<?php echo $link; ?>"><i class="icon-folder-open"></i> <?php echo $directory?></a></li>
             <?php endforeach ?>
 
           </ul>
