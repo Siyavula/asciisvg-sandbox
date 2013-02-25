@@ -95,69 +95,90 @@
   </div>
 
   <div id="content">
-    <form name="questions" action="http://www.monassis.com:27183/sandbox" method="POST">
-    <h1>Sandbox: Converting decimal numbers to fractions</h1>
+    <form name="questions" action="http://www.monassis.com:27183/sandbox" method="POST">           
+    <h1>Sandbox: Adding vectors algebraically.</h1>
   <p>
-      Write \(\text{0,}\dot{8}\)
-      in the form \(\frac{a}{b}\)
-      (where \(a\) and \(b\) are integers that share no factors).  In other words, show that \(\text{0,}\dot{8}\) is a rational number.
-    </p>
-    <p><b>Answer:</b>&#160; <input name="question1a" class="answer-input" type="text" size="10" value="8/9"/> &#160;&#160;&#160; <span class="answer-marks">[3 marks]</span><span id="button1"> &#160;&#160;&#160; <input type="submit" name="click1" value="Check" onclick="this.style.display='none'; document.getElementById('checking_please_wait').style.display='inline';"/><img src="please_wait_24.gif" style="display:none;" id="checking_please_wait"/></span></p><div id="how-to-write"><span id="how-to-write-closed" onclick="document.getElementById('how-to-write-open').style.display=((document.getElementById('how-to-write-open').style.display=='none')?'block':'none');">Help! How should I type my answer?</span><div id="how-to-write-open" style="display:none;"><?xml version="1.0" encoding="utf-8"??><p>
-  You are expected to write a fraction here.
+      A force of 325 N is applied to a pencil case pushing it towards the right. Another force of 301 N is applied in the opposite direction. What is the resultant force on the pencil case? Take to the right as the positive direction.
+    </p>  
+    <p><b>Answer:</b>&#160;  
+        \(\vec{R} = \)  <input name="question1a" class="answer-input" type="text" size="10" value="24"/> N
+       &#160;&#160;&#160; <span class="answer-marks">[2 marks]</span><span id="button1"> &#160;&#160;&#160; <input type="submit" name="click1" value="Check" onclick="this.style.display='none'; document.getElementById('checking_please_wait').style.display='inline';"/><img src="please_wait_24.gif" style="display:none;" id="checking_please_wait"/></span></p><div id="how-to-write"><span id="how-to-write-closed" onclick="document.getElementById('how-to-write-open').style.display=((document.getElementById('how-to-write-open').style.display=='none')?'block':'none');">Help! How should I type my answer?</span><div id="how-to-write-open" style="display:none;"><?xml version="1.0" encoding="utf-8"??><p>
+  You should enter a number here.
 </p>
 <p>
-  You can write pure fractions using the division symbol: <code>/</code>
-  For example, to write the fraction \(-\frac{2}{3}\) the correct input would be: <code>-2/3</code>
+  If you want to, you can use a space to separate thousands.
+  Example: <code>12&#160;800,25</code>
 </p>
 <p>
-  You can also write mixed numbers by first writing the integer part, then a space and then the fraction part.
-  For example, to write \(2 \frac{1}{8}\) the correct input would be: <code>2 1/8</code>
+  For <b>scientific notation</b> you need to use the multiply symbol (<code>&#8727;</code>) and the exponent symbol (<code>^</code>).
+  <br/>
+  For example 6,673&#160;&#215;&#160;10<sup>&#8722;11</sup> should be written as: <code>6,673 &#8727; 10^&#8722;11</code>
 </p>
 </div></div><div id="correct1"><p><span style="color:#00c000;">Correct!</span></p>
-	<p>  This question involves a rather "messy" number: \( \text{0,}\dot {8} \) is equal to \( \text{0,8888} \ldots\)  it goes on forever!!  To answer this question, we will do something clever to tidy up that long (neverending) mess of decimals: we are going to multiply by 10.  The reason is because <b> there is a single decimal point repeating </b>.  It turns out that if we multiply by 10 and then subtract as shown below, all of the decimals will cancel, which will tidy up that long decimal number.  </p>
-	
-	<p> First, let \(x = \text{0,8888} \ldots\)
-	  <br/> Next, multiply both sides of the equation above by 10 to get: \(\text{10}x = \text{8,8888} \ldots\)
-	</p>
-	
-	<p>
-	  Now subtract the two equations.  Notice that when we do this, the repeating digits <b> cancel each other</b>, and we end up with an integer.
-	  \[
-	    \begin{aligned}
-	      \text{10}x &amp; = \; \; \; \text{8,8888} \ldots	\\
-	      
-	       - x &amp; = - \text{0,8888} \ldots \\
-	       
-	       \hline 	\\
-	      \text{9}x &amp; =  \; \; \; \text{8,0000}\ldots \quad \longleftarrow \;  ^{\textrm{The decimal values all cancel,}}_{\textrm{leaving a nice, tidy integer!}}\\
-	      \text{9}x &amp; =  \; \; \; \text{8}	\\
-	      \therefore x &amp; = \frac{\text{8}}{\text{9}} 
-   	    \end{aligned}
-  	  \]
-	</p>
-      <p>The correct response can be typed as: <input type="text" value="8/9" size="3"/></p></div><div id="oops1"><p><span style="color:#c00000;">That's not right.</span></p>
-	<p>  This question involves a rather "messy" number: \( \text{0,}\dot {8} \) is equal to \( \text{0,8888} \ldots\)  it goes on forever!!  To answer this question, we will do something clever to tidy up that long (neverending) mess of decimals: we are going to multiply by 10.  The reason is because <b> there is a single decimal point repeating </b>.  It turns out that if we multiply by 10 and then subtract as shown below, all of the decimals will cancel, which will tidy up that long decimal number.  </p>
-	
-	<p> First, let \(x = \text{0,8888} \ldots\)
-	  <br/> Next, multiply both sides of the equation above by 10 to get: \(\text{10}x = \text{8,8888} \ldots\)
-	</p>
-	
-	<p>
-	  Now subtract the two equations.  Notice that when we do this, the repeating digits <b> cancel each other</b>, and we end up with an integer.
-	  \[
-	    \begin{aligned}
-	      \text{10}x &amp; = \; \; \; \text{8,8888} \ldots	\\
-	      
-	       - x &amp; = - \text{0,8888} \ldots \\
-	       
-	       \hline 	\\
-	      \text{9}x &amp; =  \; \; \; \text{8,0000}\ldots \quad \longleftarrow \;  ^{\textrm{The decimal values all cancel,}}_{\textrm{leaving a nice, tidy integer!}}\\
-	      \text{9}x &amp; =  \; \; \; \text{8}	\\
-	      \therefore x &amp; = \frac{\text{8}}{\text{9}} 
-   	    \end{aligned}
-  	  \]
-	</p>
-      <p>The correct response can be typed as: <input type="text" value="8/9" size="3"/></p></div>
+        <div style="font-weight: bold; margin-top: 10px; margin-bottom: 0;">STEP [&#8722;1 mark &#8658; 1 / 2 marks left]</div>
+          <p> First we look at what information we are given and what is required from us. </p>
+          <p><u>Given:</u>
+          <ul list-type="bulleted">
+            <li>A force pushing the pencil case to the right: \(\vec{F}_{1} = \text{325}\ \text{N}\)</li>
+            <li>A force pushing the pencil case to the left: \(\vec{F}_{2} = \text{&#8722;301}\ \text{N}\)</li>
+          </ul>
+          <u>Required:</u>
+          <ul list-type="bulleted">
+            <li>A force pushing the pencil case to the right: \(\vec{R}\)</li>
+          </ul></p>
+          <p>
+            Drawing a rough sketch of the situation can help you to answer the question.
+          </p>
+          <center><div style="position: relative; background: url(http://www.monassis.com:27183/media/1de2cef5dc5a1cc26dd86e70c9d86a13.png); width: 386.4px; height: 140px;"/></center>
+        <hr style="margin-top: 0; margin-bottom: 0;"/>
+        <div style="font-weight: bold; margin-top: 10px; margin-bottom: 0;">STEP [&#8722;1 mark &#8658; 0 / 2 marks left]</div>
+          <p>
+            To calculate the resultant force we now add the two forces.
+          </p>
+          \[
+            \begin{aligned}
+              \vec{R} &amp; = (\text{325}\ \text{N})+ (\text{&#8722;301}\ \text{N})\\
+                      &amp; = \text{325}\ \text{N} \text{&#8722;301}\ \text{N}\\
+                      &amp; = \text{24}\ \text{N} 
+            \end{aligned}
+          \]
+          <p>
+            The resultant force on the pencil case is 24 N to the right.
+          </p>
+        <hr style="margin-top: 0; margin-bottom: 0;"/>
+      <p>The correct response can be typed as: <input type="text" value="24" size="2"/></p></div><div id="oops1"><p><span style="color:#c00000;">That's not right.</span></p>
+        <div style="font-weight: bold; margin-top: 10px; margin-bottom: 0;">STEP [&#8722;1 mark &#8658; 1 / 2 marks left]</div>
+          <p> First we look at what information we are given and what is required from us. </p>
+          <p><u>Given:</u>
+          <ul list-type="bulleted">
+            <li>A force pushing the pencil case to the right: \(\vec{F}_{1} = \text{325}\ \text{N}\)</li>
+            <li>A force pushing the pencil case to the left: \(\vec{F}_{2} = \text{&#8722;301}\ \text{N}\)</li>
+          </ul>
+          <u>Required:</u>
+          <ul list-type="bulleted">
+            <li>A force pushing the pencil case to the right: \(\vec{R}\)</li>
+          </ul></p>
+          <p>
+            Drawing a rough sketch of the situation can help you to answer the question.
+          </p>
+          <center><div style="position: relative; background: url(http://www.monassis.com:27183/media/1de2cef5dc5a1cc26dd86e70c9d86a13.png); width: 386.4px; height: 140px;"/></center>
+        <hr style="margin-top: 0; margin-bottom: 0;"/>
+        <div style="font-weight: bold; margin-top: 10px; margin-bottom: 0;">STEP [&#8722;1 mark &#8658; 0 / 2 marks left]</div>
+          <p>
+            To calculate the resultant force we now add the two forces.
+          </p>
+          \[
+            \begin{aligned}
+              \vec{R} &amp; = (\text{325}\ \text{N})+ (\text{&#8722;301}\ \text{N})\\
+                      &amp; = \text{325}\ \text{N} \text{&#8722;301}\ \text{N}\\
+                      &amp; = \text{24}\ \text{N} 
+            \end{aligned}
+          \]
+          <p>
+            The resultant force on the pencil case is 24 N to the right.
+          </p>
+        <hr style="margin-top: 0; margin-bottom: 0;"/>
+      <p>The correct response can be typed as: <input type="text" value="24" size="2"/></p></div> 
   <div id="nav-buttons">
           <input type="submit" name="nextPage" value="Back to sandbox"/>
         </div></form>

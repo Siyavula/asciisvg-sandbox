@@ -62,7 +62,7 @@ $file_content = htmlspecialchars($file_object[1]);
     <!-- Error -->
     <div class="alert alert-error">
 	    <p>Error</p>
-      <p><textarea id="error_msg_<?php echo $key;?>" rows="1" disabled="disabled" style="width:100%; color:#990000; background:#FEE;"></textarea></p>
+      <p><textarea id="error_msg_<?php echo $key;?>" rows="8" disabled="disabled" style="width:100%; color:#990000; background:#FEE;"></textarea></p>
     </div>
 
   </div>
@@ -103,7 +103,9 @@ $file_content = htmlspecialchars($file_object[1]);
 	    else if (window.ActiveXObject) {
 	        self.xmlHttpReq = new ActiveXObject("Microsoft.XMLHTTP");
 	    }
-	    self.xmlHttpReq.open('POST', "cgi-bin/processor.py", true);
+	    //self.xmlHttpReq.open('POST', "cgi-bin/processor.py", true);
+	    //self.xmlHttpReq.open('POST', "cgi-bin/test_processor.py", true);
+      self.xmlHttpReq.open('POST', "functions/ascsvg_monitor.php", true);
 	    self.xmlHttpReq.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 	    self.xmlHttpReq.onreadystatechange = function() {
 	        if (self.xmlHttpReq.readyState == 4) {
@@ -116,13 +118,15 @@ $file_content = htmlspecialchars($file_object[1]);
 	    }
 		  if (image_format == "PNG")
 		  {
-			  self.xmlHttpReq.send("type=png&ascii=" + ascii_input_code + " &python=" + python_input_code + " &strip_tags=true&randomize_lock=" + random_seed_lock + "&random_seed=" + random_seed);
+  		  var text;
+        text = "type=png&ascii=" + ascii_input_code + " &python=" + python_input_code + " &strip_tags=true&randomize_lock=" + random_seed_lock + "&random_seed=" + random_seed;
+        self.xmlHttpReq.send(text);
 		  }
 		  else if (image_format == "SVG")
 		  {
 			  var text;
 			  text = "type=svg&ascii=" + ascii_input_code + " &python=" + python_input_code + " &strip_tags=true&randomize_lock=" + random_seed_lock + "&random_seed=" + random_seed;
-			  self.xmlHttpReq.send(text);
+        self.xmlHttpReq.send(text);
 		  }
   }
 
