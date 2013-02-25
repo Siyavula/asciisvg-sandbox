@@ -24,7 +24,7 @@ $file_content = htmlspecialchars($file_object[1]);
     <!-- Debug String -->
     <div class="alert alert-info">
       <p>dprint()</p>
-      <p><textarea id="debug_string_<?php echo $key;?>" rows="1" disabled="disabled" style="width:100%; color:#000000; background:#FFF;"></textarea></p>
+      <p><textarea id="debug_string_<?php echo $key;?>" rows="3" disabled="disabled" style="width:100%; color:#000000; background:#FFF;"></textarea></p>
     </div>
 
   </div>
@@ -108,13 +108,27 @@ $file_content = htmlspecialchars($file_object[1]);
       self.xmlHttpReq.open('POST', "functions/ascsvg_monitor.php", true);
 	    self.xmlHttpReq.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 	    self.xmlHttpReq.onreadystatechange = function() {
-	        if (self.xmlHttpReq.readyState == 4) {
-						  var xmlHttp_data = decodeURIComponent(self.xmlHttpReq.responseText).split ("[BRK]");
-						  document.getElementById("outputNode_<?php echo $key;?>").innerHTML = xmlHttp_data[0];
-						  document.getElementById("error_msg_<?php echo $key;?>").innerHTML = xmlHttp_data[1];
-						  document.getElementById("random_seed_<?php echo $key;?>").value = xmlHttp_data[2];
-						  document.getElementById("debug_string_<?php echo $key;?>").value = xmlHttp_data[3];
-	        }
+        if (self.xmlHttpReq.readyState == 4) {
+				  var xmlHttp_data = decodeURIComponent(self.xmlHttpReq.responseText).split ("[BRK]");
+					if (xmlHttp_data[0].length == 0)
+					{
+						if (image_format == "PNG")
+						{
+							document.getElementById("outputNode_<?php echo $key;?>").innerHTML = "<img src='cgi-bin/buffer/buffer.png'>";
+						}
+						else if (image_format == "SVG")
+						{
+							document.getElementById("outputNode_<?php echo $key;?>").innerHTML = xmlHttp_data[3];
+						}
+					}
+					else
+					{
+						document.getElementById("outputNode_<?php echo $key;?>").innerHTML = "";
+					}
+				  document.getElementById("error_msg_<?php echo $key;?>").innerHTML = xmlHttp_data[0];
+				  document.getElementById("random_seed_<?php echo $key;?>").value = xmlHttp_data[1];
+				  document.getElementById("debug_string_<?php echo $key;?>").value = xmlHttp_data[2];
+        }
 	    }
 		  if (image_format == "PNG")
 		  {

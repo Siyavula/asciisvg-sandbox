@@ -93,7 +93,7 @@ function write_file($file_path, $file_contents)
     echo $text_open_error;
   }
 }
-	
+
 // ======================================
 // Process handling in PHP
 // =====================================
@@ -105,29 +105,30 @@ function write_file($file_path, $file_contents)
 //
 // ======================================
 
-function PsExecute($command, $timeout_ms = 50) 
+function PsExecute($exec_command, $timeout_ms = 50) 
 { 
-	// Create PID
-	
 	$pid_1 = PsExec("grep"); 
-	
-	$exec_command = $command.' & echo $!';
-	
-	$pid = PsExec($exec_command); 
-	
+
+	// Get output
+	$PsOutput = PsExec($exec_command); 
+
+	// Get PID
+	$pid = (int)$PsOutput[0];
+
 	// Create Output Variable
-	$output[0] = $pid; 			// PID
+	$output = array();
+	$output[0] = $pid; 		// PID
 	$output[1] = 0;				// Timeout Error Flag
 	$output[2] = ""; 			// Timeout Error Explanation
 	$output[3] = 0; 			// System Error Flag
 	$output[4] = ""; 			// System Error Explanation
-	
+
 	// Confirm PID created		
 	if( empty($pid))
 	{
 		$output[3] = 1;						// Raise System error flag
 		$output[4] = "PID not created";		// Raise System error flag
-		return $output; 
+		return $output;
 	}
 	
 	// Sleep for 50ms (afterwhich process should have finished)
@@ -155,46 +156,39 @@ function PsExecute($command, $timeout_ms = 50)
 		else
 		{
 			$output[3] = 1;
-			$output[4] = "Parent process NOT killed!";
+			$output[4] = "Failed to KILL parent process!";
 			return $output; 
 		}
 	}
-	
-} 
+}
 
 function PsExec($exec_command) {
 
-	exec($exec_command, $op, $error_detect);
-	return (int)$op[0];
+	$command = $exec_command.' > /dev/null & echo $!'; 
+	exec($command ,$op);
+	return $op;
 
 }
 
 function PsExists($pid) { 
 
-	//echo "PID: ".$pid."<br />";
-	exec("ps -aux | grep www-data | grep $pid", $output_exists);
+	exec("ps -aux | grep www-data | grep ".$pid, $output_exists);
 	foreach ($output_exists as $output_row)
 	{
-		//echo "Row: ".$output_row."<br />";
 		$output_array = explode(" ", $output_row);
-		
 		// Scroll to search for PID
-		$pid_array = "";
 		for ($i=1; $i < 6; $i ++)
 		{
 			if (is_numeric($output_array[$i]))
-			{
-				$pid_array = $output_array[$i];
-				break;
+			{	
+				if ($output_array[$i] == $pid)
+				{
+					return true;		
+				}
 			}
 		}
-		
-		if ($pid_array == $pid)
-		{
-			return true;		
-		}
 	}
-	return false; 
+	return false;
 } 
 
 function PsKill($pid) { 
