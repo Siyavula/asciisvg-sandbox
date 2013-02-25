@@ -12,7 +12,7 @@ escapeshellarg($_POST['randomize_lock']).' '.
 escapeshellarg($_POST['random_seed']);
 
 // Format Command
-$command = 'python ../cgi-bin/test_processor.py '.$variables.' ';
+$command = 'python ../cgi-bin/processor.py '.$variables.' ';
 
 // Execute command
 $time_limit = 2000;
