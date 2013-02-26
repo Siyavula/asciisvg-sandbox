@@ -13,7 +13,7 @@ $file_content = htmlspecialchars($file_object[1]);
 <?php echo $file_content; ?>
     </textarea></p>
 
-    <p><button id="ascii_<?php echo $key;?>_save_btn" class="btn btn-small" onClick="httpPost_writefile_<?php echo $key;?>('<?php echo $dir.'/'.$tab_dict[2][$key]; ?>', String(encodeURIComponent(asciiinput_editor_<?php echo $key;?>.getValue())));">Save</button> <i id="save_status_<?php echo $key;?>"></i></p>
+    <p><button id="ascii_<?php echo $key;?>_save_btn" class="btn btn-medium" onClick="httpPost_writefile_<?php echo $key;?>('<?php echo $dir.'/'.$tab_dict[2][$key]; ?>', String(encodeURIComponent(asciiinput_editor_<?php echo $key;?>.getValue())));">Save</button> <i id="save_status_<?php echo $key;?>"></i></p>
 
     <!-- Suggestion -->
     <div class="alert alert-info">
@@ -36,18 +36,20 @@ $file_content = htmlspecialchars($file_object[1]);
 
       <!-- Option: Randomize -->
       <label class="checkbox">
-        <input type="checkbox" id="randomize_lock_<?php echo $key;?>">  hold random seed: <input id="random_seed_<?php echo $key;?>" style="width:50px;">
+        <input type="checkbox" id="randomize_lock_<?php echo $key;?>"> hold seed:
       </label>
+
+			<input id="random_seed_<?php echo $key;?>" class="input" type="text" style="width:50px;">
       
       <!-- Update: SVG Button -->
-      <button type="button" class="btn btn-small" onClick="update_SVG_<?php echo $key;?>();">SVG</button>
+      <button type="button" class="btn btn-medium" onClick="update_SVG_<?php echo $key;?>();">SVG</button>
 
       <!-- Update: PNG Button -->
-      <button type="button" class="btn btn-small" onClick="update_PNG_<?php echo $key;?>();">PNG</button>
+      <button type="button" class="btn btn-medium" onClick="update_PNG_<?php echo $key;?>();">PNG</button>
 
       <!-- Option: Auto-update -->
       <label class="checkbox">
-        <input type="checkbox" id="autocomplete_checkbox_<?php echo $key;?>"> Auto-update
+        <input type="checkbox" id="autocomplete_checkbox_<?php echo $key;?>"> Auto-update (no time limit)
       </label>
 
     </div>
@@ -86,10 +88,6 @@ $file_content = htmlspecialchars($file_object[1]);
   function xmlhttpPost_<?php echo $key;?>(image_format) {
 	    var xmlHttpReq = false;
 	    var self = this;
-
-      // Loading
-      document.getElementById("outputNode_<?php echo $key;?>").innerHTML = "<img src='images/icon/loading.gif'>";
-
 		  var ascii_input_code = String(encodeURIComponent(asciiinput_editor_<?php echo $key;?>.getValue()));
 		  var python_input_code = String(encodeURIComponent(pythoninput_editor.getValue()));
 		  var random_seed = document.getElementById("random_seed_<?php echo $key;?>").value;
@@ -103,33 +101,59 @@ $file_content = htmlspecialchars($file_object[1]);
 	    else if (window.ActiveXObject) {
 	        self.xmlHttpReq = new ActiveXObject("Microsoft.XMLHTTP");
 	    }
-	    //self.xmlHttpReq.open('POST', "cgi-bin/processor.py", true);
-	    //self.xmlHttpReq.open('POST', "cgi-bin/test_processor.py", true);
-      self.xmlHttpReq.open('POST', "functions/ascsvg_monitor.php", true);
-	    self.xmlHttpReq.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-	    self.xmlHttpReq.onreadystatechange = function() {
-        if (self.xmlHttpReq.readyState == 4) {
-				  var xmlHttp_data = decodeURIComponent(self.xmlHttpReq.responseText).split ("[BRK]");
-					if (xmlHttp_data[0].length == 0)
+
+			// Depending on auto/not use different processor scripts
+			if (document.getElementById("autocomplete_checkbox_<?php echo $key;?>").checked) 
+			{
+				self.xmlHttpReq.open('POST', "cgi-bin/processor.py", true);
+				self.xmlHttpReq.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+			  self.xmlHttpReq.onreadystatechange = function() 
+				{
+		      if (self.xmlHttpReq.readyState == 4) 
 					{
-						if (image_format == "PNG")
-						{
-							document.getElementById("outputNode_<?php echo $key;?>").innerHTML = "<img src='cgi-bin/buffer/buffer.png'>";
-						}
-						else if (image_format == "SVG")
-						{
-							document.getElementById("outputNode_<?php echo $key;?>").innerHTML = xmlHttp_data[3];
-						}
-					}
-					else
+						var xmlHttp_data = decodeURIComponent(self.xmlHttpReq.responseText).split ("[BRK]");
+						document.getElementById("outputNode_<?php echo $key;?>").innerHTML = xmlHttp_data[0];
+						document.getElementById("error_msg_<?php echo $key;?>").innerHTML = xmlHttp_data[1];
+						document.getElementById("random_seed_<?php echo $key;?>").value = xmlHttp_data[2];
+						document.getElementById("debug_string_<?php echo $key;?>").value = xmlHttp_data[3];
+		      }
+			  }
+			}
+			else
+			{
+	      // Loading
+	      document.getElementById("outputNode_<?php echo $key;?>").innerHTML = "<img src='images/icon/loading.gif'>";
+
+				// Monitored process	
+				self.xmlHttpReq.open('POST', "functions/ascsvg_monitor.php", true);
+				self.xmlHttpReq.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+			  self.xmlHttpReq.onreadystatechange = function() 
+				{
+		      if (self.xmlHttpReq.readyState == 4) 
 					{
-						document.getElementById("outputNode_<?php echo $key;?>").innerHTML = "";
-					}
-				  document.getElementById("error_msg_<?php echo $key;?>").innerHTML = xmlHttp_data[0];
-				  document.getElementById("random_seed_<?php echo $key;?>").value = xmlHttp_data[1];
-				  document.getElementById("debug_string_<?php echo $key;?>").value = xmlHttp_data[2];
-        }
-	    }
+						var xmlHttp_data = decodeURIComponent(self.xmlHttpReq.responseText).split ("[BRK]");
+						if (xmlHttp_data[0].length == 0)
+						{
+							if (image_format == "PNG")
+							{
+								document.getElementById("outputNode_<?php echo $key;?>").innerHTML = "<img src='cgi-bin/buffer/buffer.png'>";
+							}
+							else if (image_format == "SVG")
+							{
+								document.getElementById("outputNode_<?php echo $key;?>").innerHTML = xmlHttp_data[3];
+							}
+						}
+						else
+						{
+							document.getElementById("outputNode_<?php echo $key;?>").innerHTML = "";
+						}
+						document.getElementById("error_msg_<?php echo $key;?>").innerHTML = xmlHttp_data[0];
+						document.getElementById("random_seed_<?php echo $key;?>").value = xmlHttp_data[1];
+						document.getElementById("debug_string_<?php echo $key;?>").value = xmlHttp_data[2];
+		      }
+			  }
+			}
+	    
 		  if (image_format == "PNG")
 		  {
   		  var text;
@@ -226,7 +250,7 @@ $file_content = htmlspecialchars($file_object[1]);
 	        if (self.xmlHttpReq.readyState == 4) {
 						  var xmlHttp_data = decodeURIComponent(self.xmlHttpReq.responseText);
 						  document.getElementById("save_status_<?php echo $key;?>").innerHTML = xmlHttp_data;
-              document.getElementById("ascii_<?php echo $key;?>_save_btn").className = "btn btn-small";
+              document.getElementById("ascii_<?php echo $key;?>_save_btn").className = "btn btn-medium";
               setTimeout('document.getElementById("save_status_<?php echo $key;?>").innerHTML = "";', 2000);
 	        }
 	    }
@@ -254,7 +278,7 @@ $file_content = htmlspecialchars($file_object[1]);
     }, 
     onChange: function() {
       updatePreview_<?php echo $key;?>(asciiinput_editor_<?php echo $key;?>);
-      document.getElementById("ascii_<?php echo $key;?>_save_btn").className = "btn btn-small btn-warning";
+      document.getElementById("ascii_<?php echo $key;?>_save_btn").className = "btn btn-medium btn-warning";
       document.getElementById('warning_save_changes').style.display = "block";
     },
 	  onGutterClick: function(cm, n) {

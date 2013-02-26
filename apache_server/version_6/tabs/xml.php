@@ -5,7 +5,7 @@ $file_content = htmlspecialchars($file_object[1]);
 
 <?php if ($file_object[0] == 1) :?>
   <p><textarea id="xmlinput" name="xmlinput"><?php echo $file_content; ?></textarea></p>
-  <p><button id='xml_save_btn' class="btn btn-small" onClick="httpPost_writefile_xml('<?php echo $dir.'/'.$tab_dict[0][0]; ?>', String(encodeURIComponent(xmlinput_editor.getValue())));">Save</button> &nbsp; <i id="save_status_xml"></i></p>
+  <p><button id='xml_save_btn' class="btn btn-medium" onClick="httpPost_writefile_xml('<?php echo $dir.'/'.$tab_dict[0][0]; ?>', String(encodeURIComponent(xmlinput_editor.getValue())));">Save</button> &nbsp; <i id="save_status_xml"></i></p>
 
 <script>
 
@@ -19,7 +19,7 @@ $file_content = htmlspecialchars($file_object[1]);
       "Ctrl-S": function() { httpPost_writefile_xml('<?php echo $dir.'/'.$tab_dict[0][0]; ?>', String(encodeURIComponent(xmlinput_editor.getValue()))); }
     },
     onChange: function() {
-      document.getElementById('xml_save_btn').className = "btn btn-small btn-warning";
+      document.getElementById('xml_save_btn').className = "btn btn-medium btn-warning";
       document.getElementById('warning_save_changes').style.display = "block";
     },
 	  onGutterClick: function(cm, n) {
@@ -60,7 +60,7 @@ $file_content = htmlspecialchars($file_object[1]);
 	        if (self.xmlHttpReq.readyState == 4) {
 						  var xmlHttp_data = decodeURIComponent(self.xmlHttpReq.responseText);
 						  document.getElementById("save_status_xml").innerHTML = xmlHttp_data;
-              document.getElementById('xml_save_btn').className = "btn btn-small";
+              document.getElementById('xml_save_btn').className = "btn btn-medium";
               setTimeout('document.getElementById("save_status_xml").innerHTML = "";', 2000);
 	        }
 	    }

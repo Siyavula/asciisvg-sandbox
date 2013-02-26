@@ -3,10 +3,10 @@
 $zip_name = $dir."/".str_replace($parent_dir."/", "", $dir).".zip";
 ?>
 
-<div class="alert alert-info">
-  Random Seed: <input id="random_seed_preview" style="width:60px;"/> 
-  <button class="btn btn-small" onClick="httpPost_zip('<?php echo $dir;?>');">Zip</button> 
-  <button class="btn btn-small" onClick="httpPost_preview();">Preview</button> 
+<div class="alert alert-info form-inline">
+  Random Seed: <input class="input" type="text" id="random_seed_preview" style="width:60px;"/> 
+  <button class="btn btn-medium" onClick="httpPost_zip('<?php echo $dir;?>');">Zip</button> 
+  <button class="btn btn-medium" onClick="httpPost_preview();">Preview</button> 
   <i id="zip_status"></i><i id="preview_status"></i>
 </div>
 
