@@ -41,7 +41,8 @@ if (strlen($data) > 0)
   }
 
   // Write this to a HTML file
-  if (write_file("template.html",$data))
+	$write_string = write_file("template.html",$data);
+  if (substr($write_string,0,5) == "Error")
   {
     echo "Error: HTML file not accessible. ";
   }

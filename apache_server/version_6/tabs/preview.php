@@ -73,7 +73,7 @@ $zip_name = $dir."/".str_replace($parent_dir."/", "", $dir).".zip";
 	    self.xmlHttpReq.onreadystatechange = function() {
 	        if (self.xmlHttpReq.readyState == 4) {
 						  var xmlHttp_data = decodeURIComponent(self.xmlHttpReq.responseText);
-              if (xmlHttp_data.substring(1,6) == "Error"){
+              if (xmlHttp_data.substring(0,5) == "Error"){
               document.getElementById('preview_iframe').src = "";
               } else {
               document.getElementById('preview_iframe').src = "functions/template.html";

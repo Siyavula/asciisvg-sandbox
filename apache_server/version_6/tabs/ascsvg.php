@@ -103,25 +103,24 @@ $file_content = htmlspecialchars($file_object[1]);
 	    }
 
 			// Depending on auto/not use different processor scripts
-			if (document.getElementById("autocomplete_checkbox_<?php echo $key;?>").checked) 
+			
+			self.xmlHttpReq.open('POST', "cgi-bin/processor.py", true);
+			self.xmlHttpReq.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+		  self.xmlHttpReq.onreadystatechange = function() 
 			{
-				self.xmlHttpReq.open('POST', "cgi-bin/processor.py", true);
-				self.xmlHttpReq.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-			  self.xmlHttpReq.onreadystatechange = function() 
+	      if (self.xmlHttpReq.readyState == 4) 
 				{
-		      if (self.xmlHttpReq.readyState == 4) 
-					{
-						var xmlHttp_data = decodeURIComponent(self.xmlHttpReq.responseText).split ("[BRK]");
-						document.getElementById("outputNode_<?php echo $key;?>").innerHTML = xmlHttp_data[0];
-						document.getElementById("error_msg_<?php echo $key;?>").innerHTML = xmlHttp_data[1];
-						document.getElementById("random_seed_<?php echo $key;?>").value = xmlHttp_data[2];
-						document.getElementById("debug_string_<?php echo $key;?>").value = xmlHttp_data[3];
-		      }
-			  }
-			}
-			else
-			{
-	      // Loading
+					var xmlHttp_data = decodeURIComponent(self.xmlHttpReq.responseText).split ("[BRK]");
+					document.getElementById("outputNode_<?php echo $key;?>").innerHTML = xmlHttp_data[0];
+					document.getElementById("error_msg_<?php echo $key;?>").innerHTML = xmlHttp_data[1];
+					document.getElementById("random_seed_<?php echo $key;?>").value = xmlHttp_data[2];
+					document.getElementById("debug_string_<?php echo $key;?>").value = xmlHttp_data[3];
+	      }
+		  }
+
+			/*
+			
+			  // Loading
 	      document.getElementById("outputNode_<?php echo $key;?>").innerHTML = "<img src='images/icon/loading.gif'>";
 
 				// Monitored process	
@@ -153,6 +152,10 @@ $file_content = htmlspecialchars($file_object[1]);
 		      }
 			  }
 			}
+
+			PROBLEM: processor_monitored.py NOT added to git repo. Sadly.
+
+			*/
 	    
 		  if (image_format == "PNG")
 		  {

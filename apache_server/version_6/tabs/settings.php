@@ -54,18 +54,15 @@ $filecontents = $filecontents[1];
         {
 				  var xmlHttp_data = decodeURIComponent(self.xmlHttpReq.responseText);  
 
-          if (xmlHttp_data.substring(1,8) == "Success")
+          if (server_name == "127.0.0.1")
           {
-            if (server_name == "127.0.0.1")
-            {
-              document.getElementById("btn_local").className = "btn btn-medium btn-success";
-						  document.getElementById("btn_web").className = "btn btn-medium";
-            }
-            else if (server_name == "www.monassis.com")
-            {
-              document.getElementById("btn_web").className = "btn btn-medium btn-success";
-						  document.getElementById("btn_local").className = "btn btn-medium";
-            }
+            document.getElementById("btn_local").className = "btn btn-medium btn-success";
+					  document.getElementById("btn_web").className = "btn btn-medium";
+          }
+          else if (server_name == "www.monassis.com")
+          {
+            document.getElementById("btn_web").className = "btn btn-medium btn-success";
+					  document.getElementById("btn_local").className = "btn btn-medium";
           }
         }
 	    }
