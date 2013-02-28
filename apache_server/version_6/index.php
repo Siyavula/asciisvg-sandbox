@@ -116,8 +116,10 @@
                   <li><a href="#resource_unicode" data-toggle="tab"><i class="icon-info-sign"></i> Unicode List</a></li>
                   <li class="divider"></li>
                   <li><a href="#settings" data-toggle="tab"><i class="icon-wrench"></i> Settings</a></li>
-                  <li class="divider"></li>
+                  <!--
+									<li class="divider"></li>
                   <li><a href="#terminal" data-toggle="tab"><i class="icon-eye-open"></i> Terminal</a></li>
+									-->
                 </ul>
                 </li>
 
